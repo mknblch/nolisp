@@ -11,5 +11,6 @@ public class Evaluator {
 
     List<Object> eval (ListStruct struct) {
 
+        return null;
     }
 }
