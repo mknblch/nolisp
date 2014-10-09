@@ -5,74 +5,35 @@ import de.mknblch.sucode.lexer.LexerException;
 import de.mknblch.sucode.lexer.Token;
 import de.mknblch.sucode.parser.structs.*;
 
-import java.util.List;
-import java.util.Stack;
-
 /**
- * Created by pexx on 05.10.2014.
+ * Created by mknblch on 05.10.2014.
  */
 public class RDParser {
 
     public ListStruct parse(Lexer lexer) throws ParserException, LexerException {
-
         final ListStruct root = new ListStruct();
-
         while (lexer.hasNext()) {
-            root.addCons(parseInner(lexer));
+            final Atom atom = parseOne(lexer);
+            if (atom.getType() == Atom.Type.END) {
+                throw new ParserException("Unbalanced AST");
+            }
+            root.addCons(atom);
         }
-
         return root;
     }
 
-    private Atom parseInner(Lexer lexer) throws LexerException, ParserException {
-        Token token = lexer.next();
-        System.out.println(token.type);
+    private Atom parseOne(Lexer lexer) throws LexerException, ParserException {
+        final Token token = lexer.next();
         switch (token.type) {
-
             case BRACE_OPEN:
                 return parseList(lexer);
             case BRACE_CLOSE:
                 return new EndStruct();
-
-            case SYMBOL:
-            case STRING:
-            case INT:
-            case REAL:
-                return asStruct(token);
-
             case QUOTE:
-                break;
+                return new QuotedListStruct(parseOne(lexer));
             case LINE_COMMENT:
+                // do nothing
                 break;
-        }
-
-        throw new ParserException("Bam");
-    }
-
-
-    private ListStruct parseList(Lexer lexer) throws LexerException, ParserException {
-
-
-        ListStruct listStruct = new ListStruct();
-
-        while (lexer.hasNext()) {
-
-            Atom atom = parseInner(lexer);
-
-            if (atom instanceof EndStruct) {
-                return listStruct;
-            }
-
-            listStruct.addCons(atom);
-        }
-
-        throw new ParserException("Unable to parse List");
-    }
-
-
-    private Atom asStruct(Token token) throws ParserException {
-
-        switch (token.type) {
             case SYMBOL:
                 return new SymbolStruct(token.literal);
             case STRING:
@@ -82,17 +43,19 @@ public class RDParser {
             case REAL:
                 return new RealStruct(token.literal);
         }
-
-        throw new ParserException("Type is no ConstantStruct");
+        throw new ParserException("Unbalanced AST");
     }
 
-    private static Atom joinQuoted(Atom atom, boolean quoted) {
 
-        if (quoted) {
-            return new QuotedListStruct(atom);
-        } else {
-            return atom;
+    private ListStruct parseList(Lexer lexer) throws LexerException, ParserException {
+        final ListStruct listStruct = new ListStruct();
+        while (lexer.hasNext()) {
+            Atom atom = parseOne(lexer);
+            if (atom.getType() == Atom.Type.END) {
+                return listStruct;
+            }
+            listStruct.addCons(atom);
         }
+        throw new ParserException("Unbalanced AST");
     }
-
 }

@@ -1,7 +1,7 @@
 package de.mknblch.sucode.parser.structs;
 
 /**
- * Created by pexx on 03.10.2014.
+ * Created by mknblch on 03.10.2014.
  */
 public class ListStruct implements Atom {
 

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by pexx on 05.10.2014.
+ * Created by mknblch on 05.10.2014.
  */
 public class Evaluator {
 

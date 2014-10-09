@@ -7,9 +7,10 @@ import java.util.List;
 import java.util.Stack;
 
 /**
- * Created by pexx on 05.10.2014.
+ * Created by mknblch on 05.10.2014.
  */
-public class Parser {
+
+public class StackParser {
 
     public ListStruct parse (List<Token> tokenList) throws ParserException {
 

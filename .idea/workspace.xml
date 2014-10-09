@@ -2,21 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="59f8e5f4-4bc0-4d9e-8220-d7922b71f1d8" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/lexer/BufferedLexer.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/EndStruct.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/Program.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/QuotedListStruct.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/RDParser.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/java/de/mknblch/sucode/parser/RDParserTest.java" />
-      <change type="DELETED" beforePath="D:\DEV\idea\SuCode\src\test\java\de\mknblch\sucode\parser\ListStructTest.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/Atom.java" afterPath="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/Atom.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/lexer/BufferedLexer.java" afterPath="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/lexer/BufferedLexer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/EndStruct.java" afterPath="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/EndStruct.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/evaluator/Evaluator.java" afterPath="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/evaluator/Evaluator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/lexer/Lexer.java" afterPath="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/lexer/Lexer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/IntStruct.java" afterPath="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/IntStruct.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/lexer/LexerException.java" afterPath="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/lexer/LexerException.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/de/mknblch/sucode/lexer/LexerTest.java" afterPath="$PROJECT_DIR$/src/test/java/de/mknblch/sucode/lexer/LexerTest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/ListStruct.java" afterPath="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/ListStruct.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/Parser.java" afterPath="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/Parser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/de/mknblch/sucode/parser/ParserTest.java" afterPath="$PROJECT_DIR$/src/test/java/de/mknblch/sucode/parser/ParserTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/ParserException.java" afterPath="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/ParserException.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/RDParser.java" afterPath="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/RDParser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/de/mknblch/sucode/parser/RDParserTest.java" afterPath="$PROJECT_DIR$/src/test/java/de/mknblch/sucode/parser/RDParserTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/RealStruct.java" afterPath="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/RealStruct.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/StringStruct.java" afterPath="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/StringStruct.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/SuCode.java" afterPath="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/SuCode.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/SymbolStruct.java" afterPath="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/SymbolStruct.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/lexer/Token.java" afterPath="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/lexer/Token.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MOVED" beforePath="D:\DEV\idea\SuCode\src\main\java\de\mknblch\sucode\parser\Parser.java" afterPath="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/StackParser.java" />
+      <change type="MOVED" beforePath="D:\DEV\idea\SuCode\src\test\java\de\mknblch\sucode\parser\ParserTest.java" afterPath="$PROJECT_DIR$/src/test/java/de/mknblch/sucode/parser/StackParserTest.java" />
     </list>
     <ignored path="SuCode.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -39,43 +43,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Lexer.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/de/mknblch/sucode/lexer/Lexer.java">
+      <file leaf-file-name="Token.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/de/mknblch/sucode/lexer/Token.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="350" max-vertical-offset="2805">
-              <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BufferedLexer.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/de/mknblch/sucode/lexer/BufferedLexer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="51" max-vertical-offset="833">
-              <caret line="7" column="18" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#320#321#0" expanded="true" />
-                <element signature="e#358#359#0" expanded="true" />
-                <element signature="e#677#678#0" expanded="true" />
-                <element signature="e#721#722#0" expanded="true" />
-                <element signature="e#757#758#0" expanded="true" />
-                <element signature="e#789#790#0" expanded="true" />
-                <element signature="e#816#817#0" expanded="true" />
-                <element signature="e#858#859#0" expanded="true" />
-                <element signature="e#889#890#0" expanded="true" />
-                <element signature="e#931#932#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Parser.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/Parser.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="47" max-vertical-offset="1547">
-              <caret line="6" column="23" selection-start-line="6" selection-start-column="23" selection-end-line="6" selection-end-column="23" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="459">
+              <caret line="3" column="14" selection-start-line="3" selection-start-column="14" selection-end-line="3" selection-end-column="14" />
               <folding />
             </state>
           </provider>
@@ -84,56 +56,9 @@
       <file leaf-file-name="RDParser.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/RDParser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.918197" vertical-offset="96" max-vertical-offset="1666">
-              <caret line="44" column="30" selection-start-line="44" selection-start-column="30" selection-end-line="44" selection-end-column="30" />
+            <state vertical-scroll-proportion="0.42570952" vertical-offset="0" max-vertical-offset="1088">
+              <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EndStruct.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/EndStruct.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="306">
-              <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-              <folding>
-                <element signature="e#172#173#0" expanded="true" />
-                <element signature="e#203#204#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RDParserTest.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/de/mknblch/sucode/parser/RDParserTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="991" max-vertical-offset="1666">
-              <caret line="78" column="16" selection-start-line="78" selection-start-column="16" selection-end-line="78" selection-end-column="16" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="QuotedListStruct.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/QuotedListStruct.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="391">
-              <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RealStruct.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/RealStruct.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="408">
-              <caret line="9" column="39" selection-start-line="9" selection-start-column="39" selection-end-line="9" selection-end-column="39" />
-              <folding>
-                <element signature="e#262#263#0" expanded="true" />
-                <element signature="e#305#306#0" expanded="true" />
-                <element signature="e#337#338#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -151,9 +76,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/tokenizer/Token.java" />
-        <option value="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/tokenizer/Lexer.java" />
-        <option value="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/lexer/token/TBraceClose.java" />
         <option value="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/lexer/token/TBraceOpen.java" />
         <option value="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/lexer/token/TComment.java" />
         <option value="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/lexer/token/TString.java" />
@@ -172,36 +94,39 @@
         <option value="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/SExpStruct.java" />
         <option value="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/StringlStruct.java" />
         <option value="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/StringStruct.java" />
-        <option value="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/IntStruct.java" />
         <option value="$PROJECT_DIR$/src/test/java/de/mknblch/sucode/parser/ListStructTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/QuoteStruct.java" />
-        <option value="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/lexer/Token.java" />
-        <option value="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/ParserException.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/resources/log4j.xml" />
         <option value="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/ListStructHelper.java" />
         <option value="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/ListStructHelper.java" />
         <option value="$PROJECT_DIR$/src/main/resources/log4j.properties" />
         <option value="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/FormatHelper.java" />
-        <option value="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/Atom.java" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/Code.java" />
         <option value="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/Programm.java" />
-        <option value="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/RealStruct.java" />
         <option value="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/Program.java" />
-        <option value="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/evaluator/Evaluator.java" />
-        <option value="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/ListStruct.java" />
         <option value="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/QuotedList.java" />
         <option value="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/QuotedListStruct.java" />
-        <option value="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/Parser.java" />
-        <option value="$PROJECT_DIR$/src/test/java/de/mknblch/sucode/parser/RDParserTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/lexer/Lexer.java" />
-        <option value="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/lexer/BufferedLexer.java" />
         <option value="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/EndStructz.java" />
-        <option value="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/EndStruct.java" />
-        <option value="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/RDParser.java" />
         <option value="$PROJECT_DIR$/src/test/java/de/mknblch/sucode/lexer/LexerTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/lexer/BufferedLexer.java" />
+        <option value="$PROJECT_DIR$/src/test/java/de/mknblch/sucode/parser/RDParserTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/de/mknblch/sucode/parser/ParserTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/SuCode.java" />
+        <option value="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/evaluator/Evaluator.java" />
+        <option value="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/lexer/LexerException.java" />
+        <option value="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/lexer/Token.java" />
+        <option value="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/ParserException.java" />
+        <option value="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/RDParser.java" />
+        <option value="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/Atom.java" />
+        <option value="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/IntStruct.java" />
+        <option value="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/ListStruct.java" />
+        <option value="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/RealStruct.java" />
+        <option value="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/EndStruct.java" />
+        <option value="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/Parser.java" />
+        <option value="$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/StackParser.java" />
       </list>
     </option>
   </component>
@@ -516,7 +441,7 @@
     <property name="recentsLimit" value="5" />
     <property name="dynamic.classpath" value="false" />
     <property name="extract.method.default.visibility" value="private" />
-    <property name="SearchEverywhereHistoryKey" value="File Tem&#9;null&#9;null&#10;File Template&#9;null&#9;null&#10;LiveTe&#9;ACTION&#9;SaveAsTemplate&#10;LiveT&#9;ACTION&#9;SaveAsTemplate&#10;Live &#9;ACTION&#9;SaveAsTemplate&#10;Live Tem&#9;ACTION&#9;InsertLiveTemplate" />
+    <property name="SearchEverywhereHistoryKey" value="File Te&#9;null&#9;null&#10;File Tem&#9;null&#9;null&#10;File Template&#9;null&#9;null&#10;LiveTe&#9;ACTION&#9;SaveAsTemplate&#10;LiveT&#9;ACTION&#9;SaveAsTemplate&#10;Live &#9;ACTION&#9;SaveAsTemplate&#10;Live Tem&#9;ACTION&#9;InsertLiveTemplate" />
     <property name="options.lastSelected" value="fileTemplates" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="options.splitter.details.proportions" value="0.2" />
@@ -548,13 +473,13 @@
       <recent name="de.mknblch.sucode.lexer" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ParserTest">
-    <configuration default="false" name="ParserTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager">
+    <configuration default="false" name="StackParserTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="SuCode" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PACKAGE_NAME" value="de.mknblch.sucode.parser" />
-      <option name="MAIN_CLASS_NAME" value="de.mknblch.sucode.parser.ParserTest" />
+      <option name="MAIN_CLASS_NAME" value="de.mknblch.sucode.parser.StackParserTest" />
       <option name="METHOD_NAME" />
       <option name="TEST_OBJECT" value="class" />
       <option name="VM_PARAMETERS" value="-ea" />
@@ -593,62 +518,6 @@
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
-    <configuration default="false" name="RDParserTest.testSimpleAST" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="SuCode" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="de.mknblch.sucode.parser" />
-      <option name="MAIN_CLASS_NAME" value="de.mknblch.sucode.parser.RDParserTest" />
-      <option name="METHOD_NAME" value="testSimpleAST" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
-      </option>
-      <envs />
-      <patterns />
-      <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="" />
-        <option name="TRANSPORT" value="0" />
-        <option name="LOCAL" value="true" />
-      </RunnerSettings>
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Debug" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method />
-    </configuration>
-    <configuration default="false" name="RDParserTest.testSimpleConst" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="SuCode" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="de.mknblch.sucode.parser" />
-      <option name="MAIN_CLASS_NAME" value="de.mknblch.sucode.parser.RDParserTest" />
-      <option name="METHOD_NAME" value="testSimpleConst" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
-      </option>
-      <envs />
-      <patterns />
-      <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="" />
-        <option name="TRANSPORT" value="0" />
-        <option name="LOCAL" value="true" />
-      </RunnerSettings>
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Debug" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method />
-    </configuration>
     <configuration default="false" name="LexerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="SuCode" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -657,6 +526,50 @@
       <option name="MAIN_CLASS_NAME" value="de.mknblch.sucode.lexer.LexerTest" />
       <option name="METHOD_NAME" />
       <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <patterns />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="false" name="RDParserTest.testQuotedTwoLists" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="SuCode" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="de.mknblch.sucode.parser" />
+      <option name="MAIN_CLASS_NAME" value="de.mknblch.sucode.parser.RDParserTest" />
+      <option name="METHOD_NAME" value="testQuotedTwoLists" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <patterns />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="false" name="StackParserTest.testQuotedList" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="SuCode" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="de.mknblch.sucode.parser" />
+      <option name="MAIN_CLASS_NAME" value="de.mknblch.sucode.parser.StackParserTest" />
+      <option name="METHOD_NAME" value="testQuotedList" />
+      <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
@@ -801,19 +714,19 @@
       <method />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="JUnit.ParserTest" />
+      <item index="0" class="java.lang.String" itemvalue="JUnit.StackParserTest" />
       <item index="1" class="java.lang.String" itemvalue="JUnit.RDParserTest" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.RDParserTest.testSimpleAST" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.RDParserTest.testSimpleConst" />
-      <item index="4" class="java.lang.String" itemvalue="JUnit.LexerTest" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.LexerTest" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.RDParserTest.testQuotedTwoLists" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.StackParserTest.testQuotedList" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.ParserTest" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.LexerTest" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.RDParserTest" />
-        <item index="3" class="java.lang.String" itemvalue="JUnit.RDParserTest.testSimpleConst" />
-        <item index="4" class="java.lang.String" itemvalue="JUnit.RDParserTest.testSimpleAST" />
+        <item index="0" class="java.lang.String" itemvalue="JUnit.StackParserTest" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.RDParserTest" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.StackParserTest.testQuotedList" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.RDParserTest.testQuotedTwoLists" />
+        <item index="4" class="java.lang.String" itemvalue="JUnit.LexerTest" />
       </list>
     </recent_temporary>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
@@ -835,7 +748,11 @@
       <created>1412544882081</created>
       <updated>1412544882081</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Added RDParser because Parser was not able to parse multi quoted elements">
+      <created>1412870527192</created>
+      <updated>1412870527192</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -859,7 +776,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.15618336" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16577825" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16577825" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32941177" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -883,18 +800,11 @@
       <TodoPanelSettings />
     </option>
     <MESSAGE value="refactoring Evaluator" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactoring Evaluator" />
+    <MESSAGE value="Added RDParser because Parser was not able to parse multi quoted elements" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added RDParser because Parser was not able to parse multi quoted elements" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/RDParser.java</url>
-          <line>27</line>
-          <properties />
-          <option name="timeStamp" value="13" />
-        </line-breakpoint>
-      </breakpoints>
       <option name="time" value="14" />
     </breakpoint-manager>
   </component>
@@ -919,7 +829,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/Parser.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/StackParser.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="62" max-vertical-offset="1275">
           <caret line="62" column="13" selection-start-line="62" selection-start-column="13" selection-end-line="62" selection-end-column="13" />
@@ -933,7 +843,7 @@
           <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#354#362#0" expanded="true" />
+            <element signature="e#357#365#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1029,21 +939,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/de/mknblch/sucode/SuCode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="221">
-          <caret line="5" column="19" selection-start-line="5" selection-start-column="19" selection-end-line="5" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/de/mknblch/sucode/lexer/LexerException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.28380635" vertical-offset="0" max-vertical-offset="599">
-          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/lib/junit-4.11.jar!/org/junit/runners/ParentRunner.class">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.34949496" vertical-offset="558" max-vertical-offset="1224">
@@ -1088,21 +983,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/ParserException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5392321" vertical-offset="0" max-vertical-offset="599">
-          <caret line="19" column="21" selection-start-line="19" selection-start-column="21" selection-end-line="19" selection-end-column="21" />
-          <folding>
-            <element signature="e#208#209#0" expanded="true" />
-            <element signature="e#238#239#0" expanded="true" />
-            <element signature="e#301#302#0" expanded="true" />
-            <element signature="e#338#339#0" expanded="true" />
-            <element signature="e#385#386#0" expanded="true" />
-            <element signature="e#413#414#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/SuCode.iml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.51085144" vertical-offset="0" max-vertical-offset="612">
@@ -1140,34 +1020,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/de/mknblch/sucode/lexer/Token.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="459">
-          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/RealStruct.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="408">
-          <caret line="9" column="39" selection-start-line="9" selection-start-column="39" selection-end-line="9" selection-end-column="39" />
-          <folding>
-            <element signature="e#262#263#0" expanded="true" />
-            <element signature="e#305#306#0" expanded="true" />
-            <element signature="e#337#338#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/IntStruct.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.09371555" vertical-offset="0" max-vertical-offset="907">
-          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/Program.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.16868798" vertical-offset="0" max-vertical-offset="907">
@@ -1178,64 +1030,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/ListStruct.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.312187" vertical-offset="0" max-vertical-offset="884">
-          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/de/mknblch/sucode/evaluator/Evaluator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="629">
-          <caret line="10" column="3" selection-start-line="10" selection-start-column="3" selection-end-line="10" selection-end-column="3" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#354#362#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/Parser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="47" max-vertical-offset="1547">
-          <caret line="6" column="23" selection-start-line="6" selection-start-column="23" selection-end-line="6" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/de/mknblch/sucode/lexer/Lexer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="350" max-vertical-offset="2805">
           <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/Atom.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.25515947" vertical-offset="0" max-vertical-offset="533">
-          <caret line="8" column="35" selection-start-line="8" selection-start-column="35" selection-end-line="8" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/EndStruct.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="306">
-          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-          <folding>
-            <element signature="e#172#173#0" expanded="true" />
-            <element signature="e#203#204#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/de/mknblch/sucode/parser/RDParserTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="991" max-vertical-offset="1666">
-          <caret line="78" column="16" selection-start-line="78" selection-start-column="16" selection-end-line="78" selection-end-column="16" />
           <folding />
         </state>
       </provider>
@@ -1258,42 +1056,149 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/de/mknblch/sucode/parser/ParserTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.39732888" vertical-offset="289" max-vertical-offset="2006">
-          <caret line="31" column="44" selection-start-line="31" selection-start-column="44" selection-end-line="31" selection-end-column="44" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2828#2829#0" expanded="true" />
-            <element signature="e#2888#2889#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/de/mknblch/sucode/lexer/BufferedLexer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="51" max-vertical-offset="833">
-          <caret line="7" column="18" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="98" max-vertical-offset="901">
+          <caret line="43" column="9" selection-start-line="43" selection-start-column="9" selection-end-line="44" selection-end-column="54" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#320#321#0" expanded="true" />
             <element signature="e#358#359#0" expanded="true" />
-            <element signature="e#677#678#0" expanded="true" />
-            <element signature="e#721#722#0" expanded="true" />
-            <element signature="e#757#758#0" expanded="true" />
-            <element signature="e#789#790#0" expanded="true" />
-            <element signature="e#816#817#0" expanded="true" />
-            <element signature="e#858#859#0" expanded="true" />
-            <element signature="e#889#890#0" expanded="true" />
-            <element signature="e#931#932#0" expanded="true" />
+            <element signature="e#390#391#0" expanded="true" />
+            <element signature="e#434#435#0" expanded="true" />
+            <element signature="e#470#471#0" expanded="true" />
+            <element signature="e#502#503#0" expanded="true" />
+            <element signature="e#529#530#0" expanded="true" />
+            <element signature="e#571#572#0" expanded="true" />
+            <element signature="e#602#603#0" expanded="true" />
+            <element signature="e#644#645#0" expanded="true" />
+            <element signature="e#671#672#0" expanded="true" />
+            <element signature="e#696#697#0" expanded="true" />
+            <element signature="e#829#836#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/de/mknblch/sucode/parser/RDParserTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1666">
+          <caret line="15" column="17" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/de/mknblch/sucode/SuCode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="221">
+          <caret line="3" column="14" selection-start-line="3" selection-start-column="14" selection-end-line="3" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/de/mknblch/sucode/evaluator/Evaluator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="629">
+          <caret line="9" column="14" selection-start-line="9" selection-start-column="14" selection-end-line="9" selection-end-column="14" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#357#365#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/de/mknblch/sucode/lexer/LexerException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="238">
+          <caret line="3" column="14" selection-start-line="3" selection-start-column="14" selection-end-line="3" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/de/mknblch/sucode/lexer/Token.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="459">
+          <caret line="3" column="14" selection-start-line="3" selection-start-column="14" selection-end-line="3" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/ParserException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="544">
+          <caret line="3" column="14" selection-start-line="3" selection-start-column="14" selection-end-line="3" selection-end-column="14" />
+          <folding>
+            <element signature="e#211#212#0" expanded="true" />
+            <element signature="e#241#242#0" expanded="true" />
+            <element signature="e#304#305#0" expanded="true" />
+            <element signature="e#341#342#0" expanded="true" />
+            <element signature="e#388#389#0" expanded="true" />
+            <element signature="e#416#417#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/IntStruct.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="340">
+          <caret line="3" column="14" selection-start-line="3" selection-start-column="14" selection-end-line="3" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/ListStruct.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="850">
+          <caret line="3" column="14" selection-start-line="3" selection-start-column="14" selection-end-line="3" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/RealStruct.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="340">
+          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/Atom.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.36894825" vertical-offset="0" max-vertical-offset="599">
+          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/structs/EndStruct.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.09371555" vertical-offset="0" max-vertical-offset="907">
+          <caret line="5" column="3" selection-start-line="5" selection-start-column="3" selection-end-line="5" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/de/mknblch/sucode/parser/StackParserTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.918197" vertical-offset="249" max-vertical-offset="1989">
+          <caret line="47" column="9" selection-start-line="47" selection-start-column="9" selection-end-line="47" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/StackParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.22704507" vertical-offset="0" max-vertical-offset="1564">
+          <caret line="12" column="18" selection-start-line="12" selection-start-column="18" selection-end-line="12" selection-end-column="18" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/de/mknblch/sucode/parser/RDParser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.918197" vertical-offset="96" max-vertical-offset="1666">
-          <caret line="44" column="30" selection-start-line="44" selection-start-column="30" selection-end-line="44" selection-end-column="30" />
+        <state vertical-scroll-proportion="0.42570952" vertical-offset="0" max-vertical-offset="1088">
+          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
           <folding />
         </state>
       </provider>

@@ -1,7 +1,7 @@
 package de.mknblch.sucode.parser.structs;
 
 /**
- * Created by pexx on 28.09.2014.
+ * Created by mknblch on 28.09.2014.
  */
 public interface Atom {
 

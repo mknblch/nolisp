@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Created by pexx on 05.10.2014.
+ * Created by mknblch on 05.10.2014.
  */
 public class RDParserTest {
 
@@ -53,7 +53,7 @@ public class RDParserTest {
     @Test
     public void testQuotedList() throws Exception {
         String code = "'(1 2 3) x";
-        assertASTEquals("( ( quote 1 2 3 ) x )", code);
+        assertASTEquals("( ( quote ( 1 2 3 ) ) x )", code);
     }
 
     @Ignore // not yet implemented
@@ -66,7 +66,7 @@ public class RDParserTest {
     @Test
     public void testQuotedTwoLists() throws Exception {
         String code = "'(1 2 3)'(1 2 3)x";
-        assertASTEquals("( ( quote 1 2 3 ) ( quote 1 2 3 ) x )", code);
+        assertASTEquals("( ( quote ( 1 2 3 ) ) ( quote ( 1 2 3 ) ) x )", code);
     }
 
     @Test(expected = ParserException.class)

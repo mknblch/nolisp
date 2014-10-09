@@ -4,7 +4,6 @@ import de.mknblch.sucode.lexer.Lexer;
 import de.mknblch.sucode.lexer.LexerException;
 import de.mknblch.sucode.lexer.Token;
 import de.mknblch.sucode.parser.structs.ListStruct;
-import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -18,13 +17,13 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Created by pexx on 05.10.2014.
+ * Created by mknblch on 05.10.2014.
  */
-public class ParserTest {
+public class StackParserTest {
 
-    static final Logger LOGGER = LoggerFactory.getLogger(ParserTest.class);
+    static final Logger LOGGER = LoggerFactory.getLogger(StackParserTest.class);
 
-    private static final Parser PARSER = new Parser();
+    private static final StackParser PARSER = new StackParser();
 
     @Test
     public void testSimpleAST() throws Exception {
@@ -52,10 +51,11 @@ public class ParserTest {
         assertASTEquals("( ( quote 3.1415 ) 3 )", code);
     }
 
+    @Ignore
     @Test
     public void testQuotedList() throws Exception {
         String code = "'(1 2 3) x";
-        assertASTEquals("( ( quote 1 2 3 ) x )", code);
+        assertASTEquals("( ( quote ( 1 2 3 ) ) x )", code);
     }
 
     @Ignore // not yet implemented
@@ -65,10 +65,11 @@ public class ParserTest {
         assertASTEquals("( ( quote ( quote 1 ) ) 2 3 )", code);
     }
 
+    @Ignore
     @Test
     public void testQuotedTwoLists() throws Exception {
         String code = "'(1 2 3)'(1 2 3)x";
-        assertASTEquals("( ( quote 1 2 3 ) ( quote 1 2 3 ) x )", code);
+        assertASTEquals("( ( quote ( 1 2 3 ) ) ( quote ( 1 2 3 ) ) x )", code);
     }
 
     @Test(expected = ParserException.class)

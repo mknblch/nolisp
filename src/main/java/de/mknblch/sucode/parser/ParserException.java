@@ -1,7 +1,7 @@
 package de.mknblch.sucode.parser;
 
 /**
- * Created by pexx on 05.10.2014.
+ * Created by mknblch on 05.10.2014.
  */
 public class ParserException extends Exception {
 

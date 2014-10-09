@@ -17,14 +17,6 @@ public class BufferedLexer {
         tokens = asList(lexer);
     }
 
-    private static List<Token> asList(Lexer lexer) throws LexerException {
-        final ArrayList<Token> codeList = new ArrayList<Token>();
-        while (lexer.hasNext()) {
-            codeList.add(lexer.next());
-        }
-        return Collections.unmodifiableList(codeList);
-    }
-
     public boolean hasNext() {
         return index < tokens.size();
     }
@@ -39,5 +31,17 @@ public class BufferedLexer {
 
     public Token previous() {
         return tokens.get(--index);
+    }
+
+    public void reset() {
+        index = 0;
+    }
+
+    private static List<Token> asList(Lexer lexer) throws LexerException {
+        final ArrayList<Token> codeList = new ArrayList<Token>();
+        while (lexer.hasNext()) {
+            codeList.add(lexer.next());
+        }
+        return Collections.unmodifiableList(codeList);
     }
 }
