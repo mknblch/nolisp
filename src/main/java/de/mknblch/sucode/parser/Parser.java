@@ -8,9 +8,11 @@ import de.mknblch.sucode.parser.structs.*;
 /**
  * Created by mknblch on 05.10.2014.
  */
-public class RDParser {
+public class Parser {
 
     public ListStruct parse(Lexer lexer) throws ParserException, LexerException {
+
+
         final ListStruct root = new ListStruct();
         while (lexer.hasNext()) {
             final Atom atom = parseOne(lexer);
