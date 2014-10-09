@@ -30,11 +30,11 @@ public class ListStruct implements Atom {
         return temp;
     }
 
-    public void cons (Atom cons) {
-        last().cdr = new ListStruct(cons);
-    }
-
-    public void addCons(Atom atom) {
+    /**
+     * add element to the list
+     * @param atom
+     */
+    public void add(Atom atom) {
 
         if (null == car) {
             car = atom;
@@ -42,15 +42,35 @@ public class ListStruct implements Atom {
             cons(atom);
     }
 
+    /**
+     * determine if this element has a successor
+     * @return
+     */
     public boolean hasSuccessor() {
         return null != cdr;
     }
 
+    /**
+     * get current list element
+     * @return
+     */
     public Atom car() {
         return car;
     }
 
+    /**
+     * get rest list
+     * @return
+     */
     public ListStruct cdr() {
         return cdr;
+    }
+
+    /**
+     * add to end
+     * @param cons
+     */
+    protected void cons (Atom cons) {
+        last().cdr = new ListStruct(cons);
     }
 }

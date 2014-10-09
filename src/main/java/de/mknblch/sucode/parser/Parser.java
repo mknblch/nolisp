@@ -6,20 +6,21 @@ import de.mknblch.sucode.lexer.Token;
 import de.mknblch.sucode.parser.structs.*;
 
 /**
+ * The parser creates an AbstractSyntaxTree from a Token stream
  * Created by mknblch on 05.10.2014.
  */
 public class Parser {
 
-    public ListStruct parse(Lexer lexer) throws ParserException, LexerException {
+    public static final End END_STRUCT = new End();
 
-
-        final ListStruct root = new ListStruct();
+    public Program parse(Lexer lexer) throws ParserException, LexerException {
+        final Program root = new Program();
         while (lexer.hasNext()) {
             final Atom atom = parseOne(lexer);
             if (atom.getType() == Atom.Type.END) {
                 throw new ParserException("Unbalanced AST");
             }
-            root.addCons(atom);
+            root.add(atom);
         }
         return root;
     }
@@ -30,7 +31,7 @@ public class Parser {
             case BRACE_OPEN:
                 return parseList(lexer);
             case BRACE_CLOSE:
-                return new EndStruct();
+                return END_STRUCT;
             case QUOTE:
                 return new QuotedListStruct(parseOne(lexer));
             case LINE_COMMENT:
@@ -56,7 +57,7 @@ public class Parser {
             if (atom.getType() == Atom.Type.END) {
                 return listStruct;
             }
-            listStruct.addCons(atom);
+            listStruct.add(atom);
         }
         throw new ParserException("Unbalanced AST");
     }

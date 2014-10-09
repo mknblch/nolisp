@@ -8,7 +8,7 @@ public class StringStruct implements Atom {
     public final String value;
 
     public StringStruct(String literal) {
-        this.value = literal;
+        this.value = literal.substring(1, literal.length()-1);
     }
 
     @Override

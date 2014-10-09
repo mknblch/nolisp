@@ -16,4 +16,9 @@ public class QuotedListStruct extends ListStruct {
         super(QUOTE);
         cons(atom);
     }
+
+    @Override
+    public Type getType() {
+        return Atom.Type.QUOTED_LIST;
+    }
 }

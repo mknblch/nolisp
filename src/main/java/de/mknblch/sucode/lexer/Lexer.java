@@ -46,20 +46,16 @@ public class Lexer {
      * @return next token
      */
     public Token next() throws LexerException {
-
         skipIgnorable();
-
         // return null if end already reached
         if (offset >= code.length()) {
             return null;
         }
-
         // fetch char at offset and tokenize
         return tokenize(offset, code.charAt(offset));
     }
 
     private Token tokenize(int position, char c) throws LexerException {
-
         // first char of each token must decide it's type
         switch(c) {
             case '(' :
