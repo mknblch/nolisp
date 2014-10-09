@@ -5,6 +5,11 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 /**
@@ -105,13 +110,12 @@ public class LexerTest {
         assertTokenEquals(new String[]{"abc", ";; hallo welt", "123"}, lexer);
     }
 
-    @Ignore
-    @Test
-    public void testAsList() throws Exception {
-        final String code = "(a b c)";
-        final Lexer lexer = new Lexer(code);
-        final String[] result = lexer.asList().toArray(new String[]{});
-        assertArrayEquals(new String[]{"(", "a", "b", "c", ")"}, result);
+    private List<Token> asList(Lexer lexer) throws LexerException {
+        final ArrayList<Token> codeList = new ArrayList<Token>();
+        while (lexer.hasNext()) {
+            codeList.add(lexer.next());
+        }
+        return Collections.unmodifiableList(codeList);
     }
 
     /**

@@ -11,59 +11,79 @@ import java.util.Stack;
  */
 public class Parser {
 
-
-    public static final SymbolStruct QUOTE_STRUCT = new SymbolStruct("quote");
-
     public ListStruct parse (List<Token> tokenList) throws ParserException {
 
-        ListStruct root = new ListStruct();
-
+        final ListStruct root = new ListStruct();
         final Stack<ListStruct> stack = new Stack<ListStruct>();
+        boolean quoted = false;
+
         stack.push(root);
 
         for (int i = 0; i < tokenList.size(); i++) {
 
             final Token token = tokenList.get(i);
-
             switch (token.type) {
-
-                case SYMBOL:
-                    stack.peek().add(new SymbolStruct(token.literal));
-                    break;
                 case BRACE_OPEN: {
-                    ListStruct item = new ListStruct();
-                    stack.peek().add(item);
+                    final ListStruct item = quoted ? new QuotedListStruct() : new ListStruct();
+                    if (stack.isEmpty()) {
+                        throw new ParserException("Unbalanced AST");
+                    }
+                    stack.peek().addCons(item);
                     stack.push(item);
+                    quoted = false;
                     break;
                 }
                 case BRACE_CLOSE:
-                    ListStruct pop = stack.pop();
+                    final ListStruct pop = stack.pop();
                     if (null == pop) {
-                        throw new ParserException(String.format("Unbalanced AST at Token %02d (@ %04d)", i, token.position));
+                        throw new ParserException("Unbalanced AST");
                     }
                     break;
+                case SYMBOL:
+                    stack.peek().addCons(joinQuoted(new SymbolStruct(token.literal), quoted));
+                    quoted = false;
+                    break;
                 case STRING:
-                    stack.peek().add(new StringStruct(token.literal));
+                    stack.peek().addCons(joinQuoted(new StringStruct(token.literal), quoted));
+                    quoted = false;
                     break;
                 case INT:
-                    stack.peek().add(new IntStruct(token.literal));
+                    stack.peek().addCons(joinQuoted(new IntStruct(token.literal), quoted));
+                    quoted = false;
                     break;
                 case REAL:
-                    stack.peek().add(new RealStruct(token.literal));
+                    stack.peek().addCons(joinQuoted(new RealStruct(token.literal), quoted));
+                    quoted = false;
                     break;
-                case QUOTE: {
-                    final ListStruct item = new ListStruct();
-                    stack.peek().add(item);
-                    stack.push(item);
-                    item.add(QUOTE_STRUCT);
+                case QUOTE:
+                    quoted = true;
                     break;
-                }
                 case LINE_COMMENT: // do nothing
                     break;
             }
         }
 
+
+        if (stack.isEmpty() || stack.peek() != root){
+
+            while (!stack.isEmpty()) {
+                ListStruct pop = stack.pop();
+                System.out.println(pop.car());
+            }
+
+            throw new ParserException("Unbalanced AST");
+        }
+
         return root;
+    }
+
+    private static Atom joinQuoted(Atom atom, boolean quoted) {
+
+        if (quoted) {
+            return new QuotedListStruct(atom);
+        } else {
+            return atom;
+        }
     }
 
 }

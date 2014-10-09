@@ -10,6 +10,7 @@ public class ListStruct implements Atom {
 
     public ListStruct() {}
 
+
     public ListStruct(Atom car) {
         this.car = car;
     }
@@ -19,17 +20,21 @@ public class ListStruct implements Atom {
         return Type.LIST;
     }
 
-    public void cons (Atom cons) {
-        last().cdr = new ListStruct(cons);
-    }
-
+    /**
+     * retrieve last element of the list
+     * @return
+     */
     public ListStruct last () {
         ListStruct temp = this;
         while (null != temp.cdr) {temp = temp.cdr;}
         return temp;
     }
 
-    public void add(Atom atom) {
+    public void cons (Atom cons) {
+        last().cdr = new ListStruct(cons);
+    }
+
+    public void addCons(Atom atom) {
 
         if (null == car) {
             car = atom;
@@ -39,20 +44,6 @@ public class ListStruct implements Atom {
 
     public boolean hasSuccessor() {
         return null != cdr;
-    }
-
-    public String asStringDump() {
-
-        final StringBuffer sb = new StringBuffer();
-
-        ListStruct temp = this;
-
-        do {
-            sb.append(" ").append(temp.car);
-            temp = temp.cdr;
-        } while (temp.hasSuccessor());
-
-        return sb.toString();
     }
 
     public Atom car() {

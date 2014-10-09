@@ -40,13 +40,6 @@ public class Lexer {
         return offset < code.length();
     }
 
-    public List<Token> asList() throws LexerException {
-        final ArrayList<Token> codeList = new ArrayList<Token>();
-        while (hasNext()) {
-            codeList.add(next());    
-        }
-        return Collections.unmodifiableList(codeList);
-    }
 
     /**
      * fetch next token and increment offset.

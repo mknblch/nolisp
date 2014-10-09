@@ -2,30 +2,28 @@ package de.mknblch.sucode.parser;
 
 import de.mknblch.sucode.lexer.Lexer;
 import de.mknblch.sucode.lexer.LexerException;
-import de.mknblch.sucode.lexer.Token;
 import de.mknblch.sucode.parser.structs.ListStruct;
-import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 /**
  * Created by pexx on 05.10.2014.
  */
-public class ParserTest {
+public class RDParserTest {
 
-    static final Logger LOGGER = LoggerFactory.getLogger(ParserTest.class);
+    static final Logger LOGGER = LoggerFactory.getLogger(RDParserTest.class);
 
-    private static final Parser PARSER = new Parser();
+    private static final RDParser PARSER = new RDParser();
 
+    @Test
+    public void testSimpleConst() throws Exception {
+        String code = "(x)";
+        assertASTEquals("( ( x ) )", code);
+    }
     @Test
     public void testSimpleAST() throws Exception {
         String code = "(+ 1 2 3)(+ 1 2 3)";
@@ -89,16 +87,8 @@ public class ParserTest {
         ListStruct parse = parse(code);
     }
 
-    private List<Token> asList(Lexer lexer) throws LexerException {
-        final ArrayList<Token> codeList = new ArrayList<Token>();
-        while (lexer.hasNext()) {
-            codeList.add(lexer.next());
-        }
-        return Collections.unmodifiableList(codeList);
-    }
-
     private ListStruct parse(String code) throws ParserException, LexerException {
-        return PARSER.parse(asList(new Lexer(code)));
+        return PARSER.parse(new Lexer(code));
     }
 
     private void assertASTEquals(String expected, String code) throws LexerException, ParserException {

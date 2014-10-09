@@ -1,7 +1,9 @@
 package de.mknblch.sucode.evaluator;
 
-import de.mknblch.sucode.parser.structs.ListStruct;
+import de.mknblch.sucode.parser.structs.Atom;
+import de.mknblch.sucode.parser.Program;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,7 +11,20 @@ import java.util.List;
  */
 public class Evaluator {
 
-    List<Object> eval (ListStruct struct) {
+
+    public List<Object> evaluate(Program program) {
+
+        final ArrayList<Object> retVal = new ArrayList<Object>(program.size());
+
+        for (int i = 0; i < program.size(); i++) {
+            retVal.add(eval(program.get(i)));
+        }
+        return retVal;
+    }
+
+    private Object eval (Atom struct) {
+
+
 
         return null;
     }
