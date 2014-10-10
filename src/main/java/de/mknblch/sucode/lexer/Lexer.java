@@ -9,6 +9,10 @@ public class Lexer {
     public static final char[] NEWLINE = new char[]{'\n'};
     public static final char[] SPECIAL_TOKEN = new char[]{'(', ')', '\'', '#'};
     public static final char[] DOUBLEQUOTE = new char[]{'"'};
+    public static final String INT_REGEX = "^\\-?[0-9]+$";
+    public static final String REAL_REGEX = "^\\-?[0-9]+\\.[0-9]+$";
+    public static final String NIL_REGEX = "^(nil)|(NIL)$";
+    public static final String TRUE_REGEX = "^(t)|(T)$";
 
     public final String code;
     private int offset = 0;
@@ -19,6 +23,10 @@ public class Lexer {
         } else {
             this.code = new String(code.trim());
         }
+    }
+
+    public int getOffset() {
+        return offset;
     }
 
     /**
@@ -77,16 +85,16 @@ public class Lexer {
 
     private Token decideSymbolType(String literal, int position) throws LexerException {
 
-        if(literal.matches("^\\-?[0-9]+$"))
+        if(literal.matches(INT_REGEX))
             return TokenHelper.makeIntToken(literal, position);
 
-        else if(literal.matches("^\\-?[0-9]+\\.[0-9]+$"))
+        else if(literal.matches(REAL_REGEX))
             return TokenHelper.makeRealToken(literal, position);
 
-        else if(literal.matches("^(nil)|(NIL)$"))
+        else if(literal.matches(NIL_REGEX))
             return TokenHelper.makeNilToken(position);
 
-        else if(literal.matches("^(t)|(T)$"))
+        else if(literal.matches(TRUE_REGEX))
             return TokenHelper.makeTrueToken(position);
 
         else
@@ -114,7 +122,7 @@ public class Lexer {
         int endIndex = ++offset;
         // if the last increment grows offset above code.length throw an exception
         if(offset > code.length()) {
-            throw new LexerException(String.format("[@%04d] premature end of string found", startIndex));
+            throw new LexerException(String.format("[%03d] premature end of string found.", startIndex));
         }
         // TODO escaped "
         return code.substring(startIndex, endIndex);

@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+
 /**
  * Created by mknblch on 09.10.2014.
  */
@@ -23,12 +25,27 @@ public class EvaluatorTest {
 
     @Test
     public void testEvaluate() throws Exception {
-
-        String code = "(+ 1 1(+ 2 3))";
-
-        List<Object> evaluated = eval(code);
-
+        final String code = "(+ 1 1(+ 2 3))";
+        final List<Object> evaluated = eval(code);
         dump(evaluated);
+        assertEquals(7, evaluated.get(0));
+    }
+
+    @Test
+    public void testQuote() throws Exception {
+        final String code = "'a";
+        final List<Object> evaluated = eval(code);
+        dump(evaluated);
+    }
+
+    @Test
+    public void testEnvironment() throws Exception {
+        final String code = "(+ 2 x)";
+        final Environment env = new Environment();
+        env.put("x", 3);
+        final List<Object> evaluated = eval(code, env);
+        dump(evaluated);
+        assertEquals(5, evaluated.get(0));
     }
 
     private void dump(List<Object> evaluated) {

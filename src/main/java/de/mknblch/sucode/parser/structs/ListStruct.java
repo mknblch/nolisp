@@ -111,7 +111,7 @@ public class ListStruct implements Atom, Iterable {
             }
             @Override
             public void remove() {
-                throw new NotImplementedException();
+                throw new RuntimeException("remove() not implemented");
             }
         };
     }

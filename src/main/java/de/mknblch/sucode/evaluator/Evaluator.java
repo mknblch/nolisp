@@ -41,14 +41,22 @@ public class Evaluator {
 
     private Object evalList(ListStruct atom, Environment environment) throws EvaluationException {
 
-        final Object function = eval(atom.car(), environment);
+        final Object function = atom.car();
 
-        return evalFunction(function, atom.cdr(), environment);
+        if(!(function instanceof SymbolStruct)) {
+            throw new EvaluationException("Unable to evaluate: " + String.valueOf(function));
+        }
+
+        return evalFunction((SymbolStruct)atom.car(), atom.cdr(), environment);
     }
 
-    private Object evalFunction(Object function, ListStruct args, Environment environment) throws EvaluationException {
+    private Object evalFunction(SymbolStruct function, ListStruct args, Environment environment) throws EvaluationException {
 
-        if ("+".equals(function)) {
+        if ("quote".equals(function.literal)) {
+            return args;
+        }
+
+        if ("+".equals(function.literal)) {
             int x = 0;
             for (Object o : args) {
                 x += (Integer) eval(o, environment);
@@ -60,7 +68,8 @@ public class Evaluator {
     }
 
     private Object evalSymbol(SymbolStruct atom, Environment environment) {
-        return atom.literal;
+
+        return environment.get(atom.literal);
     }
 
 }

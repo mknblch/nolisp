@@ -35,9 +35,9 @@ public class ListStructTest {
     @Test
     public void testAdd() throws Exception {
         final ListStruct listStruct = new ListStruct();
-        LOGGER.debug("adding '1' to : '{}'", FormatHelper.formatAsSExpression(listStruct));
+        LOGGER.debug("adding '1' to '{}'", FormatHelper.formatAsSExpression(listStruct));
         listStruct.add("1");
-        LOGGER.debug("adding '2' to : '{}'", FormatHelper.formatAsSExpression(listStruct));
+        LOGGER.debug("adding '2' to '{}'", FormatHelper.formatAsSExpression(listStruct));
         listStruct.add("2");
         LOGGER.debug("adding '3' to '{}'", FormatHelper.formatAsSExpression(listStruct));
         listStruct.add("3");
@@ -73,7 +73,7 @@ public class ListStructTest {
     public void testIterator() throws Exception {
 
         final ListStruct listStruct = new ListStruct("1", "2", "3");
-        LOGGER.debug("Testing '{}'", FormatHelper.formatAsSExpression(listStruct));
+        LOGGER.debug("Testing iterator for '{}'", FormatHelper.formatAsSExpression(listStruct));
         final Iterator iterator = listStruct.iterator();
 
         assertTrue(iterator.hasNext());

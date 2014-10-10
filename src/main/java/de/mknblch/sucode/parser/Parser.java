@@ -4,6 +4,9 @@ import de.mknblch.sucode.lexer.Lexer;
 import de.mknblch.sucode.lexer.LexerException;
 import de.mknblch.sucode.lexer.Token;
 import de.mknblch.sucode.parser.structs.*;
+
+import static de.mknblch.sucode.parser.structs.ConstStruct.ConstType;
+
 /**
  * The parser transforms a token stream into an AbstractSyntaxTree
  *
@@ -11,7 +14,8 @@ import de.mknblch.sucode.parser.structs.*;
  */
 public class Parser {
 
-    public static final EndStruct END_STRUCT_STRUCT = new EndStruct();
+    public static final EndStruct END_STRUCT = new EndStruct();
+    public static final SymbolStruct QUOTE_STRUCT = new SymbolStruct("quote");
 
     public ListStruct parse(Lexer lexer) throws ParserException, LexerException {
         final ListStruct root = new ListStruct();
@@ -23,7 +27,7 @@ public class Parser {
             }
             // unbalanced count of braces found
             if (atom.getType() == Atom.Type.END) {
-                throw new ParserException("Unbalanced AST");
+                throw new ParserException(String.format("[%03d] Unbalanced AST. One or more openening braces missing.", lexer.getOffset()));
             }
             root.add(atom);
         }
@@ -36,26 +40,26 @@ public class Parser {
             case LIST_BEGIN:
                 return parseList(lexer);
             case LIST_END:
-                return END_STRUCT_STRUCT;
+                return END_STRUCT;
             case QUOTE:
                 // expand to (quote arg)
-                return new ListStruct("quote", parseOne(lexer));
+                return new ListStruct(QUOTE_STRUCT, parseOne(lexer));
             case SYMBOL:
                 return new SymbolStruct(token.literal);
             case STRING:
-                return new ConstStruct(ConstStruct.ConstType.STRING, token.value);
+                return new ConstStruct(ConstType.STRING, token.value);
             case INT:
-                return new ConstStruct(ConstStruct.ConstType.INT, token.value);
+                return new ConstStruct(ConstType.INT, token.value);
             case REAL:
-                return new ConstStruct(ConstStruct.ConstType.REAL, token.value);
+                return new ConstStruct(ConstType.REAL, token.value);
             case NIL:
-                return new ConstStruct(ConstStruct.ConstType.NIL, null);
+                return new ConstStruct(ConstType.NIL, null);
             case TRUE:
-                return new ConstStruct(ConstStruct.ConstType.TRUE, null);
+                return new ConstStruct(ConstType.TRUE, null);
             case LINE_COMMENT:
                 return null;
             default:
-                throw new RuntimeException("Not yet implemented: " + token.type);
+                throw new RuntimeException(String.format("[%03d] Type '%s' Not yet implemented.", lexer.getOffset(), token.type.name()));
         }
     }
 
@@ -69,6 +73,6 @@ public class Parser {
             }
             listStruct.add(atom);
         }
-        throw new ParserException("Unbalanced AST");
+        throw new ParserException(String.format("[%03d] Unbalanced AST. One or more closing braces missing.", lexer.getOffset()));
     }
 }
