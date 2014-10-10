@@ -79,7 +79,21 @@ public class ListStruct implements Atom, Iterable {
     }
 
     /**
-     * basic value iterator
+     * return number of elements in the list
+     */
+    public int size() {
+        if (null == car) {
+            return 0;
+        }
+        int i = 1;
+        for (ListStruct temp = this; null != temp.cdr; i++) {
+            temp = temp.cdr;
+        }
+        return i;
+    }
+
+    /**
+     * value iterator
      */
     @Override
     public Iterator iterator() {

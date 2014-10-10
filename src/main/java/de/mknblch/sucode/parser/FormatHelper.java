@@ -14,7 +14,7 @@ public class FormatHelper {
     public static String formatPretty(Object obj) {
 
         if (null == obj) {
-            return "null";
+            return "nil";
         }
         // return Non-Atoms
         if(!(obj instanceof Atom)) {

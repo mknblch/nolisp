@@ -35,13 +35,13 @@ public class ListStructTest {
     @Test
     public void testAdd() throws Exception {
         final ListStruct listStruct = new ListStruct();
-        LOGGER.debug("add '{}'", FormatHelper.formatAsSExpression(listStruct));
+        LOGGER.debug("adding '1' to : '{}'", FormatHelper.formatAsSExpression(listStruct));
         listStruct.add("1");
-        LOGGER.debug("add '{}'", FormatHelper.formatAsSExpression(listStruct));
+        LOGGER.debug("adding '2' to : '{}'", FormatHelper.formatAsSExpression(listStruct));
         listStruct.add("2");
-        LOGGER.debug("add '{}'", FormatHelper.formatAsSExpression(listStruct));
+        LOGGER.debug("adding '3' to '{}'", FormatHelper.formatAsSExpression(listStruct));
         listStruct.add("3");
-        LOGGER.debug("add '{}'", FormatHelper.formatAsSExpression(listStruct));
+        LOGGER.debug("result : '{}'", FormatHelper.formatAsSExpression(listStruct));
         assertEquals("1", listStruct.car());
         assertEquals("2", listStruct.cdr().car());
         assertEquals("3", listStruct.cdr().cdr().car());
@@ -52,13 +52,22 @@ public class ListStructTest {
     public void testHasSuccessor() throws Exception {
 
         final ListStruct listStruct = new ListStruct("1", "2", "3");
-        LOGGER.debug("Testing '{}'", FormatHelper.formatAsSExpression(listStruct));
+        LOGGER.debug("Testing successors of '{}'", FormatHelper.formatAsSExpression(listStruct));
 
         assertTrue(listStruct.hasSuccessor());
         assertTrue(listStruct.cdr().hasSuccessor());
         assertFalse(listStruct.cdr().cdr().hasSuccessor());
     }
 
+    @Test
+    public void testSize() throws Exception {
+        final ListStruct listStruct = new ListStruct("1", "2", "3");
+        LOGGER.debug("Testing size of '{}'", FormatHelper.formatAsSExpression(listStruct));
+
+        assertEquals(3, listStruct.size());
+        assertEquals(2, listStruct.cdr().size());
+        assertEquals(1, listStruct.cdr().cdr().size());
+    }
 
     @Test
     public void testIterator() throws Exception {

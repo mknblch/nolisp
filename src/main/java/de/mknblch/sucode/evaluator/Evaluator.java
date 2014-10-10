@@ -10,27 +10,27 @@ import java.util.List;
 */
 public class Evaluator {
 
-    public List<Object> evaluate (ListStruct program) throws EvaluationException {
+    public List<Object> evaluate (ListStruct program, Environment environment) throws EvaluationException {
 
         final ArrayList<Object> ret = new ArrayList<Object>();
 
 //        do {
-            ret.add(eval(program.car()));
+            ret.add(eval(program.car(), environment));
 //        } while (program.hasSuccessor());
 
         return ret;
     }
 
-    private Object eval(Object obj) throws EvaluationException {
+    private Object eval(Object obj, Environment environment) throws EvaluationException {
 
         if (obj instanceof Atom) {
             final Atom atom = (Atom) obj;
             switch (atom.getType()) {
 
                 case SYMBOL:
-                    return evalSymbol((SymbolStruct) atom);
+                    return evalSymbol((SymbolStruct) atom, environment);
                 case LIST:
-                    return evalList((ListStruct) atom);
+                    return evalList((ListStruct) atom, environment);
                 case CONST:
                     return ((ConstStruct) atom).value;
             }
@@ -39,19 +39,19 @@ public class Evaluator {
         return obj;
     }
 
-    private Object evalList(ListStruct atom) throws EvaluationException {
+    private Object evalList(ListStruct atom, Environment environment) throws EvaluationException {
 
-        final Object function = eval(atom.car());
+        final Object function = eval(atom.car(), environment);
 
-        return evalFunction(function, atom.cdr());
+        return evalFunction(function, atom.cdr(), environment);
     }
 
-    private Object evalFunction(Object function, ListStruct cdr) throws EvaluationException {
+    private Object evalFunction(Object function, ListStruct args, Environment environment) throws EvaluationException {
 
         if ("+".equals(function)) {
             int x = 0;
-            for (Object o : cdr) {
-                x += (Integer) eval(o);
+            for (Object o : args) {
+                x += (Integer) eval(o, environment);
             }
             return x;
         }
@@ -59,7 +59,7 @@ public class Evaluator {
         return null;
     }
 
-    private Object evalSymbol(SymbolStruct atom) {
+    private Object evalSymbol(SymbolStruct atom, Environment environment) {
         return atom.literal;
     }
 

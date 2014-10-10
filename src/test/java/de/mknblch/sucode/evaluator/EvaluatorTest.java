@@ -37,9 +37,13 @@ public class EvaluatorTest {
         }
     }
 
-    private List<Object> eval(String code) throws LexerException, ParserException, EvaluationException {
+    private List<Object> eval(String code) throws ParserException, EvaluationException, LexerException {
+        return eval(code, new Environment());
+    }
+
+    private List<Object> eval(String code, Environment environment) throws LexerException, ParserException, EvaluationException {
         final ListStruct program = PARSER.parse(new Lexer(code));
         LOGGER.debug("Eval: {}", FormatHelper.formatPretty(program));
-        return new Evaluator().evaluate(program);
+        return new Evaluator().evaluate(program, environment);
     }
 }
