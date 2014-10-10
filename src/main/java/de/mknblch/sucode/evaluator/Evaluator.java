@@ -46,14 +46,13 @@ public class Evaluator {
         return evalFunction(function, atom.cdr());
     }
 
-    private Object evalFunction(Object function, ListStruct cdr) {
+    private Object evalFunction(Object function, ListStruct cdr) throws EvaluationException {
 
         if ("+".equals(function)) {
-
             int x = 0;
-
-
-
+            for (Object o : cdr) {
+                x += (Integer) eval(o);
+            }
             return x;
         }
 

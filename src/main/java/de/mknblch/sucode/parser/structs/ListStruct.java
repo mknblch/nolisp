@@ -29,7 +29,7 @@ public class ListStruct implements Atom, Iterable {
     }
 
     /**
-     * retrieve last element of the list
+     * retrieve last listElement of the list
      * @return
      */
     public ListStruct last () {
@@ -52,36 +52,35 @@ public class ListStruct implements Atom, Iterable {
 
     /**
      * determine if this element has a successor
-     * @return
      */
     public boolean hasSuccessor() {
         return null != cdr;
     }
 
     /**
-     * get current list element
-     * @return
+     * get current list element.
      */
     public Object car() {
         return car;
     }
 
     /**
-     * get rest list
-     * @return
+     * get rest list.
      */
     public ListStruct cdr() {
         return cdr;
     }
 
     /**
-     * add to end
-     * @param cons
+     * wrap cons into ListStruct and set it as cdr in the last element of the list.
      */
-    protected void cons (Object cons) {
+    public void cons (Object cons) {
         last().cdr = new ListStruct(cons);
     }
 
+    /**
+     * basic value iterator
+     */
     @Override
     public Iterator iterator() {
         return new Iterator() {
