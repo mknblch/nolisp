@@ -28,6 +28,7 @@ public class FormatHelper {
             case STRING:
                 return ((SymbolStruct) atom).literal;
             case LIST:
+            case QUOTED_LIST:
                 final StringBuffer sb = new StringBuffer();
                 ListStruct temp = (ListStruct) (ListStruct) atom;
                 do {

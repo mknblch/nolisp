@@ -24,7 +24,7 @@ public class EvaluatorTest {
     @Test
     public void testEvaluate() throws Exception {
 
-        String code = "(+ 1 1 (+ 2 3))";
+        String code = "(+ 1 1(+ 2 3))";
 
         List<Object> evaluated = eval(code);
 
