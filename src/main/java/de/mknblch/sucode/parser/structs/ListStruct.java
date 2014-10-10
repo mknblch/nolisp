@@ -1,9 +1,13 @@
 package de.mknblch.sucode.parser.structs;
 
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
+import java.util.Iterator;
+
 /**
  * Created by mknblch on 03.10.2014.
  */
-public class ListStruct implements Atom {
+public class ListStruct implements Atom, Iterable {
 
     private Object car = null;
     private ListStruct cdr = null;
@@ -13,15 +17,9 @@ public class ListStruct implements Atom {
      */
     public ListStruct() {}
 
-
-    public ListStruct(Object car) {
-        this.car = car;
-    }
-
-    public ListStruct(Object car, Object... cdr) {
-        this.car = car;
-        for (int i = 0; i < cdr.length; i++) {
-            cons(cdr[i]);
+    public ListStruct(Object... items) {
+        for (int i = 0; i < items.length; i++) {
+            add(items[i]);
         }
     }
 
@@ -82,5 +80,26 @@ public class ListStruct implements Atom {
      */
     protected void cons (Object cons) {
         last().cdr = new ListStruct(cons);
+    }
+
+    @Override
+    public Iterator iterator() {
+        return new Iterator() {
+            private ListStruct head = ListStruct.this;
+            @Override
+            public boolean hasNext() {
+                return null != head;
+            }
+            @Override
+            public Object next() {
+                final Object car = head.car();
+                head = head.cdr();
+                return car;
+            }
+            @Override
+            public void remove() {
+                throw new NotImplementedException();
+            }
+        };
     }
 }

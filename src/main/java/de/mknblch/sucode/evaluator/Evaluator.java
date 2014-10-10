@@ -29,10 +29,10 @@ public class Evaluator {
 
                 case SYMBOL:
                     return evalSymbol((SymbolStruct) atom);
-                case CONST:
-                    return ((ConstStruct) atom).value;
                 case LIST:
                     return evalList((ListStruct) atom);
+                case CONST:
+                    return ((ConstStruct) atom).value;
             }
             throw new EvaluationException("Unknown Atom: " + atom.getType());
         }
@@ -42,26 +42,18 @@ public class Evaluator {
     private Object evalList(ListStruct atom) throws EvaluationException {
 
         final Object function = eval(atom.car());
-        final ArrayList<Object> args = new ArrayList<Object>();
 
-        ListStruct rest = atom.cdr();
-        do {
-            args.add(eval(rest.car()));
-            rest = rest.cdr();
-        } while (null != rest);
-
-
-        return evalFunction(function, args);
+        return evalFunction(function, atom.cdr());
     }
 
-    private Object evalFunction(Object function, ArrayList<Object> args) {
+    private Object evalFunction(Object function, ListStruct cdr) {
 
         if ("+".equals(function)) {
 
             int x = 0;
-            for (int i = 0; i < args.size(); i++) {
-                x += (Integer)args.get(i);
-            }
+
+
+
             return x;
         }
 

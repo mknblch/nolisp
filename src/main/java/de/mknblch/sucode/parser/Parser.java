@@ -5,7 +5,8 @@ import de.mknblch.sucode.lexer.LexerException;
 import de.mknblch.sucode.lexer.Token;
 import de.mknblch.sucode.parser.structs.*;
 /**
- * The parser creates an AbstractSyntaxTree from a Token stream
+ * The parser transforms a token stream into an AbstractSyntaxTree
+ *
  * Created by mknblch on 05.10.2014.
  */
 public class Parser {
@@ -37,6 +38,7 @@ public class Parser {
             case LIST_END:
                 return END_STRUCT_STRUCT;
             case QUOTE:
+                // expand to (quote arg)
                 return new ListStruct("quote", parseOne(lexer));
             case SYMBOL:
                 return new SymbolStruct(token.literal);
