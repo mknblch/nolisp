@@ -11,24 +11,23 @@ public class FormatHelper {
 
     }
 
-    public static String formatPretty(Atom atom) {
+    public static String formatPretty(Object obj) {
 
-        if (null == atom) {
-            return "nil";
+        if (null == obj) {
+            return "null";
         }
+        // return Non-Atoms
+        if(!(obj instanceof Atom)) {
+            return String.valueOf(obj);
+        }
+        final Atom atom = (Atom) obj;
 
         switch (atom.getType()) {
-
             case SYMBOL:
                 return ((SymbolStruct) atom).literal;
-            case INT:
-                return String.valueOf(((IntStruct) atom).intValue);
-            case REAL:
-                return String.valueOf(((RealStruct) atom).realValue);
-            case STRING:
-                return ((SymbolStruct) atom).literal;
+            case CONST:
+                return String.valueOf(((ConstStruct) atom).value);
             case LIST:
-            case QUOTED_LIST:
                 final StringBuffer sb = new StringBuffer();
                 ListStruct temp = (ListStruct) (ListStruct) atom;
                 do {
@@ -39,7 +38,6 @@ public class FormatHelper {
 
                 return String.format("( %s )", sb.toString());
         }
-
         return atom.getType().name();
     }
 

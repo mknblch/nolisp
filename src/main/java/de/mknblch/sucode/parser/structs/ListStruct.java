@@ -5,14 +5,24 @@ package de.mknblch.sucode.parser.structs;
  */
 public class ListStruct implements Atom {
 
-    private Atom car = null;
+    private Object car = null;
     private ListStruct cdr = null;
 
+    /**
+     * constructs an empty list
+     */
     public ListStruct() {}
 
 
-    public ListStruct(Atom car) {
+    public ListStruct(Object car) {
         this.car = car;
+    }
+
+    public ListStruct(Object car, Object... cdr) {
+        this.car = car;
+        for (int i = 0; i < cdr.length; i++) {
+            cons(cdr[i]);
+        }
     }
 
     @Override
@@ -34,7 +44,7 @@ public class ListStruct implements Atom {
      * add element to the list
      * @param atom
      */
-    public void add(Atom atom) {
+    public void add(Object atom) {
 
         if (null == car) {
             car = atom;
@@ -54,7 +64,7 @@ public class ListStruct implements Atom {
      * get current list element
      * @return
      */
-    public Atom car() {
+    public Object car() {
         return car;
     }
 
@@ -70,7 +80,7 @@ public class ListStruct implements Atom {
      * add to end
      * @param cons
      */
-    protected void cons (Atom cons) {
+    protected void cons (Object cons) {
         last().cdr = new ListStruct(cons);
     }
 }

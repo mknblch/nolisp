@@ -23,10 +23,17 @@ public class ParserTest {
         String code = "(x)";
         assertASTEquals("( ( x ) )", code);
     }
+
     @Test
     public void testSimpleAST() throws Exception {
         String code = "(+ 1 2 3)(+ 1 2 3)";
         assertASTEquals("( ( + 1 2 3 ) ( + 1 2 3 ) )", code);
+    }
+
+    @Test
+    public void testComment() throws Exception {
+        String code = "(+ 1 2 3) ;(+ 1 2 3) \n\n\n(oO)";
+        assertASTEquals("( ( + 1 2 3 ) ( oO ) )", code);
     }
 
     @Test
@@ -96,10 +103,11 @@ public class ParserTest {
     }
 
     private void assertASTEquals(String expected, String code) throws LexerException, ParserException {
-        LOGGER.debug("Code : {}", code);
+        LOGGER.debug("Code : {}", code.replaceAll("[\r\n]", "\\\\n"));
         ListStruct parse = parse(code);
         String pretty = FormatHelper.formatPretty(parse);
         LOGGER.debug("AST  : {}", pretty);
+        LOGGER.debug("SEXP : {}", FormatHelper.formatAsSExpression(parse));
         assertEquals(expected, pretty);
     }
 

@@ -1,17 +1,16 @@
 package de.mknblch.sucode.evaluator;
 
 import de.mknblch.sucode.parser.structs.*;
-import de.mknblch.sucode.parser.Program;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by mknblch on 05.10.2014.
- */
+* Created by mknblch on 05.10.2014.
+*/
 public class Evaluator {
 
-    public List<Object> evaluate (Program program) {
+    public List<Object> evaluate (ListStruct program) throws EvaluationException {
 
         final ArrayList<Object> ret = new ArrayList<Object>();
 
@@ -22,7 +21,7 @@ public class Evaluator {
         return ret;
     }
 
-    private Object eval(Object obj) {
+    private Object eval(Object obj) throws EvaluationException {
 
         if (obj instanceof Atom) {
             final Atom atom = (Atom) obj;
@@ -30,26 +29,17 @@ public class Evaluator {
 
                 case SYMBOL:
                     return evalSymbol((SymbolStruct) atom);
-                case INT:
-                    return ((IntStruct) atom).intValue;
-                case REAL:
-                    return ((RealStruct) atom).realValue;
-                case STRING:
-                    return ((StringStruct) atom).value;
-                case END:
-                    // oO
-                    break;
-                case QUOTED_LIST:
-                    break;
+                case CONST:
+                    return ((ConstStruct) atom).value;
                 case LIST:
                     return evalList((ListStruct) atom);
-
             }
+            throw new EvaluationException("Unknown Atom: " + atom.getType());
         }
         return obj;
     }
 
-    private Object evalList(ListStruct atom) {
+    private Object evalList(ListStruct atom) throws EvaluationException {
 
         final Object function = eval(atom.car());
         final ArrayList<Object> args = new ArrayList<Object>();

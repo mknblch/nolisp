@@ -1,12 +1,10 @@
 package de.mknblch.sucode.lexer;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -96,6 +94,20 @@ public class LexerTest {
     }
 
     @Test
+    public void testNIL() throws Exception {
+        final String code = "NIL";
+        final Lexer lexer = new Lexer(code);
+        assertTokenEquals(new String[]{"nil"}, lexer);
+    }
+
+    @Test
+    public void testTrue() throws Exception {
+        final String code = "T";
+        final Lexer lexer = new Lexer(code);
+        assertTokenEquals(new String[]{"t"}, lexer);
+    }
+
+    @Test
     public void testNegativeFloatCode() throws Exception {
         final String code = "(- -3.1415 -1)";
         final Lexer lexer = new Lexer(code);
@@ -126,7 +138,9 @@ public class LexerTest {
      */
     private static void assertTokenEquals (String[] expected, Lexer lexer) throws LexerException {
         for (int i = 0; i < expected.length; i++) {
-
+            LOGGER.debug("comparing: {}", expected[i]);
+            
+                    
             assertTrue("premature end at token " + i, lexer.hasNext());
             assertEquals("token " + i + " did not match", expected[i], lexer.next().literal);
         }

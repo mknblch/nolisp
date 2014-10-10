@@ -5,7 +5,7 @@ import de.mknblch.sucode.lexer.LexerException;
 import de.mknblch.sucode.parser.FormatHelper;
 import de.mknblch.sucode.parser.Parser;
 import de.mknblch.sucode.parser.ParserException;
-import de.mknblch.sucode.parser.Program;
+import de.mknblch.sucode.parser.structs.ListStruct;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,8 +37,8 @@ public class EvaluatorTest {
         }
     }
 
-    private List<Object> eval(String code) throws LexerException, ParserException {
-        final Program program = PARSER.parse(new Lexer(code));
+    private List<Object> eval(String code) throws LexerException, ParserException, EvaluationException {
+        final ListStruct program = PARSER.parse(new Lexer(code));
         LOGGER.debug("Eval: {}", FormatHelper.formatPretty(program));
         return new Evaluator().evaluate(program);
     }

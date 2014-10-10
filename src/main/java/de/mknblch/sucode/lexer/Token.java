@@ -6,14 +6,16 @@ package de.mknblch.sucode.lexer;
 public class Token {
 
     public enum Type {
-        SYMBOL, BRACE_OPEN, BRACE_CLOSE, STRING, INT, REAL, QUOTE, LINE_COMMENT;
+        SYMBOL, LIST_BEGIN, LIST_END, STRING, INT, REAL, TRUE, QUOTE, NIL, LINE_COMMENT, SHARP;
     }
 
     public final Type type;
     public final String literal;
+    public final Object value;
     public final int position;
 
-    public Token(int position, Type type, String literal) {
+    public Token(Type type, String literal, Object value, int position) {
+        this.value = value;
         this.position = position;
         this.type = type;
         this.literal = literal;

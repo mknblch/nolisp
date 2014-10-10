@@ -1,9 +1,5 @@
 package de.mknblch.sucode.lexer;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 /**
  * basic lisp lexer
  */
@@ -11,7 +7,7 @@ public class Lexer {
 
     public static final char[] IGNORE = new char[]{' ', '\t', '\r'};
     public static final char[] NEWLINE = new char[]{'\n'};
-    public static final char[] SPECIAL_TOKEN = new char[]{'(', ')', '\''};
+    public static final char[] SPECIAL_TOKEN = new char[]{'(', ')', '\'', '#'};
     public static final char[] DOUBLEQUOTE = new char[]{'"'};
 
     public final String code;
@@ -60,29 +56,41 @@ public class Lexer {
         switch(c) {
             case '(' :
                 offset++;
-                return new Token(position, Token.Type.BRACE_OPEN, "(");
+                return TokenHelper.makeListBeginToken(position);
             case ')' :
                 offset++;
-                return new Token(position, Token.Type.BRACE_CLOSE, ")");
+                return TokenHelper.makeListEndToken(position);
             case '\'' :
                 offset++;
-                return new Token(position, Token.Type.QUOTE, "'");
+                return TokenHelper.makeQuoteToken(position);
+            case '#' :
+                offset++;
+                return TokenHelper.makeSharpToken(position);
             case ';' :
-                return new Token(position, Token.Type.LINE_COMMENT, tokenizeComment());
+                return TokenHelper.makeCommentToken(tokenizeComment(), position);
             case '"' :
-                return new Token(position, Token.Type.STRING, tokenizeString());
+                return TokenHelper.makeStringToken(tokenizeString(), position);
             default :
-                return decideSymbolType(position, tokenizeSymbol());
+                return decideSymbolType(tokenizeSymbol(), position);
         }
     }
 
-    private Token decideSymbolType(int position, String symbol) {
-        if(symbol.matches("^\\-?[0-9]+$"))
-            return new Token(position, Token.Type.INT, symbol);
-        else if(symbol.matches("^\\-?[0-9]+\\.[0-9]+$"))
-            return new Token(position, Token.Type.REAL, symbol);
+    private Token decideSymbolType(String literal, int position) throws LexerException {
+
+        if(literal.matches("^\\-?[0-9]+$"))
+            return TokenHelper.makeIntToken(literal, position);
+
+        else if(literal.matches("^\\-?[0-9]+\\.[0-9]+$"))
+            return TokenHelper.makeRealToken(literal, position);
+
+        else if(literal.matches("^(nil)|(NIL)$"))
+            return TokenHelper.makeNilToken(position);
+
+        else if(literal.matches("^(t)|(T)$"))
+            return TokenHelper.makeTrueToken(position);
+
         else
-            return new Token(position, Token.Type.SYMBOL, symbol);
+            return TokenHelper.makeSymbolToken(literal, position);
     }
 
 
