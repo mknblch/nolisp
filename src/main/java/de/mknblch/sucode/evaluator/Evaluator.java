@@ -1,5 +1,6 @@
 package de.mknblch.sucode.evaluator;
 
+import de.mknblch.sucode.parser.FormatHelper;
 import de.mknblch.sucode.parser.structs.Atom;
 import de.mknblch.sucode.parser.structs.ConstStruct;
 import de.mknblch.sucode.parser.structs.ListStruct;
@@ -57,6 +58,17 @@ public class Evaluator {
 
         if ("quote".equals(function.literal)) {
             return args;
+        }
+
+        if ("set".equals(function.literal)) {
+
+            final Environment derive = environment.derive();
+            derive.put(args.car(), args.cdr().car());
+
+            System.out.printf("Rest: %s\n", FormatHelper.formatPretty(args));
+            System.out.printf("Setting %s to %s\n", args.car(), args.cdr().car());
+
+            eval(args.cdr().cdr().car(), derive);
         }
 
         if ("+".equals(function.literal)) {

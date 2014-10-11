@@ -30,6 +30,12 @@ public class EvaluatorTest {
     }
 
     @Test
+    public void testSet() throws Exception {
+        final String code = "(set a 5 (print a))";
+        eval(code);
+    }
+
+    @Test
     public void testEvaluate() throws Exception {
         final String code = "(+ 1 1(+ 2 3))";
         final List<Object> evaluated = eval(code);
@@ -56,7 +62,7 @@ public class EvaluatorTest {
 
     private void dump(List<Object> evaluated) throws ParserException {
         for (int i = 0; i < evaluated.size(); i++) {
-            LOGGER.debug("{}", FormatHelper.formatAtom(evaluated.get(i)));
+            LOGGER.debug("evaluates to {}", FormatHelper.formatAtom(evaluated.get(i)));
         }
     }
 
@@ -66,7 +72,7 @@ public class EvaluatorTest {
 
     private List<Object> eval(String code, Environment environment) throws LexerException, ParserException, EvaluationException {
         final ListStruct program = PARSER.parse(new Lexer(code));
-        LOGGER.debug("Code: {}", FormatHelper.formatPretty(program));
+        LOGGER.debug("code: {}", FormatHelper.formatPretty(program));
         LOGGER.debug("AST : {}", FormatHelper.formatAtom(program));
         return new Evaluator().evaluate(program, environment);
     }

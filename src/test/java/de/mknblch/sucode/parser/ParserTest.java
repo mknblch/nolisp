@@ -103,11 +103,11 @@ public class ParserTest {
     }
 
     private void assertASTEquals(String expected, String code) throws LexerException, ParserException {
-        LOGGER.debug("Code : {}", code.replaceAll("[\r\n]", "\\\\n"));
+        LOGGER.debug("code : {}", code.replaceAll("[\r\n]", "\\\\n"));
         ListStruct parse = parse(code);
         String pretty = FormatHelper.formatPretty(parse);
         LOGGER.debug("AST  : {}", pretty);
-        LOGGER.debug("SEXP : {}", FormatHelper.formatAsSExpression(parse));
+        LOGGER.debug("sExp : {}", FormatHelper.formatAsSExpression(parse));
         assertEquals(expected, pretty);
     }
 
