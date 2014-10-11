@@ -1,5 +1,7 @@
-package de.mknblch.sucode.evaluator;
+package de.mknblch.sucode.interpreter;
 
+import de.mknblch.sucode.interpreter.environment.Environment;
+import de.mknblch.sucode.interpreter.environment.HashMapEnv;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,16 +15,16 @@ public class EnvironmentTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EnvironmentTest.class);
 
-    public static Environment<String, Object> makeEnv(String[] keys, Object[] values) {
+    public static HashMapEnv makeEnv(String[] keys, Object[] values) {
         assertEquals("Erroneous test", keys.length, values.length);
-        final Environment<String, Object> env = new Environment<String, Object>();
+        final HashMapEnv env = new HashMapEnv();
         for (int i = 0; i < keys.length; i++) {
             env.put(keys[i], values[i]);
         }
         return env;
     }
 
-    public static void dump(Environment<String, Object> env) {
+    public static void dump(Environment env) {
         do {
             LOGGER.debug("dumping {}", env);
             for(String key : env.keySet()) {
@@ -35,8 +37,8 @@ public class EnvironmentTest {
     @Test
     public void testDerive() throws Exception {
 
-        Environment<String, Object> global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
-        Environment<String, Object> derived = global.derive();
+        Environment global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
+        HashMapEnv derived = derive(global);
         derived.put("c", 3);
         dump(derived);
 
@@ -50,8 +52,8 @@ public class EnvironmentTest {
     @Test
     public void testPutGlobal() throws Exception {
 
-        Environment<String, Object> global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
-        Environment<String, Object> derived = global.derive();
+        Environment global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
+        HashMapEnv derived = derive(global);
         derived.putGlobal("c", 3);
         dump(derived);
 
@@ -65,8 +67,8 @@ public class EnvironmentTest {
     @Test
     public void testSize() throws Exception {
 
-        Environment<String, Object> global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
-        Environment<String, Object> derived = global.derive();
+        Environment global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
+        HashMapEnv derived = derive(global);
         derived.put("c", 3);
         dump(derived);
 
@@ -78,8 +80,8 @@ public class EnvironmentTest {
     @Test
     public void testIsEmpty() throws Exception {
 
-        Environment<String, Object> global = makeEnv(new String[]{}, new Object[]{});
-        Environment<String, Object> derived = global.derive();
+        Environment global = makeEnv(new String[]{}, new Object[]{});
+        Environment derived = global.derive();
         dump(derived);
 
         assertTrue(global.isEmpty());
@@ -89,8 +91,8 @@ public class EnvironmentTest {
     @Test
     public void testOneIsEmpty() throws Exception {
 
-        Environment<String, Object> global = makeEnv(new String[]{}, new Object[]{});
-        Environment<String, Object> derived = global.derive();
+        Environment global = makeEnv(new String[]{}, new Object[]{});
+        HashMapEnv derived = derive(global);
         derived.put("c", 3);
         dump(derived);
 
@@ -101,8 +103,8 @@ public class EnvironmentTest {
     @Test
     public void testIsNotEmpty() throws Exception {
 
-        Environment<String, Object> global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
-        Environment<String, Object> derived = global.derive();
+        Environment global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
+        HashMapEnv derived = derive(global);
         derived.put("c", 3);
         dump(derived);
 
@@ -113,8 +115,8 @@ public class EnvironmentTest {
     @Test
     public void testContainsKey() throws Exception {
 
-        Environment<String, Object> global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
-        Environment<String, Object> derived = global.derive();
+        Environment global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
+        HashMapEnv derived = derive(global);
         derived.put("c", 3);
         dump(derived);
 
@@ -127,8 +129,8 @@ public class EnvironmentTest {
     @Test
     public void testGet() throws Exception {
 
-        Environment<String, Object> global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
-        Environment<String, Object> derived = global.derive();
+        Environment global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
+        HashMapEnv derived = derive(global);
         derived.put("c", 3);
         dump(derived);
 
@@ -144,8 +146,8 @@ public class EnvironmentTest {
     @Test
     public void testPut() throws Exception {
 
-        Environment<String, Object> global = makeEnv(new String[]{}, new Object[]{});
-        Environment<String, Object> derived = global.derive();
+        HashMapEnv global = makeEnv(new String[]{}, new Object[]{});
+        HashMapEnv derived = derive(global);
 
         global.put("a", 1);
         global.put("b", 2);
@@ -161,8 +163,8 @@ public class EnvironmentTest {
     @Test
     public void testRemove() throws Exception {
 
-        Environment<String, Object> global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
-        Environment<String, Object> derived = global.derive();
+        Environment global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
+        HashMapEnv derived = derive(global);
         derived.put("c", 3);
 
         derived.remove("c");
@@ -178,8 +180,8 @@ public class EnvironmentTest {
     @Test
     public void testRemoveEverywhere() throws Exception {
 
-        Environment<String, Object> global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
-        Environment<String, Object> derived = global.derive();
+        Environment global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
+        HashMapEnv derived = derive(global);
         derived.put("c", 3);
 
         derived.removeEverywhere("c");
@@ -192,8 +194,8 @@ public class EnvironmentTest {
 
     @Test
     public void testPutAll() throws Exception {
-        Environment<String, Object> e1 = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
-        Environment<String, Object> e2 = makeEnv(new String[]{"c", "b"}, new Object[]{3, 2});
+        HashMapEnv e1 = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
+        HashMapEnv e2 = makeEnv(new String[]{"c", "b"}, new Object[]{3, 2});
         e1.putAll(e2);
         assertEquals(3, e1.sizeAll());
     }
@@ -201,8 +203,8 @@ public class EnvironmentTest {
     @Test
     public void testClearLocal() throws Exception {
 
-        Environment<String, Object> global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
-        Environment<String, Object> derived = global.derive();
+        Environment global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
+        HashMapEnv derived = derive(global);
         derived.put("c", 3);
         derived.clear();
         assertEquals(0, derived.size());
@@ -212,8 +214,8 @@ public class EnvironmentTest {
     @Test
     public void testClearParent() throws Exception {
 
-        Environment<String, Object> global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
-        Environment<String, Object> derived = global.derive();
+        Environment global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
+        HashMapEnv derived = derive(global);
         derived.put("c", 3);
         global.clear();
         assertEquals(1, derived.size());
@@ -222,8 +224,8 @@ public class EnvironmentTest {
 
     @Test
     public void testClearAll() throws Exception {
-        Environment<String, Object> global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
-        Environment<String, Object> derived = global.derive();
+        Environment global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
+        HashMapEnv derived = derive(global);
         derived.put("c", 3);
         derived.clearAll();
         assertEquals(0, derived.sizeAll());
@@ -232,5 +234,9 @@ public class EnvironmentTest {
     @Test
     public void testKeySet() throws Exception {
 
+    }
+
+    private HashMapEnv derive(Environment global) {
+        return (HashMapEnv) global.derive();
     }
 }

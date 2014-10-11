@@ -1,11 +1,10 @@
-package de.mknblch.sucode.evaluator;
+package de.mknblch.sucode.interpreter;
 
 /**
  * Created by mknblch on 10.10.2014.
  */
 public class EvaluationException extends Exception {
-    public EvaluationException() {
-    }
+    public EvaluationException() { }
 
     public EvaluationException(String message) {
         super(message);

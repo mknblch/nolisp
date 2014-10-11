@@ -1,5 +1,9 @@
-package de.mknblch.sucode.evaluator;
+package de.mknblch.sucode.interpreter;
 
+import de.mknblch.sucode.interpreter.environment.Environment;
+import de.mknblch.sucode.interpreter.environment.HashMapEnv;
+import de.mknblch.sucode.interpreter.forms.FormRegister;
+import de.mknblch.sucode.interpreter.forms.PlusForm;
 import de.mknblch.sucode.lexer.Lexer;
 import de.mknblch.sucode.lexer.LexerException;
 import de.mknblch.sucode.parser.FormatHelper;
@@ -10,6 +14,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -17,10 +22,14 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by mknblch on 09.10.2014.
  */
-public class EvaluatorTest {
+public class InterpreterTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(EvaluatorTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(InterpreterTest.class);
     private static final Parser PARSER = new Parser();
+
+    private static final FormRegister testRegister = new FormRegister() {{
+       addForm(new PlusForm());
+    }};
 
     @Test
     public void testPrint() throws Exception {
@@ -40,10 +49,10 @@ public class EvaluatorTest {
 
     @Test
     public void testEvaluate() throws Exception {
-        final String code = "(+ 1 1(+ 2 3))";
+        final String code = "(+ 1 1)";
         final List<Object> evaluated = eval(code);
         dump(evaluated);
-        assertEquals(7, evaluated.get(0));
+        assertEquals(2, evaluated.get(0));
     }
 
     @Test
@@ -56,7 +65,7 @@ public class EvaluatorTest {
     @Test
     public void testEnvironment() throws Exception {
         final String code = "(+ 2 x)";
-        final Environment env = new Environment();
+        final HashMapEnv env = new HashMapEnv();
         env.put("x", 3);
         final List<Object> evaluated = eval(code, env);
         dump(evaluated);
@@ -70,13 +79,18 @@ public class EvaluatorTest {
     }
 
     private List<Object> eval(String code) throws ParserException, EvaluationException, LexerException {
-        return eval(code, new Environment());
+        return eval(code, new HashMapEnv());
     }
 
     private List<Object> eval(String code, Environment environment) throws LexerException, ParserException, EvaluationException {
         final ListStruct program = PARSER.parse(new Lexer(code));
+        final ArrayList<Object> ret = new ArrayList<Object>();
+        final Interpreter interpreter = new Interpreter(testRegister);
         LOGGER.debug("code: {}", FormatHelper.formatPretty(program));
         LOGGER.debug("AST : {}", FormatHelper.formatAtom(program));
-        return new Evaluator().evaluate(program, environment);
+        for (Object p : program) {
+            ret.add(interpreter.eval(p, environment));
+        }
+        return ret;
     }
 }
