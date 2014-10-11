@@ -1,7 +1,10 @@
 package de.mknblch.sucode.interpreter;
 
+import de.mknblch.sucode.interpreter.forms.FormException;
 import de.mknblch.sucode.interpreter.forms.FormRegister;
-import de.mknblch.sucode.interpreter.forms.PlusForm;
+import de.mknblch.sucode.interpreter.forms.builtin.MathForms;
+import de.mknblch.sucode.interpreter.forms.builtin.SpecialForms;
+import de.mknblch.sucode.interpreter.forms.builtin.StdOutForms;
 import de.mknblch.sucode.lexer.Lexer;
 import de.mknblch.sucode.lexer.LexerException;
 import de.mknblch.sucode.parser.FormatHelper;
@@ -25,10 +28,6 @@ public class InterpreterTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(InterpreterTest.class);
     private static final Parser PARSER = new Parser();
 
-    private static final FormRegister testRegister = new FormRegister() {{
-       addForm(new PlusForm());
-    }};
-
     @Test
     public void testPrint() throws Exception {
         final String code = "(print (+ 1 1(+ 2 3)))";
@@ -36,21 +35,27 @@ public class InterpreterTest {
     }
 
     @Test
-    public void testSet() throws Exception {
-        final String code =
-                "(set a 4 (print a))\n" +
-                "(print a)\n" +
-                "(set a 5 (print a))";
-
-        eval(code);
-    }
-
-    @Test
-    public void testEvaluate() throws Exception {
+    public void testAddInt() throws Exception {
         final String code = "(+ 1 1)";
         final List<Object> evaluated = eval(code);
         dump(evaluated);
-        assertEquals(2d, evaluated.get(0));
+        assertEquals(2, evaluated.get(0));
+    }
+
+    @Test
+    public void testAddDouble() throws Exception {
+        final String code = "(+ 1.0 1.0)";
+        final List<Object> evaluated = eval(code);
+        dump(evaluated);
+        assertEquals(2.0, evaluated.get(0));
+    }
+
+    @Test
+    public void testAddMixed() throws Exception {
+        final String code = "(+ 1 1.0)";
+        final List<Object> evaluated = eval(code);
+        dump(evaluated);
+        assertEquals(2.0, evaluated.get(0));
     }
 
     @Test
@@ -67,7 +72,7 @@ public class InterpreterTest {
         env.put("x", 3);
         final List<Object> evaluated = eval(code, env);
         dump(evaluated);
-        assertEquals(5d, evaluated.get(0));
+        assertEquals(5, evaluated.get(0));
     }
 
     private void dump(List<Object> evaluated) throws ParserException {
@@ -76,14 +81,21 @@ public class InterpreterTest {
         }
     }
 
-    private List<Object> eval(String code) throws ParserException, EvaluationException, LexerException {
+    private List<Object> eval(String code) throws ParserException, EvaluationException, LexerException, FormException {
         return eval(code, new Environment());
     }
 
-    private List<Object> eval(String code, Environment environment) throws LexerException, ParserException, EvaluationException {
+    private List<Object> eval(String code, Environment environment) throws LexerException, ParserException, EvaluationException, FormException {
         final ListStruct program = PARSER.parse(new Lexer(code));
         final ArrayList<Object> ret = new ArrayList<Object>();
-        final Interpreter interpreter = new Interpreter(testRegister);
+        final Interpreter interpreter = new Interpreter();
+
+        FormRegister testRegister = interpreter.getFormRegister();
+
+        testRegister.register(MathForms.class);
+        testRegister.register(SpecialForms.class);
+        testRegister.register(StdOutForms.class);
+
         LOGGER.debug("code: {}", FormatHelper.formatPretty(program));
         LOGGER.debug("AST : {}", FormatHelper.formatAtom(program));
         for (Object p : program) {

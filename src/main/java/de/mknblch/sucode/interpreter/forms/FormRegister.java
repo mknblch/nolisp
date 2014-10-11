@@ -13,17 +13,34 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * Fancy map for storing Forms to symbols. Uses reflection mechanism for easy
+ * implementation of new forms.
+ *
  * Created by mknblch on 11.10.2014.
  */
 public class FormRegister {
 
     private final Map<String, Form> forms = new HashMap<String, Form>();
 
-    public void addForm(Form form) {
+    /**
+     * empty ctor
+     */
+    public FormRegister() {}
+
+    /**
+     * pre initialization ctor
+     */
+    public FormRegister(Class<?>...classes) throws FormException {
+        for (Class<?> clazz : classes) {
+            register(clazz);
+        }
+    }
+
+    public void addForm(Form form) throws FormException {
         if (null == form.getSymbol() || form.getSymbol().isEmpty()) {
             throw new IllegalArgumentException("Form had no symbol.");
         }
-        forms.put(form.getSymbol(), form);
+        if (null != forms.put(form.getSymbol(), form)) throw new FormException(String.format("Possible redefinition of '%s'.", form.getSymbol()));
     }
 
     public void removeForm(String symbol) {
@@ -77,7 +94,7 @@ public class FormRegister {
         if(!formsFound) throw new FormException(String.format("No suitable methods found in Class '%s'.", clazz.getName()));
     }
 
-    private void registerMethod(final Method candidate, final String function) {
+    private void registerMethod(final Method candidate, final String function) throws FormException {
         addForm(
             new Form() {
                 private final Method method = candidate;

@@ -35,11 +35,18 @@ public class FormRegisterTest {
         new FormRegister().register(NotStatic.class);
     }
 
+    @Test(expected = FormException.class)
+    public void shouldFail_functionRedefinition() throws Exception {
+        final FormRegister formRegister = new FormRegister();
+        formRegister.register(Working.class);
+        formRegister.register(Working.class);
+    }
+
     @Test
     public void shouldWork_registerValid() throws Exception {
 
         final FormRegister formRegister = new FormRegister();
-        formRegister.register(FormRegisterTest.class);
+        formRegister.register(Working.class);
         dump(formRegister);
         assertEquals(4, formRegister.size());
         assertTrue(formRegister.containsForm("sum"));
@@ -53,20 +60,5 @@ public class FormRegisterTest {
         for (String string : strings) {
             LOGGER.debug(String.format("Found form '%s'", string));
         }
-    }
-
-    @Function
-    public static Object sum (ListStruct args, Environment env, Interpreter interpreter) {
-        return 0;
-    }
-
-    @Function(symbol = "foo")
-    public static Boolean t1 (ListStruct args, Environment env, Interpreter interpreter) {
-        return false;
-    }
-
-    @Function(symbol = {"bar", "baz"})
-    public static Boolean t2 (ListStruct args, Environment env, Interpreter interpreter) {
-        return false;
     }
 }

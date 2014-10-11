@@ -10,8 +10,8 @@ public class Interpreter {
 
     private final FormRegister formRegister;
 
-    public Interpreter(FormRegister formRegister) {
-        this.formRegister = formRegister;
+    public Interpreter() {
+        this.formRegister = new FormRegister();
     }
 
     public FormRegister getFormRegister() {
