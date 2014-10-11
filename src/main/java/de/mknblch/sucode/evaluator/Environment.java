@@ -10,7 +10,7 @@ import java.util.*;
  */
 public class Environment<K, V> implements Map<K, V> {
 
-    private final Environment<K, V> globalEnv;
+    private final Environment<K, V> parentEnv;
     private final HashMap<K, V> localMap;
 
     /**
@@ -23,8 +23,8 @@ public class Environment<K, V> implements Map<K, V> {
     /**
      * used for derivation.
      */
-    private Environment(Environment<K, V> globalEnv) {
-        this.globalEnv = globalEnv;
+    private Environment(Environment<K, V> parentEnv) {
+        this.parentEnv = parentEnv;
         this.localMap = new HashMap<K, V>();
     }
 
@@ -41,15 +41,15 @@ public class Environment<K, V> implements Map<K, V> {
      * @return
      */
     public Environment<K, V> getParentEnv() {
-        return globalEnv;
+        return parentEnv;
     }
 
     /**
      * put value in the most significant env if any. put to local env otherwise.
      */
     public void putGlobal(K key, V value) {
-        if (null != globalEnv) {
-            globalEnv.putGlobal(key, value);
+        if (null != parentEnv) {
+            parentEnv.putGlobal(key, value);
         } else {
             localMap.put(key, value);
         }
@@ -84,10 +84,10 @@ public class Environment<K, V> implements Map<K, V> {
      * decides whether the env (including it's parents) is empty.
      */
     public boolean isAllEmpty() {
-        if (null == globalEnv) {
+        if (null == parentEnv) {
             return localMap.isEmpty();
         }
-        return localMap.isEmpty() && globalEnv.isEmpty();
+        return localMap.isEmpty() && parentEnv.isEmpty();
     }
 
     /**
@@ -95,10 +95,10 @@ public class Environment<K, V> implements Map<K, V> {
      */
     @Override
     public boolean containsKey(Object key) {
-        if (null == globalEnv) {
+        if (null == parentEnv) {
             return localMap.containsKey(key);
         }
-        return localMap.containsKey(key) || globalEnv.containsKey(key);
+        return localMap.containsKey(key) || parentEnv.containsKey(key);
     }
 
     /**
@@ -121,7 +121,7 @@ public class Environment<K, V> implements Map<K, V> {
         if (null != value) {
             return value;
         }
-        return globalEnv != null ? globalEnv.get(key) : null;
+        return parentEnv != null ? parentEnv.get(key) : null;
     }
 
     /**
@@ -147,10 +147,10 @@ public class Environment<K, V> implements Map<K, V> {
      */
     public V removeEverywhere(Object key) {
         localMap.remove(key);
-        if (null == globalEnv) {
+        if (null == parentEnv) {
             return null;
         }
-        globalEnv.removeEverywhere(key);
+        parentEnv.removeEverywhere(key);
         return null;
     }
 
@@ -177,10 +177,10 @@ public class Environment<K, V> implements Map<K, V> {
       */
     public void clearAll() {
         localMap.clear();
-        if (null == globalEnv) {
+        if (null == parentEnv) {
             return;
         }
-        globalEnv.clearAll();
+        parentEnv.clearAll();
     }
 
     /**
@@ -195,9 +195,9 @@ public class Environment<K, V> implements Map<K, V> {
      * get union from local and all global keySets.
      */
     public Set<K> keySetAll() {
-        if (null != globalEnv) {
+        if (null != parentEnv) {
             final Set<K> localSet = keySet();
-            final Set<K> globalSet = globalEnv.keySet();
+            final Set<K> globalSet = parentEnv.keySet();
             final Set<K> union = new HashSet<K>(localSet.size() + globalSet.size());
             union.addAll(localSet);
             union.addAll(globalSet);

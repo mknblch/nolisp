@@ -20,8 +20,7 @@ import static org.junit.Assert.assertEquals;
 public class EvaluatorTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EvaluatorTest.class);
-
-    public static final Parser PARSER = new Parser();
+    private static final Parser PARSER = new Parser();
 
     @Test
     public void testPrint() throws Exception {
@@ -31,7 +30,11 @@ public class EvaluatorTest {
 
     @Test
     public void testSet() throws Exception {
-        final String code = "(set a 5 (print a))";
+        final String code =
+                "(set a 4 (print a))\n" +
+                "(print a)\n" +
+                "(set a 5 (print a))";
+
         eval(code);
     }
 

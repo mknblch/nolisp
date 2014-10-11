@@ -14,7 +14,17 @@ import static de.mknblch.sucode.parser.structs.ConstStruct.ConstType;
  */
 public class Parser {
 
-    public static final EndStruct END_STRUCT = new EndStruct();
+    /**
+     * this class is used to identify the end of list.
+     */
+    private static class EndStruct implements Atom {
+        @Override
+        public Type getType() {
+            return Type.END;
+        }
+    }
+    public static final Atom END_STRUCT = new EndStruct();
+
     public static final SymbolStruct QUOTE_STRUCT = new SymbolStruct("quote");
 
     public ListStruct parse(Lexer lexer) throws ParserException, LexerException {
@@ -27,7 +37,7 @@ public class Parser {
             }
             // unbalanced count of braces found
             if (atom.getType() == Atom.Type.END) {
-                throw new ParserException(String.format("[%03d] Unbalanced AST. One or more openening braces missing.", lexer.getOffset()));
+                throw new ParserException(String.format("[%03d] Unbalanced AST. One or more opening braces missing.", lexer.getOffset()));
             }
             root.add(atom);
         }

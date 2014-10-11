@@ -55,7 +55,7 @@ public class FormatHelper {
         switch (atom.getType()) {
 
             case SYMBOL:
-                return String.format("SYMBOL:%s", ((SymbolStruct) atom).literal);
+                return String.format("SYM:%s", ((SymbolStruct) atom).literal);
             case CONST:
                 return String.format("C%s:%s", ((ConstStruct) atom).type.name(), String.valueOf(((ConstStruct) atom).value));
             case LIST:
@@ -76,14 +76,14 @@ public class FormatHelper {
 
         // return Non-Atoms
         if (!(obj instanceof Atom)) {
-            return "JavaObject";
+            return "<Java>";
         }
         final Atom atom = (Atom) obj;
 
         switch (atom.getType()) {
 
             case SYMBOL:
-                return "SYMBOL";
+                return "SYM";
             case CONST:
                 return String.format("C%s", ((ConstStruct) atom).type.name());
             case LIST:

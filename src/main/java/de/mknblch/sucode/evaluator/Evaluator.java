@@ -18,9 +18,9 @@ public class Evaluator {
 
         final ArrayList<Object> ret = new ArrayList<Object>();
 
-//        do {
-        ret.add(eval(program.car(), environment));
-//        } while (program.hasSuccessor());
+        for (Object o : program) {
+            ret.add(eval(o, environment));
+        }
 
         return ret;
     }
@@ -43,15 +43,15 @@ public class Evaluator {
         return obj;
     }
 
-    private Object evalList(ListStruct atom, Environment environment) throws EvaluationException {
+    private Object evalList(ListStruct list, Environment environment) throws EvaluationException {
 
-        final Object function = atom.car();
+        final Object function = list.car();
 
         if (!(function instanceof SymbolStruct)) {
             throw new EvaluationException("Unable to evaluate: " + String.valueOf(function));
         }
 
-        return evalFunction((SymbolStruct) atom.car(), atom.cdr(), environment);
+        return evalFunction((SymbolStruct) list.car(), list.cdr(), environment);
     }
 
     private Object evalFunction(SymbolStruct function, ListStruct args, Environment environment) throws EvaluationException {
@@ -63,10 +63,10 @@ public class Evaluator {
         if ("set".equals(function.literal)) {
 
             final Environment derive = environment.derive();
-            derive.put(args.car(), args.cdr().car());
+            derive.put(((SymbolStruct)args.car()).literal, args.cdr().car());
 
-            System.out.printf("Rest: %s\n", FormatHelper.formatPretty(args));
-            System.out.printf("Setting %s to %s\n", args.car(), args.cdr().car());
+//            System.out.printf("Rest: %s\n", FormatHelper.formatPretty(args));
+//            System.out.printf("Setting %s to %s\n", args.car(), args.cdr().car());
 
             eval(args.cdr().cdr().car(), derive);
         }
@@ -81,16 +81,16 @@ public class Evaluator {
 
         if ("print".equals(function.literal)) {
             for (Object o : args) {
-                System.out.println(eval(o, environment));
+                System.out.println(": " + eval(o, environment));
             }
         }
 
         return null;
     }
 
-    private Object evalSymbol(SymbolStruct atom, Environment environment) {
+    private Object evalSymbol(SymbolStruct symbol, Environment environment) throws EvaluationException {
 
-        return environment.get(atom.literal);
+        return eval(environment.get(symbol.literal), environment);
     }
 
 }
