@@ -42,6 +42,10 @@ public class FormRegister {
         return forms.keySet();
     }
 
+    public int size() {
+        return forms.size();
+    }
+
     public Form getForm(String symbol) throws EvaluationException {
         final Form form = forms.get(symbol);
         if (null != form) {
@@ -50,16 +54,17 @@ public class FormRegister {
         throw new EvaluationException(String.format("Function '%s' not found.", symbol));
     }
 
-    public void register(Class<?> clazz) {
+    public void register(Class<?> clazz) throws FormException {
         // scan class
         final Method[] declaredMethods = clazz.getDeclaredMethods();
+        boolean formsFound = false;
         for (final Method method : declaredMethods) {
             // check method signature
             if (!suitable(method)) continue;
 
             final String[] symbols = method.getAnnotation(Function.class).symbol();
 
-            // register with method name as symbol
+            // register with method 1name as symbol
             if (symbols.length == 0) {
                 registerMethod(method, method.getName());
             } else {
@@ -67,7 +72,9 @@ public class FormRegister {
                     registerMethod(method, methodName);
                 }
             }
+            formsFound = true;
         }
+        if(!formsFound) throw new FormException(String.format("No suitable methods found in Class '%s'.", clazz.getName()));
     }
 
     private void registerMethod(final Method candidate, final String function) {
@@ -95,14 +102,17 @@ public class FormRegister {
     /**
      * checks if the method signature is suitable for Forms.
      */
-    private boolean suitable(Method method) {
-        if(!Modifier.isStatic(method.getModifiers())) return false;
+    private boolean suitable(Method method) throws FormException {
         if(!method.isAnnotationPresent(Function.class)) return false;
+        if(method.getReturnType().equals(Void.TYPE)) throw new FormException("Invalid signature. Function must have a return type.");
+        if(!Modifier.isStatic(method.getModifiers())) throw new FormException("Invalid signature. Function must be static.");
         final Class<?>[] types = method.getParameterTypes();
-        if(3 != types.length) return false;
-        if(!ListStruct.class.equals(types[0])) return false;
-        if(!Environment.class.equals(types[1])) return false;
-        if(!Interpreter.class.equals(types[2])) return false;
+        if(
+                3 != types.length ||
+                !ListStruct.class.equals(types[0]) ||
+                !Environment.class.equals(types[1]) ||
+                !Interpreter.class.equals(types[2])) throw new FormException("Invalid signature. Function must match 'Object func(ListStruct, Environment, Interpreter)'");
+
         return true;
     }
 }
