@@ -1,18 +1,7 @@
-package de.mknblch.sucode.interpreter.forms.builtin;
+package de.mknblch.sucode.interpreter.func.builtin;
 
-import de.mknblch.sucode.interpreter.Environment;
-import de.mknblch.sucode.interpreter.Interpreter;
-import de.mknblch.sucode.interpreter.forms.FormRegister;
-import de.mknblch.sucode.lexer.Lexer;
-import de.mknblch.sucode.parser.FormatHelper;
-import de.mknblch.sucode.parser.Parser;
-import de.mknblch.sucode.parser.ParserException;
-import de.mknblch.sucode.parser.structs.ListStruct;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;

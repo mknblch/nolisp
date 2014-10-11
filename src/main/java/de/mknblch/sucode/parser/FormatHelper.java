@@ -57,7 +57,7 @@ public class FormatHelper {
             case SYMBOL:
                 return String.format("SYM:%s", ((SymbolStruct) atom).literal);
             case CONST:
-                return String.format("C%s:%s", ((ConstStruct) atom).type.name(), String.valueOf(((ConstStruct) atom).value));
+                return String.format("C%s:%2$s", ((ConstStruct) atom).type.name(), String.valueOf(((ConstStruct) atom).value));
             case LIST:
                 final ListStruct listStruct = (ListStruct) atom;
                 final StringBuffer buffer = new StringBuffer();

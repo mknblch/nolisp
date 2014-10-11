@@ -1,53 +1,53 @@
-package de.mknblch.sucode.interpreter.forms.builtin;
+package de.mknblch.sucode.interpreter.func.builtin;
 
-import de.mknblch.sucode.interpreter.Environment;
+import de.mknblch.sucode.interpreter.Context;
 import de.mknblch.sucode.interpreter.EvaluationException;
 import de.mknblch.sucode.interpreter.Interpreter;
-import de.mknblch.sucode.interpreter.forms.Function;
+import de.mknblch.sucode.interpreter.func.Define;
 import de.mknblch.sucode.parser.structs.ListStruct;
 
-import static de.mknblch.sucode.interpreter.forms.TypeHelper.asReal;
+import static de.mknblch.sucode.interpreter.func.TypeHelper.asReal;
 
 /**
  * Created by mknblch on 12.10.2014.
  */
 public class MathForms {
 
-    @Function(symbol = {"+", "add", "sum"})
-    public static Object plus(ListStruct args, Environment env, Interpreter ip) throws Exception {
+    @Define(symbol = {"+", "add", "sum"})
+    public static Object plus(ListStruct args, Context context) throws Exception {
         Object result = 0;
         for (Object arg : args) {
-            final Object evaluated = ip.eval(arg, env);
+            final Object evaluated = Interpreter.eval(arg, context);
             result = plus(result, evaluated);
         }
         return result;
     }
 
-    @Function(symbol = {"-", "sub"})
-    public static Object minus(ListStruct args, Environment env, Interpreter ip) throws Exception {
-        return minus(ip.eval(args.car(), env), ip.eval(args.cdr().car(), env));
+    @Define(symbol = {"-", "sub"})
+    public static Object minus(ListStruct args, Context context) throws Exception {
+        return minus(Interpreter.eval(args.car(), context), Interpreter.eval(args.cdr().car(), context));
     }
 
-    @Function(symbol = {"*", "mul"})
-    public static Object mul(ListStruct args, Environment env, Interpreter ip) throws Exception {
-        return mul(ip.eval(args.car(), env), ip.eval(args.cdr().car(), env));
+    @Define(symbol = {"*", "mul"})
+    public static Object mul(ListStruct args, Context context) throws Exception {
+        return mul(Interpreter.eval(args.car(), context), Interpreter.eval(args.cdr().car(), context));
     }
 
-    @Function(symbol = {"/", "div"})
-    public static Object div(ListStruct args, Environment env, Interpreter ip) throws Exception {
-        return div(ip.eval(args.car(), env), ip.eval(args.cdr().car(), env));
+    @Define(symbol = {"/", "div"})
+    public static Object div(ListStruct args, Context context) throws Exception {
+        return div(Interpreter.eval(args.car(), context), Interpreter.eval(args.cdr().car(), context));
     }
 
-    @Function(symbol = {"%", "mod"})
-    public static Object mod(ListStruct args, Environment env, Interpreter ip) throws Exception {
-        return mod(ip.eval(args.car(), env), ip.eval(args.cdr().car(), env));
+    @Define(symbol = {"%", "mod"})
+    public static Object mod(ListStruct args, Context context) throws Exception {
+        return mod(Interpreter.eval(args.car(), context), Interpreter.eval(args.cdr().car(), context));
     }
 
-    @Function(symbol = {"**", "pow"})
-    public static Object pow(ListStruct args, Environment env, Interpreter ip) throws Exception {
+    @Define(symbol = {"**", "pow"})
+    public static Object pow(ListStruct args, Context context) throws Exception {
         return Math.pow(
-                asReal(ip.eval(args.car(), env)),
-                asReal(ip.eval(args.cdr().car(), env)));
+                asReal(Interpreter.eval(args.car(), context)),
+                asReal(Interpreter.eval(args.cdr().car(), context)));
     }
 
     private static Object mod(Object a, Object b) throws EvaluationException {

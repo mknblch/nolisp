@@ -1,4 +1,4 @@
-package de.mknblch.sucode.interpreter.forms;
+package de.mknblch.sucode.interpreter.func;
 
 import de.mknblch.sucode.interpreter.EvaluationException;
 import de.mknblch.sucode.parser.structs.SymbolStruct;

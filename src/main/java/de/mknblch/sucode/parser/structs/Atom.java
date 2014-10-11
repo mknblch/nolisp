@@ -6,7 +6,7 @@ package de.mknblch.sucode.parser.structs;
 public interface Atom {
 
     public enum Type {
-        SYMBOL, CONST, LIST, END
+        SYMBOL, CONST, LIST, FUNC, END
     }
 
     public Type getType();

@@ -1,9 +1,10 @@
 package de.mknblch.sucode.interpreter;
 
-import de.mknblch.sucode.interpreter.forms.FormRegister;
-import de.mknblch.sucode.interpreter.forms.builtin.ConsoleForms;
-import de.mknblch.sucode.interpreter.forms.builtin.MathForms;
-import de.mknblch.sucode.interpreter.forms.builtin.SpecialForms;
+import de.mknblch.sucode.interpreter.func.FunctionBuilder;
+import de.mknblch.sucode.interpreter.func.builtin.AbstractFormTest;
+import de.mknblch.sucode.interpreter.func.builtin.ConsoleForms;
+import de.mknblch.sucode.interpreter.func.builtin.MathForms;
+import de.mknblch.sucode.interpreter.func.builtin.SpecialForms;
 import de.mknblch.sucode.lexer.Lexer;
 import de.mknblch.sucode.parser.FormatHelper;
 import de.mknblch.sucode.parser.Parser;
@@ -21,7 +22,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by mknblch on 09.10.2014.
  */
-public class InterpreterTest {
+public class InterpreterTest extends AbstractFormTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(InterpreterTest.class);
     private static final Parser PARSER = new Parser();
@@ -66,33 +67,12 @@ public class InterpreterTest {
     @Test
     public void testEnvironment() throws Exception {
         final String code = "(+ 2 x)";
-        final Environment env = new Environment();
+        final Context env = new Context();
         env.bind("x", 3);
         final List<Object> evaluated = eval(code, env);
         dump(evaluated);
         assertEquals(5, evaluated.get(0));
     }
 
-    private void dump(List<Object> evaluated) throws ParserException {
-        for (int i = 0; i < evaluated.size(); i++) {
-            LOGGER.debug("evaluates to {}", FormatHelper.formatAtom(evaluated.get(i)));
-        }
-    }
 
-    private List<Object> eval(String code) throws Exception {
-        return eval(code, new Environment());
-    }
-
-    private List<Object> eval(String code, Environment environment) throws Exception {
-        final ListStruct program = PARSER.parse(new Lexer(code));
-        final ArrayList<Object> ret = new ArrayList<Object>();
-        final Interpreter interpreter = new Interpreter(new FormRegister(MathForms.class,SpecialForms.class,ConsoleForms.class));
-
-        LOGGER.debug("code: {}", FormatHelper.formatPretty(program));
-        LOGGER.debug("AST : {}", FormatHelper.formatAtom(program));
-        for (Object p : program) {
-            ret.add(interpreter.eval(p, environment));
-        }
-        return ret;
-    }
 }

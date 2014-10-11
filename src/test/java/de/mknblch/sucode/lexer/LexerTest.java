@@ -137,13 +137,21 @@ public class LexerTest {
      * @throws LexerException
      */
     private static void assertTokenEquals (String[] expected, Lexer lexer) throws LexerException {
+        LOGGER.debug("comparing: {}", merge(expected));
         for (int i = 0; i < expected.length; i++) {
-            LOGGER.debug("comparing: {}", expected[i]);
-            
-                    
+
             assertTrue("premature end at token " + i, lexer.hasNext());
             assertEquals("token " + i + " did not match", expected[i], lexer.next().literal);
         }
         assertFalse("lexer has more tokens", lexer.hasNext());
+    }
+
+    private static String merge (String[] strings) {
+        final StringBuffer stringBuffer = new StringBuffer();
+        for (int i = 0; i < strings.length; i++) {
+            if(stringBuffer.length() > 0) stringBuffer.append(" ");
+            stringBuffer.append(strings[i]);
+        }
+        return String.format("%s", stringBuffer.toString());
     }
 }

@@ -1,4 +1,4 @@
-package de.mknblch.sucode.interpreter.forms.builtin;
+package de.mknblch.sucode.interpreter.func.builtin;
 
 import de.mknblch.sucode.interpreter.EvaluationException;
 import de.mknblch.sucode.parser.structs.ConstStruct;
@@ -35,7 +35,6 @@ public class SpecialFormsTest extends AbstractFormTest {
         assertEquals(3, result.get(0));
     }
 
-    @Ignore
     @Test
     public void testLambda() throws Exception {
         List<Object> result = eval("((lambda (a) (+ a 1)) 1)");

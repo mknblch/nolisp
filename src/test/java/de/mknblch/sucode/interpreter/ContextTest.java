@@ -12,20 +12,20 @@ import static org.junit.Assert.*;
 /**
  * Created by mknblch on 11.10.2014.
  */
-public class EnvironmentTest {
+public class ContextTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(EnvironmentTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ContextTest.class);
 
-    public static Environment makeEnv(String[] keys, Object[] values) {
+    public static Context makeEnv(String[] keys, Object[] values) {
         assertEquals("Erroneous test", keys.length, values.length);
-        final Environment env = new Environment();
+        final Context env = new Context();
         for (int i = 0; i < keys.length; i++) {
             env.bind(keys[i], values[i]);
         }
         return env;
     }
 
-    public static void dump(Environment env) throws EvaluationException {
+    public static void dump(Context env) throws EvaluationException {
         do {
             LOGGER.debug("dumping {}", env);
             for(String key : env.keySetLocal()) {
@@ -38,8 +38,8 @@ public class EnvironmentTest {
     @Test
     public void testDerive() throws Exception {
 
-        Environment global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
-        Environment derived = derive(global);
+        Context global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
+        Context derived = derive(global);
         derived.bind("c", 3);
         dump(derived);
 
@@ -53,8 +53,8 @@ public class EnvironmentTest {
     @Test
     public void testPutGlobal() throws Exception {
 
-        Environment global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
-        Environment derived = derive(global);
+        Context global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
+        Context derived = derive(global);
         derived.bindGlobal("c", 3);
         dump(derived);
 
@@ -68,8 +68,8 @@ public class EnvironmentTest {
     @Test
     public void testSize() throws Exception {
 
-        Environment global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
-        Environment derived = derive(global);
+        Context global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
+        Context derived = derive(global);
         derived.bind("c", 3);
         dump(derived);
 
@@ -81,8 +81,8 @@ public class EnvironmentTest {
     @Test
     public void testIsEmpty() throws Exception {
 
-        Environment global = makeEnv(new String[]{}, new Object[]{});
-        Environment derived = global.derive();
+        Context global = makeEnv(new String[]{}, new Object[]{});
+        Context derived = global.derive();
         dump(derived);
 
         assertTrue(global.isEmptyLocal());
@@ -92,8 +92,8 @@ public class EnvironmentTest {
     @Test
     public void testOneIsEmpty() throws Exception {
 
-        Environment global = makeEnv(new String[]{}, new Object[]{});
-        Environment derived = derive(global);
+        Context global = makeEnv(new String[]{}, new Object[]{});
+        Context derived = derive(global);
         derived.bind("c", 3);
         dump(derived);
 
@@ -104,8 +104,8 @@ public class EnvironmentTest {
     @Test
     public void testIsNotEmpty() throws Exception {
 
-        Environment global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
-        Environment derived = derive(global);
+        Context global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
+        Context derived = derive(global);
         derived.bind("c", 3);
         dump(derived);
 
@@ -116,8 +116,8 @@ public class EnvironmentTest {
     @Test
     public void testContainsKey() throws Exception {
 
-        Environment global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
-        Environment derived = derive(global);
+        Context global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
+        Context derived = derive(global);
         derived.bind("c", 3);
         dump(derived);
 
@@ -130,8 +130,8 @@ public class EnvironmentTest {
     @Test
     public void testGet() throws Exception {
 
-        Environment global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
-        Environment derived = derive(global);
+        Context global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
+        Context derived = derive(global);
         derived.bind("c", 3);
         dump(derived);
 
@@ -147,8 +147,8 @@ public class EnvironmentTest {
     @Test
     public void testBind() throws Exception {
 
-        Environment global = makeEnv(new String[]{}, new Object[]{});
-        Environment derived = derive(global);
+        Context global = makeEnv(new String[]{}, new Object[]{});
+        Context derived = derive(global);
 
         global.bind("a", 1);
         global.bind("b", 2);
@@ -164,13 +164,13 @@ public class EnvironmentTest {
     @Test
     public void testRemove() throws Exception {
 
-        Environment global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
-        Environment derived = derive(global);
+        Context global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
+        Context derived = derive(global);
         derived.bind("c", 3);
 
-        derived.removeLocal("c");
-        derived.removeLocal("b");
-        derived.removeLocal("a");
+        derived.unbindLocal("c");
+        derived.unbindLocal("b");
+        derived.unbindLocal("a");
 
         dump(derived);
         assertTrue(derived.isEmptyLocal());
@@ -181,13 +181,13 @@ public class EnvironmentTest {
     @Test
     public void testRemoveGlobal() throws Exception {
 
-        Environment global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
-        Environment derived = derive(global);
+        Context global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
+        Context derived = derive(global);
         derived.bind("c", 3);
 
-        derived.removeGlobal("c");
-        derived.removeGlobal("b");
-        derived.removeGlobal("a");
+        derived.unbind("c");
+        derived.unbind("b");
+        derived.unbind("a");
 
         dump(derived);
         assertTrue(derived.isEmptyGlobal());
@@ -195,7 +195,7 @@ public class EnvironmentTest {
 
     @Test
     public void testBindAll() throws Exception {
-        Environment e1 = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
+        Context e1 = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
 
         HashMap<String, Object> e2 = new HashMap<String, Object>() {{
             put("b", 3);
@@ -209,8 +209,8 @@ public class EnvironmentTest {
     @Test
     public void testClearLocal() throws Exception {
 
-        Environment global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
-        Environment derived = derive(global);
+        Context global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
+        Context derived = derive(global);
         derived.bind("c", 3);
         derived.clearLocal();
         assertEquals(0, derived.size());
@@ -219,8 +219,8 @@ public class EnvironmentTest {
 
     @Test
     public void testClearGlobal() throws Exception {
-        Environment global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
-        Environment derived = derive(global);
+        Context global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
+        Context derived = derive(global);
         derived.bind("c", 3);
         derived.clearGlobal();
         assertEquals(0, derived.sizeGlobal());
@@ -228,7 +228,7 @@ public class EnvironmentTest {
 
     @Test
     public void testKeySetLocal() throws Exception {
-        Environment global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
+        Context global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
         Set<String> keys = global.keySetLocal();
         assertTrue(keys.contains("a"));
         assertTrue(keys.contains("b"));
@@ -236,8 +236,8 @@ public class EnvironmentTest {
 
     @Test
     public void testKeySetGlobal() throws Exception {
-        Environment global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
-        Environment derive = global.derive();
+        Context global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
+        Context derive = global.derive();
         derive.bind("c", 3);
         Set<String> keys = derive.keySetGlobal();
         assertTrue(keys.contains("a"));
@@ -245,7 +245,7 @@ public class EnvironmentTest {
         assertTrue(keys.contains("c"));
     }
 
-    private Environment derive(Environment global) {
-        return (Environment) global.derive();
+    private Context derive(Context global) {
+        return (Context) global.derive();
     }
 }

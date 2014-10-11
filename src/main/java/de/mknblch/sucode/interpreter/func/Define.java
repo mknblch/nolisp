@@ -1,4 +1,4 @@
-package de.mknblch.sucode.interpreter.forms;
+package de.mknblch.sucode.interpreter.func;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -10,6 +10,7 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Function {
+public @interface Define {
     String[] symbol() default {};
+    boolean special() default false;
 }

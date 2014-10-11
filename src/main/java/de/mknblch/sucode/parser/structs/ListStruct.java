@@ -110,7 +110,7 @@ public class ListStruct implements Atom, Iterable {
 
             @Override
             public void remove() {
-                throw new RuntimeException("removeLocal() not implemented");
+                throw new RuntimeException("unbindLocal() not implemented");
             }
         };
     }

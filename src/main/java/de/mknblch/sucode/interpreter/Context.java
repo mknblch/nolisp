@@ -1,5 +1,7 @@
 package de.mknblch.sucode.interpreter;
 
+import de.mknblch.sucode.interpreter.func.Function;
+
 import java.util.*;
 
 /**
@@ -9,22 +11,22 @@ import java.util.*;
  * <p/>
  * Created by mknblch on 10.10.2014.
  */
-public class Environment {
+public class Context {
 
-    private final Environment parentEnv;
+    private final Context parentEnv;
     private final HashMap<String, Object> localMap;
 
     /**
      * construct empty environment.
      */
-    public Environment() {
+    public Context() {
         this(null);
     }
 
     /**
      * used for derivation.
      */
-    private Environment(Environment parentEnv) {
+    private Context(Context parentEnv) {
         this.parentEnv = parentEnv;
         this.localMap = new HashMap<String, Object>();
     }
@@ -32,26 +34,15 @@ public class Environment {
     /**
      * derive a new local environment (new scope) with this as it's parent.
      */
-    public Environment derive() {
-        return new Environment(this);
+    public Context derive() {
+        return new Context(this);
     }
 
     /**
      * retrieve parent environment
      */
-    public Environment getParentEnv() {
+    public Context getParentEnv() {
         return parentEnv;
-    }
-
-    /**
-     * put value in the most significant env if any. put to local env otherwise.
-     */
-    public void bindGlobal(String key, Object value) {
-        if (null != parentEnv) {
-            parentEnv.bindGlobal(key, value);
-        } else {
-            localMap.put(key, value);
-        }
     }
 
     /**
@@ -103,33 +94,78 @@ public class Environment {
      * env is specified, null is returned.
      */
     public Object get(Object key) throws EvaluationException {
-
         if(localMap.containsKey(key)) {
             return localMap.get(key);
         }
         if(null != parentEnv && parentEnv.containsKey(key)) {
             return parentEnv.get(key);
         }
-
-        throw new EvaluationException(String.format("Unbound variable '%s'.", key));
+        throw new EvaluationException(String.format("Reference to undefined identifier: '%s'.", key));
     }
 
     /**
-     * removeLocal element from local env only.
+     * unbindLocal element from local env only.
      */
-    public Object removeLocal(Object key) {
+    public Object unbindLocal(Object key) {
         return localMap.remove(key);
     }
 
     /**
-     * removeLocal key.value pair from local and all parent environments.
+     * global operation. unbindLocal key-value pair from local and all parent environments.
      */
-    public void removeGlobal(String key) {
+    public void unbind(String key) {
         localMap.remove(key);
         if (null == parentEnv) {
             return;
         }
-        parentEnv.removeGlobal(key);
+        parentEnv.unbind(key);
+    }
+
+    /**
+     * local operation.
+     */
+    public void define (Function function) {
+        bind(function.getSymbol(), function);
+    }
+
+    public void defineAll (Collection<Function> functions) {
+        for (Function function : functions) {
+            bind(function.getSymbol(), function);
+        }
+    }
+
+    public void defineGlobal (Function function) {
+        bindGlobal(function.getSymbol(), function);
+    }
+
+    public void defineAllGlobal (Collection<Function> functions) {
+        for (Function function : functions) {
+            bindGlobal(function.getSymbol(), function);
+        }
+    }
+
+
+    public void undefineLocal(String key) {
+        unbindLocal(key);
+    }
+
+    /**
+     * global operation
+     */
+    public void undefine(String key) {
+        unbind(key);
+    }
+
+    public void undefineAll (Collection<Function> functions) {
+        for (Function function : functions) {
+            unbind(function.getSymbol());
+        }
+    }
+
+    public void undefineAllLocal (Collection<Function> functions) {
+        for (Function function : functions) {
+            unbindLocal(function.getSymbol());
+        }
     }
 
     /**
@@ -140,11 +176,31 @@ public class Environment {
     }
 
     /**
+     * put value in the most significant env if any. put to local env otherwise.
+     */
+    public void bindGlobal(String key, Object value) {
+        if (null != parentEnv) {
+            parentEnv.bindGlobal(key, value);
+        } else {
+            localMap.put(key, value);
+        }
+    }
+
+    /**
      * put all into local env.
      */
     public void bindAll(Map<String, Object> m) {
         for (Map.Entry<String, Object> v : m.entrySet()) {
             bind(v.getKey(), v.getValue());
+        }
+    }
+
+    /**
+     * put all into local env.
+     */
+    public void bindAllGlobal(Map<String, Object> m) {
+        for (Map.Entry<String, Object> v : m.entrySet()) {
+            bindGlobal(v.getKey(), v.getValue());
         }
     }
 
