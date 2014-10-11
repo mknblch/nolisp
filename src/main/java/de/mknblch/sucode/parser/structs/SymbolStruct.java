@@ -15,9 +15,4 @@ public class SymbolStruct implements Atom {
     public Type getType() {
         return Type.SYMBOL;
     }
-
-    @Override
-    public String toString() {
-        return String.format("SYMBOL:", literal);
-    }
 }
