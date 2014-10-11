@@ -1,6 +1,5 @@
 package de.mknblch.sucode.interpreter;
 
-import de.mknblch.sucode.interpreter.environment.Environment;
 import de.mknblch.sucode.interpreter.forms.FormRegister;
 import de.mknblch.sucode.parser.structs.*;
 

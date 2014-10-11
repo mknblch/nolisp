@@ -1,7 +1,5 @@
 package de.mknblch.sucode.interpreter;
 
-import de.mknblch.sucode.interpreter.environment.Environment;
-import de.mknblch.sucode.interpreter.environment.HashMapEnv;
 import de.mknblch.sucode.interpreter.forms.FormRegister;
 import de.mknblch.sucode.interpreter.forms.PlusForm;
 import de.mknblch.sucode.lexer.Lexer;
@@ -52,7 +50,7 @@ public class InterpreterTest {
         final String code = "(+ 1 1)";
         final List<Object> evaluated = eval(code);
         dump(evaluated);
-        assertEquals(2, evaluated.get(0));
+        assertEquals(2d, evaluated.get(0));
     }
 
     @Test
@@ -65,11 +63,11 @@ public class InterpreterTest {
     @Test
     public void testEnvironment() throws Exception {
         final String code = "(+ 2 x)";
-        final HashMapEnv env = new HashMapEnv();
+        final Environment env = new Environment();
         env.put("x", 3);
         final List<Object> evaluated = eval(code, env);
         dump(evaluated);
-        assertEquals(5, evaluated.get(0));
+        assertEquals(5d, evaluated.get(0));
     }
 
     private void dump(List<Object> evaluated) throws ParserException {
@@ -79,7 +77,7 @@ public class InterpreterTest {
     }
 
     private List<Object> eval(String code) throws ParserException, EvaluationException, LexerException {
-        return eval(code, new HashMapEnv());
+        return eval(code, new Environment());
     }
 
     private List<Object> eval(String code, Environment environment) throws LexerException, ParserException, EvaluationException {

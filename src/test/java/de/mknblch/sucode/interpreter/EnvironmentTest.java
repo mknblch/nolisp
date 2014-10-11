@@ -1,7 +1,5 @@
 package de.mknblch.sucode.interpreter;
 
-import de.mknblch.sucode.interpreter.environment.Environment;
-import de.mknblch.sucode.interpreter.environment.HashMapEnv;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,9 +13,9 @@ public class EnvironmentTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EnvironmentTest.class);
 
-    public static HashMapEnv makeEnv(String[] keys, Object[] values) {
+    public static Environment makeEnv(String[] keys, Object[] values) {
         assertEquals("Erroneous test", keys.length, values.length);
-        final HashMapEnv env = new HashMapEnv();
+        final Environment env = new Environment();
         for (int i = 0; i < keys.length; i++) {
             env.put(keys[i], values[i]);
         }
@@ -38,7 +36,7 @@ public class EnvironmentTest {
     public void testDerive() throws Exception {
 
         Environment global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
-        HashMapEnv derived = derive(global);
+        Environment derived = derive(global);
         derived.put("c", 3);
         dump(derived);
 
@@ -53,7 +51,7 @@ public class EnvironmentTest {
     public void testPutGlobal() throws Exception {
 
         Environment global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
-        HashMapEnv derived = derive(global);
+        Environment derived = derive(global);
         derived.putGlobal("c", 3);
         dump(derived);
 
@@ -68,7 +66,7 @@ public class EnvironmentTest {
     public void testSize() throws Exception {
 
         Environment global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
-        HashMapEnv derived = derive(global);
+        Environment derived = derive(global);
         derived.put("c", 3);
         dump(derived);
 
@@ -92,7 +90,7 @@ public class EnvironmentTest {
     public void testOneIsEmpty() throws Exception {
 
         Environment global = makeEnv(new String[]{}, new Object[]{});
-        HashMapEnv derived = derive(global);
+        Environment derived = derive(global);
         derived.put("c", 3);
         dump(derived);
 
@@ -104,7 +102,7 @@ public class EnvironmentTest {
     public void testIsNotEmpty() throws Exception {
 
         Environment global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
-        HashMapEnv derived = derive(global);
+        Environment derived = derive(global);
         derived.put("c", 3);
         dump(derived);
 
@@ -116,7 +114,7 @@ public class EnvironmentTest {
     public void testContainsKey() throws Exception {
 
         Environment global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
-        HashMapEnv derived = derive(global);
+        Environment derived = derive(global);
         derived.put("c", 3);
         dump(derived);
 
@@ -130,7 +128,7 @@ public class EnvironmentTest {
     public void testGet() throws Exception {
 
         Environment global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
-        HashMapEnv derived = derive(global);
+        Environment derived = derive(global);
         derived.put("c", 3);
         dump(derived);
 
@@ -146,8 +144,8 @@ public class EnvironmentTest {
     @Test
     public void testPut() throws Exception {
 
-        HashMapEnv global = makeEnv(new String[]{}, new Object[]{});
-        HashMapEnv derived = derive(global);
+        Environment global = makeEnv(new String[]{}, new Object[]{});
+        Environment derived = derive(global);
 
         global.put("a", 1);
         global.put("b", 2);
@@ -164,7 +162,7 @@ public class EnvironmentTest {
     public void testRemove() throws Exception {
 
         Environment global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
-        HashMapEnv derived = derive(global);
+        Environment derived = derive(global);
         derived.put("c", 3);
 
         derived.remove("c");
@@ -181,7 +179,7 @@ public class EnvironmentTest {
     public void testRemoveEverywhere() throws Exception {
 
         Environment global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
-        HashMapEnv derived = derive(global);
+        Environment derived = derive(global);
         derived.put("c", 3);
 
         derived.removeEverywhere("c");
@@ -194,8 +192,8 @@ public class EnvironmentTest {
 
     @Test
     public void testPutAll() throws Exception {
-        HashMapEnv e1 = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
-        HashMapEnv e2 = makeEnv(new String[]{"c", "b"}, new Object[]{3, 2});
+        Environment e1 = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
+        Environment e2 = makeEnv(new String[]{"c", "b"}, new Object[]{3, 2});
         e1.putAll(e2);
         assertEquals(3, e1.sizeAll());
     }
@@ -204,7 +202,7 @@ public class EnvironmentTest {
     public void testClearLocal() throws Exception {
 
         Environment global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
-        HashMapEnv derived = derive(global);
+        Environment derived = derive(global);
         derived.put("c", 3);
         derived.clear();
         assertEquals(0, derived.size());
@@ -215,7 +213,7 @@ public class EnvironmentTest {
     public void testClearParent() throws Exception {
 
         Environment global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
-        HashMapEnv derived = derive(global);
+        Environment derived = derive(global);
         derived.put("c", 3);
         global.clear();
         assertEquals(1, derived.size());
@@ -225,7 +223,7 @@ public class EnvironmentTest {
     @Test
     public void testClearAll() throws Exception {
         Environment global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
-        HashMapEnv derived = derive(global);
+        Environment derived = derive(global);
         derived.put("c", 3);
         derived.clearAll();
         assertEquals(0, derived.sizeAll());
@@ -236,7 +234,7 @@ public class EnvironmentTest {
 
     }
 
-    private HashMapEnv derive(Environment global) {
-        return (HashMapEnv) global.derive();
+    private Environment derive(Environment global) {
+        return (Environment) global.derive();
     }
 }
