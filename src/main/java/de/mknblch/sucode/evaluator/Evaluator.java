@@ -1,21 +1,24 @@
 package de.mknblch.sucode.evaluator;
 
-import de.mknblch.sucode.parser.structs.*;
+import de.mknblch.sucode.parser.structs.Atom;
+import de.mknblch.sucode.parser.structs.ConstStruct;
+import de.mknblch.sucode.parser.structs.ListStruct;
+import de.mknblch.sucode.parser.structs.SymbolStruct;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
-* Created by mknblch on 05.10.2014.
-*/
+ * Created by mknblch on 05.10.2014.
+ */
 public class Evaluator {
 
-    public List<Object> evaluate (ListStruct program, Environment environment) throws EvaluationException {
+    public List<Object> evaluate(ListStruct program, Environment environment) throws EvaluationException {
 
         final ArrayList<Object> ret = new ArrayList<Object>();
 
 //        do {
-            ret.add(eval(program.car(), environment));
+        ret.add(eval(program.car(), environment));
 //        } while (program.hasSuccessor());
 
         return ret;
@@ -43,11 +46,11 @@ public class Evaluator {
 
         final Object function = atom.car();
 
-        if(!(function instanceof SymbolStruct)) {
+        if (!(function instanceof SymbolStruct)) {
             throw new EvaluationException("Unable to evaluate: " + String.valueOf(function));
         }
 
-        return evalFunction((SymbolStruct)atom.car(), atom.cdr(), environment);
+        return evalFunction((SymbolStruct) atom.car(), atom.cdr(), environment);
     }
 
     private Object evalFunction(SymbolStruct function, ListStruct args, Environment environment) throws EvaluationException {

@@ -7,10 +7,10 @@ public class TokenHelper {
 
     public static Token makeStringToken(String literal, int position) throws LexerException {
 
-        if(literal.length() < 2) {
+        if (literal.length() < 2) {
             throw new LexerException(String.format("[@%04d] Parsing '%s' to STRING failed", position, literal));
         }
-        return new Token(Token.Type.STRING, literal, literal.substring(1, literal.length()-1), position);
+        return new Token(Token.Type.STRING, literal, literal.substring(1, literal.length() - 1), position);
     }
 
     public static Token makeIntToken(String literal, int position) throws LexerException {

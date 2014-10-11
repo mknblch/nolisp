@@ -38,6 +38,7 @@ public class Lexer {
 
     /**
      * determine if lexer has more tokens.
+     *
      * @return true if tokens left
      */
     public boolean hasNext() {
@@ -47,6 +48,7 @@ public class Lexer {
 
     /**
      * fetch next token and increment offset.
+     *
      * @return next token
      */
     public Token next() throws LexerException {
@@ -61,40 +63,40 @@ public class Lexer {
 
     private Token tokenize(int position, char c) throws LexerException {
         // first char of each token must decide it's type
-        switch(c) {
-            case '(' :
+        switch (c) {
+            case '(':
                 offset++;
                 return TokenHelper.makeListBeginToken(position);
-            case ')' :
+            case ')':
                 offset++;
                 return TokenHelper.makeListEndToken(position);
-            case '\'' :
+            case '\'':
                 offset++;
                 return TokenHelper.makeQuoteToken(position);
-            case '#' :
+            case '#':
                 offset++;
                 return TokenHelper.makeSharpToken(position);
-            case ';' :
+            case ';':
                 return TokenHelper.makeCommentToken(tokenizeComment(), position);
-            case '"' :
+            case '"':
                 return TokenHelper.makeStringToken(tokenizeString(), position);
-            default :
+            default:
                 return decideSymbolType(tokenizeSymbol(), position);
         }
     }
 
     private Token decideSymbolType(String literal, int position) throws LexerException {
 
-        if(literal.matches(INT_REGEX))
+        if (literal.matches(INT_REGEX))
             return TokenHelper.makeIntToken(literal, position);
 
-        else if(literal.matches(REAL_REGEX))
+        else if (literal.matches(REAL_REGEX))
             return TokenHelper.makeRealToken(literal, position);
 
-        else if(literal.matches(NIL_REGEX))
+        else if (literal.matches(NIL_REGEX))
             return TokenHelper.makeNilToken(position);
 
-        else if(literal.matches(TRUE_REGEX))
+        else if (literal.matches(TRUE_REGEX))
             return TokenHelper.makeTrueToken(position);
 
         else
@@ -121,7 +123,7 @@ public class Lexer {
         // inc offset and store end of string including "
         int endIndex = ++offset;
         // if the last increment grows offset above code.length throw an exception
-        if(offset > code.length()) {
+        if (offset > code.length()) {
             throw new LexerException(String.format("[%03d] premature end of string found.", startIndex));
         }
         // TODO escaped "
@@ -137,11 +139,12 @@ public class Lexer {
 
     /**
      * increment offset until any char OTHER THEN charsToSkip is found
+     *
      * @param charsToSkip these chars should be ignored
      */
     private void skip(char[]... charsToSkip) {
         for (int i = offset; i < code.length(); i++) {
-            if(elementOf(code.charAt(offset), charsToSkip))
+            if (elementOf(code.charAt(offset), charsToSkip))
                 offset++;
             else
                 return;
@@ -150,11 +153,12 @@ public class Lexer {
 
     /**
      * increment offset until any of charsToStop is found
+     *
      * @param charsToStop chars to search for
      */
     private void until(char[]... charsToStop) {
         for (int i = offset; i < code.length(); i++) {
-            if(!elementOf(code.charAt(offset), charsToStop))
+            if (!elementOf(code.charAt(offset), charsToStop))
                 offset++;
             else
                 return;
@@ -163,6 +167,7 @@ public class Lexer {
 
     /**
      * determine if char a is element of c
+     *
      * @param a single char for comparision
      * @param c set of chars
      * @return true if a elementOf c. false otherwise

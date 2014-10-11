@@ -48,9 +48,9 @@ public class EvaluatorTest {
         assertEquals(5, evaluated.get(0));
     }
 
-    private void dump(List<Object> evaluated) {
+    private void dump(List<Object> evaluated) throws ParserException {
         for (int i = 0; i < evaluated.size(); i++) {
-            LOGGER.debug("{}", evaluated.get(i));
+            LOGGER.debug("{}", FormatHelper.formatAtom(evaluated.get(i)));
         }
     }
 

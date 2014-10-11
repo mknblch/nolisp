@@ -1,7 +1,5 @@
 package de.mknblch.sucode.parser.structs;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import java.util.Iterator;
 
 /**
@@ -15,7 +13,8 @@ public class ListStruct implements Atom, Iterable {
     /**
      * constructs an empty list
      */
-    public ListStruct() {}
+    public ListStruct() {
+    }
 
     public ListStruct(Object... items) {
         for (int i = 0; i < items.length; i++) {
@@ -30,16 +29,20 @@ public class ListStruct implements Atom, Iterable {
 
     /**
      * retrieve last listElement of the list
+     *
      * @return
      */
-    public ListStruct last () {
+    public ListStruct last() {
         ListStruct temp = this;
-        while (null != temp.cdr) {temp = temp.cdr;}
+        while (null != temp.cdr) {
+            temp = temp.cdr;
+        }
         return temp;
     }
 
     /**
      * add element to the list
+     *
      * @param atom
      */
     public void add(Object atom) {
@@ -74,7 +77,7 @@ public class ListStruct implements Atom, Iterable {
     /**
      * wrap cons into ListStruct and set it as cdr in the last element of the list.
      */
-    public void cons (Object cons) {
+    public void cons(Object cons) {
         last().cdr = new ListStruct(cons);
     }
 
@@ -99,16 +102,19 @@ public class ListStruct implements Atom, Iterable {
     public Iterator iterator() {
         return new Iterator() {
             private ListStruct head = ListStruct.this;
+
             @Override
             public boolean hasNext() {
                 return null != head;
             }
+
             @Override
             public Object next() {
                 final Object car = head.car();
                 head = head.cdr();
                 return car;
             }
+
             @Override
             public void remove() {
                 throw new RuntimeException("remove() not implemented");

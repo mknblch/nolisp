@@ -9,7 +9,7 @@ import static de.mknblch.sucode.parser.structs.ConstStruct.ConstType;
 
 /**
  * The parser transforms a token stream into an AbstractSyntaxTree
- *
+ * <p/>
  * Created by mknblch on 05.10.2014.
  */
 public class Parser {
