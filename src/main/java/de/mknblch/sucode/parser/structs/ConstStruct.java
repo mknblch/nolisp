@@ -5,13 +5,14 @@ package de.mknblch.sucode.parser.structs;
  */
 public class ConstStruct implements Atom {
 
+
+
     public enum ConstType {
-        INT, REAL, STRING, TRUE, NIL
+        INT, REAL, STRING, TRUE, NIL;
     }
-
     public final ConstType type;
-    public final Object value;
 
+    public final Object value;
     public ConstStruct(ConstType type, Object value) {
         this.type = type;
         this.value = value;
@@ -21,4 +22,9 @@ public class ConstStruct implements Atom {
     public Type getType() {
         return Type.CONST;
     }
+
+    public ConstType getConstType() {
+        return type;
+    }
+
 }

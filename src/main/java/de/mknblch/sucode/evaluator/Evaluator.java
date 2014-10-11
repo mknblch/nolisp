@@ -67,6 +67,12 @@ public class Evaluator {
             return x;
         }
 
+        if ("print".equals(function.literal)) {
+            for (Object o : args) {
+                System.out.println(eval(o, environment));
+            }
+        }
+
         return null;
     }
 

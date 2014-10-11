@@ -44,7 +44,6 @@ public class FormatHelper {
         return atom.getType().name();
     }
 
-
     public static String formatAtom(Object obj) throws ParserException {
 
         // return Non-Atoms
@@ -58,21 +57,73 @@ public class FormatHelper {
             case SYMBOL:
                 return String.format("SYMBOL:%s", ((SymbolStruct) atom).literal);
             case CONST:
-                return String.format("C%s:%s", ((ConstStruct) atom).getType().name(), String.valueOf(((ConstStruct) atom).value));
+                return String.format("C%s:%s", ((ConstStruct) atom).type.name(), String.valueOf(((ConstStruct) atom).value));
             case LIST:
-                return formatListStruct((ListStruct) atom);
+                final ListStruct listStruct = (ListStruct) atom;
+                final StringBuffer buffer = new StringBuffer();
+                for (Object element : listStruct) {
+                    if (buffer.length() > 0) buffer.append(", ");
+                    buffer.append(formatAtom(element));
+                }
+                return String.format("[%s]", buffer.toString());
         }
 
         throw new ParserException("Unable to format " + atom);
     }
 
-    public static String formatListStruct(ListStruct listStruct) throws ParserException {
-        final StringBuffer buffer = new StringBuffer();
-        for (Object element : listStruct) {
-            if (buffer.length() > 0) buffer.append(", ");
-            buffer.append(formatAtom(element));
+
+    public static String formatTypesOnly(Object obj) throws ParserException {
+
+        // return Non-Atoms
+        if (!(obj instanceof Atom)) {
+            return "JavaObject";
         }
-        return String.format("LIST:[%s]", buffer.toString());
+        final Atom atom = (Atom) obj;
+
+        switch (atom.getType()) {
+
+            case SYMBOL:
+                return "SYMBOL";
+            case CONST:
+                return String.format("C%s", ((ConstStruct) atom).type.name());
+            case LIST:
+                ListStruct listStruct = (ListStruct) atom;
+                final StringBuffer buffer = new StringBuffer();
+                for (Object element : listStruct) {
+                    if (buffer.length() > 0) buffer.append(", ");
+                    buffer.append(formatTypesOnly(element));
+                }
+                return String.format("LIST:[%s]", buffer.toString());
+        }
+
+        throw new ParserException("Unable to format " + atom);
+    }
+
+    public static String formatValuesOnly(Object obj) throws ParserException {
+
+        // return Non-Atoms
+        if (!(obj instanceof Atom)) {
+            return String.valueOf(obj);
+        }
+        final Atom atom = (Atom) obj;
+
+        switch (atom.getType()) {
+
+            case SYMBOL:
+                return String.format("%s", ((SymbolStruct) atom).literal);
+            case CONST:
+                return String.format("%s", String.valueOf(((ConstStruct) atom).value));
+            case LIST:
+                ListStruct listStruct = (ListStruct) atom;
+                final StringBuffer buffer = new StringBuffer();
+                for (Object element : listStruct) {
+                    if (buffer.length() > 0) buffer.append(", ");
+                    buffer.append(formatValuesOnly(element));
+                }
+                return String.format("[%s]", buffer.toString());
+        }
+
+        throw new ParserException("Unable to format " + atom);
     }
 
 }

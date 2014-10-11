@@ -13,16 +13,19 @@ import java.util.Set;
 public class Environment<K, V> implements Map<K, V> {
 
     private final HashMap<K, V> localMap;
-
     private final Environment<K, V> globalEnv;
 
     public Environment() {
         this(null);
     }
 
-    public Environment(Environment<K, V> globalEnv) {
+    private Environment(Environment<K, V> globalEnv) {
         this.globalEnv = globalEnv;
         this.localMap = new HashMap<K, V>();
+    }
+
+    public Environment<K, V> derive() {
+        return new Environment<K, V>(this);
     }
 
     /**
@@ -56,7 +59,7 @@ public class Environment<K, V> implements Map<K, V> {
         if (null == globalEnv) {
             return localMap.containsKey(key);
         }
-        return localMap.containsKey(key) && globalEnv.containsKey(key);
+        return localMap.containsKey(key) || globalEnv.containsKey(key);
     }
 
     @Override
@@ -64,7 +67,7 @@ public class Environment<K, V> implements Map<K, V> {
         if (null == globalEnv) {
             return localMap.containsValue(value);
         }
-        return localMap.containsValue(value) && globalEnv.containsValue(value);
+        return localMap.containsValue(value) || globalEnv.containsValue(value);
     }
 
     @Override
