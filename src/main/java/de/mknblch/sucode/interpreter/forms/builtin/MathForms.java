@@ -6,7 +6,7 @@ import de.mknblch.sucode.interpreter.Interpreter;
 import de.mknblch.sucode.interpreter.forms.Function;
 import de.mknblch.sucode.parser.structs.ListStruct;
 
-import static de.mknblch.sucode.interpreter.TypeHelper.asReal;
+import static de.mknblch.sucode.interpreter.forms.TypeHelper.asReal;
 
 /**
  * Created by mknblch on 12.10.2014.
@@ -14,7 +14,7 @@ import static de.mknblch.sucode.interpreter.TypeHelper.asReal;
 public class MathForms {
 
     @Function(symbol = {"+", "add", "sum"})
-    public static Object plus(ListStruct args, Environment env, Interpreter ip) throws EvaluationException {
+    public static Object plus(ListStruct args, Environment env, Interpreter ip) throws Exception {
         Object result = 0;
         for (Object arg : args) {
             final Object evaluated = ip.eval(arg, env);
@@ -24,27 +24,27 @@ public class MathForms {
     }
 
     @Function(symbol = {"-", "sub"})
-    public static Object minus(ListStruct args, Environment env, Interpreter ip) throws EvaluationException {
+    public static Object minus(ListStruct args, Environment env, Interpreter ip) throws Exception {
         return minus(ip.eval(args.car(), env), ip.eval(args.cdr().car(), env));
     }
 
     @Function(symbol = {"*", "mul"})
-    public static Object mul(ListStruct args, Environment env, Interpreter ip) throws EvaluationException {
+    public static Object mul(ListStruct args, Environment env, Interpreter ip) throws Exception {
         return mul(ip.eval(args.car(), env), ip.eval(args.cdr().car(), env));
     }
 
     @Function(symbol = {"/", "div"})
-    public static Object div(ListStruct args, Environment env, Interpreter ip) throws EvaluationException {
+    public static Object div(ListStruct args, Environment env, Interpreter ip) throws Exception {
         return div(ip.eval(args.car(), env), ip.eval(args.cdr().car(), env));
     }
 
     @Function(symbol = {"%", "mod"})
-    public static Object mod(ListStruct args, Environment env, Interpreter ip) throws EvaluationException {
+    public static Object mod(ListStruct args, Environment env, Interpreter ip) throws Exception {
         return mod(ip.eval(args.car(), env), ip.eval(args.cdr().car(), env));
     }
 
     @Function(symbol = {"**", "pow"})
-    public static Object pow(ListStruct args, Environment env, Interpreter ip) throws EvaluationException {
+    public static Object pow(ListStruct args, Environment env, Interpreter ip) throws Exception {
         return Math.pow(
                 asReal(ip.eval(args.car(), env)),
                 asReal(ip.eval(args.cdr().car(), env)));

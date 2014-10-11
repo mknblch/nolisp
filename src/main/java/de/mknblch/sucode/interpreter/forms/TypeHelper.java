@@ -1,4 +1,6 @@
-package de.mknblch.sucode.interpreter;
+package de.mknblch.sucode.interpreter.forms;
+
+import de.mknblch.sucode.interpreter.EvaluationException;
 
 /**
  * Created by mknblch on 11.10.2014.

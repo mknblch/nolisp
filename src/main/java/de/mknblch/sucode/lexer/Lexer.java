@@ -21,7 +21,7 @@ public class Lexer {
         if (null == code) {
             throw new IllegalArgumentException("null not allowed");
         } else {
-            this.code = new String(code.trim());
+            this.code = code.trim();
         }
     }
 

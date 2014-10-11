@@ -4,6 +4,8 @@ import de.mknblch.sucode.interpreter.forms.FormRegister;
 import de.mknblch.sucode.parser.structs.*;
 
 /**
+ * ListStruct Interpreter
+ *
  * Created by mknblch on 05.10.2014.
  */
 public class Interpreter {
@@ -14,11 +16,15 @@ public class Interpreter {
         this.formRegister = new FormRegister();
     }
 
+    public Interpreter(FormRegister formRegister) {
+        this.formRegister = formRegister;
+    }
+
     public FormRegister getFormRegister() {
         return formRegister;
     }
 
-    public Object eval(Object obj, Environment environment) throws EvaluationException {
+    public Object eval(Object obj, Environment environment) throws Exception {
         // null evaluates to null
         if (null == obj) {
             return null;

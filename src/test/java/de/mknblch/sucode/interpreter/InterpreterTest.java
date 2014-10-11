@@ -1,12 +1,10 @@
 package de.mknblch.sucode.interpreter;
 
-import de.mknblch.sucode.interpreter.forms.FormException;
 import de.mknblch.sucode.interpreter.forms.FormRegister;
+import de.mknblch.sucode.interpreter.forms.builtin.ConsoleForms;
 import de.mknblch.sucode.interpreter.forms.builtin.MathForms;
 import de.mknblch.sucode.interpreter.forms.builtin.SpecialForms;
-import de.mknblch.sucode.interpreter.forms.builtin.StdOutForms;
 import de.mknblch.sucode.lexer.Lexer;
-import de.mknblch.sucode.lexer.LexerException;
 import de.mknblch.sucode.parser.FormatHelper;
 import de.mknblch.sucode.parser.Parser;
 import de.mknblch.sucode.parser.ParserException;
@@ -81,20 +79,14 @@ public class InterpreterTest {
         }
     }
 
-    private List<Object> eval(String code) throws ParserException, EvaluationException, LexerException, FormException {
+    private List<Object> eval(String code) throws Exception {
         return eval(code, new Environment());
     }
 
-    private List<Object> eval(String code, Environment environment) throws LexerException, ParserException, EvaluationException, FormException {
+    private List<Object> eval(String code, Environment environment) throws Exception {
         final ListStruct program = PARSER.parse(new Lexer(code));
         final ArrayList<Object> ret = new ArrayList<Object>();
-        final Interpreter interpreter = new Interpreter();
-
-        FormRegister testRegister = interpreter.getFormRegister();
-
-        testRegister.register(MathForms.class);
-        testRegister.register(SpecialForms.class);
-        testRegister.register(StdOutForms.class);
+        final Interpreter interpreter = new Interpreter(new FormRegister(MathForms.class,SpecialForms.class,ConsoleForms.class));
 
         LOGGER.debug("code: {}", FormatHelper.formatPretty(program));
         LOGGER.debug("AST : {}", FormatHelper.formatAtom(program));
