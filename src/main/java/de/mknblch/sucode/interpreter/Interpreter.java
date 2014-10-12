@@ -48,7 +48,7 @@ public class Interpreter {
 
     private static String symbolValue (Object obj) throws EvaluationException {
         if(!(obj instanceof SymbolStruct)) {
-            throw new EvaluationException(String.format("Cannot retrieve symbol-value of type %s", obj.getClass().getName()));
+            throw new EvaluationException(String.format("Cannot retrieve symbol-value of type '%s'.", obj.getClass().getName()));
         }
         return ((SymbolStruct)obj).literal;
     }

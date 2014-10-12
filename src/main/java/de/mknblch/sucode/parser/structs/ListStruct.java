@@ -50,7 +50,7 @@ public class ListStruct implements Atom, Iterable {
         if (null == car) {
             car = atom;
         } else
-            cons(atom);
+            last().cdr = new ListStruct(atom);
     }
 
     /**
@@ -72,13 +72,6 @@ public class ListStruct implements Atom, Iterable {
      */
     public ListStruct cdr() {
         return cdr;
-    }
-
-    /**
-     * wrap cons into ListStruct and set it as cdr in the last element of the list.
-     */
-    public void cons(Object cons) {
-        last().cdr = new ListStruct(cons);
     }
 
     /**
@@ -117,7 +110,7 @@ public class ListStruct implements Atom, Iterable {
 
             @Override
             public void remove() {
-                throw new RuntimeException("remove() not implemented");
+                throw new RuntimeException("removeLocal() not implemented");
             }
         };
     }

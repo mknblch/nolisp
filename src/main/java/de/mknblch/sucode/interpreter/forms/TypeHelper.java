@@ -1,6 +1,7 @@
 package de.mknblch.sucode.interpreter.forms;
 
 import de.mknblch.sucode.interpreter.EvaluationException;
+import de.mknblch.sucode.parser.structs.SymbolStruct;
 
 /**
  * Created by mknblch on 11.10.2014.
@@ -30,6 +31,11 @@ public class TypeHelper {
     public static String asString(Object o) throws EvaluationException {
         if(!(o instanceof String)) throw new EvaluationException("Invalid type cast.");
         return (String) o;
+    }
+
+    public static String symbolLiteral(Object o) throws EvaluationException {
+        if(!(o instanceof SymbolStruct)) throw new EvaluationException("Invalid type cast.");
+        return ((SymbolStruct) o).literal;
     }
 
     public Boolean asBoolean(Object o) {

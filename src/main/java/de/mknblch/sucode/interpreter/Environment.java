@@ -3,13 +3,13 @@ package de.mknblch.sucode.interpreter;
 import java.util.*;
 
 /**
- * Scoped map. Used to implement different variable scopes where a set operation<br/>
- * alters the local environment only and get operations pass from local to global<br/>
- * until the value is found.
+ * Scoped map. Used to implement different variable scopes where a set() operation<br/>
+ * alters only the local environment and get() operations pass from local to global<br/>
+ * environment until the key is found.
  * <p/>
  * Created by mknblch on 10.10.2014.
  */
-public class Environment implements Map<String, Object> {
+public class Environment {
 
     private final Environment parentEnv;
     private final HashMap<String, Object> localMap;
@@ -30,71 +30,66 @@ public class Environment implements Map<String, Object> {
     }
 
     /**
-         * derive a new local environment (new scope) with this as it's parent.
-         * @return
-         */
+     * derive a new local environment (new scope) with this as it's parent.
+     */
     public Environment derive() {
         return new Environment(this);
     }
 
     /**
-         * retrieve parent environment
-         * @return
-         */
+     * retrieve parent environment
+     */
     public Environment getParentEnv() {
         return parentEnv;
     }
 
     /**
-         * put value in the most significant env if any. put to local env otherwise.
-         */
-    public void putGlobal(String key, Object value) {
+     * put value in the most significant env if any. put to local env otherwise.
+     */
+    public void bindGlobal(String key, Object value) {
         if (null != parentEnv) {
-            parentEnv.putGlobal(key, value);
+            parentEnv.bindGlobal(key, value);
         } else {
             localMap.put(key, value);
         }
     }
 
     /**
-         * retrieve size of local map.
-         */
-    @Override
+     * retrieve size of local map.
+     */
     public int size() {
         return localMap.size();
     }
 
     /**
-         * returns the size of this + parent environments.
-         * expensive operation because the keySet union of the
-         * local and all global environments must be calculated.
-         */
-    public int sizeAll() {
-        return keySetAll().size();
+     * returns the size of this + parent environments.
+     * expensive operation because the keySetLocal union of the
+     * local and all global environments must be calculated.
+     */
+    public int sizeGlobal() {
+        return keySetGlobal().size();
     }
 
     /**
          * check if local env is empty.
          */
-    @Override
-    public boolean isEmpty() {
+    public boolean isEmptyLocal() {
         return localMap.isEmpty();
     }
 
     /**
          * decides whether the env (including it's parents) is empty.
          */
-    public boolean isAllEmpty() {
+    public boolean isEmptyGlobal() {
         if (null == parentEnv) {
             return localMap.isEmpty();
         }
-        return localMap.isEmpty() && parentEnv.isEmpty();
+        return localMap.isEmpty() && parentEnv.isEmptyLocal();
     }
 
     /**
-         * check if local or global env contains the key.
-         */
-    @Override
+     * check if local or global env contains the key.
+     */
     public boolean containsKey(Object key) {
         if (null == parentEnv) {
             return localMap.containsKey(key);
@@ -103,122 +98,101 @@ public class Environment implements Map<String, Object> {
     }
 
     /**
-         * not implemented because it's not decidable if the
-         * maps contain different values for the same key.
-         */
-    @Override
-    public boolean containsValue(Object value) {
-        throw new UnsupportedOperationException("Not implemented.");
-    }
+     * get value. if the key is found in local map it's value is used. if not
+     * the element will be retrieved from global environments. if no global
+     * env is specified, null is returned.
+     */
+    public Object get(Object key) throws EvaluationException {
 
-    /**
-         * get value. if the key is found in local map it's value is used. if not
-         * the element will be retrieved from global environments. if no global
-         * env is specified, null is returned.
-         */
-    @Override
-    public Object get(Object key) {
-        final Object value = localMap.get(key);
-        if (null != value) {
-            return value;
+        if(localMap.containsKey(key)) {
+            return localMap.get(key);
         }
-        return parentEnv != null ? parentEnv.get(key) : null;
+        if(null != parentEnv && parentEnv.containsKey(key)) {
+            return parentEnv.get(key);
+        }
+
+        throw new EvaluationException(String.format("Unbound variable '%s'.", key));
     }
 
     /**
-         * put value into local environment.
-         */
-    @Override
-    public Object put(String key, Object value) {
-        return localMap.put(key, value);
-    }
-
-    /**
-         * remove element from local env only.
-         */
-    @Override
-    public Object remove(Object key) {
+     * removeLocal element from local env only.
+     */
+    public Object removeLocal(Object key) {
         return localMap.remove(key);
     }
 
     /**
-         * remove key.value pair from local and all parent environments.
-         * @param key
-         */
-    public void removeEverywhere(String key) {
+     * removeLocal key.value pair from local and all parent environments.
+     */
+    public void removeGlobal(String key) {
         localMap.remove(key);
         if (null == parentEnv) {
             return;
         }
-        parentEnv.removeEverywhere(key);
+        parentEnv.removeGlobal(key);
     }
 
     /**
-         * put all into local env.
-         */
-    @Override
-    public void putAll(Map<? extends String, ? extends Object> m) {
-        for (Map.Entry<? extends String, ? extends Object> v : m.entrySet()) {
-            put(v.getKey(), v.getValue());
+     * put value into local environment.
+     */
+    public void bind(String key, Object value) {
+        localMap.put(key, value);
+    }
+
+    /**
+     * put all into local env.
+     */
+    public void bindAll(Map<String, Object> m) {
+        for (Map.Entry<String, Object> v : m.entrySet()) {
+            bind(v.getKey(), v.getValue());
         }
     }
 
     /**
-         * clear local environment.
-         */
-    @Override
-    public void clear() {
+     * clearLocal local environment.
+     */
+    public void clearLocal() {
         localMap.clear();
     }
 
     /**
-         * clear local and all global envs.
-          */
-    public void clearAll() {
+     * clearLocal local and global env.
+      */
+    public void clearGlobal() {
         localMap.clear();
         if (null == parentEnv) {
             return;
         }
-        parentEnv.clearAll();
+        parentEnv.clearGlobal();
     }
 
     /**
-         * get local keySet
+         * get local keySetLocal
          */
-    @Override
-    public Set<String> keySet() {
+    public Set<String> keySetLocal() {
         return localMap.keySet();
     }
 
     /**
          * get union from local and all global keySets.
          */
-    public Set<String> keySetAll() {
+    public Set<String> keySetGlobal() {
         if (null != parentEnv) {
-            return union(keySet(), parentEnv.keySet());
+            return union(keySetLocal(), parentEnv.keySetLocal());
         }
         return localMap.keySet();
     }
 
     /**
-         * return local value collection.
-         */
-    @Override
-    public Collection<Object> values() {
-        return localMap.values();
-    }
-
-    /**
-         * return local entry set.
-         */
-    @Override
+     * return local entry set.
+     */
     public Set<Map.Entry<String, Object>> entrySet() {
         return localMap.entrySet();
     }
 
-    private static <U> Set<U> union(Set<U> localSet, Set<U> globalSet) {
-        final Set<U> union = new HashSet<U>(localSet.size() + globalSet.size());
-        union.addAll(localSet);
+    private static <U> Set<U> union(Set<U> a, Set<U> globalSet) {
+        final Set<U> union = new HashSet<U>(a.size() + globalSet.size());
+        union.addAll(a);
         union.addAll(globalSet);
         return union;
     }

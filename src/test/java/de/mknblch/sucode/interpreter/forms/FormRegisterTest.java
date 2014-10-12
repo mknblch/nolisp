@@ -1,9 +1,9 @@
 package de.mknblch.sucode.interpreter.forms;
 
-import de.mknblch.sucode.interpreter.Interpreter;
-import de.mknblch.sucode.interpreter.Environment;
-import de.mknblch.sucode.parser.structs.ListStruct;
-import org.junit.Assert;
+import de.mknblch.sucode.interpreter.forms.testforms.NoReturnType;
+import de.mknblch.sucode.interpreter.forms.testforms.NotStatic;
+import de.mknblch.sucode.interpreter.forms.testforms.Working;
+import de.mknblch.sucode.interpreter.forms.testforms.WrongSignature;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

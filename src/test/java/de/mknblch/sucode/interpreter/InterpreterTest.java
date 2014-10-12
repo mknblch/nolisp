@@ -67,7 +67,7 @@ public class InterpreterTest {
     public void testEnvironment() throws Exception {
         final String code = "(+ 2 x)";
         final Environment env = new Environment();
-        env.put("x", 3);
+        env.bind("x", 3);
         final List<Object> evaluated = eval(code, env);
         dump(evaluated);
         assertEquals(5, evaluated.get(0));
