@@ -36,9 +36,9 @@ public class SpecialFormsTest extends AbstractFormTest {
 
     @Test
     public void testLambda() throws Exception {
-        List<Object> result = eval("((lambda (a b) (+ a b 2)) 1 2)");
+        List<Object> result = eval("((lambda (a b) (+ a b)) 1 2 )");
         dump(result);
-        assertEquals(5, result.get(0));
+        assertEquals(3, result.get(0));
     }
 
     @Test

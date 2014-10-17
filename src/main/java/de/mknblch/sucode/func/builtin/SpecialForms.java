@@ -1,5 +1,6 @@
 package de.mknblch.sucode.func.builtin;
 
+import de.mknblch.sucode.func.FunctionDefinitionException;
 import de.mknblch.sucode.interpreter.Context;
 import de.mknblch.sucode.interpreter.EvaluationException;
 import de.mknblch.sucode.interpreter.Interpreter;
@@ -35,7 +36,6 @@ public class SpecialForms {
 
     @Define(symbol = "let*", special = true) // (let* ((a 1) (b a)) b) => 1
     public static Object letAsterisk(ListStruct args, Context env) throws Exception {
-
         final Context localScope = env.derive();
         // car must be list
         for (Object def : (ListStruct) args.car()) {
@@ -51,7 +51,6 @@ public class SpecialForms {
 
     @Define(symbol = "lambda", special = true) // ((lambda (a) (+ a 1)) 1) => 2
     public static Object lambda(final ListStruct pArgs, final Context parentContext) throws Exception {
-
         // definition scope
         final List<String> symbols = TypeHelper.symbolList(pArgs.car());
 
@@ -63,11 +62,7 @@ public class SpecialForms {
             @Override
             public Object eval(ListStruct args, Context localContext) throws Exception {
                 // bind args to context
-                for (int i = 0; i < symbols.size(); i++) {
-                    localContext.bind(symbols.get(i), Interpreter.eval(args.car(), parentContext));
-                }
-//                if ()
-                    // procedure /t.scm:2:8: expects 1 argument, given 2: 1 2
+                bind(args, localContext, symbols, parentContext);
                 // eval with
                 return Interpreter.eval(func, localContext);
             }
@@ -87,6 +82,16 @@ public class SpecialForms {
                 return Type.FUNC;
             }
         };
+    }
+
+    private static void bind(ListStruct args, Context localContext, List<String> symbols, Context parentContext) throws Exception {
+        ListStruct temp = args;
+        for (int i = 0; i < symbols.size(); i++) {
+            if(null == temp) throw new EvaluationException(String.format(
+                    "procedure expects %d arguments, given %d", symbols.size(), i));
+            localContext.bind(symbols.get(i), Interpreter.eval(temp.car(), parentContext));
+            temp = temp.cdr();
+        }
     }
 
 }
