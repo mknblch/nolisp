@@ -11,7 +11,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * The FunctionBuilder constructs a set
+ * The FunctionBuilder constructs a set of functions from
+ * annotated static methods
  *
  * Created by mknblch on 11.10.2014.
  */
@@ -44,10 +45,9 @@ public class FunctionBuilder {
         return functions;
     }
 
-    public static Function wrapMethod(final Method func, final String symbol, final boolean specialForm) {
+    public static Function wrapMethod(final Method method, final String symbol, final boolean specialForm) {
 
         return new Function() {
-            private final Method method = func;
             @Override
             public Object eval(ListStruct args, Context context) throws EvaluationException {
                 try {
@@ -81,7 +81,7 @@ public class FunctionBuilder {
      */
     private static boolean suitable(Method method) throws FunctionDefinitionException {
         if(!method.isAnnotationPresent(Define.class)) return false;
-        if(method.getReturnType().equals(Void.TYPE)) throw new FunctionDefinitionException("Invalid signature. Method must have a return type.");
+        if(method.getReturnType().equals(Void.TYPE)) throw new FunctionDefinitionException("Invalid signature. Method must have a return value.");
         if(!Modifier.isStatic(method.getModifiers())) throw new FunctionDefinitionException("Invalid signature. Method must be static.");
         final Class<?>[] types = method.getParameterTypes();
         if(

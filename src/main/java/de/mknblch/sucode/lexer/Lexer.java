@@ -5,10 +5,10 @@ package de.mknblch.sucode.lexer;
  */
 public class Lexer {
 
-    public static final char[] IGNORE = new char[]{' ', '\t', '\r'};
-    public static final char[] NEWLINE = new char[]{'\n'};
-    public static final char[] SPECIAL_TOKEN = new char[]{'(', ')', '\'', '#'};
-    public static final char[] DOUBLEQUOTE = new char[]{'"'};
+    public static final char[] IGNORE_CHARS = new char[]{' ', '\t', '\r'};
+    public static final char[] NEWLINE_CHARS = new char[]{'\n'};
+    public static final char[] SPECIAL_TOKEN_CHARS = new char[]{'(', ')', '\'', '#'};
+    public static final char[] DOUBLEQUOTE_CHARS = new char[]{'"'};
     public static final String INT_REGEX = "^\\-?[0-9]+$";
     public static final String REAL_REGEX = "^\\-?[0-9]+\\.[0-9]+$";
     public static final String NIL_REGEX = "^(nil)|(NIL)$";
@@ -62,7 +62,7 @@ public class Lexer {
     }
 
     private Token tokenize(int position, char c) throws LexerException {
-        // first char of each token must decide it's type
+        // first char of each token must decide it's type or it's treated as symbol
         switch (c) {
             case '(':
                 offset++;
@@ -87,46 +87,43 @@ public class Lexer {
 
     private Token decideSymbolType(String literal, int position) throws LexerException {
 
-        if (literal.matches(INT_REGEX))
+        if (literal.matches(INT_REGEX)) {
             return TokenHelper.makeIntToken(literal, position);
-
-        else if (literal.matches(REAL_REGEX))
+        } else if (literal.matches(REAL_REGEX)) {
             return TokenHelper.makeRealToken(literal, position);
-
-        else if (literal.matches(NIL_REGEX))
+        } else if (literal.matches(NIL_REGEX)) {
             return TokenHelper.makeNilToken(position);
-
-        else if (literal.matches(TRUE_REGEX))
+        } else if (literal.matches(TRUE_REGEX)) {
             return TokenHelper.makeTrueToken(position);
-
-        else
+        } else {
             return TokenHelper.makeSymbolToken(literal, position);
+        }
     }
 
 
     private String tokenizeComment() {
         int startIndex = offset;
-        until(NEWLINE);
+        until(NEWLINE_CHARS);
         return code.substring(startIndex, offset);
     }
 
     private String tokenizeSymbol() {
         int startIndex = offset;
-        until(IGNORE, SPECIAL_TOKEN, NEWLINE);
+        until(IGNORE_CHARS, SPECIAL_TOKEN_CHARS, NEWLINE_CHARS);
         return code.substring(startIndex, offset);
     }
 
     private String tokenizeString() throws LexerException {
         // store start index of string including " and inc offset
         int startIndex = offset++;
-        until(DOUBLEQUOTE);
+        until(DOUBLEQUOTE_CHARS);
         // inc offset and store end of string including "
         int endIndex = ++offset;
         // if the last increment grows offset above code.length throw an exception
         if (offset > code.length()) {
             throw new LexerException(String.format("[%03d] premature end of string found.", startIndex));
         }
-        // TODO escaped "
+        // TODO escapes
         return code.substring(startIndex, endIndex);
     }
 
@@ -134,7 +131,7 @@ public class Lexer {
      * skip ignorable chars. e.g. whitespaces and newline
      */
     private void skipIgnorable() {
-        skip(IGNORE, NEWLINE);
+        skip(IGNORE_CHARS, NEWLINE_CHARS);
     }
 
     /**
@@ -144,10 +141,11 @@ public class Lexer {
      */
     private void skip(char[]... charsToSkip) {
         for (int i = offset; i < code.length(); i++) {
-            if (elementOf(code.charAt(offset), charsToSkip))
+            if (E(code.charAt(offset), charsToSkip)) {
                 offset++;
-            else
+            } else {
                 return;
+            }
         }
     }
 
@@ -158,10 +156,11 @@ public class Lexer {
      */
     private void until(char[]... charsToStop) {
         for (int i = offset; i < code.length(); i++) {
-            if (!elementOf(code.charAt(offset), charsToStop))
+            if (!E(code.charAt(offset), charsToStop)) {
                 offset++;
-            else
+            } else {
                 return;
+            }
         }
     }
 
@@ -170,13 +169,12 @@ public class Lexer {
      *
      * @param a single char for comparision
      * @param c set of chars
-     * @return true if a elementOf c. false otherwise
+     * @return true if a is element of c. false otherwise
      */
-    public static boolean elementOf(char a, char[]... c) {
+    public static boolean E (char a, char[]... c) {
         for (char[] chs : c) {
             for (int i = 0; i < chs.length; i++) {
-                if (a == chs[i])
-                    return true;
+                if (a == chs[i]) return true;
             }
         }
         return false;

@@ -4,7 +4,9 @@ import de.mknblch.sucode.interpreter.Context;
 import de.mknblch.sucode.interpreter.EvaluationException;
 import de.mknblch.sucode.interpreter.Interpreter;
 import de.mknblch.sucode.interpreter.func.Define;
+import de.mknblch.sucode.interpreter.func.Function;
 import de.mknblch.sucode.interpreter.func.TypeHelper;
+import de.mknblch.sucode.parser.structs.Atom;
 import de.mknblch.sucode.parser.structs.ListStruct;
 
 /**
@@ -24,7 +26,7 @@ public class SpecialForms {
         for (Object def : (ListStruct) args.car()) {
             // each element must be a symbol-value pair.
             final ListStruct pair = ((ListStruct) def);
-            // bind to local but eval args with parent env
+            // bind to local but eval args with parent scope
             localScope.bind(TypeHelper.symbolLiteral(pair.car()), Interpreter.eval(pair.cdr().car(), env));
         }
         return Interpreter.eval(args.cdr().car(), localScope);
@@ -49,7 +51,29 @@ public class SpecialForms {
     @Define(symbol = "lambda", special = true) // ((lambda (a) (+ a 1)) 1) => 2
     public static Object lambda(ListStruct args, Context env) throws Exception {
 
-        return null;
+
+
+        return new Function() {
+            @Override
+            public Object eval(ListStruct args, Context context) throws Exception {
+                return null;
+            }
+
+            @Override
+            public String getSymbol() {
+                return "lambda";
+            }
+
+            @Override
+            public boolean isSpecialForm() {
+                return false;
+            }
+
+            @Override
+            public Type getType() {
+                return null;
+            }
+        };
     }
 
 }
