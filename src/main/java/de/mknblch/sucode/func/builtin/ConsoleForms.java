@@ -1,10 +1,10 @@
-package de.mknblch.sucode.interpreter.func.builtin;
+package de.mknblch.sucode.func.builtin;
 
 import de.mknblch.sucode.interpreter.Context;
 import de.mknblch.sucode.interpreter.Interpreter;
-import de.mknblch.sucode.interpreter.func.Define;
-import de.mknblch.sucode.interpreter.func.TypeHelper;
-import de.mknblch.sucode.parser.structs.ListStruct;
+import de.mknblch.sucode.func.Define;
+import de.mknblch.sucode.func.TypeHelper;
+import de.mknblch.sucode.structs.ListStruct;
 
 /**
  * Created by mknblch on 12.10.2014.

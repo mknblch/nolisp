@@ -1,6 +1,6 @@
 package de.mknblch.sucode.interpreter;
 
-import de.mknblch.sucode.interpreter.func.Function;
+import de.mknblch.sucode.func.Function;
 
 import java.util.*;
 
@@ -26,7 +26,7 @@ public class Context {
     /**
      * used for derivation.
      */
-    private Context(Context parentEnv) {
+    public Context(Context parentEnv) {
         this.parentEnv = parentEnv;
         this.localMap = new HashMap<String, Object>();
     }

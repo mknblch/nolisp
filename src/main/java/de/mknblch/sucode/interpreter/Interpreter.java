@@ -1,7 +1,7 @@
 package de.mknblch.sucode.interpreter;
 
-import de.mknblch.sucode.interpreter.func.Function;
-import de.mknblch.sucode.parser.structs.*;
+import de.mknblch.sucode.func.Function;
+import de.mknblch.sucode.structs.*;
 
 /**
  * ListStruct Interpreter
@@ -11,6 +11,9 @@ import de.mknblch.sucode.parser.structs.*;
 public class Interpreter {
 
     public static Object eval(Object obj, Context context) throws Exception {
+
+//        System.out.println(FormatHelper.formatPretty(obj));
+
         // null evaluates to null
         if (null == obj) {
             return null;
@@ -25,8 +28,10 @@ public class Interpreter {
                     return evalFunction((ListStruct) atom, context);
                 case CONST:
                     return ((ConstStruct) atom).value;
+//                case FUNC:
+//                    return ((Function) atom).eval()
             }
-            throw new EvaluationException(String.format("Unknown Atom '%s'.", atom.getType()));
+            throw new EvaluationException(String.format("Unknown Atom %s:%s", atom, atom.getType()));
         }
         // non atoms evaluate to itself
         return obj;
@@ -37,6 +42,9 @@ public class Interpreter {
      */
     public static ListStruct evalList(ListStruct list, Context context) throws Exception {
         final ListStruct ret = new ListStruct();
+        if (null == list) {
+            return null;
+        }
         for (Object l : list) {
             ret.add(eval(l, context));
         }
@@ -46,10 +54,12 @@ public class Interpreter {
     private static Object evalFunction(ListStruct listStruct, Context context) throws Exception {
         final Object head = eval(listStruct.car(), context);
         if (null == head) {
-            throw new EvaluationException(String.format("Procedure application: expected procedure, given: 'nil'."));
+            throw new EvaluationException(String.format("Procedure application: expected procedure, given: nil"));
         }
         if(!(head instanceof Function)) {
-            throw new EvaluationException(String.format("Procedure application: expected procedure, given: '%s'.", head.getClass().getName()));
+//            return head;
+            // TODO verify correctness
+            throw new EvaluationException(String.format("Procedure application: expected procedure, given: %s:%s", head, head.getClass().getName()));
         }
         final Function function = (Function) head;
         // pre evaluate arguments if no special form

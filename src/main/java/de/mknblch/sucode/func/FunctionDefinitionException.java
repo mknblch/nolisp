@@ -1,4 +1,4 @@
-package de.mknblch.sucode.interpreter.func;
+package de.mknblch.sucode.func;
 
 /**
  * Created by mknblch on 12.10.2014.

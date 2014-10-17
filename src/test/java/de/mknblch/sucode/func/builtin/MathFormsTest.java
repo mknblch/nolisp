@@ -1,4 +1,4 @@
-package de.mknblch.sucode.interpreter.func.builtin;
+package de.mknblch.sucode.func.builtin;
 
 import org.junit.Test;
 

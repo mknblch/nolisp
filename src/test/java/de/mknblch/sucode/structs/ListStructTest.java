@@ -1,7 +1,6 @@
-package de.mknblch.sucode.parser.structs;
+package de.mknblch.sucode.structs;
 
 import de.mknblch.sucode.parser.FormatHelper;
-import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -83,5 +82,33 @@ public class ListStructTest {
         assertTrue(iterator.hasNext());
         assertEquals("3", iterator.next());
         assertFalse(iterator.hasNext());
+    }
+    @Test
+    public void testEmptyIterator() throws Exception {
+
+        final ListStruct listStruct = new ListStruct();
+        LOGGER.debug("Testing iterator for '{}'", FormatHelper.formatAsSExpression(listStruct));
+        final Iterator iterator = listStruct.iterator();
+
+        assertFalse(iterator.hasNext());
+    }
+
+    @Test
+    public void testGet() throws Exception {
+
+        final ListStruct listStruct = new ListStruct("1", "2", "3");
+        LOGGER.debug("Testing iterator for '{}'", FormatHelper.formatAsSExpression(listStruct));
+
+        assertEquals("1", listStruct.get(0));
+        assertEquals("2", listStruct.get(1));
+        assertEquals("3", listStruct.get(2));
+    }
+
+    @Test(expected = Exception.class)
+    public void testGetOverflow() throws Exception {
+
+        final ListStruct listStruct = new ListStruct("1", "2", "3");
+        LOGGER.debug("Testing iterator for '{}'", FormatHelper.formatAsSExpression(listStruct));
+        listStruct.get(3);
     }
 }

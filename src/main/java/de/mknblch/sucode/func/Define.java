@@ -1,4 +1,4 @@
-package de.mknblch.sucode.interpreter.func;
+package de.mknblch.sucode.func;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

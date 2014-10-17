@@ -1,8 +1,8 @@
-package de.mknblch.sucode.interpreter.func;
+package de.mknblch.sucode.func;
 
 import de.mknblch.sucode.interpreter.EvaluationException;
 import de.mknblch.sucode.interpreter.Context;
-import de.mknblch.sucode.parser.structs.ListStruct;
+import de.mknblch.sucode.structs.ListStruct;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

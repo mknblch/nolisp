@@ -1,4 +1,4 @@
-package de.mknblch.sucode.parser.structs;
+package de.mknblch.sucode.structs;
 
 /**
  * Created by mknblch on 28.09.2014.

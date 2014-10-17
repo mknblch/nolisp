@@ -1,4 +1,4 @@
-package de.mknblch.sucode.parser.structs;
+package de.mknblch.sucode.structs;
 
 import java.util.Iterator;
 
@@ -67,6 +67,15 @@ public class ListStruct implements Atom, Iterable {
         return car;
     }
 
+    public Object get(int n) {
+        ListStruct temp = this;
+        for (int i = n; i > 0; i--) {
+            if(null == temp.cdr) throw new IndexOutOfBoundsException(String.format("Index: %d, Size: %d", n, this.size()));
+            temp = temp.cdr;
+        }
+        return temp.car();
+    }
+
     /**
      * get rest list.
      */
@@ -98,7 +107,7 @@ public class ListStruct implements Atom, Iterable {
 
             @Override
             public boolean hasNext() {
-                return null != head;
+                return null != head && null != head.car();
             }
 
             @Override

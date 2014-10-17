@@ -1,13 +1,14 @@
-package de.mknblch.sucode.interpreter.func.builtin;
+package de.mknblch.sucode.func.builtin;
 
 import de.mknblch.sucode.interpreter.Context;
 import de.mknblch.sucode.interpreter.EvaluationException;
 import de.mknblch.sucode.interpreter.Interpreter;
-import de.mknblch.sucode.interpreter.func.Define;
-import de.mknblch.sucode.interpreter.func.Function;
-import de.mknblch.sucode.interpreter.func.TypeHelper;
-import de.mknblch.sucode.parser.structs.Atom;
-import de.mknblch.sucode.parser.structs.ListStruct;
+import de.mknblch.sucode.func.Define;
+import de.mknblch.sucode.func.Function;
+import de.mknblch.sucode.func.TypeHelper;
+import de.mknblch.sucode.structs.ListStruct;
+
+import java.util.List;
 
 /**
  * Created by mknblch on 12.10.2014.
@@ -49,19 +50,31 @@ public class SpecialForms {
 
 
     @Define(symbol = "lambda", special = true) // ((lambda (a) (+ a 1)) 1) => 2
-    public static Object lambda(ListStruct args, Context env) throws Exception {
+    public static Object lambda(final ListStruct pArgs, final Context parentContext) throws Exception {
 
+        // definition scope
+        final List<String> symbols = TypeHelper.symbolList(pArgs.car());
 
-
+        /* evaluation scope */
         return new Function() {
+
+            private final Object func = pArgs.cdr().car();
+
             @Override
-            public Object eval(ListStruct args, Context context) throws Exception {
-                return null;
+            public Object eval(ListStruct args, Context localContext) throws Exception {
+                // bind args to context
+                for (int i = 0; i < symbols.size(); i++) {
+                    localContext.bind(symbols.get(i), Interpreter.eval(args.car(), parentContext));
+                }
+//                if ()
+                    // procedure /t.scm:2:8: expects 1 argument, given 2: 1 2
+                // eval with
+                return Interpreter.eval(func, localContext);
             }
 
             @Override
             public String getSymbol() {
-                return "lambda";
+                return null;
             }
 
             @Override
@@ -71,7 +84,7 @@ public class SpecialForms {
 
             @Override
             public Type getType() {
-                return null;
+                return Type.FUNC;
             }
         };
     }

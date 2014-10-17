@@ -3,9 +3,9 @@ package de.mknblch.sucode.parser;
 import de.mknblch.sucode.lexer.Lexer;
 import de.mknblch.sucode.lexer.LexerException;
 import de.mknblch.sucode.lexer.Token;
-import de.mknblch.sucode.parser.structs.*;
+import de.mknblch.sucode.structs.*;
 
-import static de.mknblch.sucode.parser.structs.ConstStruct.ConstType;
+import static de.mknblch.sucode.structs.ConstStruct.ConstType;
 
 /**
  * The parser transforms a token stream into an AbstractSyntaxTree
@@ -15,15 +15,14 @@ import static de.mknblch.sucode.parser.structs.ConstStruct.ConstType;
 public class Parser {
 
     /**
-     * this class is used to identify the end of list.
+     * this struct is used to identify the end of list.
      */
-    private static class EndStruct implements Atom {
+    public static final Atom END_STRUCT = new Atom() {
         @Override
         public Type getType() {
             return Type.END;
         }
-    }
-    public static final Atom END_STRUCT = new EndStruct();
+    };
 
     public static final SymbolStruct QUOTE_STRUCT = new SymbolStruct("quote");
 
@@ -77,7 +76,7 @@ public class Parser {
     private ListStruct parseList(Lexer lexer) throws LexerException, ParserException {
         final ListStruct listStruct = new ListStruct();
         while (lexer.hasNext()) {
-            Atom atom = parseOne(lexer);
+            final Atom atom = parseOne(lexer);
             if (atom.getType() == Atom.Type.END) {
                 return listStruct;
             }

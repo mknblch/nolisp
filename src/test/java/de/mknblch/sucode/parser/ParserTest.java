@@ -2,7 +2,7 @@ package de.mknblch.sucode.parser;
 
 import de.mknblch.sucode.lexer.Lexer;
 import de.mknblch.sucode.lexer.LexerException;
-import de.mknblch.sucode.parser.structs.ListStruct;
+import de.mknblch.sucode.structs.ListStruct;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

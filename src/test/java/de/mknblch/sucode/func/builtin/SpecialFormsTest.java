@@ -1,8 +1,7 @@
-package de.mknblch.sucode.interpreter.func.builtin;
+package de.mknblch.sucode.func.builtin;
 
 import de.mknblch.sucode.interpreter.EvaluationException;
-import de.mknblch.sucode.parser.structs.ConstStruct;
-import org.junit.Ignore;
+import de.mknblch.sucode.structs.ConstStruct;
 import org.junit.Test;
 
 import java.util.List;
@@ -37,8 +36,15 @@ public class SpecialFormsTest extends AbstractFormTest {
 
     @Test
     public void testLambda() throws Exception {
-        List<Object> result = eval("((lambda (a) (+ a 1)) 1)");
+        List<Object> result = eval("((lambda (a b) (+ a b 2)) 1 2)");
         dump(result);
-        assertEquals(2, result.get(0));
+        assertEquals(5, result.get(0));
+    }
+
+    @Test
+    public void testEmptyLambda() throws Exception {
+        List<Object> result = eval("( ((lambda () 1)))");
+        dump(result);
+        assertEquals(1, result.get(0));
     }
 }

@@ -1,9 +1,9 @@
 package de.mknblch.sucode.parser;
 
-import de.mknblch.sucode.parser.structs.Atom;
-import de.mknblch.sucode.parser.structs.ConstStruct;
-import de.mknblch.sucode.parser.structs.ListStruct;
-import de.mknblch.sucode.parser.structs.SymbolStruct;
+import de.mknblch.sucode.structs.Atom;
+import de.mknblch.sucode.structs.ConstStruct;
+import de.mknblch.sucode.structs.ListStruct;
+import de.mknblch.sucode.structs.SymbolStruct;
 
 public class FormatHelper {
 
@@ -66,9 +66,11 @@ public class FormatHelper {
                     buffer.append(formatAtom(element));
                 }
                 return String.format("[%s]", buffer.toString());
+            default:
+                return String.format("%s:", atom.getType());
         }
 
-        throw new ParserException("Unable to format " + atom);
+//        throw new ParserException("Unable to format " + atom);
     }
 
 

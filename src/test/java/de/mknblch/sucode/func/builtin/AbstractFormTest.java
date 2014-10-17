@@ -1,13 +1,13 @@
-package de.mknblch.sucode.interpreter.func.builtin;
+package de.mknblch.sucode.func.builtin;
 
 import de.mknblch.sucode.interpreter.Context;
 import de.mknblch.sucode.interpreter.Interpreter;
-import de.mknblch.sucode.interpreter.func.FunctionBuilder;
+import de.mknblch.sucode.func.FunctionBuilder;
 import de.mknblch.sucode.lexer.Lexer;
 import de.mknblch.sucode.parser.FormatHelper;
 import de.mknblch.sucode.parser.Parser;
 import de.mknblch.sucode.parser.ParserException;
-import de.mknblch.sucode.parser.structs.ListStruct;
+import de.mknblch.sucode.structs.ListStruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
