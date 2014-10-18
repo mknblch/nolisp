@@ -55,7 +55,7 @@ public class FunctionBuilder {
                 } catch (IllegalAccessException e) {
                     throw new EvaluationException(e);
                 } catch (InvocationTargetException e) {
-                    throw new EvaluationException(e);
+                    throw new EvaluationException(e.getCause());
                 }
             }
 
