@@ -27,7 +27,7 @@ public class ContextTest {
 
     public static void dump(Context env) throws EvaluationException {
         do {
-            LOGGER.debug("dumping {}", env);
+            LOGGER.debug("dumping Context ");
             for(String key : env.keySetLocal()) {
                 LOGGER.debug("{} = {}", key, env.get(key));
             }

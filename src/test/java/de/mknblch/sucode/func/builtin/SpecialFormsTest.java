@@ -21,7 +21,7 @@ public class SpecialFormsTest extends AbstractFormTest {
         List<Object> result = eval("(quote 1)");
         dump(result);
         System.out.println(result.get(0).getClass().getSimpleName());
-        assertTrue(result.get(0) instanceof ConstStruct);
+        assertEquals(1, result.get(0));
     }
 
     @Test(expected = EvaluationException.class)

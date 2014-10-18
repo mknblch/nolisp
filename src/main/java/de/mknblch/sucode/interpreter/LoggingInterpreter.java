@@ -13,10 +13,9 @@ public class LoggingInterpreter extends DefaultInterpreter {
 
     @Override
     public Object eval(Object obj, Context context) throws Exception {
-
-        LOGGER.trace("{}", FormatHelper.formatPretty(obj));
-
-        return super.eval(obj, context);
+        final Object evaluated = super.eval(obj, context);
+        LOGGER.trace("{} => {}", FormatHelper.formatPretty(obj), FormatHelper.formatPretty(evaluated));
+        return evaluated;
     }
 
 

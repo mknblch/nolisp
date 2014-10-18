@@ -72,7 +72,7 @@ public class SpecialForms {
             @Override
             public Object eval(ListStruct args, Context localContext) throws Exception {
                 // bind args to context
-                bind(args, localContext, symbols, parentContext);
+                bind(parentContext, localContext, symbols, args);
                 // eval with
                 return interpreter.eval(func, localContext);
             }
@@ -94,7 +94,11 @@ public class SpecialForms {
         };
     }
 
-    private static void bind(ListStruct args, Context localContext, List<String> symbols, Context parentContext) throws Exception {
+    /**
+     * bind each argument in args with key at args index in symbols to the local context by evaluating it with the
+     * parent context.
+     */
+    private static void bind(Context parentContext, Context localContext, List<String> symbols, ListStruct args) throws Exception {
         ListStruct temp = args;
         for (int i = 0; i < symbols.size(); i++) {
             if(null == temp) throw new EvaluationException(String.format(

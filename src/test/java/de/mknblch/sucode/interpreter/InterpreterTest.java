@@ -56,6 +56,13 @@ public class InterpreterTest extends AbstractFormTest {
     }
 
     @Test
+    public void testComment() throws Exception {
+        final String code = ";hallo\n'a";
+        final List<Object> evaluated = eval(code);
+        dump(evaluated);
+    }
+
+    @Test
     public void testEnvironment() throws Exception {
         final String code = "(+ 2 x)";
         final Context env = new Context();

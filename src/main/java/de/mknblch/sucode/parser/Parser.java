@@ -24,49 +24,50 @@ public class Parser {
         }
     };
 
+    public static final Atom COMMENT_STRUCT = new Atom() {
+        @Override
+        public Type getType() {
+            return null;
+        }
+    };
+
     public static final SymbolStruct QUOTE_STRUCT = new SymbolStruct("quote");
 
     public ListStruct parse(Lexer lexer) throws ParserException, LexerException {
         final ListStruct root = new ListStruct();
         while (lexer.hasNext()) {
-            final Atom atom = parseOne(lexer);
-            // skip comments
-            if (null == atom) {
-                continue;
-            }
-            // unbalanced count of braces found
-            if (atom.getType() == Atom.Type.END) {
-                throw new ParserException(String.format("[%03d] Unbalanced AST. One or more opening braces missing.", lexer.getOffset()));
-            }
-            root.add(atom);
+            final Object o = parseOne(lexer);
+            if(o == COMMENT_STRUCT) continue;
+            if(o == END_STRUCT) throw new ParserException(String.format("[%03d] Unbalanced AST. One or more opening braces missing.", lexer.getOffset()));
+            root.add(o);
         }
         return root;
     }
 
-    private Atom parseOne(Lexer lexer) throws LexerException, ParserException {
+    private Object parseOne(Lexer lexer) throws LexerException, ParserException {
         final Token token = lexer.next();
         switch (token.type) {
-            case LIST_BEGIN:
-                return parseList(lexer);
+            case LIST_BEGIN: return parseList(lexer);
+
             case LIST_END:
                 return END_STRUCT;
-            case QUOTE:
-                // expand to (quote arg)
-                return new ListStruct(QUOTE_STRUCT, parseOne(lexer));
-            case SYMBOL:
-                return new SymbolStruct(token.literal);
+
+            // expand to (quote arg)
+            case QUOTE: return new ListStruct(QUOTE_STRUCT, parseOne(lexer));
+
+            case SYMBOL: return new SymbolStruct(token.literal);
+
             case STRING:
-                return new ConstStruct(ConstType.STRING, token.value);
             case INT:
-                return new ConstStruct(ConstType.INT, token.value);
             case REAL:
-                return new ConstStruct(ConstType.REAL, token.value);
-            case NIL:
-                return new ConstStruct(ConstType.NIL, null);
-            case TRUE:
-                return new ConstStruct(ConstType.TRUE, null);
-            case LINE_COMMENT:
-                return null;
+                return token.value;
+
+            case NIL: return new ConstStruct(ConstType.NIL, null);
+
+            case TRUE: return Boolean.TRUE; //new ConstStruct(ConstType.TRUE, null);
+
+            case LINE_COMMENT: return COMMENT_STRUCT;
+
             default:
                 throw new RuntimeException(String.format("[%03d] Type '%s' Not yet implemented.", lexer.getOffset(), token.type.name()));
         }
@@ -76,7 +77,13 @@ public class Parser {
     private ListStruct parseList(Lexer lexer) throws LexerException, ParserException {
         final ListStruct listStruct = new ListStruct();
         while (lexer.hasNext()) {
-            final Atom atom = parseOne(lexer);
+            final Object o = parseOne(lexer);
+            if (!(o instanceof Atom)) {
+                listStruct.add(o);
+                continue;
+            }
+
+            final Atom atom = ((Atom) o);
             if (atom.getType() == Atom.Type.END) {
                 return listStruct;
             }
