@@ -1,16 +1,14 @@
 package de.mknblch.sucode.func;
 
-import de.mknblch.sucode.func.builtin.ConsoleForms;
-import de.mknblch.sucode.func.builtin.MathForms;
-import de.mknblch.sucode.func.builtin.MathFormsTest;
-import de.mknblch.sucode.func.builtin.SpecialForms;
+import de.mknblch.sucode.builtin.ConsoleForms;
+import de.mknblch.sucode.builtin.MathForms;
+import de.mknblch.sucode.builtin.MathFormsTest;
+import de.mknblch.sucode.builtin.SpecialForms;
 import de.mknblch.sucode.interpreter.Context;
-import de.mknblch.sucode.interpreter.DefaultInterpreter;
 import de.mknblch.sucode.interpreter.Interpreter;
-import de.mknblch.sucode.func.FunctionBuilder;
 import de.mknblch.sucode.interpreter.LoggingInterpreter;
 import de.mknblch.sucode.lexer.Lexer;
-import de.mknblch.sucode.parser.FormatHelper;
+import de.mknblch.sucode.helper.FormatHelper;
 import de.mknblch.sucode.parser.Parser;
 import de.mknblch.sucode.parser.ParserException;
 import de.mknblch.sucode.structs.ListStruct;
@@ -45,7 +43,7 @@ public abstract class AbstractFormTest {
         final ListStruct program = PARSER.parse(new Lexer(code));
         final ArrayList<Object> ret = new ArrayList<Object>();
 
-        context.defineAll(FunctionBuilder.build(INTERPRETER, SpecialForms.class, MathForms.class, ConsoleForms.class));
+        context.defineAll(FunctionBuilder.build(SpecialForms.class, MathForms.class, ConsoleForms.class));
         LOGGER.debug("code: {}", FormatHelper.formatPretty(program));
         LOGGER.debug("AST : {}", FormatHelper.formatAtom(program));
         for (Object p : program) {

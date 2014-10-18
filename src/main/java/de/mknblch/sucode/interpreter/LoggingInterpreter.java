@@ -1,6 +1,6 @@
 package de.mknblch.sucode.interpreter;
 
-import de.mknblch.sucode.parser.FormatHelper;
+import de.mknblch.sucode.helper.FormatHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

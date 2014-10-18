@@ -14,16 +14,12 @@ import static de.mknblch.sucode.structs.ConstStruct.ConstType;
  */
 public class Parser {
 
-    /**
-     * this struct is used to identify the end of list.
-     */
     public static final Atom END_STRUCT = new Atom() {
         @Override
         public Type getType() {
-            return Type.END;
+            return null;
         }
     };
-
     public static final Atom COMMENT_STRUCT = new Atom() {
         @Override
         public Type getType() {
@@ -37,8 +33,8 @@ public class Parser {
         final ListStruct root = new ListStruct();
         while (lexer.hasNext()) {
             final Object o = parseOne(lexer);
-            if(o == COMMENT_STRUCT) continue;
-            if(o == END_STRUCT) throw new ParserException(String.format("[%03d] Unbalanced AST. One or more opening braces missing.", lexer.getOffset()));
+            if(COMMENT_STRUCT == o) continue;
+            if(END_STRUCT == o) throw new ParserException(String.format("[%03d] Unbalanced AST. One or more opening braces missing.", lexer.getOffset()));
             root.add(o);
         }
         return root;
@@ -47,26 +43,19 @@ public class Parser {
     private Object parseOne(Lexer lexer) throws LexerException, ParserException {
         final Token token = lexer.next();
         switch (token.type) {
+
             case LIST_BEGIN: return parseList(lexer);
-
-            case LIST_END:
-                return END_STRUCT;
-
-            // expand to (quote arg)
             case QUOTE: return new ListStruct(QUOTE_STRUCT, parseOne(lexer));
-
             case SYMBOL: return new SymbolStruct(token.literal);
+            case NIL: return new ConstStruct(ConstType.NIL, null); // TODO null?
+            case TRUE: return Boolean.TRUE; //new ConstStruct(ConstType.TRUE, null);
+            case LINE_COMMENT: return COMMENT_STRUCT;
+            case LIST_END: return END_STRUCT;
 
             case STRING:
             case INT:
             case REAL:
                 return token.value;
-
-            case NIL: return new ConstStruct(ConstType.NIL, null);
-
-            case TRUE: return Boolean.TRUE; //new ConstStruct(ConstType.TRUE, null);
-
-            case LINE_COMMENT: return COMMENT_STRUCT;
 
             default:
                 throw new RuntimeException(String.format("[%03d] Type '%s' Not yet implemented.", lexer.getOffset(), token.type.name()));
@@ -78,16 +67,10 @@ public class Parser {
         final ListStruct listStruct = new ListStruct();
         while (lexer.hasNext()) {
             final Object o = parseOne(lexer);
-            if (!(o instanceof Atom)) {
-                listStruct.add(o);
-                continue;
-            }
-
-            final Atom atom = ((Atom) o);
-            if (atom.getType() == Atom.Type.END) {
+            if(o == END_STRUCT) {
                 return listStruct;
             }
-            listStruct.add(atom);
+            listStruct.add(o);
         }
         throw new ParserException(String.format("[%03d] Unbalanced AST. One or more closing braces missing.", lexer.getOffset()));
     }

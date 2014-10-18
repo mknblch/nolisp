@@ -9,21 +9,18 @@ import de.mknblch.sucode.structs.ListStruct;
  * Created by mknblch on 12.10.2014.
  */
 public class Working {
-
-    private static Interpreter interpreter;
-
-    @Define
-    public static Object sum (ListStruct args, Context env) {
+    @Define(symbol = "sum")
+    public static Object sum (Context env, ListStruct args) {
         return 0;
     }
 
     @Define(symbol = "foo")
-    public static Boolean t1 (ListStruct args, Context env) {
+    public static Boolean t1 (Context env, ListStruct args) {
         return false;
     }
 
     @Define(symbol = {"bar", "baz"})
-    public static Boolean t2 (ListStruct args, Context env) {
+    public static Boolean t2 (Context env, ListStruct args) {
         return false;
     }
 }

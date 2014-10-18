@@ -7,6 +7,6 @@ import de.mknblch.sucode.structs.ListStruct;
 
 public class NoReturnType {
 
-    @Define
+    @Define(symbol = "wrong")
     public static void wrong (ListStruct args, Context env, Interpreter interpreter) { }
 }

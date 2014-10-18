@@ -1,6 +1,6 @@
 package de.mknblch.sucode.structs;
 
-import de.mknblch.sucode.parser.FormatHelper;
+import de.mknblch.sucode.helper.FormatHelper;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,9 +1,8 @@
-package de.mknblch.sucode.func.builtin;
+package de.mknblch.sucode.builtin;
 
 import de.mknblch.sucode.func.AbstractFormTest;
 import de.mknblch.sucode.func.Function;
 import de.mknblch.sucode.interpreter.EvaluationException;
-import de.mknblch.sucode.structs.ConstStruct;
 import org.junit.Test;
 
 import java.util.List;
@@ -20,7 +19,6 @@ public class SpecialFormsTest extends AbstractFormTest {
     public void testQuote() throws Exception {
         List<Object> result = eval("(quote 1)");
         dump(result);
-        System.out.println(result.get(0).getClass().getSimpleName());
         assertEquals(1, result.get(0));
     }
 

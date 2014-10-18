@@ -1,13 +1,11 @@
-package de.mknblch.sucode.func.builtin;
+package de.mknblch.sucode.builtin;
 
-import de.mknblch.sucode.func.InjectInterpreter;
 import de.mknblch.sucode.interpreter.Context;
 import de.mknblch.sucode.interpreter.EvaluationException;
-import de.mknblch.sucode.interpreter.Interpreter;
 import de.mknblch.sucode.func.Define;
 import de.mknblch.sucode.structs.ListStruct;
 
-import static de.mknblch.sucode.func.TypeHelper.asReal;
+import static de.mknblch.sucode.helper.TypeHelper.asReal;
 
 /**
  * Created by mknblch on 12.10.2014.
@@ -15,7 +13,7 @@ import static de.mknblch.sucode.func.TypeHelper.asReal;
 public class MathForms {
 
     @Define(symbol = {"+", "add", "sum"})
-    public static Object plus(ListStruct args, Context context) throws Exception {
+    public static Object plus(Context context, ListStruct args) throws Exception {
         Object result = 0;
         for (Object arg : args) {
             final Object evaluated = arg; //arg;
@@ -25,27 +23,27 @@ public class MathForms {
     }
 
     @Define(symbol = {"-", "sub"})
-    public static Object minus(ListStruct args, Context context) throws Exception {
+    public static Object minus(Context context, ListStruct args) throws Exception {
         return minus(args.car(), args.cdr().car());
     }
 
     @Define(symbol = {"*", "mul"})
-    public static Object mul(ListStruct args, Context context) throws Exception {
+    public static Object mul(Context context, ListStruct args) throws Exception {
         return mul(args.car(), args.cdr().car());
     }
 
     @Define(symbol = {"/", "div"})
-    public static Object div(ListStruct args, Context context) throws Exception {
+    public static Object div(Context context, ListStruct args) throws Exception {
         return div(args.car(), args.cdr().car());
     }
 
     @Define(symbol = {"%", "mod"})
-    public static Object mod(ListStruct args, Context context) throws Exception {
+    public static Object mod(Context context, ListStruct args) throws Exception {
         return mod(args.car(), args.cdr().car());
     }
 
     @Define(symbol = {"**", "pow"})
-    public static Object pow(ListStruct args, Context context) throws Exception {
+    public static Object pow(Context context, ListStruct args) throws Exception {
         return Math.pow(
                 asReal(args.car()),
                 asReal(args.cdr().car()));

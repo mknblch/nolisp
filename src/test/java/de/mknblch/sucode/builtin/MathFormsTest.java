@@ -1,4 +1,4 @@
-package de.mknblch.sucode.func.builtin;
+package de.mknblch.sucode.builtin;
 
 import de.mknblch.sucode.func.AbstractFormTest;
 import org.junit.Test;

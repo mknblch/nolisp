@@ -1,4 +1,4 @@
-package de.mknblch.sucode.func;
+package de.mknblch.sucode.helper;
 
 import de.mknblch.sucode.interpreter.EvaluationException;
 import de.mknblch.sucode.structs.ConstStruct;

@@ -1,6 +1,8 @@
 package de.mknblch.sucode.interpreter;
 
 import de.mknblch.sucode.func.Function;
+import de.mknblch.sucode.func.NonSpecialForm;
+import de.mknblch.sucode.func.SpecialForm;
 import de.mknblch.sucode.structs.*;
 
 /**
@@ -49,24 +51,16 @@ public class DefaultInterpreter implements Interpreter {
 
     private Object evalFunction(ListStruct listStruct, Context context) throws Exception {
         final Object head = eval(listStruct.car(), context);
-        // verify type
-        expectFunction(head);
-        final Function function = (Function) head;
-        // pre evaluate arguments if no special form
-        if(!function.isSpecialForm()) {
-            return function.eval(evalList(listStruct.cdr(), context), context);
-        }
-        return function.eval(listStruct.cdr(), context);
-    }
-
-    private static void expectFunction(Object head) throws EvaluationException {
         if (null == head) {
             throw new EvaluationException(String.format("Procedure application: expected procedure, given: nil"));
         }
-        if(!(head instanceof Function)) {
+        if(head instanceof NonSpecialForm) {
+            return ((NonSpecialForm) head).eval(context, evalList(listStruct.cdr(), context));
+        } else if(head instanceof SpecialForm) {
+            return ((SpecialForm) head).eval(this, context, listStruct.cdr());
+        } else {
             // TODO verify correctness
             throw new EvaluationException(String.format("Procedure application: expected procedure, given: %s:%s", head, head.getClass().getName()));
         }
     }
-
 }

@@ -6,6 +6,6 @@ import de.mknblch.sucode.func.Define;
 import de.mknblch.sucode.structs.ListStruct;
 
 public class NotStatic {
-    @Define
+    @Define(symbol = "wrong")
     public Object wrong (ListStruct args, Context env, Interpreter interpreter) { return null; }
 }

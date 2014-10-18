@@ -1,5 +1,6 @@
 package de.mknblch.sucode.parser;
 
+import de.mknblch.sucode.helper.FormatHelper;
 import de.mknblch.sucode.lexer.Lexer;
 import de.mknblch.sucode.lexer.LexerException;
 import de.mknblch.sucode.structs.ListStruct;

@@ -1,5 +1,6 @@
-package de.mknblch.sucode.parser;
+package de.mknblch.sucode.helper;
 
+import de.mknblch.sucode.parser.ParserException;
 import de.mknblch.sucode.structs.Atom;
 import de.mknblch.sucode.structs.ConstStruct;
 import de.mknblch.sucode.structs.ListStruct;
