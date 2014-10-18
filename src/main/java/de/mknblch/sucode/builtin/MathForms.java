@@ -3,7 +3,7 @@ package de.mknblch.sucode.builtin;
 import de.mknblch.sucode.interpreter.Context;
 import de.mknblch.sucode.interpreter.EvaluationException;
 import de.mknblch.sucode.func.Define;
-import de.mknblch.sucode.structs.ListStruct;
+import de.mknblch.sucode.ast.ListStruct;
 
 import static de.mknblch.sucode.helper.TypeHelper.asReal;
 

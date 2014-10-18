@@ -1,4 +1,4 @@
-package de.mknblch.sucode.structs;
+package de.mknblch.sucode.ast;
 
 import de.mknblch.sucode.helper.FormatHelper;
 import org.junit.Test;

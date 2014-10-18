@@ -1,12 +1,10 @@
 package de.mknblch.sucode.func;
 
-import de.mknblch.sucode.interpreter.DefaultInterpreter;
 import de.mknblch.sucode.interpreter.Context;
 import de.mknblch.sucode.interpreter.EvaluationException;
 import de.mknblch.sucode.interpreter.Interpreter;
-import de.mknblch.sucode.structs.ListStruct;
+import de.mknblch.sucode.ast.ListStruct;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;

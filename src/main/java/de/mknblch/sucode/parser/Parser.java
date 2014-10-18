@@ -3,9 +3,9 @@ package de.mknblch.sucode.parser;
 import de.mknblch.sucode.lexer.Lexer;
 import de.mknblch.sucode.lexer.LexerException;
 import de.mknblch.sucode.lexer.Token;
-import de.mknblch.sucode.structs.*;
+import de.mknblch.sucode.ast.*;
 
-import static de.mknblch.sucode.structs.ConstStruct.ConstType;
+import static de.mknblch.sucode.ast.ConstStruct.ConstType;
 
 /**
  * The parser transforms a token stream into an AbstractSyntaxTree
@@ -47,7 +47,7 @@ public class Parser {
             case LIST_BEGIN: return parseList(lexer);
             case QUOTE: return new ListStruct(QUOTE_STRUCT, parseOne(lexer));
             case SYMBOL: return new SymbolStruct(token.literal);
-            case NIL: return new ConstStruct(ConstType.NIL, null); // TODO null?
+            case NIL: return null; //return new ConstStruct(ConstType.NIL, null);
             case TRUE: return Boolean.TRUE; //new ConstStruct(ConstType.TRUE, null);
             case LINE_COMMENT: return COMMENT_STRUCT;
             case LIST_END: return END_STRUCT;

@@ -16,7 +16,7 @@ public @interface Define {
     /**
      * <p>returns whether the function is a special form or not. </p>
      *
-     * <p>special forms take their arguments as pure structs and evaluate them under certain conditions.
+     * <p>special forms take their arguments as pure ast and evaluate them under certain conditions.
      * to do so a reference to the actual interpreter is needed and must be defined as static field using
      * the @{@link Special} annotation.<br>
      * </p>

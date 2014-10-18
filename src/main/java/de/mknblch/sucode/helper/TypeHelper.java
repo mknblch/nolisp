@@ -1,9 +1,9 @@
 package de.mknblch.sucode.helper;
 
 import de.mknblch.sucode.interpreter.EvaluationException;
-import de.mknblch.sucode.structs.ConstStruct;
-import de.mknblch.sucode.structs.ListStruct;
-import de.mknblch.sucode.structs.SymbolStruct;
+import de.mknblch.sucode.ast.ConstStruct;
+import de.mknblch.sucode.ast.ListStruct;
+import de.mknblch.sucode.ast.SymbolStruct;
 
 import java.util.ArrayList;
 import java.util.List;

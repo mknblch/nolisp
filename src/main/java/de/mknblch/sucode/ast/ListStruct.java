@@ -1,4 +1,4 @@
-package de.mknblch.sucode.structs;
+package de.mknblch.sucode.ast;
 
 import java.util.Iterator;
 

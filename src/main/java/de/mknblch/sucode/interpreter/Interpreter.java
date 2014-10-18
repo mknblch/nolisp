@@ -1,6 +1,6 @@
 package de.mknblch.sucode.interpreter;
 
-import de.mknblch.sucode.structs.ListStruct;
+import de.mknblch.sucode.ast.ListStruct;
 
 /**
  * Created by mknblch on 18.10.2014.

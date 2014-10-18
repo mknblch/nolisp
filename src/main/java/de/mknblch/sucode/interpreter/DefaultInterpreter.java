@@ -1,9 +1,8 @@
 package de.mknblch.sucode.interpreter;
 
-import de.mknblch.sucode.func.Function;
 import de.mknblch.sucode.func.NonSpecialForm;
 import de.mknblch.sucode.func.SpecialForm;
-import de.mknblch.sucode.structs.*;
+import de.mknblch.sucode.ast.*;
 
 /**
  * ListStruct Interpreter
@@ -29,8 +28,8 @@ public class DefaultInterpreter implements Interpreter {
                 return context.get(((SymbolStruct) atom).literal);
             case LIST:
                 return evalFunction((ListStruct) atom, context);
-            case CONST:
-                return ((ConstStruct) atom).value;
+//            case CONST:
+//                return ((ConstStruct) atom).value;
             default:
                 throw new EvaluationException(String.format("Unknown Atom %s:%s", atom, atom.getType()));
         }

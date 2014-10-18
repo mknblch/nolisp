@@ -1,4 +1,4 @@
-package de.mknblch.sucode.structs;
+package de.mknblch.sucode.ast;
 
 /**
  * Created by mknblch on 05.10.2014.

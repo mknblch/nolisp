@@ -5,7 +5,7 @@ import de.mknblch.sucode.helper.TypeHelper;
 import de.mknblch.sucode.interpreter.Context;
 import de.mknblch.sucode.interpreter.EvaluationException;
 import de.mknblch.sucode.interpreter.Interpreter;
-import de.mknblch.sucode.structs.ListStruct;
+import de.mknblch.sucode.ast.ListStruct;
 
 import java.util.List;
 

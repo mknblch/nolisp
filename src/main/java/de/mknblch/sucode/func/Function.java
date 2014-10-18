@@ -1,9 +1,6 @@
 package de.mknblch.sucode.func;
 
-import de.mknblch.sucode.interpreter.Context;
-import de.mknblch.sucode.interpreter.Interpreter;
-import de.mknblch.sucode.structs.Atom;
-import de.mknblch.sucode.structs.ListStruct;
+import de.mknblch.sucode.ast.Atom;
 
 /**
  * Created by mknblch on 11.10.2014.
