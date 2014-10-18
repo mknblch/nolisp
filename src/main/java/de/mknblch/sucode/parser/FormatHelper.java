@@ -48,16 +48,16 @@ public class FormatHelper {
 
         // return Non-Atoms
         if (!(obj instanceof Atom)) {
-            return String.valueOf(obj);
+            return String.format("%s:%s", String.valueOf(obj), obj.getClass().getSimpleName());
         }
         final Atom atom = (Atom) obj;
 
         switch (atom.getType()) {
 
             case SYMBOL:
-                return String.format("SYM:%s", ((SymbolStruct) atom).literal);
+                return String.format("%s:SYM", ((SymbolStruct) atom).literal);
             case CONST:
-                return String.format("C%s:%2$s", ((ConstStruct) atom).type.name(), String.valueOf(((ConstStruct) atom).value));
+                return String.format("$2%s:C%1$s", ((ConstStruct) atom).type.name(), String.valueOf(((ConstStruct) atom).value));
             case LIST:
                 final ListStruct listStruct = (ListStruct) atom;
                 final StringBuffer buffer = new StringBuffer();

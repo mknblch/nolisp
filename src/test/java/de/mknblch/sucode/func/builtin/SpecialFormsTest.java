@@ -45,6 +45,9 @@ public class SpecialFormsTest extends AbstractFormTest {
 
     @Test
     public void testEmptyLambda() throws Exception {
+        final String as
+                = "asdasd asda";
+
         List<Object> result = eval("((lambda () 1))");
         dump(result);
         assertEquals(1, result.get(0));
@@ -69,5 +72,12 @@ public class SpecialFormsTest extends AbstractFormTest {
         List<Object> result = eval("(setq c 1) c");
         dump(result);
         assertEquals(1, result.get(0));
+    }
+
+    @Test
+    public void testSetqList() throws Exception {
+        List<Object> result = eval("(setq a 1 b (+ 1 a) c (+ a b))");
+        dump(result);
+        assertEquals(3, result.get(0));
     }
 }

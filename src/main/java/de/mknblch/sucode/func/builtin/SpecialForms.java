@@ -18,11 +18,15 @@ public class SpecialForms {
 
     @Define(symbol = "setq", special = true)
     public static Object setq(ListStruct args, Context context) throws Exception {
+        ListStruct temp = args;
+        Object value;
+        do {
+            final String key = TypeHelper.symbolLiteral(temp.car());
+            value = interpreter.eval(temp.cdr().car(), context);
+            context.bind(key, value);
+            temp = temp.cdr().cdr();
+        } while (temp != null);
 
-        final String key = TypeHelper.symbolLiteral(args.car());
-        // bind to local but eval args with parent scope
-        final Object value = interpreter.eval(args.cdr().car(), context);
-        context.bind(key, value);
         return value;
     }
 

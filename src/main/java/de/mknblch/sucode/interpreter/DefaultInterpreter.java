@@ -41,7 +41,8 @@ public class DefaultInterpreter implements Interpreter {
             return null;
         }
         for (Object l : list) {
-            ret.add(eval(l, context));
+            if (!(l instanceof Atom)) ret.add(l);
+            else ret.add(eval(l, context));
         }
         return ret;
     }
