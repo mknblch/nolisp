@@ -66,11 +66,11 @@ public class FormatHelper {
                     buffer.append(formatAtom(element));
                 }
                 return String.format("[%s]", buffer.toString());
-            default:
-                return String.format("%s:", atom.getType());
+            case FUNC:
+                return String.format("#<Closure>", atom.getType());
         }
 
-//        throw new ParserException("Unable to format " + atom);
+        throw new ParserException("Unable to format " + atom);
     }
 
 

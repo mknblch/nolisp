@@ -16,6 +16,15 @@ import java.util.List;
  */
 public class SpecialForms {
 
+    @Define(symbol = "setq", special = true)
+    public static Object setq(ListStruct args, Context context) throws Exception {
+
+        final String key = TypeHelper.symbolLiteral(args.car());
+        // bind to local but eval args with parent scope
+        context.bind(key, Interpreter.eval(args.cdr().car(), context));
+        return null;
+    }
+
     @Define(symbol = "quote", special = true)
     public static Object quote(ListStruct args, Context context) throws EvaluationException {
         return args.car();

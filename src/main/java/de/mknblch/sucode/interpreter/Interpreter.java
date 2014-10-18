@@ -57,7 +57,6 @@ public class Interpreter {
             throw new EvaluationException(String.format("Procedure application: expected procedure, given: nil"));
         }
         if(!(head instanceof Function)) {
-//            return head;
             // TODO verify correctness
             throw new EvaluationException(String.format("Procedure application: expected procedure, given: %s:%s", head, head.getClass().getName()));
         }
