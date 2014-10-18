@@ -55,4 +55,18 @@ public class SpecialFormsTest extends AbstractFormTest {
         dump(result);
         assertTrue(result.get(0) instanceof Function);
     }
+
+    @Test
+    public void testSetqLambda() throws Exception {
+        List<Object> result = eval("(setq c (lambda (a b) (+ a b))) (c 3 5)");
+        dump(result);
+        assertEquals(8, result.get(1));
+    }
+
+    @Test
+    public void testSetq() throws Exception {
+        List<Object> result = eval("(setq c 1) c");
+        dump(result);
+        assertEquals(1, result.get(0));
+    }
 }

@@ -28,8 +28,6 @@ public class Interpreter {
                     return evalFunction((ListStruct) atom, context);
                 case CONST:
                     return ((ConstStruct) atom).value;
-//                case FUNC:
-//                    return ((Function) atom).eval()
             }
             throw new EvaluationException(String.format("Unknown Atom %s:%s", atom, atom.getType()));
         }
@@ -53,6 +51,17 @@ public class Interpreter {
 
     private static Object evalFunction(ListStruct listStruct, Context context) throws Exception {
         final Object head = eval(listStruct.car(), context);
+        // verify type
+        expectFunction(head);
+        final Function function = (Function) head;
+        // pre evaluate arguments if no special form
+        if(!function.isSpecialForm()) {
+            return function.eval(evalList(listStruct.cdr(), context), context);
+        }
+        return function.eval(listStruct.cdr(), context);
+    }
+
+    private static void expectFunction(Object head) throws EvaluationException {
         if (null == head) {
             throw new EvaluationException(String.format("Procedure application: expected procedure, given: nil"));
         }
@@ -60,12 +69,6 @@ public class Interpreter {
             // TODO verify correctness
             throw new EvaluationException(String.format("Procedure application: expected procedure, given: %s:%s", head, head.getClass().getName()));
         }
-        final Function function = (Function) head;
-        // pre evaluate arguments if no special form
-        if(!function.isSpecialForm()) {
-            return function.eval(evalList(listStruct.cdr(), context), context);
-        }
-        return function.eval(listStruct.cdr(), context);
     }
 
 }

@@ -21,8 +21,9 @@ public class SpecialForms {
 
         final String key = TypeHelper.symbolLiteral(args.car());
         // bind to local but eval args with parent scope
-        context.bind(key, Interpreter.eval(args.cdr().car(), context));
-        return null;
+        final Object value = Interpreter.eval(args.cdr().car(), context);
+        context.bind(key, value);
+        return value;
     }
 
     @Define(symbol = "quote", special = true)
