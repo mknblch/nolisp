@@ -5,8 +5,6 @@ import de.mknblch.sucode.lexer.LexerException;
 import de.mknblch.sucode.lexer.Token;
 import de.mknblch.sucode.ast.*;
 
-import static de.mknblch.sucode.ast.ConstStruct.ConstType;
-
 /**
  * The parser transforms a token stream into an AbstractSyntaxTree
  * <p/>

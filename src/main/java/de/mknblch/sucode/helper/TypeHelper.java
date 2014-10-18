@@ -1,7 +1,6 @@
 package de.mknblch.sucode.helper;
 
 import de.mknblch.sucode.interpreter.EvaluationException;
-import de.mknblch.sucode.ast.ConstStruct;
 import de.mknblch.sucode.ast.ListStruct;
 import de.mknblch.sucode.ast.SymbolStruct;
 
@@ -43,10 +42,6 @@ public class TypeHelper {
         return ((SymbolStruct) o).literal;
     }
 
-    public static Object constValue(Object o) throws EvaluationException {
-        if(!(o instanceof ConstStruct)) throw new EvaluationException("Illegal CONST cast.");
-        return ((ConstStruct) o).value;
-    }
     public static Boolean asBoolean(Object o) {
         return o != null;
     }
@@ -66,19 +61,4 @@ public class TypeHelper {
         }
         return flat;
     }
-
-    public static <T> List<T> convertConstListFlat(Object o) throws EvaluationException {
-        if(!(o instanceof ListStruct)) throw new EvaluationException("Illegal LIST cast.");
-        final ArrayList<T> flat = new ArrayList<T>();
-        final ListStruct listStruct = (ListStruct) o;
-        try {
-            for (Object t : listStruct) {
-                flat.add((T) constValue(t));
-            }
-        } catch (ClassCastException cce) {
-            throw new EvaluationException("Illegal CONST cast.");
-        }
-        return flat;
-    }
-
 }

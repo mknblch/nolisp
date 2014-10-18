@@ -13,6 +13,6 @@ public abstract class NonSpecialForm implements Function {
 
     @Override
     public Atom.Type getType() {
-        return Atom.Type.FUNC;
+        return Type.FORM;
     }
 }

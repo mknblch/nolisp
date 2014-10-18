@@ -34,20 +34,20 @@ public abstract class AbstractFormTest {
     }
 
     protected List<Object> eval(String code) throws Exception {
-
-
-        return eval(code, new Context());
+        final Context context = new Context();
+        context.defineAll(FunctionBuilder.build(SpecialForms.class, MathForms.class, ConsoleForms.class));
+        return eval(code, context);
     }
 
     protected List<Object> eval(String code, Context context) throws Exception {
         final ListStruct program = PARSER.parse(new Lexer(code));
         final ArrayList<Object> ret = new ArrayList<Object>();
-
-        context.defineAll(FunctionBuilder.build(SpecialForms.class, MathForms.class, ConsoleForms.class));
         LOGGER.debug("code: {}", FormatHelper.formatPretty(program));
         LOGGER.debug("AST : {}", FormatHelper.formatAtom(program));
         for (Object p : program) {
-            ret.add(INTERPRETER.eval(p, context));
+            final Object eval = INTERPRETER.eval(p, context);
+            ret.add(eval);
+            LOGGER.debug("eval: {}", FormatHelper.formatAtom(eval));
         }
         return ret;
     }

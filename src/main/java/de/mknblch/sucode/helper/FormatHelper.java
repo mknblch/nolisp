@@ -2,7 +2,6 @@ package de.mknblch.sucode.helper;
 
 import de.mknblch.sucode.parser.ParserException;
 import de.mknblch.sucode.ast.Atom;
-import de.mknblch.sucode.ast.ConstStruct;
 import de.mknblch.sucode.ast.ListStruct;
 import de.mknblch.sucode.ast.SymbolStruct;
 
@@ -29,8 +28,6 @@ public class FormatHelper {
         switch (atom.getType()) {
             case SYMBOL:
                 return ((SymbolStruct) atom).literal;
-            case CONST:
-                return String.valueOf(((ConstStruct) atom).value);
             case LIST:
                 final StringBuffer sb = new StringBuffer();
                 ListStruct temp = (ListStruct) (ListStruct) atom;
@@ -57,8 +54,6 @@ public class FormatHelper {
 
             case SYMBOL:
                 return String.format("%s:SYM", ((SymbolStruct) atom).literal);
-            case CONST:
-                return String.format("$2%s:C%1$s", ((ConstStruct) atom).type.name(), String.valueOf(((ConstStruct) atom).value));
             case LIST:
                 final ListStruct listStruct = (ListStruct) atom;
                 final StringBuffer buffer = new StringBuffer();
@@ -67,8 +62,9 @@ public class FormatHelper {
                     buffer.append(formatAtom(element));
                 }
                 return String.format("[%s]", buffer.toString());
-            case FUNC:
-                return String.format("#<Closure>", atom.getType());
+            case SPECIAL_FORM:
+            case FORM:
+                return String.format("#<%s>", atom.getType());
         }
 
         throw new ParserException("Unable to format " + atom);
@@ -87,8 +83,6 @@ public class FormatHelper {
 
             case SYMBOL:
                 return "SYM";
-            case CONST:
-                return String.format("C%s", ((ConstStruct) atom).type.name());
             case LIST:
                 ListStruct listStruct = (ListStruct) atom;
                 final StringBuffer buffer = new StringBuffer();
@@ -114,8 +108,6 @@ public class FormatHelper {
 
             case SYMBOL:
                 return String.format("%s", ((SymbolStruct) atom).literal);
-            case CONST:
-                return String.format("%s", String.valueOf(((ConstStruct) atom).value));
             case LIST:
                 ListStruct listStruct = (ListStruct) atom;
                 final StringBuffer buffer = new StringBuffer();

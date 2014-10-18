@@ -13,6 +13,6 @@ public abstract class SpecialForm implements Function {
 
     @Override
     public Type getType() {
-        return Type.FUNC;
+        return Type.SPECIAL_FORM;
     }
 }
