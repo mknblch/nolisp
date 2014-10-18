@@ -6,6 +6,7 @@ import de.mknblch.sucode.func.Define;
 import de.mknblch.sucode.structs.ListStruct;
 
 public class NoReturnType {
+
     @Define
     public static void wrong (ListStruct args, Context env, Interpreter interpreter) { }
 }

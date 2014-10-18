@@ -1,8 +1,14 @@
-package de.mknblch.sucode.func.builtin;
+package de.mknblch.sucode.func;
 
+import de.mknblch.sucode.func.builtin.ConsoleForms;
+import de.mknblch.sucode.func.builtin.MathForms;
+import de.mknblch.sucode.func.builtin.MathFormsTest;
+import de.mknblch.sucode.func.builtin.SpecialForms;
 import de.mknblch.sucode.interpreter.Context;
+import de.mknblch.sucode.interpreter.DefaultInterpreter;
 import de.mknblch.sucode.interpreter.Interpreter;
 import de.mknblch.sucode.func.FunctionBuilder;
+import de.mknblch.sucode.interpreter.LoggingInterpreter;
 import de.mknblch.sucode.lexer.Lexer;
 import de.mknblch.sucode.parser.FormatHelper;
 import de.mknblch.sucode.parser.Parser;
@@ -21,6 +27,7 @@ public abstract class AbstractFormTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MathFormsTest.class);
     private static final Parser PARSER = new Parser();
+    public static final Interpreter INTERPRETER = new LoggingInterpreter();
 
     protected void dump(List<Object> evaluated) throws ParserException {
         for (int i = 0; i < evaluated.size(); i++) {
@@ -29,17 +36,20 @@ public abstract class AbstractFormTest {
     }
 
     protected List<Object> eval(String code) throws Exception {
+
+
         return eval(code, new Context());
     }
 
     protected List<Object> eval(String code, Context context) throws Exception {
         final ListStruct program = PARSER.parse(new Lexer(code));
         final ArrayList<Object> ret = new ArrayList<Object>();
-        context.defineAll(FunctionBuilder.scan(SpecialForms.class, MathForms.class, ConsoleForms.class));
+
+        context.defineAll(FunctionBuilder.build(INTERPRETER, SpecialForms.class, MathForms.class, ConsoleForms.class));
         LOGGER.debug("code: {}", FormatHelper.formatPretty(program));
         LOGGER.debug("AST : {}", FormatHelper.formatAtom(program));
         for (Object p : program) {
-            ret.add(Interpreter.eval(p, context));
+            ret.add(INTERPRETER.eval(p, context));
         }
         return ret;
     }

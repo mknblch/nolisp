@@ -1,6 +1,6 @@
 package de.mknblch.sucode.interpreter;
 
-import de.mknblch.sucode.func.builtin.AbstractFormTest;
+import de.mknblch.sucode.func.AbstractFormTest;
 import de.mknblch.sucode.parser.Parser;
 import org.junit.Test;
 import org.slf4j.Logger;

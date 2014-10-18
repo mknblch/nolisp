@@ -1,12 +1,9 @@
 package de.mknblch.sucode.func.builtin;
 
-import de.mknblch.sucode.func.FunctionDefinitionException;
+import de.mknblch.sucode.func.*;
 import de.mknblch.sucode.interpreter.Context;
 import de.mknblch.sucode.interpreter.EvaluationException;
 import de.mknblch.sucode.interpreter.Interpreter;
-import de.mknblch.sucode.func.Define;
-import de.mknblch.sucode.func.Function;
-import de.mknblch.sucode.func.TypeHelper;
 import de.mknblch.sucode.structs.ListStruct;
 
 import java.util.List;
@@ -16,12 +13,15 @@ import java.util.List;
  */
 public class SpecialForms {
 
+    @InjectInterpreter
+    private static Interpreter interpreter;
+
     @Define(symbol = "setq", special = true)
     public static Object setq(ListStruct args, Context context) throws Exception {
 
         final String key = TypeHelper.symbolLiteral(args.car());
         // bind to local but eval args with parent scope
-        final Object value = Interpreter.eval(args.cdr().car(), context);
+        final Object value = interpreter.eval(args.cdr().car(), context);
         context.bind(key, value);
         return value;
     }
@@ -39,9 +39,9 @@ public class SpecialForms {
             // each element must be a symbol-value pair.
             final ListStruct pair = ((ListStruct) def);
             // bind to local but eval args with parent scope
-            localScope.bind(TypeHelper.symbolLiteral(pair.car()), Interpreter.eval(pair.cdr().car(), env));
+            localScope.bind(TypeHelper.symbolLiteral(pair.car()), interpreter.eval(pair.cdr().car(), env));
         }
-        return Interpreter.eval(args.cdr().car(), localScope);
+        return interpreter.eval(args.cdr().car(), localScope);
     }
 
     @Define(symbol = "let*", special = true) // (let* ((a 1) (b a)) b) => 1
@@ -52,10 +52,10 @@ public class SpecialForms {
             // each element must be a symbol-value pair.
             final ListStruct pair = ((ListStruct) def);
             // bind to local and eval with local scope
-            localScope.bind(TypeHelper.symbolLiteral(pair.car()), Interpreter.eval(pair.cdr().car(), localScope));
+            localScope.bind(TypeHelper.symbolLiteral(pair.car()), interpreter.eval(pair.cdr().car(), localScope));
         }
         // evaluate cdar with newly build variable scope
-        return Interpreter.eval(args.cdr().car(), localScope);
+        return interpreter.eval(args.cdr().car(), localScope);
     }
 
 
@@ -74,7 +74,7 @@ public class SpecialForms {
                 // bind args to context
                 bind(args, localContext, symbols, parentContext);
                 // eval with
-                return Interpreter.eval(func, localContext);
+                return interpreter.eval(func, localContext);
             }
 
             @Override
@@ -99,7 +99,7 @@ public class SpecialForms {
         for (int i = 0; i < symbols.size(); i++) {
             if(null == temp) throw new EvaluationException(String.format(
                     "procedure expects %d arguments, given %d", symbols.size(), i));
-            localContext.bind(symbols.get(i), Interpreter.eval(temp.car(), parentContext));
+            localContext.bind(symbols.get(i), interpreter.eval(temp.car(), parentContext));
             temp = temp.cdr();
         }
     }

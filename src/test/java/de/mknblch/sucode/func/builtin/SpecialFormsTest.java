@@ -1,5 +1,6 @@
 package de.mknblch.sucode.func.builtin;
 
+import de.mknblch.sucode.func.AbstractFormTest;
 import de.mknblch.sucode.func.Function;
 import de.mknblch.sucode.interpreter.EvaluationException;
 import de.mknblch.sucode.structs.ConstStruct;

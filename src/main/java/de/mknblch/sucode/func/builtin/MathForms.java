@@ -1,5 +1,6 @@
 package de.mknblch.sucode.func.builtin;
 
+import de.mknblch.sucode.func.InjectInterpreter;
 import de.mknblch.sucode.interpreter.Context;
 import de.mknblch.sucode.interpreter.EvaluationException;
 import de.mknblch.sucode.interpreter.Interpreter;
@@ -17,7 +18,7 @@ public class MathForms {
     public static Object plus(ListStruct args, Context context) throws Exception {
         Object result = 0;
         for (Object arg : args) {
-            final Object evaluated = Interpreter.eval(arg, context);
+            final Object evaluated = arg; //arg;
             result = plus(result, evaluated);
         }
         return result;
@@ -25,29 +26,29 @@ public class MathForms {
 
     @Define(symbol = {"-", "sub"})
     public static Object minus(ListStruct args, Context context) throws Exception {
-        return minus(Interpreter.eval(args.car(), context), Interpreter.eval(args.cdr().car(), context));
+        return minus(args.car(), args.cdr().car());
     }
 
     @Define(symbol = {"*", "mul"})
     public static Object mul(ListStruct args, Context context) throws Exception {
-        return mul(Interpreter.eval(args.car(), context), Interpreter.eval(args.cdr().car(), context));
+        return mul(args.car(), args.cdr().car());
     }
 
     @Define(symbol = {"/", "div"})
     public static Object div(ListStruct args, Context context) throws Exception {
-        return div(Interpreter.eval(args.car(), context), Interpreter.eval(args.cdr().car(), context));
+        return div(args.car(), args.cdr().car());
     }
 
     @Define(symbol = {"%", "mod"})
     public static Object mod(ListStruct args, Context context) throws Exception {
-        return mod(Interpreter.eval(args.car(), context), Interpreter.eval(args.cdr().car(), context));
+        return mod(args.car(), args.cdr().car());
     }
 
     @Define(symbol = {"**", "pow"})
     public static Object pow(ListStruct args, Context context) throws Exception {
         return Math.pow(
-                asReal(Interpreter.eval(args.car(), context)),
-                asReal(Interpreter.eval(args.cdr().car(), context)));
+                asReal(args.car()),
+                asReal(args.cdr().car()));
     }
 
     private static Object mod(Object a, Object b) throws EvaluationException {

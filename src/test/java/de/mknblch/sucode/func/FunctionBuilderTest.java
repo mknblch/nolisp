@@ -1,6 +1,8 @@
 package de.mknblch.sucode.func;
 
 import de.mknblch.sucode.func.testforms.*;
+import de.mknblch.sucode.interpreter.DefaultInterpreter;
+import de.mknblch.sucode.interpreter.Interpreter;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,32 +18,32 @@ import static junit.framework.TestCase.assertTrue;
 public class FunctionBuilderTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FunctionBuilderTest.class);
+    private static final Interpreter interpreter = new DefaultInterpreter();
 
     @Test(expected = FunctionDefinitionException.class)
     public void shouldFail_WrongSignature() throws Exception {
-        FunctionBuilder.scan(WrongSignature.class);
+        FunctionBuilder.build(interpreter, WrongSignature.class);
     }
 
     @Test(expected = FunctionDefinitionException.class)
     public void shouldFail_NoReturnType() throws Exception {
-        FunctionBuilder.scan(NoReturnType.class);
+        FunctionBuilder.build(interpreter, NoReturnType.class);
     }
 
     @Test(expected = FunctionDefinitionException.class)
     public void shouldFail_NotStatic() throws Exception {
-        FunctionBuilder.scan(NotStatic.class);
+        FunctionBuilder.build(interpreter, NotStatic.class);
     }
 
     @Test(expected = FunctionDefinitionException.class)
     public void shouldFail_functionRedefinition() throws Exception {
-        FunctionBuilder.scan(DuplicateMethods.class);
+        FunctionBuilder.build(interpreter, DuplicateMethods.class);
     }
 
     @Test
     public void shouldWork_registerValid() throws Exception {
 
-        final FunctionBuilder functionBuilder = new FunctionBuilder();
-        final Set<Function> scan = functionBuilder.scan(Working.class);
+        final Set<Function> scan = FunctionBuilder.build(interpreter, Working.class);
         assertEquals(4, scan.size());
     }
 }
