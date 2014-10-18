@@ -15,9 +15,6 @@ import static org.junit.Assert.assertEquals;
  */
 public class InterpreterTest extends AbstractFormTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(InterpreterTest.class);
-    private static final Parser PARSER = new Parser();
-
     @Test
     public void testPrint() throws Exception {
         final String code = "(print (+ 1 1(+ 2 3)))";
@@ -64,12 +61,12 @@ public class InterpreterTest extends AbstractFormTest {
 
     @Test
     public void testEnvironment() throws Exception {
-        final String code = "(+ 2 x)";
+        final String code = "x";
         final Context env = new Context();
         env.bind("x", 3);
         final List<Object> evaluated = eval(code, env);
         dump(evaluated);
-        assertEquals(5, evaluated.get(0));
+        assertEquals(3, evaluated.get(0));
     }
 
 

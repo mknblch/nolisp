@@ -45,6 +45,9 @@ public class FormatHelper {
     public static String formatAtom(Object obj) throws ParserException {
 
         // return Non-Atoms
+        if (null == obj) {
+            return "null";
+        }
         if (!(obj instanceof Atom)) {
             return String.format("%s:%s", String.valueOf(obj), obj.getClass().getSimpleName());
         }
