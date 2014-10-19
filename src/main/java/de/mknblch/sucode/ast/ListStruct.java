@@ -7,19 +7,23 @@ import java.util.Iterator;
  */
 public class ListStruct implements Atom, Iterable {
 
+    private boolean isEmptyList = false;
     private Object car = null;
     private ListStruct cdr = null;
 
     /**
      * constructs an empty list
      */
-    public ListStruct() {
+    public ListStruct(Object car, Object... rest) {
+
+        this.car = car;
+        for (int i = 0; i < rest.length; i++) {
+            append(rest[i]);
+        }
     }
 
-    public ListStruct(Object... items) {
-        for (int i = 0; i < items.length; i++) {
-            add(items[i]);
-        }
+    public ListStruct() {
+        isEmptyList = true;
     }
 
     @Override
@@ -40,17 +44,39 @@ public class ListStruct implements Atom, Iterable {
         return temp;
     }
 
+
     /**
-     * add element to the list
+     * add element to the list if:
+     * the list has a successor  the element is appended to the end.
+     * if not
      *
      * @param atom
      */
-    public void add(Object atom) {
+    public ListStruct append(Object atom) {
 
-        if (null == car) {
-            car = atom;
-        } else
-            last().cdr = new ListStruct(atom);
+        if (cdr == null) cdr = new ListStruct(atom);
+        else last().cdr = new ListStruct(atom);
+
+        // TODO this or new ListStruct?
+        return this;
+    }
+
+    public void add (Object o) {
+        if (isEmptyList) {
+            isEmptyList = false;
+            car = o;
+        } else {
+            append(o);
+        }
+    }
+
+    public Object get(int n) {
+        ListStruct temp = this;
+        for (int i = n; i > 0; i--) {
+            if(null == temp.cdr) throw new IndexOutOfBoundsException(String.format("Index: %d, Size: %d", n, this.size()));
+            temp = temp.cdr;
+        }
+        return temp.car();
     }
 
     /**
@@ -65,15 +91,6 @@ public class ListStruct implements Atom, Iterable {
      */
     public Object car() {
         return car;
-    }
-
-    public Object get(int n) {
-        ListStruct temp = this;
-        for (int i = n; i > 0; i--) {
-            if(null == temp.cdr) throw new IndexOutOfBoundsException(String.format("Index: %d, Size: %d", n, this.size()));
-            temp = temp.cdr;
-        }
-        return temp.car();
     }
 
     public Object getOrNull(int n) {
@@ -144,6 +161,8 @@ public class ListStruct implements Atom, Iterable {
      */
     @Override
     public Iterator iterator() {
+
+        // TODO buggy with null values in car
         return new Iterator() {
             private ListStruct head = ListStruct.this;
 

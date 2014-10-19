@@ -44,7 +44,6 @@ public class FormatHelper {
 
     public static String formatAtom(Object obj) throws ParserException {
 
-        // return Non-Atoms
         if (null == obj) {
             return "null";
         }
@@ -64,7 +63,7 @@ public class FormatHelper {
                     if (buffer.length() > 0) buffer.append(", ");
                     buffer.append(formatAtom(element));
                 }
-                return String.format("[%s]", buffer.toString());
+                return String.format("[ %s ]", buffer.toString());
             case SPECIAL_FORM:
             case FORM:
                 return String.format("#<%s>", atom.getType());

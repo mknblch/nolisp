@@ -5,6 +5,9 @@ import de.mknblch.sucode.lexer.LexerException;
 import de.mknblch.sucode.lexer.Token;
 import de.mknblch.sucode.ast.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * The parser transforms a token stream into an AbstractSyntaxTree
  * <p/>
@@ -43,7 +46,7 @@ public class Parser {
         switch (token.type) {
 
             case LIST_BEGIN: return parseList(lexer);
-            case QUOTE: return new ListStruct(QUOTE_STRUCT, parseOne(lexer));
+            case QUOTE: return new ListStruct(QUOTE_STRUCT).append(parseOne(lexer));
             case SYMBOL: return new SymbolStruct(token.literal);
             case NIL: return null; //return new ConstStruct(ConstType.NIL, null);
             case TRUE: return Boolean.TRUE; //new ConstStruct(ConstType.TRUE, null);

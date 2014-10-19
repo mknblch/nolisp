@@ -11,7 +11,6 @@ import de.mknblch.sucode.ast.*;
  */
 public class DefaultInterpreter implements Interpreter {
 
-
     @Override
     public Object eval(Object obj, Context context) throws Exception {
         // null evaluates to null

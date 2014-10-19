@@ -81,6 +81,12 @@ public class ParserTest {
         assertASTEquals("( ( quote ( 1 2 3 ) ) ( quote ( 1 2 3 ) ) x )", code);
     }
 
+    @Test
+    public void testNil() throws Exception {
+        String code = "(nil)";
+        assertASTEquals("( ( nil ) )", code);
+    }
+
     @Test(expected = ParserException.class)
     public void shouldFail_UnbalancedBraceOpen() throws Exception {
         String code = "(()";

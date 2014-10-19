@@ -44,12 +44,12 @@ public abstract class AbstractFormTest {
     protected List<Object> eval(String code, Context context) throws Exception {
         final ListStruct program = PARSER.parse(new Lexer(code));
         final ArrayList<Object> ret = new ArrayList<Object>();
-        LOGGER.debug("code: {}", FormatHelper.formatPretty(program));
-        LOGGER.debug("AST : {}", FormatHelper.formatAtom(program));
+        LOGGER.debug("parser: {}", FormatHelper.formatPretty(program));
+        LOGGER.debug("AST   : {}", FormatHelper.formatAtom(program));
         for (Object p : program) {
             final Object eval = INTERPRETER.eval(p, context);
-            ret.add(eval);
             LOGGER.debug("eval: {}", FormatHelper.formatAtom(eval));
+            ret.add(eval);
         }
         return ret;
     }

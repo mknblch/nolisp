@@ -50,6 +50,38 @@ public class ListStructTest {
     }
 
     @Test
+    public void testAddGetNull() throws Exception {
+        final ListStruct listStruct = new ListStruct();
+        LOGGER.debug("adding '1' to '{}'", FormatHelper.formatAsSExpression(listStruct));
+        listStruct.add("1");
+        LOGGER.debug("adding null to '{}'", FormatHelper.formatAsSExpression(listStruct));
+        listStruct.add(null);
+        LOGGER.debug("adding '3' to '{}'", FormatHelper.formatAsSExpression(listStruct));
+        listStruct.add("3");
+        LOGGER.debug("result : '{}'", FormatHelper.formatAsSExpression(listStruct));
+
+        assertEquals("1", listStruct.get(0));
+        assertNull(listStruct.get(1));
+        assertEquals("3", listStruct.get(2));
+    }
+
+    @Test
+    public void testAddGetNullFirst() throws Exception {
+        final ListStruct listStruct = new ListStruct();
+        LOGGER.debug("adding null to '{}'", FormatHelper.formatAsSExpression(listStruct));
+        listStruct.add(null);
+        LOGGER.debug("adding '1' to '{}'", FormatHelper.formatAsSExpression(listStruct));
+        listStruct.add("1");
+        LOGGER.debug("adding '3' to '{}'", FormatHelper.formatAsSExpression(listStruct));
+        listStruct.add("3");
+        LOGGER.debug("result : '{}'", FormatHelper.formatAsSExpression(listStruct));
+
+        assertNull(listStruct.get(0));
+        assertEquals("1", listStruct.get(1));
+        assertEquals("3", listStruct.get(2));
+    }
+
+    @Test
     public void testHasSuccessor() throws Exception {
 
         final ListStruct listStruct = new ListStruct("1", "2", "3");

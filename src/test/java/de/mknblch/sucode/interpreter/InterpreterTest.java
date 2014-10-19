@@ -60,6 +60,15 @@ public class InterpreterTest extends AbstractFormTest {
     }
 
     @Test
+    public void testNull() throws Exception {
+        final String code = "nil";
+        final List<Object> evaluated = eval(code);
+        dump(evaluated);
+        assertEquals(1, evaluated.size());
+        assertEquals(null, evaluated.get(0));
+    }
+
+    @Test
     public void testEnvironment() throws Exception {
         final String code = "x";
         final Context env = new Context();
