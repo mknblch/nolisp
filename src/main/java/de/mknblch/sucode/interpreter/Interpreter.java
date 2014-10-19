@@ -7,9 +7,6 @@ import de.mknblch.sucode.ast.ListStruct;
  */
 public interface Interpreter {
 
-    /**
-     * the method which gets called by every form. the actual inte
-     */
     public Object eval(Object obj, Context context) throws Exception;
 
     /**

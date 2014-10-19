@@ -1,5 +1,8 @@
 package de.mknblch.sucode.func;
 
+import de.mknblch.sucode.ast.Function;
+import de.mknblch.sucode.ast.NonSpecialForm;
+import de.mknblch.sucode.ast.SpecialForm;
 import de.mknblch.sucode.interpreter.Context;
 import de.mknblch.sucode.interpreter.EvaluationException;
 import de.mknblch.sucode.interpreter.Interpreter;

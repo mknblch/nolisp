@@ -1,7 +1,7 @@
 package de.mknblch.sucode.interpreter;
 
-import de.mknblch.sucode.func.NonSpecialForm;
-import de.mknblch.sucode.func.SpecialForm;
+import de.mknblch.sucode.ast.NonSpecialForm;
+import de.mknblch.sucode.ast.SpecialForm;
 import de.mknblch.sucode.ast.*;
 
 /**
@@ -14,24 +14,15 @@ public class DefaultInterpreter implements Interpreter {
     @Override
     public Object eval(Object obj, Context context) throws Exception {
         // null evaluates to null
-        if (null == obj) {
-            return null;
-        }
+        if (null == obj) return null;
         // non atoms evaluate to itself
-        if (!(obj instanceof Atom)) {
-            return obj;
-        }
+        if (!(obj instanceof Atom)) return obj;
         // atoms must be evaluated
         final Atom atom = (Atom) obj;
         switch (atom.getType()) {
-            case SYMBOL:
-                return context.get(((SymbolStruct) atom).literal);
-            case LIST:
-                return evalFunction((ListStruct) atom, context);
-//            case CONST:
-//                return ((ConstStruct) atom).value;
-            default:
-                throw new EvaluationException(String.format("Unknown Atom %s:%s", atom, atom.getType()));
+            case SYMBOL: return context.get(((SymbolStruct) atom).literal);
+            case LIST: return evalFunction((ListStruct) atom, context);
+            default: throw new EvaluationException(String.format("Unknown Atom %s:%s", atom, atom.getType()));
         }
     }
 
@@ -58,7 +49,6 @@ public class DefaultInterpreter implements Interpreter {
         } else if(head instanceof SpecialForm) {
             return ((SpecialForm) head).eval(this, context, listStruct.cdr());
         } else {
-            // TODO verify correctness
             throw new EvaluationException(String.format("Procedure application: expected procedure, given: %s:%s", head, head.getClass().getName()));
         }
     }

@@ -54,9 +54,7 @@ public class Lexer {
     public Token next() throws LexerException {
         skipIgnorable();
         // return null if end already reached
-        if (offset >= code.length()) {
-            return null;
-        }
+        if (offset >= code.length()) return null;
         // fetch char at offset and tokenize
         return tokenize(offset, code.charAt(offset));
     }

@@ -1,5 +1,6 @@
 package de.mknblch.sucode.builtin;
 
+import de.mknblch.sucode.ast.NonSpecialForm;
 import de.mknblch.sucode.func.*;
 import de.mknblch.sucode.helper.TypeHelper;
 import de.mknblch.sucode.interpreter.Context;

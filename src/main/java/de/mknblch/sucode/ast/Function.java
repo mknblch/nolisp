@@ -1,4 +1,4 @@
-package de.mknblch.sucode.func;
+package de.mknblch.sucode.ast;
 
 import de.mknblch.sucode.ast.Atom;
 

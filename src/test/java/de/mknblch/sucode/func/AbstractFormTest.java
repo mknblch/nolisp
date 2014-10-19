@@ -34,8 +34,7 @@ public abstract class AbstractFormTest {
     }
 
     protected List<Object> eval(String code) throws Exception {
-        final Context context = new Context();
-        context.defineAll(FunctionBuilder.build(SpecialForms.class, MathForms.class, ConsoleForms.class));
+        final Context context = new Context(SpecialForms.class, MathForms.class, ConsoleForms.class);
         return eval(code, context);
     }
 

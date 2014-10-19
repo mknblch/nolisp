@@ -1,11 +1,8 @@
 package de.mknblch.sucode.func;
 
+import de.mknblch.sucode.ast.Function;
 import de.mknblch.sucode.func.testforms.*;
-import de.mknblch.sucode.interpreter.DefaultInterpreter;
-import de.mknblch.sucode.interpreter.Interpreter;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Set;
 

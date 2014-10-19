@@ -1,6 +1,8 @@
 package de.mknblch.sucode.interpreter;
 
-import de.mknblch.sucode.func.Function;
+import de.mknblch.sucode.ast.Function;
+import de.mknblch.sucode.func.FunctionBuilder;
+import de.mknblch.sucode.func.FunctionDefinitionException;
 
 import java.util.*;
 
@@ -20,7 +22,12 @@ public class Context {
      * construct empty environment.
      */
     public Context() {
-        this(null);
+        this.parentEnv = null;
+        this.localMap = new HashMap<String, Object>();
+    }
+    public Context(Class<?> ...buildInFunctionContainer) throws FunctionDefinitionException {
+        this();
+        defineAll(FunctionBuilder.build(buildInFunctionContainer));
     }
 
     /**
@@ -130,7 +137,7 @@ public class Context {
 
     public void defineAll (Collection<Function> functions) {
         for (Function function : functions) {
-            bind(function.getSymbol(), function);
+            define(function);
         }
     }
 
@@ -140,7 +147,7 @@ public class Context {
 
     public void defineAllGlobal (Collection<Function> functions) {
         for (Function function : functions) {
-            bindGlobal(function.getSymbol(), function);
+            defineGlobal(function);
         }
     }
 
@@ -156,17 +163,6 @@ public class Context {
         unbind(key);
     }
 
-    public void undefineAll (Collection<Function> functions) {
-        for (Function function : functions) {
-            unbind(function.getSymbol());
-        }
-    }
-
-    public void undefineAllLocal (Collection<Function> functions) {
-        for (Function function : functions) {
-            unbindLocal(function.getSymbol());
-        }
-    }
 
     /**
      * put value into local environment.
@@ -237,13 +233,6 @@ public class Context {
             return union(keySetLocal(), parentEnv.keySetLocal());
         }
         return localMap.keySet();
-    }
-
-    /**
-     * return local entry set.
-     */
-    public Set<Map.Entry<String, Object>> entrySet() {
-        return localMap.entrySet();
     }
 
     private static <U> Set<U> union(Set<U> a, Set<U> globalSet) {
