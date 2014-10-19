@@ -12,10 +12,32 @@ import de.mknblch.sucode.interpreter.Interpreter;
  */
 public class ConditionForms {
 
+    /*
+        (if condition yes no)
+     */
     @Special
     @Define(symbol = "if")
-    public static Object print(Interpreter interpreter, Context context, ListStruct args) throws Exception {
-        System.out.print(args.car());
-        return null;
+    public static Object ifCondition(Interpreter interpreter, Context context, ListStruct args) throws Exception {
+
+        final boolean condition = TypeHelper.asBoolean(interpreter.eval(args.car(), context));
+
+        final Object trueBranch = args.cdr().car();
+        final ListStruct cddr = args.cdr().cdr();
+        final Object falseBranch = cddr.car();
+
+        if(condition) return interpreter.eval(trueBranch, context);
+        else return interpreter.eval(falseBranch, context);
     }
+
+    /*
+        null?	    Tell if the argument is nil (empty list).
+        pair?	    Tell if the argument is a pair (result of cons, most often a non-empty list.)
+        id?	        Tells if the argument is an identifier.
+        int?	    Tells if the argument is an integer.
+        str?	    Tells if the argument is a string.
+        builtin?	Tells if the argument is a builtin function.
+        lambda?	    Tells if the argument is a function (result of the lambda operator).
+        macro?	    Tells if the argument is a macro (result of the macro operator).
+        functional?	Tells if the argument is something that can be called with a parameter list as a function is. These are any of the last three types.
+     */
 }

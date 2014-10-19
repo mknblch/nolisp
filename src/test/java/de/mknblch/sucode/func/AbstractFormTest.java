@@ -1,9 +1,6 @@
 package de.mknblch.sucode.func;
 
-import de.mknblch.sucode.builtin.ConsoleForms;
-import de.mknblch.sucode.builtin.MathForms;
-import de.mknblch.sucode.builtin.MathFormsTest;
-import de.mknblch.sucode.builtin.SpecialForms;
+import de.mknblch.sucode.builtin.*;
 import de.mknblch.sucode.interpreter.Context;
 import de.mknblch.sucode.interpreter.Interpreter;
 import de.mknblch.sucode.interpreter.LoggingInterpreter;
@@ -27,6 +24,12 @@ public abstract class AbstractFormTest {
     private static final Parser PARSER = new Parser();
     public static final Interpreter INTERPRETER = new LoggingInterpreter();
 
+    public static final Class[] BUILTIN_FORMS = new Class[]{
+            SpecialForms.class,
+            ConditionForms.class,
+            MathForms.class,
+            ConsoleForms.class};
+
     protected void dump(List<Object> evaluated) throws ParserException {
         for (int i = 0; i < evaluated.size(); i++) {
             LOGGER.debug("evaluates to {}", FormatHelper.formatAtom(evaluated.get(i)));
@@ -34,7 +37,7 @@ public abstract class AbstractFormTest {
     }
 
     protected List<Object> eval(String code) throws Exception {
-        final Context context = new Context(SpecialForms.class, MathForms.class, ConsoleForms.class);
+        final Context context = new Context(BUILTIN_FORMS);
         return eval(code, context);
     }
 
