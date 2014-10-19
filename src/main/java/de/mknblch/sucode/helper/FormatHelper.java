@@ -27,7 +27,7 @@ public class FormatHelper {
 
         switch (atom.getType()) {
             case SYMBOL:
-                return ((SymbolStruct) atom).literal;
+                return String.format("%s", ((SymbolStruct) atom).literal);
             case LIST:
                 final StringBuffer sb = new StringBuffer();
                 ListStruct temp = (ListStruct) (ListStruct) atom;
@@ -68,57 +68,6 @@ public class FormatHelper {
             case SPECIAL_FORM:
             case FORM:
                 return String.format("#<%s>", atom.getType());
-        }
-
-        throw new ParserException("Unable to format " + atom);
-    }
-
-
-    public static String formatTypesOnly(Object obj) throws ParserException {
-
-        // return Non-Atoms
-        if (!(obj instanceof Atom)) {
-            return "<Java>";
-        }
-        final Atom atom = (Atom) obj;
-
-        switch (atom.getType()) {
-
-            case SYMBOL:
-                return "SYM";
-            case LIST:
-                ListStruct listStruct = (ListStruct) atom;
-                final StringBuffer buffer = new StringBuffer();
-                for (Object element : listStruct) {
-                    if (buffer.length() > 0) buffer.append(", ");
-                    buffer.append(formatTypesOnly(element));
-                }
-                return String.format("LIST:[%s]", buffer.toString());
-        }
-
-        throw new ParserException("Unable to format " + atom);
-    }
-
-    public static String formatValuesOnly(Object obj) throws ParserException {
-
-        // return Non-Atoms
-        if (!(obj instanceof Atom)) {
-            return String.valueOf(obj);
-        }
-        final Atom atom = (Atom) obj;
-
-        switch (atom.getType()) {
-
-            case SYMBOL:
-                return String.format("%s", ((SymbolStruct) atom).literal);
-            case LIST:
-                ListStruct listStruct = (ListStruct) atom;
-                final StringBuffer buffer = new StringBuffer();
-                for (Object element : listStruct) {
-                    if (buffer.length() > 0) buffer.append(", ");
-                    buffer.append(formatValuesOnly(element));
-                }
-                return String.format("[%s]", buffer.toString());
         }
 
         throw new ParserException("Unable to format " + atom);

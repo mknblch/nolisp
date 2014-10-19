@@ -1,6 +1,7 @@
 package de.mknblch.sucode.ast;
 
 import de.mknblch.sucode.helper.FormatHelper;
+import junit.framework.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,7 @@ import static junit.framework.Assert.assertTrue;
 import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertNull;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by mknblch on 10.10.2014.
@@ -110,5 +112,14 @@ public class ListStructTest {
         final ListStruct listStruct = new ListStruct("1", "2", "3");
         LOGGER.debug("Testing iterator for '{}'", FormatHelper.formatAsSExpression(listStruct));
         listStruct.get(3);
+    }
+
+    @Test
+    public void testGetOrNullOverflow() throws Exception {
+
+        final ListStruct listStruct = new ListStruct("1", "2", "3");
+        LOGGER.debug("Testing iterator for '{}'", FormatHelper.formatAsSExpression(listStruct));
+        assertNotNull(listStruct.getOrNull(2));
+        assertNull(listStruct.getOrNull(3));
     }
 }

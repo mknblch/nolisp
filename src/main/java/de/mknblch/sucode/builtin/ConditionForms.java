@@ -17,17 +17,45 @@ public class ConditionForms {
      */
     @Special
     @Define(symbol = "if")
-    public static Object ifCondition(Interpreter interpreter, Context context, ListStruct args) throws Exception {
-
+    public static Object ifImpl(Interpreter interpreter, Context context, ListStruct args) throws Exception {
         final boolean condition = TypeHelper.asBoolean(interpreter.eval(args.car(), context));
-
-        final Object trueBranch = args.cdr().car();
-        final ListStruct cddr = args.cdr().cdr();
-        final Object falseBranch = cddr.car();
-
+        final Object trueBranch = args.cdar();
+        final Object falseBranch = args.cddar();
         if(condition) return interpreter.eval(trueBranch, context);
         else return interpreter.eval(falseBranch, context);
     }
+
+    @Special
+    @Define(symbol = "cond") // (cond () () ())
+    public static Object cond(Interpreter interpreter, Context context, ListStruct args) throws Exception {
+        for (Object arg : args) {
+            TypeHelper.expectList(arg);
+            // (bool form)
+            final ListStruct pair = (ListStruct) arg;
+            final Object condition = interpreter.eval(pair.car(), context);
+            if (TypeHelper.asBoolean(condition)) {
+                return interpreter.eval(pair.cdar(), context);
+            }
+        }
+        return null;
+    }
+
+    @Special
+    @Define(symbol = {"=", "==", "eq", "eq?", "equal?"}) // (eq? 1 3)
+    public static Object equal(Interpreter interpreter, Context context, ListStruct args) throws Exception {
+        final Object a = interpreter.eval(args.car(), context);
+        final Object b = args.cdr() != null ? interpreter.eval(args.cdr().car(), context) : null;
+        if(null == a) {
+            if (null == b) return true;
+            else return false;
+        }
+        if(null == b) {
+            if (null == a) return true;
+            else return false;
+        }
+        return a.equals(b);
+    }
+
 
     /*
         null?	    Tell if the argument is nil (empty list).

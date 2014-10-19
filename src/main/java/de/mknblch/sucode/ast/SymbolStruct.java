@@ -15,4 +15,22 @@ public class SymbolStruct implements Atom {
     public Type getType() {
         return Type.SYMBOL;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        SymbolStruct that = (SymbolStruct) o;
+
+        if (!literal.equals(that.literal)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        // TODO review
+        return literal.hashCode();
+    }
 }

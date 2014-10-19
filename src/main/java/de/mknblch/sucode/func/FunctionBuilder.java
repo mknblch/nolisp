@@ -1,7 +1,7 @@
 package de.mknblch.sucode.func;
 
+import de.mknblch.sucode.ast.Form;
 import de.mknblch.sucode.ast.Function;
-import de.mknblch.sucode.ast.NonSpecialForm;
 import de.mknblch.sucode.ast.SpecialForm;
 import de.mknblch.sucode.interpreter.Context;
 import de.mknblch.sucode.interpreter.EvaluationException;
@@ -60,7 +60,7 @@ public class FunctionBuilder {
 
     public static Function wrapNonSpecialForm(final Method method, final String symbol) {
 
-        return new NonSpecialForm() {
+        return new Form() {
             @Override
             public Object eval(Context context, ListStruct args) throws Exception {
                 return method.invoke(null, context, args);

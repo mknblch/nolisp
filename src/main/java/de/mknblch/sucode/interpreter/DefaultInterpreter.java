@@ -1,6 +1,6 @@
 package de.mknblch.sucode.interpreter;
 
-import de.mknblch.sucode.ast.NonSpecialForm;
+import de.mknblch.sucode.ast.Form;
 import de.mknblch.sucode.ast.SpecialForm;
 import de.mknblch.sucode.ast.*;
 
@@ -10,6 +10,7 @@ import de.mknblch.sucode.ast.*;
  * Created by mknblch on 05.10.2014.
  */
 public class DefaultInterpreter implements Interpreter {
+
 
     @Override
     public Object eval(Object obj, Context context) throws Exception {
@@ -44,8 +45,8 @@ public class DefaultInterpreter implements Interpreter {
         if (null == head) {
             throw new EvaluationException(String.format("Procedure application: expected procedure, given: nil"));
         }
-        if(head instanceof NonSpecialForm) {
-            return ((NonSpecialForm) head).eval(context, evalList(listStruct.cdr(), context));
+        if(head instanceof Form) {
+            return ((Form) head).eval(context, evalList(listStruct.cdr(), context));
         } else if(head instanceof SpecialForm) {
             return ((SpecialForm) head).eval(this, context, listStruct.cdr());
         } else {

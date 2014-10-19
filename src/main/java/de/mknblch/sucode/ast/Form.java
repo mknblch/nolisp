@@ -5,7 +5,7 @@ import de.mknblch.sucode.interpreter.Context;
 /**
  * Created by mknblch on 18.10.2014.
  */
-public abstract class NonSpecialForm implements Function {
+public abstract class Form implements Function {
 
     public abstract Object eval(Context context, ListStruct args) throws Exception;
 
