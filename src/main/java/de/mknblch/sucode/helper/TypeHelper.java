@@ -46,7 +46,8 @@ public class TypeHelper {
         if (null == o) {
             return false;
         }
-        return Boolean.TRUE.equals(o);
+        // TODO review
+        return !Boolean.FALSE.equals(o);
     }
 
     public static List<String> symbolList(Object o) throws EvaluationException {
