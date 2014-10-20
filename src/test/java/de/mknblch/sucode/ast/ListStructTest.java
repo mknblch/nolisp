@@ -8,11 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Iterator;
 
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.TestCase.assertFalse;
-import static junit.framework.TestCase.assertNull;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 /**
  * Created by mknblch on 10.10.2014.
@@ -153,5 +149,34 @@ public class ListStructTest {
         LOGGER.debug("Testing iterator for '{}'", FormatHelper.formatAsSExpression(listStruct));
         assertNotNull(listStruct.getOrNull(2));
         assertNull(listStruct.getOrNull(3));
+    }
+
+    @Test
+    public final void testListWithHeadNull() throws Exception {
+        final ListStruct listStruct = new ListStruct(null, 1, 2);
+        assertEquals(null, listStruct.get(0));
+        assertEquals(1, listStruct.get(1));
+        assertEquals(2, listStruct.get(2));
+    }
+
+    @Test
+    public final void testIteratorOverNullValues() throws Exception {
+
+        final ListStruct listStruct = new ListStruct(null, 1, 2);
+        Iterator iterator = listStruct.iterator();
+        assertTrue(iterator.hasNext());
+        assertEquals(null, iterator.next());
+        assertTrue(iterator.hasNext());
+        assertEquals(1, iterator.next());
+        assertTrue(iterator.hasNext());
+        assertEquals(2, iterator.next());
+    }
+
+    @Test
+    public final void testSizeForNulls() throws Exception {
+
+        final ListStruct listStruct = new ListStruct(null, null, null);
+        assertEquals(3, listStruct.size());
+
     }
 }
