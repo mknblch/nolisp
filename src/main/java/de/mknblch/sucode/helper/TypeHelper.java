@@ -53,12 +53,8 @@ public class TypeHelper {
         expectList(o);
         final ArrayList<String> flat = new ArrayList<String>();
         final ListStruct listStruct = (ListStruct) o;
-        try {
-            for (Object t : listStruct) {
-                flat.add(symbolLiteral(t));
-            }
-        } catch (ClassCastException cce) {
-            throw new EvaluationException("Illegal CONST cast.");
+        for (Object t : listStruct) {
+            flat.add(symbolLiteral(t));
         }
         return flat;
     }

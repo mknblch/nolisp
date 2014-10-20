@@ -53,4 +53,11 @@ public class ConditionFormsTest extends AbstractFormTest {
         final List<Object> result = eval("(cond (nil 1) ((eq? 1 2) 2) (T 42))");
         assertEquals(42, result.get(0));
     }
+
+    @Test
+    public final void testRecursiveCall() throws Exception {
+
+        final List<Object> result = eval("(setq f (lambda (n) (if (eq? n 0) 1 (* n (f (- n 1))))))  (f 5)");
+        assertEquals(120, result.get(1));
+    }
 }
