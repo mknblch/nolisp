@@ -3,6 +3,7 @@ package de.mknblch.sucode.helper;
 import de.mknblch.sucode.ast.ListStruct;
 import de.mknblch.sucode.ast.SymbolStruct;
 import de.mknblch.sucode.interpreter.EvaluationException;
+import de.mknblch.sucode.parser.Parser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,5 +101,22 @@ public class TypeHelper {
             throw new EvaluationException(
                     String.format("Expected REAL but was: %s", o != null ? o.getClass().getSimpleName() : "null"));
         }
+    }
+
+    public static void expectQuote(Object o) throws EvaluationException {
+        if (o == Parser.QUOTE_STRUCT) {
+            throw new EvaluationException(
+                    String.format("Expected QUOTE:SYM but was: %s", o != null ? o.getClass().getSimpleName() : "null"));
+        }
+    }
+
+
+
+    public static void expectQuotedList(Object o) throws EvaluationException {
+        if (!(o instanceof ListStruct)) {
+            throw new EvaluationException(
+                    String.format("Expected LIST but was: %s", o != null ? o.getClass().getSimpleName() : "null"));
+        }
+        expectQuote(((ListStruct)o).car());
     }
 }

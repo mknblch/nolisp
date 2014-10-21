@@ -26,7 +26,7 @@ public class LambdaForm extends Form {
     public Object eval(Context localContext, ListStruct args) throws Exception {
         // bind args to context
         bind(interpreter, parentContext, localContext, symbols, args);
-        // eval with
+        // eval with local
         return interpreter.eval(form, localContext);
     }
 
@@ -39,7 +39,12 @@ public class LambdaForm extends Form {
      * bind each argument in args with key at args index in symbols to the local context by evaluating it with the
      * parent context.
      */
-    private static void bind(Interpreter interpreter, Context parentContext, Context localContext, List<String> symbols, ListStruct args) throws Exception {
+    private static void bind(Interpreter interpreter,
+                             Context parentContext,
+                             Context localContext,
+                             List<String> symbols,
+                             ListStruct args) throws Exception {
+
         ListStruct temp = args;
         for (int i = 0; i < symbols.size(); i++) {
             if(null == temp) throw new EvaluationException(String.format(

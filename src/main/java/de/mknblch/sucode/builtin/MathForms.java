@@ -16,8 +16,7 @@ public class MathForms {
     public static Object plus(Context context, ListStruct args) throws Exception {
         Object result = 0;
         for (Object arg : args) {
-            final Object evaluated = arg; //arg;
-            result = plus(result, evaluated);
+            result = plus(result, arg);
         }
         return result;
     }
@@ -46,7 +45,7 @@ public class MathForms {
     public static Object pow(Context context, ListStruct args) throws Exception {
         return Math.pow(
                 asReal(args.car()),
-                asReal(args.cdr().car()));
+                asReal(args.cdar()));
     }
 
     private static Object mod(Object a, Object b) throws EvaluationException {

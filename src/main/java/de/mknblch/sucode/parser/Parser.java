@@ -27,7 +27,6 @@ public class Parser {
             return null;
         }
     };
-
     public static final SymbolStruct QUOTE_STRUCT = new SymbolStruct("quote");
 
     public ListStruct parse(Lexer lexer) throws ParserException, LexerException {

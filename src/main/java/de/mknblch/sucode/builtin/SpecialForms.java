@@ -11,6 +11,8 @@ import de.mknblch.sucode.ast.ListStruct;
 
 import java.util.List;
 
+import static de.mknblch.sucode.helper.TypeHelper.*;
+
 /**
  * Created by mknblch on 12.10.2014.
  */
@@ -46,7 +48,7 @@ public class SpecialForms {
             // each element must be a symbol-value pair.
             final ListStruct pair = ((ListStruct) def);
             // bind to local but eval args with parent scope
-            localScope.bind(TypeHelper.symbolLiteral(pair.car()), interpreter.eval(pair.cdr().car(), parentScope));
+            localScope.bind(symbolLiteral(pair.car()), interpreter.eval(pair.cdr().car(), parentScope));
         }
         return interpreter.eval(args.cdr().car(), localScope);
     }
@@ -60,17 +62,36 @@ public class SpecialForms {
             // each element must be a symbol-value pair.
             final ListStruct pair = ((ListStruct) def);
             // bind to local and eval with local scope
-            localScope.bind(TypeHelper.symbolLiteral(pair.car()), interpreter.eval(pair.cdr().car(), localScope));
+            localScope.bind(symbolLiteral(pair.car()), interpreter.eval(pair.cdr().car(), localScope));
         }
         // evaluate cdar with newly build variable scope
         return interpreter.eval(args.cdr().car(), localScope);
     }
 
-
     @Special
     @Define(symbol = "lambda") // ((lambda (a) (+ a 1)) 1) => 2
     public static Object lambda(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
-        return new LambdaForm(interpreter, parentContext, TypeHelper.symbolList(args.car()), args.cdar());
+        return new LambdaForm(interpreter, parentContext, symbolList(args.car()), args.cdar());
     }
+
+    @Special
+    @Define(symbol = "defun") // (defun bla (a) (+ a 1) ) => form
+    public static Object defun(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
+        final String functionName = symbolLiteral(args.car());
+        final List<String> symbols = symbolList(args.cdar());
+        final LambdaForm lambda = new LambdaForm(interpreter, parentContext, symbols, args.cddar());
+        parentContext.bind(functionName, lambda);
+        return lambda;
+    }
+
+
+    @Special
+    @Define(symbol = "eval") // (eval '(+ 1 1)) => 2
+    public static Object eval(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
+        final Object car = args.car();
+        // TODO
+        return interpreter.eval(car, parentContext);
+    }
+
 
 }

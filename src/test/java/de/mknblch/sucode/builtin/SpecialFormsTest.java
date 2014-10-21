@@ -78,4 +78,23 @@ public class SpecialFormsTest extends AbstractFormTest {
         dump(result);
         assertEquals(3, result.get(0));
     }
+
+    @Test
+    public final void testRecursiveCall() throws Exception {
+        final List<Object> result = eval("(setq f (lambda (n) (if (eq? n 0) 1 (* n (f (- n 1)))))) (f 5)");
+        assertEquals(120, result.get(1));
+    }
+
+    @Test
+    public final void testDefun() throws Exception {
+        final List<Object> result = eval("(defun f (n) (if (eq? n 0) 1 (* n (f (- n 1))))) (f 5)");
+        assertEquals(120, result.get(1));
+    }
+
+    @Test
+    public final void testEval() throws Exception {
+        final List<Object> result = eval("(eval '(+ 22 20))");
+        assertEquals(42, result.get(0));
+    }
+
 }

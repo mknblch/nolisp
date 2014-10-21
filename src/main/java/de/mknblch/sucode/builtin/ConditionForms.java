@@ -1,6 +1,8 @@
 package de.mknblch.sucode.builtin;
 
+import de.mknblch.sucode.ast.LambdaForm;
 import de.mknblch.sucode.ast.ListStruct;
+import de.mknblch.sucode.ast.SymbolStruct;
 import de.mknblch.sucode.func.Define;
 import de.mknblch.sucode.func.Special;
 import de.mknblch.sucode.helper.TypeHelper;
@@ -54,6 +56,44 @@ public class ConditionForms {
             else return false;
         }
         return a.equals(b);
+    }
+
+    @Define(symbol = "null?")
+    public static Object isNull(Context context, ListStruct args) {
+        return null == args.car();
+    }
+
+    @Define(symbol = "int?")
+    public static Object isInt(Context context, ListStruct args) {
+        return args.car() instanceof Integer;
+    }
+
+    @Define(symbol = "real?")
+    public static Object isReal(Context context, ListStruct args) {
+        return args.car() instanceof Double;
+    }
+
+    @Define(symbol = "string?")
+    public static Object isString(Context context, ListStruct args) {
+        return args.car() instanceof String;
+    }
+
+    @Special
+    @Define(symbol = "symbol?")
+    public static Object isSymbol(Interpreter interpreter, Context context, ListStruct args) {
+        return args.car() instanceof SymbolStruct;
+    }
+
+    @Special
+    @Define(symbol = "list?")
+    public static Object isList(Interpreter interpreter, Context context, ListStruct args) {
+        return args.car() instanceof ListStruct;
+    }
+
+    @Special
+    @Define(symbol = "lambda?")
+    public static Object isLambda(Interpreter interpreter, Context context, ListStruct args) {
+        return args.car() instanceof LambdaForm;
     }
 
 
