@@ -11,7 +11,7 @@ import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Created by mknblch on 12.10.2014.
+ * @author mknblch
  */
 public class SpecialFormsTest extends AbstractFormTest {
 
@@ -104,6 +104,16 @@ public class SpecialFormsTest extends AbstractFormTest {
                 "(setq y x)" +
                 "(setq z y)" +
                 "(eval z)";
+
+        final List<Object> result = eval(code);
+        assertEquals(42, result.get(2));
+    }
+
+    @Test
+    public final void testEvalSymboql() throws Exception {
+        final String code = "(setq x 3)" +
+                "(setq p '(+ (* 3 (* x x)) 15))" +
+                "(eval p)";
 
         final List<Object> result = eval(code);
         assertEquals(42, result.get(2));

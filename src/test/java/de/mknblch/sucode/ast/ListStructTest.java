@@ -11,7 +11,7 @@ import java.util.Iterator;
 import static org.junit.Assert.*;
 
 /**
- * Created by mknblch on 10.10.2014.
+ * @author mknblch
  */
 public class ListStructTest {
 

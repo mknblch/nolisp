@@ -1,7 +1,7 @@
 package de.mknblch.sucode.func;
 
 /**
- * Created by mknblch on 12.10.2014.
+ * @author mknblch
  */
 public class FunctionDefinitionException extends Exception {
     public FunctionDefinitionException() {

@@ -10,7 +10,7 @@ import java.util.Set;
 import static org.junit.Assert.*;
 
 /**
- * Created by mknblch on 11.10.2014.
+ * @author mknblch
  */
 public class ContextTest {
 

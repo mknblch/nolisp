@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Created by mknblch on 18.10.2014.
+ * @author mknblch
  */
 public class LoggingInterpreter extends DefaultInterpreter {
 

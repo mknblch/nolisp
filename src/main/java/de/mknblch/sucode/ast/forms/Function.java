@@ -3,9 +3,9 @@ package de.mknblch.sucode.ast.forms;
 import de.mknblch.sucode.ast.Atom;
 
 /**
- * interface to Forms which were registered by the FunctionBuilder
+ * interface to all Forms which define their own execution rules.
  *
- * Created by mknblch on 11.10.2014.
+ * @author mknblch
  */
 public interface Function extends Atom {
 

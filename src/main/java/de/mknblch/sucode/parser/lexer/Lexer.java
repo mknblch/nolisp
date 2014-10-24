@@ -1,7 +1,8 @@
-package de.mknblch.sucode.lexer;
+package de.mknblch.sucode.parser.lexer;
 
 /**
- * basic lisp lexer
+ * basic lisp lexer.
+ *
  */
 public class Lexer {
 
@@ -14,19 +15,23 @@ public class Lexer {
     public static final String NIL_REGEX = "^(nil)|(NIL)$";
     public static final String TRUE_REGEX = "^(t)|(T)$";
 
-    public final String code;
+    private String code;
     private int offset = 0;
 
+    public Lexer() {
+    }
+
     public Lexer(String code) {
+        setCode(code);
+    }
+
+    public void setCode(String code) {
         if (null == code) {
             throw new IllegalArgumentException("null not allowed");
         } else {
             this.code = code.trim();
         }
-    }
-
-    public int getOffset() {
-        return offset;
+        reset();
     }
 
     /**
@@ -34,6 +39,10 @@ public class Lexer {
      */
     public void reset() {
         offset = 0;
+    }
+
+    public int getOffset() {
+        return offset;
     }
 
     /**

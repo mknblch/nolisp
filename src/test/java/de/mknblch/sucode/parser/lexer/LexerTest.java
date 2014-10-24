@@ -1,4 +1,4 @@
-package de.mknblch.sucode.lexer;
+package de.mknblch.sucode.parser.lexer;
 
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -11,7 +11,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 /**
- * Created by mknblch on 03.10.2014.
+ * @author mknblch
  */
 public class LexerTest {
 

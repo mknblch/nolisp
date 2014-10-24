@@ -7,7 +7,7 @@ import de.mknblch.sucode.interpreter.Context;
  * wrapper class for functions which were registered in the context by
  * scanning for @Defined annotation.
  *
- * Created by mknblch on 18.10.2014.
+ * @author mknblch
  */
 public abstract class Form implements Function {
 

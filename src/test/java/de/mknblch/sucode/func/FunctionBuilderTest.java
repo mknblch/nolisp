@@ -10,7 +10,7 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 
 /**
- * Created by mknblch on 11.10.2014.
+ * @author mknblch
  */
 public class FunctionBuilderTest {
 

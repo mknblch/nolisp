@@ -1,7 +1,7 @@
 package de.mknblch.sucode.parser;
 
 /**
- * Created by mknblch on 05.10.2014.
+ * @author mknblch
  */
 public class ParserException extends Exception {
 

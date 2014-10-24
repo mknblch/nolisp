@@ -10,7 +10,7 @@ import de.mknblch.sucode.interpreter.Interpreter;
  * calling eval. therefore the eval-function gets the interpreter
  * as an additional argument to anything useful.
  *
- * Created by mknblch on 18.10.2014.
+ * @author mknblch
  */
 public abstract class SpecialForm implements Function {
 

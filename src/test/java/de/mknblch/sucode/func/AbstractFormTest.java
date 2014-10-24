@@ -4,7 +4,7 @@ import de.mknblch.sucode.builtin.*;
 import de.mknblch.sucode.interpreter.Context;
 import de.mknblch.sucode.interpreter.Interpreter;
 import de.mknblch.sucode.interpreter.LoggingInterpreter;
-import de.mknblch.sucode.lexer.Lexer;
+import de.mknblch.sucode.parser.lexer.Lexer;
 import de.mknblch.sucode.helper.FormatHelper;
 import de.mknblch.sucode.parser.Parser;
 import de.mknblch.sucode.parser.ParserException;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by mknblch on 12.10.2014.
+ * @author mknblch
  */
 public abstract class AbstractFormTest {
 
@@ -42,7 +42,7 @@ public abstract class AbstractFormTest {
     }
 
     protected List<Object> eval(String code, Context context) throws Exception {
-        final ListStruct program = PARSER.parse(new Lexer(code));
+        final ListStruct program = PARSER.parse(code);
         final ArrayList<Object> ret = new ArrayList<Object>();
         LOGGER.debug("parser: {}", FormatHelper.formatPretty(program));
         LOGGER.debug("AST   : {}", FormatHelper.formatAtom(program));

@@ -1,7 +1,7 @@
-package de.mknblch.sucode.lexer;
+package de.mknblch.sucode.parser.lexer;
 
 /**
- * Created by mknblch on 10.10.2014.
+ * @author mknblch
  */
 public class TokenHelper {
 

@@ -8,7 +8,7 @@ import de.mknblch.sucode.interpreter.Interpreter;
 import java.util.List;
 
 /**
- * Created by mknblch on 19.10.2014.
+ * @author mknblch
  */
 public class LambdaForm extends Form {
     private final Interpreter interpreter;

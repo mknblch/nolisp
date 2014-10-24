@@ -11,7 +11,7 @@ import java.util.*;
  * alters only the local environment and get() operations pass from local to global<br/>
  * environment until the key is found.
  * <p/>
- * Created by mknblch on 10.10.2014.
+ * @author mknblch
  */
 public class Context {
 

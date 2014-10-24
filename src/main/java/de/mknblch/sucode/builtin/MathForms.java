@@ -8,7 +8,7 @@ import de.mknblch.sucode.ast.ListStruct;
 import static de.mknblch.sucode.helper.TypeHelper.asReal;
 
 /**
- * Created by mknblch on 12.10.2014.
+ * @author mknblch
  */
 public class MathForms {
 

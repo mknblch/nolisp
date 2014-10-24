@@ -1,17 +1,14 @@
 package de.mknblch.sucode.parser;
 
-import de.mknblch.sucode.lexer.Lexer;
-import de.mknblch.sucode.lexer.LexerException;
-import de.mknblch.sucode.lexer.Token;
+import de.mknblch.sucode.parser.lexer.Lexer;
+import de.mknblch.sucode.parser.lexer.LexerException;
+import de.mknblch.sucode.parser.lexer.Token;
 import de.mknblch.sucode.ast.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * The parser transforms a token stream into an AbstractSyntaxTree
  * <p/>
- * Created by mknblch on 05.10.2014.
+ * @author mknblch
  */
 public class Parser {
 
@@ -29,8 +26,11 @@ public class Parser {
     };
     public static final SymbolStruct QUOTE_STRUCT = new SymbolStruct("quote");
 
-    public ListStruct parse(Lexer lexer) throws ParserException, LexerException {
-        final ListStruct root = new ListStruct();
+    private final Lexer lexer = new Lexer();
+
+    public Program parse(String code) throws ParserException, LexerException {
+        lexer.setCode(code);
+        Program root = new Program();
         while (lexer.hasNext()) {
             final Object o = parseOne(lexer);
             if(COMMENT_STRUCT == o) continue;

@@ -3,7 +3,7 @@ package de.mknblch.sucode.ast;
 import java.util.Iterator;
 
 /**
- * Created by mknblch on 03.10.2014.
+ * @author mknblch
  */
 public class ListStruct implements Atom, Iterable {
 

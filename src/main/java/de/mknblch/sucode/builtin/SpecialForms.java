@@ -14,7 +14,7 @@ import java.util.List;
 import static de.mknblch.sucode.helper.TypeHelper.*;
 
 /**
- * Created by mknblch on 12.10.2014.
+ * @author mknblch
  */
 public class SpecialForms {
 
@@ -25,6 +25,7 @@ public class SpecialForms {
         Object value;
         do {
             final String key = symbolLiteral(temp.car());
+            expectCdr(temp);
             value = interpreter.eval(temp.cdr().car(), context);
             context.bindGlobal(key, value);
             temp = temp.cdr().cdr();
@@ -40,20 +41,6 @@ public class SpecialForms {
     }
 
     @Special
-    @Define(symbol = "let") // (let ((a 1) (b a)) b) => ERROR
-    public static Object let(Interpreter interpreter, Context parentScope, ListStruct args) throws Exception {
-        final Context localScope = parentScope.derive();
-        // car must be list
-        for (Object def : (ListStruct) args.car()) {
-            // each element must be a symbol-value pair.
-            final ListStruct pair = ((ListStruct) def);
-            // bind to local but eval args with parent scope
-            localScope.bind(symbolLiteral(pair.car()), interpreter.eval(pair.cdr().car(), parentScope));
-        }
-        return interpreter.eval(args.cdr().car(), localScope);
-    }
-
-    @Special
     @Define(symbol = "let*") // (let* ((a 1) (b a)) b) => 1
     public static Object letAsterisk(Interpreter interpreter, Context parentScope, ListStruct args) throws Exception {
         final Context localScope = parentScope.derive();
@@ -65,6 +52,22 @@ public class SpecialForms {
             localScope.bind(symbolLiteral(pair.car()), interpreter.eval(pair.cdr().car(), localScope));
         }
         // evaluate cdar with newly build variable scope
+        return interpreter.eval(args.cdr().car(), localScope);
+    }
+
+    @Special
+    @Define(symbol = "let") // (let ((a 1) (b a)) b) => ERROR
+    public static Object let(Interpreter interpreter, Context parentScope, ListStruct args) throws Exception {
+        final Context localScope = parentScope.derive();
+        // car must be list
+        final ListStruct car = (ListStruct) args.car();
+        expectList(car);
+        for (Object def : car) {
+            // each element must be a symbol-value pair.
+            final ListStruct pair = ((ListStruct) def);
+            // bind to local but eval args with parent scope
+            localScope.bind(symbolLiteral(pair.car()), interpreter.eval(pair.cdr().car(), parentScope));
+        }
         return interpreter.eval(args.cdr().car(), localScope);
     }
 

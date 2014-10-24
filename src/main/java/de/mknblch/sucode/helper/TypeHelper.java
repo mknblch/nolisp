@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by mknblch on 11.10.2014.
+ * @author mknblch
  */
 public class TypeHelper {
 
@@ -111,13 +111,22 @@ public class TypeHelper {
         }
     }
 
-
-
     public static void expectQuotedList(Object o) throws EvaluationException {
         if (!(o instanceof ListStruct)) {
             throw new EvaluationException(
                     String.format("Expected LIST but was: %s", o != null ? o.getClass().getSimpleName() : "null"));
         }
         expectQuote(((ListStruct)o).car());
+    }
+
+    public static void expectCdr(Object o) throws EvaluationException {
+        if (null == o ||
+                !(o instanceof ListStruct) ||
+                null == ((ListStruct) o).cdr()) {
+
+            throw new EvaluationException(
+                    String.format("Expected LIST with rest"));
+        }
+
     }
 }

@@ -8,7 +8,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Created by mknblch on 12.10.2014.
+ * @author mknblch
  */
 public class MathFormsTest extends AbstractFormTest {
 

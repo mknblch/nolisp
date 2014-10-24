@@ -1,8 +1,8 @@
 package de.mknblch.sucode.parser;
 
 import de.mknblch.sucode.helper.FormatHelper;
-import de.mknblch.sucode.lexer.Lexer;
-import de.mknblch.sucode.lexer.LexerException;
+import de.mknblch.sucode.parser.lexer.Lexer;
+import de.mknblch.sucode.parser.lexer.LexerException;
 import de.mknblch.sucode.ast.ListStruct;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Created by mknblch on 05.10.2014.
+ * @author mknblch
  */
 public class ParserTest {
 
@@ -105,13 +105,13 @@ public class ParserTest {
         ListStruct parse = parse(code);
     }
 
-    private ListStruct parse(String code) throws ParserException, LexerException {
-        return PARSER.parse(new Lexer(code));
+    private Program parse(String code) throws ParserException, LexerException {
+        return PARSER.parse(code);
     }
 
     private void assertASTEquals(String expected, String code) throws LexerException, ParserException {
         LOGGER.debug("code : {}", code.replaceAll("[\r\n]", "\\\\n"));
-        ListStruct parse = parse(code);
+        Program parse = parse(code);
         String pretty = FormatHelper.formatPretty(parse);
         LOGGER.debug("AST  : {}", pretty);
         LOGGER.debug("sExp : {}", FormatHelper.formatAsSExpression(parse));

@@ -1,5 +1,7 @@
 package de.mknblch.sucode.builtin;
 
+import de.mknblch.sucode.ast.Atom;
+import de.mknblch.sucode.ast.forms.Function;
 import de.mknblch.sucode.ast.forms.LambdaForm;
 import de.mknblch.sucode.ast.ListStruct;
 import de.mknblch.sucode.ast.SymbolStruct;
@@ -10,7 +12,7 @@ import de.mknblch.sucode.interpreter.Context;
 import de.mknblch.sucode.interpreter.Interpreter;
 
 /**
- * Created by mknblch on 12.10.2014.
+ * @author mknblch
  */
 public class ConditionForms {
 
@@ -94,6 +96,18 @@ public class ConditionForms {
     @Define(symbol = "lambda?")
     public static Object isLambda(Interpreter interpreter, Context context, ListStruct args) {
         return args.car() instanceof LambdaForm;
+    }
+
+    @Special
+    @Define(symbol = {"function?", "functional?"})
+    public static Object isFunctional(Interpreter interpreter, Context context, ListStruct args) {
+        return args.car() instanceof Function;
+    }
+
+    @Special
+    @Define(symbol = {"atom?", "atomar?"})
+    public static Object isAtom(Interpreter interpreter, Context context, ListStruct args) {
+        return args.car() instanceof Atom;
     }
 
 

@@ -1,7 +1,7 @@
 package de.mknblch.sucode.interpreter;
 
 /**
- * Created by mknblch on 10.10.2014.
+ * @author mknblch
  */
 public class EvaluationException extends Exception {
     public EvaluationException() { }

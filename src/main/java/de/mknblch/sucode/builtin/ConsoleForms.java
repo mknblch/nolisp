@@ -6,7 +6,7 @@ import de.mknblch.sucode.helper.TypeHelper;
 import de.mknblch.sucode.ast.ListStruct;
 
 /**
- * Created by mknblch on 12.10.2014.
+ * @author mknblch
  */
 public class ConsoleForms {
 

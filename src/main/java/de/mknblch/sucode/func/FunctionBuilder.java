@@ -18,7 +18,7 @@ import java.util.Set;
  * The FunctionBuilder constructs a set of functions from
  * annotated static methods
  *
- * Created by mknblch on 11.10.2014.
+ * @author mknblch
  */
 public class FunctionBuilder {
 
