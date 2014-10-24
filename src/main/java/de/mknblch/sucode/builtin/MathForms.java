@@ -16,6 +16,9 @@ public class MathForms {
     @DefineConstant("PI")
     public static final double PI = Math.PI;
 
+    @DefineConstant("E")
+    public static final double E = Math.E;
+
     @Define({"+", "add", "sum"})
     public static Object plus(Context context, ListStruct args) throws Exception {
         Object result = 0;

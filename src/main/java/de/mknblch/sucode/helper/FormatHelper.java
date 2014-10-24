@@ -20,7 +20,7 @@ public class FormatHelper {
         for (String key : keys) {
             try {
                 final Object obj = context.get(key);
-                if (!addForms && obj instanceof Atom) continue;
+                if (!addForms && obj instanceof Atom && ((Atom) obj).getType() == Atom.Type.FORM) continue;
                 if (sb.length() > 0) sb.append(", ");
                 sb.append(key).append(" => ").append(formatPretty(obj));
             } catch (EvaluationException e) {
@@ -60,7 +60,8 @@ public class FormatHelper {
 
                 return String.format("( %s )", sb.toString());
             case LAMBDA:
-                return String.format("#<LAMBDA> (%s)", formatLambdaSymbols(((LambdaForm) atom).getSymbols()));
+                final LambdaForm lambda = (LambdaForm) atom;
+                return String.format("#<LAMBDA> (%s) %s", formatLambdaSymbols(lambda.getSymbols()), formatPretty(lambda.getForm()));
             case FORM:
                 return "#<FORM>";
             case SYMBOL:
@@ -77,36 +78,36 @@ public class FormatHelper {
         }
         return sb.toString();
     }
-
-    public static String formatAtom(Object obj) throws ParserException {
-
-        if (null == obj) {
-            return "null";
-        }
-        if (!(obj instanceof Atom)) {
-            return String.format("%s:%s", String.valueOf(obj), obj.getClass().getSimpleName());
-        }
-        final Atom atom = (Atom) obj;
-
-        switch (atom.getType()) {
-
-            case SYMBOL:
-                return String.format("%s:SYM", ((SymbolStruct) atom).literal);
-            case LIST:
-                final ListStruct listStruct = (ListStruct) atom;
-                final StringBuffer buffer = new StringBuffer();
-                for (Object element : listStruct) {
-                    if (buffer.length() > 0) buffer.append(", ");
-                    buffer.append(formatAtom(element));
-                }
-                return String.format("[ %s ]", buffer.toString());
-            case FORM:
-                return String.format("#<%s>", atom.getType());
-            case LAMBDA:
-                return String.format("#<%s>", atom.getType());
-        }
-
-        throw new ParserException("Unable to format " + atom);
-    }
+//
+//    public static String formatAtom(Object obj) throws ParserException {
+//
+//        if (null == obj) {
+//            return "null";
+//        }
+//        if (!(obj instanceof Atom)) {
+//            return String.format("%s:%s", String.valueOf(obj), obj.getClass().getSimpleName());
+//        }
+//        final Atom atom = (Atom) obj;
+//
+//        switch (atom.getType()) {
+//
+//            case SYMBOL:
+//                return String.format("%s:SYM", ((SymbolStruct) atom).literal);
+//            case LIST:
+//                final ListStruct listStruct = (ListStruct) atom;
+//                final StringBuffer buffer = new StringBuffer();
+//                for (Object element : listStruct) {
+//                    if (buffer.length() > 0) buffer.append(", ");
+//                    buffer.append(formatAtom(element));
+//                }
+//                return String.format("[ %s ]", buffer.toString());
+//            case FORM:
+//                return String.format("#<%s>", atom.getType());
+//            case LAMBDA:
+//                return String.format("#<%s>", atom.getType());
+//        }
+//
+//        throw new ParserException("Unable to format " + atom);
+//    }
 
 }

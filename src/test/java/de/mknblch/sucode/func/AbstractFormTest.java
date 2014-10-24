@@ -37,7 +37,7 @@ public abstract class AbstractFormTest {
 
     protected void dump(List<Object> evaluated) throws ParserException {
         for (int i = 0; i < evaluated.size(); i++) {
-            LOGGER.debug("evaluates to {}", FormatHelper.formatAtom(evaluated.get(i)));
+            LOGGER.debug("evaluates to {}", FormatHelper.formatPretty(evaluated.get(i)));
         }
     }
 
@@ -49,14 +49,13 @@ public abstract class AbstractFormTest {
     protected List<Object> eval(String code, Context context) throws Exception {
         final ListStruct program = PARSER.parse(code);
         final ArrayList<Object> ret = new ArrayList<Object>();
-        LOGGER.debug("parser: {}", FormatHelper.formatPretty(program));
-        LOGGER.debug("AST   : {}", FormatHelper.formatAtom(program));
+        LOGGER.debug("evaluating: {}", FormatHelper.formatPretty(program));
         for (Object p : program) {
             final Object eval = INTERPRETER.eval(p, context);
-            LOGGER.debug("eval: {}", FormatHelper.formatAtom(eval));
+            LOGGER.debug("eval: {}", FormatHelper.formatPretty(eval));
             ret.add(eval);
         }
-        LOGGER.trace("Context: [ {} ]", FormatHelper.formatContext(context, false));
+        LOGGER.debug("Context: [ {} ]", FormatHelper.formatContext(context, false));
         return ret;
     }
 

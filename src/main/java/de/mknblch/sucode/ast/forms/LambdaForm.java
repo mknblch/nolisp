@@ -46,6 +46,10 @@ public class LambdaForm extends Form {
         return symbols;
     }
 
+    public Object getForm() {
+        return form;
+    }
+
     /**
      * bind each argument in args with key at args index in symbols to the local context by evaluating it with the
      * parent context.

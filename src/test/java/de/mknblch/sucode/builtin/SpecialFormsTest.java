@@ -122,7 +122,7 @@ public class SpecialFormsTest extends AbstractFormTest {
     public void testEvalLambda() throws Exception {
         final String code = "(eval (lambda (x) (* 2 x)))";
         final List<Object> result = eval(code);
-        assertASTEquals("#<LAMBDA> (x)", result.get(0));
+        assertASTEquals("#<LAMBDA> (x) ( * 2 x )", result.get(0));
     }
     @Test
     public void testEvalBuiltin() throws Exception {
