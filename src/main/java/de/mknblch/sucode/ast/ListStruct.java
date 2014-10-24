@@ -101,18 +101,9 @@ public class ListStruct implements Atom, Iterable {
         return car;
     }
 
+    // TODO review name
     public Object caar() {
         if (null != car && car instanceof ListStruct) return ((ListStruct) car).car();
-        return null;
-    }
-
-    public Object caaar() {
-        if (null != car && car instanceof ListStruct) {
-            ListStruct caar = ((ListStruct) caar());
-            if (null != caar && caar instanceof ListStruct) {
-                return ((ListStruct) caar).car;
-            }
-        }
         return null;
     }
 

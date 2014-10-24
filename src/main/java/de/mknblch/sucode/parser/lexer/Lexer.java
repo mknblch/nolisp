@@ -69,7 +69,7 @@ public class Lexer {
     }
 
     private Token tokenize(int position, char c) throws LexerException {
-        // first char of each token must decide it's type or it's treated as symbol
+        // first char of each token must decide it's type or it's treated as value
         switch (c) {
             case '(':
                 offset++;

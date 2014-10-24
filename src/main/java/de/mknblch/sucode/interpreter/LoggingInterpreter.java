@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author mknblch
  */
-public class LoggingInterpreter extends DefaultInterpreter {
+public class LoggingInterpreter extends CoreInterpreter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LoggingInterpreter.class);
 

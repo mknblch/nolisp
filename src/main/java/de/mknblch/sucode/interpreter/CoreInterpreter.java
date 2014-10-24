@@ -9,7 +9,7 @@ import de.mknblch.sucode.ast.*;
  *
  * @author mknblch
  */
-public class DefaultInterpreter implements Interpreter {
+public class CoreInterpreter implements Interpreter {
 
     @Override
     public Object eval(Object obj, Context context) throws Exception {

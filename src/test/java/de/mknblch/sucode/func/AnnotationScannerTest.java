@@ -12,32 +12,32 @@ import static junit.framework.TestCase.assertTrue;
 /**
  * @author mknblch
  */
-public class FunctionBuilderTest {
+public class AnnotationScannerTest {
 
     @Test(expected = FunctionDefinitionException.class)
     public void shouldFail_WrongSignature() throws Exception {
-        FunctionBuilder.build(WrongSignature.class);
+        AnnotationScanner.scanMethods(WrongSignature.class);
     }
 
     @Test(expected = FunctionDefinitionException.class)
     public void shouldFail_NoReturnType() throws Exception {
-        FunctionBuilder.build(NoReturnType.class);
+        AnnotationScanner.scanMethods(NoReturnType.class);
     }
 
     @Test(expected = FunctionDefinitionException.class)
     public void shouldFail_NotStatic() throws Exception {
-        FunctionBuilder.build(NotStatic.class);
+        AnnotationScanner.scanMethods(NotStatic.class);
     }
 
     @Test(expected = FunctionDefinitionException.class)
     public void shouldFail_functionRedefinition() throws Exception {
-        FunctionBuilder.build(DuplicateMethods.class);
+        AnnotationScanner.scanMethods(DuplicateMethods.class);
     }
 
     @Test
     public void shouldWork_registerValid() throws Exception {
 
-        final Set<Function> scan = FunctionBuilder.build(Working.class);
+        final Set<Function> scan = AnnotationScanner.scanMethods(Working.class);
         assertEquals(4, scan.size());
     }
 }

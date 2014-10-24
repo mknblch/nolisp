@@ -3,12 +3,32 @@ package de.mknblch.sucode.helper;
 import de.mknblch.sucode.ast.Atom;
 import de.mknblch.sucode.ast.ListStruct;
 import de.mknblch.sucode.ast.SymbolStruct;
+import de.mknblch.sucode.ast.forms.Form;
 import de.mknblch.sucode.ast.forms.LambdaForm;
+import de.mknblch.sucode.interpreter.Context;
+import de.mknblch.sucode.interpreter.EvaluationException;
 import de.mknblch.sucode.parser.ParserException;
 
 import java.util.List;
+import java.util.Set;
 
 public class FormatHelper {
+
+    public static String formatContext(Context context, boolean addForms) {
+        final Set<String> keys = context.keySetGlobal();
+        final StringBuffer sb = new StringBuffer();
+        for (String key : keys) {
+            try {
+                final Object obj = context.get(key);
+                if (!addForms && obj instanceof Atom) continue;
+                if (sb.length() > 0) sb.append(", ");
+                sb.append(key).append(" => ").append(formatPretty(obj));
+            } catch (EvaluationException e) {
+                e.printStackTrace();
+            }
+        }
+        return sb.toString();
+    }
 
     public static String formatAsSExpression(ListStruct listStruct) {
         return String.format("(%s %s)",

@@ -10,13 +10,13 @@ import de.mknblch.sucode.ast.ListStruct;
  */
 public class ConsoleForms {
 
-    @Define(symbol = "print")
+    @Define(value = "print")
     public static Object print(Context context, ListStruct args) throws Exception {
         System.out.print(args.car());
         return null;
     }
 
-    @Define(symbol = "printf")
+    @Define(value = "printf")
     public static Object printf(Context context, ListStruct args) throws Exception {
         final String format = TypeHelper.asString(args.car());
         final int size = args.size()-1;

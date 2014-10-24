@@ -20,7 +20,7 @@ public class ConditionForms {
         (if condition yes no)
      */
     @Special
-    @Define(symbol = "if")
+    @Define(value = "if")
     public static Object ifImpl(Interpreter interpreter, Context context, ListStruct args) throws Exception {
         final boolean condition = TypeHelper.asBoolean(interpreter.eval(args.car(), context));
         final Object trueBranch = args.cdar();
@@ -30,7 +30,7 @@ public class ConditionForms {
     }
 
     @Special
-    @Define(symbol = "cond") // (cond () () ())
+    @Define(value = "cond") // (cond () () ())
     public static Object cond(Interpreter interpreter, Context context, ListStruct args) throws Exception {
         for (Object arg : args) {
             TypeHelper.expectList(arg);
@@ -45,7 +45,7 @@ public class ConditionForms {
     }
 
     @Special
-    @Define(symbol = {"=", "==", "eq", "eq?", "equal?"}) // (eq? 1 3)
+    @Define(value = {"=", "==", "eq", "eq?", "equal?"}) // (eq? 1 3)
     public static Object equal(Interpreter interpreter, Context context, ListStruct args) throws Exception {
         final Object a = interpreter.eval(args.car(), context);
         final Object b = args.cdr() != null ? interpreter.eval(args.cdr().car(), context) : null;
@@ -60,52 +60,52 @@ public class ConditionForms {
         return a.equals(b);
     }
 
-    @Define(symbol = "null?")
+    @Define(value = "null?")
     public static Object isNull(Context context, ListStruct args) {
         return null == args.car();
     }
 
-    @Define(symbol = "int?")
+    @Define(value = "int?")
     public static Object isInt(Context context, ListStruct args) {
         return args.car() instanceof Integer;
     }
 
-    @Define(symbol = "real?")
+    @Define(value = "real?")
     public static Object isReal(Context context, ListStruct args) {
         return args.car() instanceof Double;
     }
 
-    @Define(symbol = "string?")
+    @Define(value = "string?")
     public static Object isString(Context context, ListStruct args) {
         return args.car() instanceof String;
     }
 
     @Special
-    @Define(symbol = "symbol?")
+    @Define(value = "value?")
     public static Object isSymbol(Interpreter interpreter, Context context, ListStruct args) {
         return args.car() instanceof SymbolStruct;
     }
 
     @Special
-    @Define(symbol = "list?")
+    @Define(value = "list?")
     public static Object isList(Interpreter interpreter, Context context, ListStruct args) {
         return args.car() instanceof ListStruct;
     }
 
     @Special
-    @Define(symbol = "lambda?")
+    @Define(value = "lambda?")
     public static Object isLambda(Interpreter interpreter, Context context, ListStruct args) {
         return args.car() instanceof LambdaForm;
     }
 
     @Special
-    @Define(symbol = {"function?", "functional?"})
+    @Define(value = {"function?", "functional?"})
     public static Object isFunctional(Interpreter interpreter, Context context, ListStruct args) {
         return args.car() instanceof Function;
     }
 
     @Special
-    @Define(symbol = {"atom?", "atomar?"})
+    @Define(value = {"atom?", "atomar?"})
     public static Object isAtom(Interpreter interpreter, Context context, ListStruct args) {
         return args.car() instanceof Atom;
     }

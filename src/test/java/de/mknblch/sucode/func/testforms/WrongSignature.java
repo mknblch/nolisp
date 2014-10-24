@@ -5,6 +5,6 @@ import de.mknblch.sucode.func.Define;
 import de.mknblch.sucode.ast.ListStruct;
 
 public class WrongSignature {
-    @Define(symbol = "wrong")
+    @Define(value = "wrong")
     public static Object wrong (ListStruct args, Context env, String interpreter) { return null; }
 }

@@ -1,7 +1,7 @@
 package de.mknblch.sucode.interpreter;
 
 import de.mknblch.sucode.ast.forms.Function;
-import de.mknblch.sucode.func.FunctionBuilder;
+import de.mknblch.sucode.func.AnnotationScanner;
 import de.mknblch.sucode.func.FunctionDefinitionException;
 
 import java.util.*;
@@ -27,7 +27,8 @@ public class Context {
     }
     public Context(Class<?> ...buildInFunctionContainer) throws FunctionDefinitionException {
         this();
-        defineAll(FunctionBuilder.build(buildInFunctionContainer));
+        defineAll(AnnotationScanner.scanMethods(buildInFunctionContainer));
+        bindAll(AnnotationScanner.scanFields(buildInFunctionContainer));
     }
 
     /**

@@ -10,7 +10,7 @@ import de.mknblch.sucode.ast.Atom;
 public interface Function extends Atom {
 
     /**
-     * return the symbol used to call this function
+     * return the value used to call this function
      */
     public String getSymbol();
 

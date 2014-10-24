@@ -13,6 +13,7 @@ import de.mknblch.sucode.ast.ListStruct;
 import de.mknblch.sucode.parser.lexer.LexerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import sun.rmi.runtime.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +56,7 @@ public abstract class AbstractFormTest {
             LOGGER.debug("eval: {}", FormatHelper.formatAtom(eval));
             ret.add(eval);
         }
+        LOGGER.trace("Context: [ {} ]", FormatHelper.formatContext(context, false));
         return ret;
     }
 

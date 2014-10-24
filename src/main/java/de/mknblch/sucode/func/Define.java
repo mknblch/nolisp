@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Define {
-    String[] symbol();
+    String[] value();
 
     /**
      * <p>returns whether the function is a special form or not. </p>
@@ -24,5 +24,4 @@ public @interface Define {
      * <p>if not the arguments will be evaluated BEFORE function call. therefore no
      * @{@link Special} is needed.</p>
      */
-//    boolean special() default false;
 }
