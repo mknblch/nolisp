@@ -1,7 +1,7 @@
 package de.mknblch.sucode.interpreter;
 
-import de.mknblch.sucode.ast.Form;
-import de.mknblch.sucode.ast.SpecialForm;
+import de.mknblch.sucode.ast.forms.Form;
+import de.mknblch.sucode.ast.forms.SpecialForm;
 import de.mknblch.sucode.ast.*;
 
 /**

@@ -1,7 +1,7 @@
 package de.mknblch.sucode.builtin;
 
 import de.mknblch.sucode.func.AbstractFormTest;
-import de.mknblch.sucode.ast.Function;
+import de.mknblch.sucode.ast.forms.Function;
 import de.mknblch.sucode.interpreter.EvaluationException;
 import org.junit.Test;
 
@@ -74,7 +74,7 @@ public class SpecialFormsTest extends AbstractFormTest {
 
     @Test
     public void testSetqList() throws Exception {
-        List<Object> result = eval("(setq a 1 b (+ 1 a) c (+ a b))");
+        List<Object> result = eval("(setq a 1 b (* 3 a) c (* a b))");
         dump(result);
         assertEquals(3, result.get(0));
     }
@@ -95,6 +95,18 @@ public class SpecialFormsTest extends AbstractFormTest {
     public final void testEval() throws Exception {
         final List<Object> result = eval("(eval '(+ 22 20))");
         assertEquals(42, result.get(0));
+    }
+
+    @Test
+    public final void testEvalSymbol() throws Exception {
+        final String code =
+                "(setq x 42)" +
+                "(setq y x)" +
+                "(setq z y)" +
+                "(eval z)";
+
+        final List<Object> result = eval(code);
+        assertEquals(42, result.get(2));
     }
 
 }

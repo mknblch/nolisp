@@ -1,6 +1,6 @@
 package de.mknblch.sucode.builtin;
 
-import de.mknblch.sucode.ast.LambdaForm;
+import de.mknblch.sucode.ast.forms.LambdaForm;
 import de.mknblch.sucode.ast.ListStruct;
 import de.mknblch.sucode.ast.SymbolStruct;
 import de.mknblch.sucode.func.Define;

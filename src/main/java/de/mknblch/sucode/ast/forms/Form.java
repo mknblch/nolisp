@@ -1,8 +1,12 @@
-package de.mknblch.sucode.ast;
+package de.mknblch.sucode.ast.forms;
 
+import de.mknblch.sucode.ast.ListStruct;
 import de.mknblch.sucode.interpreter.Context;
 
 /**
+ * wrapper class for functions which were registered in the context by
+ * scanning for @Defined annotation.
+ *
  * Created by mknblch on 18.10.2014.
  */
 public abstract class Form implements Function {
@@ -10,7 +14,7 @@ public abstract class Form implements Function {
     public abstract Object eval(Context context, ListStruct args) throws Exception;
 
     @Override
-    public Atom.Type getType() {
+    public Type getType() {
         return Type.FORM;
     }
 }

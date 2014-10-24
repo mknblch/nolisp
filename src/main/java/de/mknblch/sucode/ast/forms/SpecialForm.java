@@ -1,9 +1,15 @@
-package de.mknblch.sucode.ast;
+package de.mknblch.sucode.ast.forms;
 
+import de.mknblch.sucode.ast.ListStruct;
 import de.mknblch.sucode.interpreter.Context;
 import de.mknblch.sucode.interpreter.Interpreter;
 
 /**
+ * wrapper class for @Special-registered functions.
+ * in contrast to the normal From it does not evaluate it's args before
+ * calling eval. therefore the eval-function gets the interpreter
+ * as an additional argument to anything useful.
+ *
  * Created by mknblch on 18.10.2014.
  */
 public abstract class SpecialForm implements Function {

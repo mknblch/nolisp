@@ -1,6 +1,6 @@
 package de.mknblch.sucode.interpreter;
 
-import de.mknblch.sucode.ast.Function;
+import de.mknblch.sucode.ast.forms.Function;
 import de.mknblch.sucode.func.FunctionBuilder;
 import de.mknblch.sucode.func.FunctionDefinitionException;
 

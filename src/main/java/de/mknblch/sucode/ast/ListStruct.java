@@ -56,11 +56,10 @@ public class ListStruct implements Atom, Iterable {
         if (cdr == null) cdr = new ListStruct(atom);
         else last().cdr = new ListStruct(atom);
 
-        // TODO this or new ListStruct?
         return this;
     }
 
-    public void add (Object o) {
+    public void add(Object o) {
         if (isEmptyList) {
             isEmptyList = false;
             car = o;
@@ -72,7 +71,8 @@ public class ListStruct implements Atom, Iterable {
     public Object get(int n) {
         ListStruct temp = this;
         for (int i = n; i > 0; i--) {
-            if(null == temp.cdr) throw new IndexOutOfBoundsException(String.format("Index: %d, Size: %d", n, this.size()));
+            if (null == temp.cdr)
+                throw new IndexOutOfBoundsException(String.format("Index: %d, Size: %d", n, this.size()));
             temp = temp.cdr;
         }
         return temp.car();
@@ -85,6 +85,15 @@ public class ListStruct implements Atom, Iterable {
         return null != cdr;
     }
 
+    public Object getOrNull(int n) {
+        ListStruct temp = this;
+        for (int i = n; i > 0; i--) {
+            if (null == temp.cdr) return null;
+            temp = temp.cdr;
+        }
+        return temp.car();
+    }
+
     /**
      * get current list element.
      */
@@ -92,13 +101,19 @@ public class ListStruct implements Atom, Iterable {
         return car;
     }
 
-    public Object getOrNull(int n) {
-        ListStruct temp = this;
-        for (int i = n; i > 0; i--) {
-            if(null == temp.cdr) return null;
-            temp = temp.cdr;
+    public Object caar() {
+        if (null != car && car instanceof ListStruct) return ((ListStruct) car).car();
+        return null;
+    }
+
+    public Object caaar() {
+        if (null != car && car instanceof ListStruct) {
+            ListStruct caar = ((ListStruct) caar());
+            if (null != caar && caar instanceof ListStruct) {
+                return ((ListStruct) caar).car;
+            }
         }
-        return temp.car();
+        return null;
     }
 
     /**
@@ -129,7 +144,7 @@ public class ListStruct implements Atom, Iterable {
 
     public ListStruct cdddr() {
 
-        if(cdr != null && cdr.cdr != null)
+        if (cdr != null && cdr.cdr != null)
             return cdr.cdr.cdr;
 
         return null;
@@ -137,7 +152,7 @@ public class ListStruct implements Atom, Iterable {
 
     public Object cdddar() {
         final ListStruct cdddr = cdddr();
-        if(cdddr != null) return cdddr.car();
+        if (cdddr != null) return cdddr.car();
         return null;
     }
 
@@ -163,7 +178,7 @@ public class ListStruct implements Atom, Iterable {
 
             @Override
             public boolean hasNext() {
-                if(isEmptyList) return false;
+                if (isEmptyList) return false;
                 return null != head; // && null != head.car();
             }
 

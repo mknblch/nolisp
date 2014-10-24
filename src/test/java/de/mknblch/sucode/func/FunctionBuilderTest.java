@@ -1,6 +1,6 @@
 package de.mknblch.sucode.func;
 
-import de.mknblch.sucode.ast.Function;
+import de.mknblch.sucode.ast.forms.Function;
 import de.mknblch.sucode.func.testforms.*;
 import org.junit.Test;
 

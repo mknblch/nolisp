@@ -1,8 +1,8 @@
 package de.mknblch.sucode.builtin;
 
-import de.mknblch.sucode.ast.Form;
-import de.mknblch.sucode.ast.LambdaForm;
+import de.mknblch.sucode.ast.forms.LambdaForm;
 import de.mknblch.sucode.func.*;
+import de.mknblch.sucode.helper.FormatHelper;
 import de.mknblch.sucode.helper.TypeHelper;
 import de.mknblch.sucode.interpreter.Context;
 import de.mknblch.sucode.interpreter.EvaluationException;
@@ -24,7 +24,7 @@ public class SpecialForms {
         ListStruct temp = args;
         Object value;
         do {
-            final String key = TypeHelper.symbolLiteral(temp.car());
+            final String key = symbolLiteral(temp.car());
             value = interpreter.eval(temp.cdr().car(), context);
             context.bindGlobal(key, value);
             temp = temp.cdr().cdr();
@@ -80,17 +80,15 @@ public class SpecialForms {
         final String functionName = symbolLiteral(args.car());
         final List<String> symbols = symbolList(args.cdar());
         final LambdaForm lambda = new LambdaForm(interpreter, parentContext, symbols, args.cddar());
-        parentContext.bind(functionName, lambda);
+        parentContext.bindGlobal(functionName, lambda);
         return lambda;
     }
 
 
     @Special
-    @Define(symbol = "eval") // (eval '(+ 1 1)) => 2
+    @Define(symbol = "eval") // (eval '(+ 20 22)) :> (eval (quote (+ 20 22))) => 42
     public static Object eval(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
-        final Object car = args.car();
-        // TODO
-        return interpreter.eval(car, parentContext);
+        return interpreter.eval(interpreter.eval(args.car(), parentContext), parentContext);
     }
 
 

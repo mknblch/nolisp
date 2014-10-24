@@ -104,7 +104,8 @@ public class TypeHelper {
     }
 
     public static void expectQuote(Object o) throws EvaluationException {
-        if (o == Parser.QUOTE_STRUCT) {
+        System.out.println("examining " + o + " against " + Parser.QUOTE_STRUCT);
+        if (o != Parser.QUOTE_STRUCT) {
             throw new EvaluationException(
                     String.format("Expected QUOTE:SYM but was: %s", o != null ? o.getClass().getSimpleName() : "null"));
         }

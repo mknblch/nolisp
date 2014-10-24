@@ -1,5 +1,6 @@
-package de.mknblch.sucode.ast;
+package de.mknblch.sucode.ast.forms;
 
+import de.mknblch.sucode.ast.ListStruct;
 import de.mknblch.sucode.interpreter.Context;
 import de.mknblch.sucode.interpreter.EvaluationException;
 import de.mknblch.sucode.interpreter.Interpreter;
