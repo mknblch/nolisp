@@ -1,7 +1,7 @@
 package de.mknblch.sucode.builtin;
 
-import de.mknblch.sucode.func.AbstractFormTest;
 import de.mknblch.sucode.ast.forms.Function;
+import de.mknblch.sucode.func.AbstractFormTest;
 import de.mknblch.sucode.interpreter.EvaluationException;
 import org.junit.Test;
 
@@ -101,22 +101,39 @@ public class SpecialFormsTest extends AbstractFormTest {
     public final void testEvalSymbol() throws Exception {
         final String code =
                 "(setq x 42)" +
-                "(setq y x)" +
-                "(setq z y)" +
-                "(eval z)";
+                        "(setq y x)" +
+                        "(setq z y)" +
+                        "(eval z)";
 
         final List<Object> result = eval(code);
         assertEquals(42, result.get(2));
     }
 
     @Test
-    public final void testEvalSymboql() throws Exception {
+    public final void testEvalQuotedList() throws Exception {
         final String code = "(setq x 3)" +
                 "(setq p '(+ (* 3 (* x x)) 15))" +
                 "(eval p)";
-
         final List<Object> result = eval(code);
         assertEquals(42, result.get(2));
     }
 
+    @Test
+    public void testEvalLambda() throws Exception {
+        final String code = "(eval (lambda (x) (* 2 x)))";
+        final List<Object> result = eval(code);
+        assertASTEquals("#<LAMBDA> (x)", result.get(0));
+    }
+    @Test
+    public void testEvalBuiltin() throws Exception {
+        final String code = "(eval +)";
+        final List<Object> result = eval(code);
+        assertASTEquals("#<FORM>", result.get(0));
+    }
+
+    @Test
+    public void testList() throws Exception {
+        final List<Object> result = eval("(list 1 (+ 1 1) (+ 1 1 1) (+ 1 1 1 1))");
+        assertASTEquals("( 1 2 3 4 )", result.get(0));
+    }
 }

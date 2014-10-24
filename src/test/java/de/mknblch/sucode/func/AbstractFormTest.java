@@ -4,16 +4,20 @@ import de.mknblch.sucode.builtin.*;
 import de.mknblch.sucode.interpreter.Context;
 import de.mknblch.sucode.interpreter.Interpreter;
 import de.mknblch.sucode.interpreter.LoggingInterpreter;
+import de.mknblch.sucode.parser.Program;
 import de.mknblch.sucode.parser.lexer.Lexer;
 import de.mknblch.sucode.helper.FormatHelper;
 import de.mknblch.sucode.parser.Parser;
 import de.mknblch.sucode.parser.ParserException;
 import de.mknblch.sucode.ast.ListStruct;
+import de.mknblch.sucode.parser.lexer.LexerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author mknblch
@@ -52,5 +56,12 @@ public abstract class AbstractFormTest {
             ret.add(eval);
         }
         return ret;
+    }
+
+
+    protected static void assertASTEquals(String expected, Object evaluated) throws LexerException, ParserException {
+        String pretty = FormatHelper.formatPretty(evaluated);
+        LOGGER.debug("AST  : {}", pretty);
+        assertEquals(expected, pretty);
     }
 }

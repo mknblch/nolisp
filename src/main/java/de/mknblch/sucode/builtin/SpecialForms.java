@@ -40,6 +40,11 @@ public class SpecialForms {
         return args.car();
     }
 
+    @Define(symbol = "list")
+    public static Object list(Context context, ListStruct args) throws EvaluationException {
+        return args;
+    }
+
     @Special
     @Define(symbol = "let*") // (let* ((a 1) (b a)) b) => 1
     public static Object letAsterisk(Interpreter interpreter, Context parentScope, ListStruct args) throws Exception {

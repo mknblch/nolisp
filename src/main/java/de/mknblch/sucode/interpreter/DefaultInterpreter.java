@@ -22,6 +22,12 @@ public class DefaultInterpreter implements Interpreter {
         switch (atom.getType()) {
             case SYMBOL: return context.get(((SymbolStruct) atom).literal);
             case LIST: return evalFunction((ListStruct) atom, context);
+
+            // TODO review
+            case FORM:
+            case LAMBDA:
+                return obj;
+
             default: throw new EvaluationException(String.format("Unknown Atom %s:%s", atom, atom.getType()));
         }
     }

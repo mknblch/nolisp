@@ -1,9 +1,12 @@
 package de.mknblch.sucode.helper;
 
-import de.mknblch.sucode.parser.ParserException;
 import de.mknblch.sucode.ast.Atom;
 import de.mknblch.sucode.ast.ListStruct;
 import de.mknblch.sucode.ast.SymbolStruct;
+import de.mknblch.sucode.ast.forms.LambdaForm;
+import de.mknblch.sucode.parser.ParserException;
+
+import java.util.List;
 
 public class FormatHelper {
 
@@ -26,8 +29,6 @@ public class FormatHelper {
         final Atom atom = (Atom) obj;
 
         switch (atom.getType()) {
-            case SYMBOL:
-                return String.format("%s", ((SymbolStruct) atom).literal);
             case LIST:
                 final StringBuffer sb = new StringBuffer();
                 ListStruct temp = (ListStruct) (ListStruct) atom;
@@ -38,8 +39,23 @@ public class FormatHelper {
                 } while (temp != null);
 
                 return String.format("( %s )", sb.toString());
+            case LAMBDA:
+                return String.format("#<LAMBDA> (%s)", formatLambdaSymbols(((LambdaForm) atom).getSymbols()));
+            case FORM:
+                return "#<FORM> " ; //+ formatPretty(); TODO
+            case SYMBOL:
+                return String.format("%s", ((SymbolStruct) atom).literal);
         }
         return atom.getType().name();
+    }
+
+    private static String formatLambdaSymbols(List<String> symbols) {
+        final StringBuffer sb = new StringBuffer();
+        for (String symbol : symbols) {
+            if (sb.length() > 0) sb.append(" ");
+            sb.append(symbol);
+        }
+        return sb.toString();
     }
 
     public static String formatAtom(Object obj) throws ParserException {
@@ -64,8 +80,9 @@ public class FormatHelper {
                     buffer.append(formatAtom(element));
                 }
                 return String.format("[ %s ]", buffer.toString());
-            case SPECIAL_FORM:
             case FORM:
+                return String.format("#<%s>", atom.getType());
+            case LAMBDA:
                 return String.format("#<%s>", atom.getType());
         }
 

@@ -1,5 +1,6 @@
 package de.mknblch.sucode.ast.forms;
 
+import de.mknblch.sucode.ast.Atom;
 import de.mknblch.sucode.ast.ListStruct;
 import de.mknblch.sucode.interpreter.Context;
 import de.mknblch.sucode.interpreter.EvaluationException;
@@ -34,6 +35,15 @@ public class LambdaForm extends Form {
     @Override
     public String getSymbol() {
         return null;
+    }
+
+    @Override
+    public Type getType() {
+        return Type.LAMBDA;
+    }
+
+    public List<String> getSymbols() {
+        return symbols;
     }
 
     /**
