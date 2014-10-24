@@ -42,7 +42,7 @@ public class FormatHelper {
             case LAMBDA:
                 return String.format("#<LAMBDA> (%s)", formatLambdaSymbols(((LambdaForm) atom).getSymbols()));
             case FORM:
-                return "#<FORM> " ; //+ formatPretty(); TODO
+                return "#<FORM>";
             case SYMBOL:
                 return String.format("%s", ((SymbolStruct) atom).literal);
         }
