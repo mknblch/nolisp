@@ -27,11 +27,12 @@ public abstract class AbstractFormTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MathFormsTest.class);
     private static final Parser PARSER = new Parser();
-    public static final Interpreter INTERPRETER = new LoggingInterpreter();
+    private static final Interpreter INTERPRETER = new LoggingInterpreter();
 
     public static final Class[] BUILTIN_FORMS = new Class[]{
             SpecialForms.class,
             ConditionForms.class,
+            PredicateForms.class,
             MathForms.class,
             ConsoleForms.class};
 

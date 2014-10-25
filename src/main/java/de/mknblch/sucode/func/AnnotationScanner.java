@@ -55,7 +55,7 @@ public class AnnotationScanner {
 
     private static void addConstant(Map<String, Object> constants, Field field) throws FunctionDefinitionException {
 
-        final DefineConstant annotation = field.getAnnotation(DefineConstant.class);
+        final Constant annotation = field.getAnnotation(Constant.class);
         final String[] symbols = annotation.value();
         for (String symbol : symbols) {
             try {
@@ -70,7 +70,7 @@ public class AnnotationScanner {
 
     private static boolean isConstantField(Field field) throws FunctionDefinitionException {
 
-        if(!field.isAnnotationPresent(DefineConstant.class)) return false;
+        if(!field.isAnnotationPresent(Constant.class)) return false;
 
         final int modifiers = field.getModifiers();
         if (!Modifier.isStatic(modifiers))

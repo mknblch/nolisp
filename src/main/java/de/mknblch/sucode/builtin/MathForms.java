@@ -1,22 +1,23 @@
 package de.mknblch.sucode.builtin;
 
-import de.mknblch.sucode.func.DefineConstant;
+import de.mknblch.sucode.func.Constant;
 import de.mknblch.sucode.interpreter.Context;
 import de.mknblch.sucode.interpreter.EvaluationException;
 import de.mknblch.sucode.func.Define;
 import de.mknblch.sucode.ast.ListStruct;
 
 import static de.mknblch.sucode.helper.TypeHelper.asReal;
+import static de.mknblch.sucode.helper.TypeHelper.expectCdr;
 
 /**
  * @author mknblch
  */
 public class MathForms {
 
-    @DefineConstant("PI")
+    @Constant("PI")
     public static final double PI = Math.PI;
 
-    @DefineConstant("E")
+    @Constant("E")
     public static final double E = Math.E;
 
     @Define({"+", "add", "sum"})
@@ -30,29 +31,34 @@ public class MathForms {
 
     @Define({"-", "sub"})
     public static Object minus(Context context, ListStruct args) throws Exception {
+        expectCdr(args);
         return minus(args.car(), args.cdr().car());
     }
 
     @Define({"*", "mul"})
     public static Object mul(Context context, ListStruct args) throws Exception {
+        expectCdr(args);
         return mul(args.car(), args.cdr().car());
     }
 
     @Define({"/", "div"})
     public static Object div(Context context, ListStruct args) throws Exception {
+        expectCdr(args);
         return div(args.car(), args.cdr().car());
     }
 
     @Define({"%", "mod"})
     public static Object mod(Context context, ListStruct args) throws Exception {
+        expectCdr(args);
         return mod(args.car(), args.cdr().car());
     }
 
     @Define({"**", "pow"})
     public static Object pow(Context context, ListStruct args) throws Exception {
+        expectCdr(args);
         return Math.pow(
                 asReal(args.car()),
-                asReal(args.cdar()));
+                asReal(args.cdr().car()));
     }
 
     @Define({"log"})

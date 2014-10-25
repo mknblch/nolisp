@@ -78,5 +78,12 @@ public class InterpreterTest extends AbstractFormTest {
         assertEquals(3, evaluated.get(0));
     }
 
+    @Test
+    public void test() throws Exception {
+        final String code = ";hallo\n'a";
+        final List<Object> evaluated = eval(code);
+        dump(evaluated);
+    }
+
 
 }

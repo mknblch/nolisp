@@ -43,9 +43,6 @@ public class SpecialFormsTest extends AbstractFormTest {
 
     @Test
     public void testEmptyLambda() throws Exception {
-        final String as
-                = "asdasd asda";
-
         List<Object> result = eval("((lambda () 1))");
         dump(result);
         assertEquals(1, result.get(0));
