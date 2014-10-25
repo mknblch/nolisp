@@ -1,7 +1,9 @@
 package de.mknblch.sucode.builtin;
 
+import de.mknblch.sucode.ast.forms.Form;
 import de.mknblch.sucode.ast.forms.LambdaForm;
 import de.mknblch.sucode.func.*;
+import de.mknblch.sucode.helper.FormatHelper;
 import de.mknblch.sucode.interpreter.Context;
 import de.mknblch.sucode.interpreter.EvaluationException;
 import de.mknblch.sucode.interpreter.Interpreter;
@@ -76,11 +78,28 @@ public class SpecialForms {
         return interpreter.eval(args.cdr().car(), localScope);
     }
 
+    @Define(value = "progn") // (progn 1 2 3) => 3
+    public static Object progn(Context parentScope, ListStruct args) throws Exception {
+        if (null == args) {
+            return null;
+        }
+        return args.last().car();
+    }
+
     @Special
     @Define(value = "lambda") // ((lambda (a) (+ a 1)) 1) => 2
     public static Object lambda(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
         expectCdr(args);
         return new LambdaForm(interpreter, parentContext, symbolList(args.car()), args.cdar());
+    }
+
+    @Special
+    @Define(value = "defmacro") // ((lambda (a) (+ a 1)) 1) => 2
+    public static Object defmacro(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
+        expectCdr(args);
+        throw new EvaluationException("defmacro not yet implemented");
+
+//        return new LambdaForm(interpreter, parentContext, symbolList(args.car()), args.cdar());
     }
 
     @Special
@@ -95,12 +114,29 @@ public class SpecialForms {
         return lambda;
     }
 
-
     @Special
     @Define(value = "eval") // (eval '(+ 20 22)) :> (eval (quote (+ 20 22))) => 42
     public static Object eval(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
         return interpreter.eval(interpreter.eval(args.car(), parentContext), parentContext);
     }
 
+    @Special
+    @Define(value = "function") // (function +)
+    public static Object function(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
+        return args.car();
+    }
+
+    @Special
+    @Define(value = "funcall") // (funcall (function +) 1 2 3 4 5) => 15
+    public static Object funcall(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
+        final String symbol = symbolLiteral(interpreter.eval(args.car(), parentContext));
+        final Form form = asForm(parentContext.get(symbol));
+        Object ret = args.cdar();
+        ListStruct rest = args.cddr();
+        for (Object o : rest) {
+            ret = form.eval(parentContext, new ListStruct(ret, interpreter.eval(o, parentContext)));
+        }
+        return ret;
+    }
 
 }

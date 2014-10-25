@@ -4,6 +4,7 @@ import de.mknblch.sucode.ast.Atom;
 import de.mknblch.sucode.ast.ListStruct;
 import de.mknblch.sucode.ast.SymbolStruct;
 import de.mknblch.sucode.ast.forms.Form;
+import de.mknblch.sucode.ast.forms.Function;
 import de.mknblch.sucode.ast.forms.LambdaForm;
 import de.mknblch.sucode.interpreter.Context;
 import de.mknblch.sucode.interpreter.EvaluationException;
@@ -63,7 +64,7 @@ public class FormatHelper {
                 final LambdaForm lambda = (LambdaForm) atom;
                 return String.format("#<LAMBDA> (%s) %s", formatLambdaSymbols(lambda.getSymbols()), formatPretty(lambda.getForm()));
             case FORM:
-                return "#<FORM>";
+                return String.format("#<BUILTIN %s>", ((Function) atom).getSymbol());
             case SYMBOL:
                 return String.format("%s", ((SymbolStruct) atom).literal);
         }
@@ -77,5 +78,37 @@ public class FormatHelper {
             sb.append(symbol);
         }
         return sb.toString();
+    }
+
+    public static String formatAtom(Object obj) {
+
+        if (null == obj) {
+            return "null";
+        }
+        if (!(obj instanceof Atom)) {
+            return String.format("%s:%s", String.valueOf(obj), obj.getClass().getSimpleName());
+        }
+        final Atom atom = (Atom) obj;
+
+        switch (atom.getType()) {
+
+            case SYMBOL:
+                return String.format("%s:SYM", ((SymbolStruct) atom).literal);
+            case LIST:
+                final ListStruct listStruct = (ListStruct) atom;
+                final StringBuffer buffer = new StringBuffer();
+                for (Object element : listStruct) {
+                    if (buffer.length() > 0) buffer.append(", ");
+                    buffer.append(formatAtom(element));
+                }
+                return String.format("[ %s ]", buffer.toString());
+            case LAMBDA:
+                final LambdaForm lambda = (LambdaForm) atom;
+                return String.format("#<LAMBDA> (%s) %s", formatLambdaSymbols(lambda.getSymbols()), formatAtom(lambda.getForm()));
+            case FORM:
+                return String.format("#<BUILTIN %s>", ((Function) atom).getSymbol());
+        }
+
+        return String.format("%s:UNKNOWN_ATOM", atom);
     }
 }

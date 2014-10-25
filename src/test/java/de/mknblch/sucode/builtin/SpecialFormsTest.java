@@ -125,7 +125,7 @@ public class SpecialFormsTest extends AbstractFormTest {
     public void testEvalBuiltin() throws Exception {
         final String code = "(eval +)";
         final List<Object> result = eval(code);
-        assertASTEquals("#<FORM>", result.get(0));
+        assertASTEquals("#<BUILTIN +>", result.get(0));
     }
 
     @Test
@@ -133,4 +133,43 @@ public class SpecialFormsTest extends AbstractFormTest {
         final List<Object> result = eval("(list 1 (+ 1 1) (+ 1 1 1) (+ 1 1 1 1))");
         assertASTEquals("( 1 2 3 4 )", result.get(0));
     }
+
+    // TODO review! maybe a dedicated function context is needed because +, ++ and +++ have special meaning in cl
+    @Test
+    public void testFunction() throws Exception {
+        final List<Object> result = eval("+");
+        assertASTEquals("#<BUILTIN +>", result.get(0));
+    }
+
+    @Test
+    public void testDefmacro() throws Exception {
+
+        final List<Object> result = eval("(defmacro s2 (a b v) (setq a v) (setq b v)) (s2 x y 1) x y");
+        assertASTEquals("#<BUILTIN +>", result.get(0));
+    }
+
+    @Test
+    public void testFuncallPlus() throws Exception {
+        final List<Object> result = eval("(funcall #'+ 3 4 5 6 7 8 9)");
+        assertEquals(42, result.get(0));
+    }
+
+    @Test
+    public void testFuncallMinus() throws Exception {
+        final List<Object> result = eval("(funcall #'- 50 1 1 1 1 1 1 1 1)");
+        assertEquals(42, result.get(0));
+    }
+
+    @Test
+    public void testProgn() throws Exception {
+        final List<Object> result = eval("(progn 0 7 14 21 28 35 42)");
+        assertEquals(42, result.get(0));
+    }
+
+    @Test
+    public void testPrognEmpty() throws Exception {
+        final List<Object> result = eval("(progn)");
+        assertEquals(null, result.get(0));
+    }
+
 }

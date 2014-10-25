@@ -3,6 +3,7 @@ package de.mknblch.sucode.ast;
 import java.util.Iterator;
 
 /**
+ * custom linked list impl.
  * @author mknblch
  */
 public class ListStruct implements Atom, Iterable {
