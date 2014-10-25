@@ -78,36 +78,4 @@ public class FormatHelper {
         }
         return sb.toString();
     }
-//
-//    public static String formatAtom(Object obj) throws ParserException {
-//
-//        if (null == obj) {
-//            return "null";
-//        }
-//        if (!(obj instanceof Atom)) {
-//            return String.format("%s:%s", String.valueOf(obj), obj.getClass().getSimpleName());
-//        }
-//        final Atom atom = (Atom) obj;
-//
-//        switch (atom.getType()) {
-//
-//            case SYMBOL:
-//                return String.format("%s:SYM", ((SymbolStruct) atom).literal);
-//            case LIST:
-//                final ListStruct listStruct = (ListStruct) atom;
-//                final StringBuffer buffer = new StringBuffer();
-//                for (Object element : listStruct) {
-//                    if (buffer.length() > 0) buffer.append(", ");
-//                    buffer.append(formatAtom(element));
-//                }
-//                return String.format("[ %s ]", buffer.toString());
-//            case FORM:
-//                return String.format("#<%s>", atom.getType());
-//            case LAMBDA:
-//                return String.format("#<%s>", atom.getType());
-//        }
-//
-//        throw new ParserException("Unable to format " + atom);
-//    }
-
 }

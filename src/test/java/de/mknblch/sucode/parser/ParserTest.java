@@ -1,7 +1,6 @@
 package de.mknblch.sucode.parser;
 
 import de.mknblch.sucode.helper.FormatHelper;
-import de.mknblch.sucode.parser.lexer.Lexer;
 import de.mknblch.sucode.parser.lexer.LexerException;
 import de.mknblch.sucode.ast.ListStruct;
 import org.junit.Test;
@@ -22,69 +21,69 @@ public class ParserTest {
     @Test
     public void testSimpleConst() throws Exception {
         String code = "(x)";
-        assertASTEquals("( ( x ) )", code);
+        evalAssertASTEquals("( ( x ) )", code);
     }
 
     @Test
     public void testSimpleAST() throws Exception {
         String code = "(+ 1 2 3)(+ 1 2 3)";
-        assertASTEquals("( ( + 1 2 3 ) ( + 1 2 3 ) )", code);
+        evalAssertASTEquals("( ( + 1 2 3 ) ( + 1 2 3 ) )", code);
     }
 
     @Test
     public void testComment() throws Exception {
         String code = "(+ 1 2 3) ;(+ 1 2 3) \n\n\n(oO)";
-        assertASTEquals("( ( + 1 2 3 ) ( oO ) )", code);
+        evalAssertASTEquals("( ( + 1 2 3 ) ( oO ) )", code);
     }
 
     @Test
     public void testQuotedInt() throws Exception {
         String code = "'1 x";
-        assertASTEquals("( ( quote 1 ) x )", code);
+        evalAssertASTEquals("( ( quote 1 ) x )", code);
     }
 
 
     @Test
     public void testQuotedSymbol() throws Exception {
         String code = "'x x";
-        assertASTEquals("( ( quote x ) x )", code);
+        evalAssertASTEquals("( ( quote x ) x )", code);
     }
 
 
     @Test
     public void testQuotedReal() throws Exception {
         String code = "'3.1415 3";
-        assertASTEquals("( ( quote 3.1415 ) 3 )", code);
+        evalAssertASTEquals("( ( quote 3.1415 ) 3 )", code);
     }
 
     @Test
     public void testQuotedList() throws Exception {
         String code = "'(1 2 3) x";
-        assertASTEquals("( ( quote ( 1 2 3 ) ) x )", code);
+        evalAssertASTEquals("( ( quote ( 1 2 3 ) ) x )", code);
     }
 
     @Test
     public void testDoubleQuoted() throws Exception {
         String code = "''1 2 3";
-        assertASTEquals("( ( quote ( quote 1 ) ) 2 3 )", code);
+        evalAssertASTEquals("( ( quote ( quote 1 ) ) 2 3 )", code);
     }
 
     @Test
     public void testDoubleQuotedList() throws Exception {
         String code = "''(1 2 3)";
-        assertASTEquals("( ( quote ( quote ( 1 2 3 ) ) ) )", code);
+        evalAssertASTEquals("( ( quote ( quote ( 1 2 3 ) ) ) )", code);
     }
 
     @Test
     public void testQuotedTwoLists() throws Exception {
         String code = "'(1 2 3)'(1 2 3)x";
-        assertASTEquals("( ( quote ( 1 2 3 ) ) ( quote ( 1 2 3 ) ) x )", code);
+        evalAssertASTEquals("( ( quote ( 1 2 3 ) ) ( quote ( 1 2 3 ) ) x )", code);
     }
 
     @Test
     public void testNil() throws Exception {
         String code = "(nil)";
-        assertASTEquals("( ( nil ) )", code);
+        evalAssertASTEquals("( ( nil ) )", code);
     }
 
     @Test(expected = ParserException.class)
@@ -105,11 +104,17 @@ public class ParserTest {
         ListStruct parse = parse(code);
     }
 
+    @Test
+    public void testFunction() throws Exception {
+        String code = "#'(list 42)";
+        evalAssertASTEquals("( ( function ( list 42 ) ) )", code);
+    }
+
     private Program parse(String code) throws ParserException, LexerException {
         return PARSER.parse(code);
     }
 
-    private void assertASTEquals(String expected, String code) throws LexerException, ParserException {
+    private void evalAssertASTEquals(String expected, String code) throws LexerException, ParserException {
         LOGGER.debug("code : {}", code.replaceAll("[\r\n]", "\\\\n"));
         Program parse = parse(code);
         String pretty = FormatHelper.formatPretty(parse);

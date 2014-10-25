@@ -62,8 +62,10 @@ public class LambdaForm extends Form {
 
         ListStruct temp = args;
         for (int i = 0; i < symbols.size(); i++) {
-            if(null == temp) throw new EvaluationException(String.format(
-                    "procedure expects %d arguments, given %d", symbols.size(), i));
+            if(null == temp) {
+                throw new EvaluationException(String.format(
+                        "procedure expects %d arguments, given %d", symbols.size(), i));
+            }
             localContext.bind(symbols.get(i), interpreter.eval(temp.car(), parentContext));
             temp = temp.cdr();
         }
