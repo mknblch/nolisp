@@ -144,8 +144,15 @@ public class SpecialFormsTest extends AbstractFormTest {
     @Test
     public void testDefmacroComplex() throws Exception {
 
-        final List<Object> result = eval("(defmacro s2 (a b v) (setq a v) (setq b v)) (setq x 0) (setq y 0) (s2 x y 1) x y");
-        assertASTEquals("L[ nil 0 0 1 1 1 ]", result);
+        final List<Object> result = eval("(defmacro s2 (a b v) (setq a v) (setq b v)) (setq x 0) (setq y 0) (s2 x y 1) x y (s2 x y 2) x y");
+        assertASTEquals("L[ nil 0 0 1 1 1 2 2 2 ]", result);
+    }
+
+    @Test
+    public void testDefmacroComplexVarNameCollision() throws Exception {
+
+        final List<Object> result = eval("(defmacro s2 (a b v) (setq a v) (setq b v)) (setq x 0) (setq y 0) (s2 x y 1) x y (s2 x y 2) x y");
+        assertASTEquals("L[ nil 0 0 1 1 1 2 2 2 ]", result);
     }
 
     @Test
@@ -153,6 +160,12 @@ public class SpecialFormsTest extends AbstractFormTest {
 
         final List<Object> result = eval("(defmacro s2 (x) (+ x x)) (s2 21)");
         assertEquals(42, result.get(1));
+    }
+    @Test
+    public void testDefmacro1() throws Exception {
+
+        final List<Object> result = eval("(defmacro s2 (x y) (+ y x)) (s2 2 1)");
+        assertEquals(3, result.get(1));
     }
 
     @Test

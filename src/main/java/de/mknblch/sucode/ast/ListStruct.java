@@ -1,6 +1,9 @@
 package de.mknblch.sucode.ast;
 
+import de.mknblch.sucode.helper.TypeHelper;
+
 import java.util.Iterator;
+import java.util.Stack;
 
 /**
  * custom linked list impl.
@@ -186,5 +189,9 @@ public class ListStruct implements Atom, Iterable {
                 throw new RuntimeException("unbindLocal() not implemented");
             }
         };
+    }
+
+    public void setCar(Object o) {
+        car = o;
     }
 }

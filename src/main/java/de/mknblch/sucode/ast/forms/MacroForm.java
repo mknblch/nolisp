@@ -5,6 +5,7 @@ import de.mknblch.sucode.ast.SymbolStruct;
 import de.mknblch.sucode.interpreter.Context;
 import de.mknblch.sucode.interpreter.Interpreter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static de.mknblch.sucode.helper.TypeHelper.*;
@@ -19,27 +20,65 @@ import static de.mknblch.sucode.helper.TypeHelper.*;
 public class MacroForm extends SpecialForm {
 
     private final String symbol;
-    private final List<String> formSymbols;
     private final ListStruct form;
+    private final List<ListStruct>[] symbolMap;
+    private final List<String> formSymbols;
 
     // (defmacro symbol (args*) from+)
     public MacroForm(String symbol, List<String> formSymbols, ListStruct form) {
+        symbolMap = buildIndex(formSymbols, form);
         this.symbol = symbol;
         this.formSymbols = formSymbols;
         this.form = form;
     }
 
+    private static List<ListStruct>[] buildIndex(List<String> formSymbols, ListStruct form) {
+        final List<ListStruct>[] map = new List[formSymbols.size()];
+        deepMap(map, formSymbols, form);
+        return map;
+    }
+
+
+    private static void deepMap(List<ListStruct>[] list, List<String> formSymbols, ListStruct form) {
+        // find each occurrence of the formSymbols and bind it's parent ListStruct to the map
+        ListStruct temp = form;
+        while (null != temp) {
+            final Object car = temp.car();
+            if (isList(car)) {
+                deepMap(list, formSymbols, (ListStruct) car);
+            } else {
+                final int matchingSymbol = findMatchingSymbol(formSymbols, car);
+                if (matchingSymbol != -1) {
+                    if (null == list[matchingSymbol]) list[matchingSymbol] = new ArrayList<ListStruct>();
+                    list[matchingSymbol].add(temp);
+                }
+            }
+            temp = temp.cdr();
+        }
+    }
+
     @Override // args=(arg1 arg2 ...)
     public Object eval(Interpreter interpreter, Context localContext, ListStruct args) throws Exception {
         final List<Object> flatten = asJavaList(args);
-        final ListStruct formList = deepReplaceCopy(formSymbols, flatten, form);
+        replace(symbolMap, flatten, form);
         Object ret = null;
-        for (Object o : formList) {
+        for (Object o : form) {
             ret = interpreter.eval(o, localContext);
         }
         return ret;
     }
 
+
+    private static void replace(List<ListStruct>[] index, List<Object> replacements, ListStruct form) {
+        final int min = Math.min(index.length, replacements.size());
+        for (int i = 0; i < min; i++) {
+            final List<ListStruct> listStructs = index[i];
+            final Object o = replacements.get(i);
+            for (ListStruct listStruct : listStructs) {
+                listStruct.setCar(o);
+            }
+        }
+    }
 
     @Override
     public String getSymbol() {
@@ -57,36 +96,6 @@ public class MacroForm extends SpecialForm {
 
     public Object getForm() {
         return form;
-    }
-
-    /**
-     * performs a deep copy of form and replace each occurrence of search with replacement.
-     * TODO more efficient way
-     */
-    private static ListStruct deepReplaceCopy(List<String> searchSymbols, List<Object> replacements, ListStruct form) {
-        final int rSize = replacements.size();
-        final ListStruct node = new ListStruct();
-        for (Object o : form) {
-            if(isList(o)) {
-                // recursive call to go down into sub-list
-                node.add(deepReplaceCopy(searchSymbols, replacements, (ListStruct) o));
-            } else {
-                final int matchingSymbol = findMatchingSymbol(searchSymbols, o);
-                if (matchingSymbol != -1) {
-                    // search was found, replace
-                    // has replacement for index
-                    if(rSize > matchingSymbol) node.add(replacements.get(matchingSymbol));
-                    // has no replacement, ass null
-                    // TODO review
-                    else node.add(null);
-                } else {
-                    // add as is
-                    node.add(o);
-                }
-            }
-        }
-
-        return node;
     }
 
     private static int findMatchingSymbol(List<String> search, Object o) {
