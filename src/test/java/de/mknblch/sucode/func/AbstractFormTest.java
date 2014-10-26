@@ -2,10 +2,9 @@ package de.mknblch.sucode.func;
 
 import de.mknblch.sucode.builtin.*;
 import de.mknblch.sucode.interpreter.Context;
+import de.mknblch.sucode.interpreter.CoreInterpreter;
 import de.mknblch.sucode.interpreter.Interpreter;
 import de.mknblch.sucode.interpreter.LoggingInterpreter;
-import de.mknblch.sucode.parser.Program;
-import de.mknblch.sucode.parser.lexer.Lexer;
 import de.mknblch.sucode.helper.FormatHelper;
 import de.mknblch.sucode.parser.Parser;
 import de.mknblch.sucode.parser.ParserException;
@@ -13,7 +12,6 @@ import de.mknblch.sucode.ast.ListStruct;
 import de.mknblch.sucode.parser.lexer.LexerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sun.rmi.runtime.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +25,8 @@ public abstract class AbstractFormTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MathFormsTest.class);
     private static final Parser PARSER = new Parser();
-    private static final Interpreter INTERPRETER = new LoggingInterpreter();
+    protected static final Interpreter LOGGING_INTERPRETER = new LoggingInterpreter();
+    protected static final Interpreter CORE_INTERPRETER = new CoreInterpreter();
 
     public static final Class[] BUILTIN_FORMS = new Class[]{
             SpecialForms.class,
@@ -44,15 +43,15 @@ public abstract class AbstractFormTest {
 
     protected List<Object> eval(String code) throws Exception {
         final Context context = new Context(BUILTIN_FORMS);
-        return eval(code, context);
+        return eval(code, LOGGING_INTERPRETER, context);
     }
 
-    protected List<Object> eval(String code, Context context) throws Exception {
+    protected List<Object> eval(String code, Interpreter interpreter, Context context) throws Exception {
         final ListStruct program = PARSER.parse(code);
         final ArrayList<Object> ret = new ArrayList<Object>();
         LOGGER.debug("evaluating: {}", FormatHelper.formatPretty(program));
         for (Object p : program) {
-            final Object eval = INTERPRETER.eval(p, context);
+            final Object eval = interpreter.eval(p, context);
             LOGGER.debug("eval: {}", FormatHelper.formatPretty(eval));
             ret.add(eval);
         }

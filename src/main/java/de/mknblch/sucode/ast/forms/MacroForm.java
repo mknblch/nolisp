@@ -32,7 +32,7 @@ public class MacroForm extends SpecialForm {
     @Override // args=(arg1 arg2 ...)
     public Object eval(Interpreter interpreter, Context localContext, ListStruct args) throws Exception {
         final List<Object> flatten = asJavaList(args);
-        final ListStruct formList = map(formSymbols, flatten, form);
+        final ListStruct formList = deepReplaceCopy(formSymbols, flatten, form);
         Object ret = null;
         for (Object o : formList) {
             ret = interpreter.eval(o, localContext);
@@ -61,14 +61,15 @@ public class MacroForm extends SpecialForm {
 
     /**
      * performs a deep copy of form and replace each occurrence of search with replacement.
+     * TODO more efficient way
      */
-    private static ListStruct map(List<String> searchSymbols, List<Object> replacements, ListStruct form) {
+    private static ListStruct deepReplaceCopy(List<String> searchSymbols, List<Object> replacements, ListStruct form) {
         final int rSize = replacements.size();
         final ListStruct node = new ListStruct();
         for (Object o : form) {
             if(isList(o)) {
                 // recursive call to go down into sub-list
-                node.add(map(searchSymbols, replacements, (ListStruct) o));
+                node.add(deepReplaceCopy(searchSymbols, replacements, (ListStruct) o));
             } else {
                 final int matchingSymbol = findMatchingSymbol(searchSymbols, o);
                 if (matchingSymbol != -1) {
