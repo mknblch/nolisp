@@ -7,7 +7,7 @@ package de.mknblch.sucode.ast;
 public interface Atom {
 
     public enum Type {
-        SYMBOL, LIST, FORM, LAMBDA, REFERENCE, MACRO
+        SYMBOL, LIST, FORM, LAMBDA, MACRO
     }
 
     public Type getType();

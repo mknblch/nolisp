@@ -2,14 +2,11 @@ package de.mknblch.sucode.helper;
 
 import de.mknblch.sucode.ast.Atom;
 import de.mknblch.sucode.ast.ListStruct;
-import de.mknblch.sucode.ast.Reference;
 import de.mknblch.sucode.ast.SymbolStruct;
-import de.mknblch.sucode.ast.forms.Form;
 import de.mknblch.sucode.ast.forms.Function;
 import de.mknblch.sucode.ast.forms.LambdaForm;
 import de.mknblch.sucode.interpreter.Context;
 import de.mknblch.sucode.interpreter.EvaluationException;
-import de.mknblch.sucode.parser.ParserException;
 
 import java.util.List;
 import java.util.Set;
@@ -80,8 +77,6 @@ public class FormatHelper {
                 return String.format("#<MACRO %s>", ((Function) atom).getSymbol());
             case SYMBOL:
                 return String.format("%s", ((SymbolStruct) atom).literal);
-            case REFERENCE:
-                return String.format("@%s", ((Reference) atom).target);
         }
         throw new IllegalArgumentException(String.format("%s:UNKNOWN_ATOM", atom));
 
@@ -124,8 +119,6 @@ public class FormatHelper {
                 return String.format("#<LAMBDA> (%s) %s", formatLambdaSymbols(lambda.getSymbols()), formatAtom(lambda.getForm()));
             case FORM:
                 return String.format("#<BUILTIN %s>", ((Function) atom).getSymbol());
-            case REFERENCE:
-                return String.format("%s:REF", ((Reference) atom).target);
         }
 
         throw new IllegalArgumentException(String.format("%s:UNKNOWN_ATOM", atom));

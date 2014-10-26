@@ -1,6 +1,5 @@
 package de.mknblch.sucode.builtin;
 
-import de.mknblch.sucode.ast.Reference;
 import de.mknblch.sucode.ast.forms.Form;
 import de.mknblch.sucode.ast.forms.LambdaForm;
 import de.mknblch.sucode.ast.forms.MacroForm;
@@ -117,13 +116,6 @@ public class SpecialForms {
     @Define("function") // (function +)
     public static Object function(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
         return args.car();
-    }
-
-    // TODO review dangerous?
-    @Special
-    @Define({"ref", "reference"})
-    public static Object ref(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
-        return new Reference(symbolLiteral(args.car()));
     }
 
     @Special

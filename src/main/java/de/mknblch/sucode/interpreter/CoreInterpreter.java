@@ -2,7 +2,6 @@ package de.mknblch.sucode.interpreter;
 
 import de.mknblch.sucode.ast.Atom;
 import de.mknblch.sucode.ast.ListStruct;
-import de.mknblch.sucode.ast.Reference;
 import de.mknblch.sucode.ast.SymbolStruct;
 import de.mknblch.sucode.ast.forms.Form;
 import de.mknblch.sucode.ast.forms.Function;
@@ -27,7 +26,7 @@ public class CoreInterpreter implements Interpreter {
         final Atom atom = (Atom) obj;
         switch (atom.getType()) {
             case SYMBOL:
-                return retrieveFromContext(context, (SymbolStruct) atom);
+                return retrieveFromContext((SymbolStruct) atom, context);
             case LIST:
                 return evalList((ListStruct) atom, context);
 
@@ -41,14 +40,6 @@ public class CoreInterpreter implements Interpreter {
         }
     }
 
-    private Object retrieveFromContext(Context context, SymbolStruct atom) throws EvaluationException {
-        Object ret = context.get(((SymbolStruct) atom).literal);
-        while(ret instanceof Reference) {
-            ret = context.get(((Reference) ret).target);
-        }
-        return ret;
-    }
-
     @Override
     public ListStruct evalEach(ListStruct list, Context context) throws Exception {
         final ListStruct ret = new ListStruct();
@@ -60,6 +51,10 @@ public class CoreInterpreter implements Interpreter {
             else ret.add(eval(l, context));
         }
         return ret;
+    }
+
+    private Object retrieveFromContext(SymbolStruct atom, Context context) throws EvaluationException {
+        return context.get(((SymbolStruct) atom).literal);
     }
 
     private Object evalList(ListStruct list, Context context) throws Exception {
