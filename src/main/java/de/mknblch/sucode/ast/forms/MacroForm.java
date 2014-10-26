@@ -21,63 +21,26 @@ public class MacroForm extends SpecialForm {
 
     private final String symbol;
     private final ListStruct form;
-    private final List<ListStruct>[] symbolMap;
+    private final List<ListStruct>[] index;
     private final List<String> formSymbols;
 
     // (defmacro symbol (args*) from+)
     public MacroForm(String symbol, List<String> formSymbols, ListStruct form) {
-        symbolMap = buildIndex(formSymbols, form);
+        index = buildIndex(formSymbols, form);
         this.symbol = symbol;
         this.formSymbols = formSymbols;
         this.form = form;
     }
 
-    private static List<ListStruct>[] buildIndex(List<String> formSymbols, ListStruct form) {
-        final List<ListStruct>[] map = new List[formSymbols.size()];
-        deepMap(map, formSymbols, form);
-        return map;
-    }
-
-
-    private static void deepMap(List<ListStruct>[] list, List<String> formSymbols, ListStruct form) {
-        // find each occurrence of the formSymbols and bind it's parent ListStruct to the map
-        ListStruct temp = form;
-        while (null != temp) {
-            final Object car = temp.car();
-            if (isList(car)) {
-                deepMap(list, formSymbols, (ListStruct) car);
-            } else {
-                final int matchingSymbol = findMatchingSymbol(formSymbols, car);
-                if (matchingSymbol != -1) {
-                    if (null == list[matchingSymbol]) list[matchingSymbol] = new ArrayList<ListStruct>();
-                    list[matchingSymbol].add(temp);
-                }
-            }
-            temp = temp.cdr();
-        }
-    }
-
     @Override // args=(arg1 arg2 ...)
     public Object eval(Interpreter interpreter, Context localContext, ListStruct args) throws Exception {
         final List<Object> flatten = asJavaList(args);
-        replace(symbolMap, flatten, form);
+        replace(index, flatten, form);
         Object ret = null;
         for (Object o : form) {
             ret = interpreter.eval(o, localContext);
         }
         return ret;
-    }
-
-
-    private static void replace(List<ListStruct>[] index, List<Object> replacements, ListStruct form) {
-        final int min = Math.min(index.length, replacements.size());
-        for (int i = 0; i < min; i++) {
-            final List<ListStruct> listStructs = index[i];
-            final Object o = replacements.get(i);
-            for (ListStruct listStruct : listStructs) {
-                listStruct.setCar(o);
-            }
-        }
     }
 
     @Override
@@ -90,12 +53,37 @@ public class MacroForm extends SpecialForm {
         return Type.MACRO;
     }
 
+
     public List<String> getFormSymbols() {
         return formSymbols;
     }
 
     public Object getForm() {
         return form;
+    }
+
+    private static List<ListStruct>[] buildIndex(List<String> formSymbols, ListStruct form) {
+        final List<ListStruct>[] index = new List[formSymbols.size()];
+        extractPointer(index, formSymbols, form);
+        return index;
+    }
+
+    private static void extractPointer(List<ListStruct>[] list, List<String> formSymbols, ListStruct form) {
+        // find each occurrence of the formSymbols and bind it's parent ListStruct to the map
+        ListStruct temp = form;
+        while (null != temp) {
+            final Object car = temp.car();
+            if (isList(car)) {
+                extractPointer(list, formSymbols, (ListStruct) car);
+            } else {
+                final int matchingSymbol = findMatchingSymbol(formSymbols, car);
+                if (matchingSymbol != -1) {
+                    if (null == list[matchingSymbol]) list[matchingSymbol] = new ArrayList<ListStruct>();
+                    list[matchingSymbol].add(temp);
+                }
+            }
+            temp = temp.cdr();
+        }
     }
 
     private static int findMatchingSymbol(List<String> search, Object o) {
@@ -105,6 +93,17 @@ public class MacroForm extends SpecialForm {
             if(search.get(i).equals(literal)) return i;
         }
         return -1;
+    }
+
+    private static void replace(List<ListStruct>[] index, List<Object> replacements, ListStruct form) {
+        final int min = Math.min(index.length, replacements.size());
+        for (int i = 0; i < min; i++) {
+            final List<ListStruct> listStructs = index[i];
+            final Object o = replacements.get(i);
+            for (ListStruct listStruct : listStructs) {
+                listStruct.setCar(o);
+            }
+        }
     }
 
 }
