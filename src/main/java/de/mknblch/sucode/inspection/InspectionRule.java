@@ -7,7 +7,7 @@ import de.mknblch.sucode.ast.ListStruct;
  */
 public interface InspectionRule {
 
-    public void inspect(ListStruct listElement);
+    public void inspect(ListStruct list);
 
-    public boolean visitLists();
+    public void inspectList(ListStruct list);
 }

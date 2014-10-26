@@ -39,9 +39,7 @@ public class InspectorTest {
             }
 
             @Override
-            public boolean visitLists() {
-                return false;
-            }
+            public void inspectList(ListStruct list) { }
         };
 
         LOGGER.debug("{}", FormatHelper.formatPretty(parse));
@@ -52,27 +50,18 @@ public class InspectorTest {
     }
 
     @Test
-    public void testInspectVisit() throws Exception {
+    public void testInspectVisitLists() throws Exception {
 
         final Program parse = PARSER.parse("1 (1 (2 nil) 4 ) 5 6 (7)");
 
         final InspectionRule replaceRule = new InspectionRule() {
             @Override
-            public void inspect(ListStruct listElement) {
-
-                final Object car = listElement.car();
-                if (null == car) {
-                    listElement.setCar(new ListStruct(null));
-                } else if (TypeHelper.isList(car)) {
-                    listElement.setCar("oO");
-                } else {
-                    listElement.setCar(42);
-                }
-            }
+            public void inspect(ListStruct listElement) {}
 
             @Override
-            public boolean visitLists() {
-                return true;
+            public void inspectList(ListStruct list) {
+
+                if(7 != list.car()) list.setCar("oO");
             }
         };
 
@@ -80,7 +69,7 @@ public class InspectorTest {
         Inspector.inspect(parse, replaceRule);
         LOGGER.debug("{}", FormatHelper.formatPretty(parse));
 
-        assertASTEquals("( 42 oO 42 42 oO )", parse);
+        assertASTEquals("( 1 ( oO ( oO nil ) 4 ) 5 6 ( 7 ) )", parse);
     }
 
     public void assertASTEquals(String expected, Program parse) {

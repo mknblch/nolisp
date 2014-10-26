@@ -17,7 +17,7 @@ public class Inspector {
             final Object car = temp.car();
             if(isList(car)) {
                 final ListStruct listStruct = (ListStruct) car;
-                if (rule.visitLists()) rule.inspect(temp);
+                rule.inspectList(listStruct);
                 inspect(listStruct, rule);
             } else {
                 rule.inspect(temp);
