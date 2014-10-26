@@ -16,16 +16,17 @@ public class LambdaForm extends Form {
     private final List<String> symbols;
     private final Object form;
 
-    public LambdaForm(Interpreter interpreter, Context definitionScopeContext, List<String> symbols, Object form) {
+    public LambdaForm(Interpreter interpreter, Context definitionScopeContext, List<String> formSymbols, Object form) {
         this.interpreter = interpreter;
         this.definitionScopeContext = definitionScopeContext;
-        this.symbols = symbols;
+        this.symbols = formSymbols;
         this.form = form;
     }
 
     @Override
     public Object eval(Context localContext, ListStruct args) throws Exception {
         // bind args to context
+        // TODO faster impl like in Macro possible?
         bind(interpreter, definitionScopeContext, localContext, symbols, args);
         // eval with local
         return interpreter.eval(form, localContext);

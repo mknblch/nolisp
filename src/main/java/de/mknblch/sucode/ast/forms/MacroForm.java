@@ -11,8 +11,6 @@ import java.util.List;
 import static de.mknblch.sucode.helper.TypeHelper.*;
 
 /**
- *
- *
  * (defmacro target (arg*) from+)
  *
  * @author mknblch
@@ -95,11 +93,12 @@ public class MacroForm extends SpecialForm {
         return -1;
     }
 
-    private static void replace(List<ListStruct>[] index, List<Object> replacements, ListStruct form) {
+    private static void replace(List<ListStruct>[] index, List<Object> replacements, Object form) {
         final int min = Math.min(index.length, replacements.size());
         for (int i = 0; i < min; i++) {
             final List<ListStruct> listStructs = index[i];
             final Object o = replacements.get(i);
+            if (null == o) continue;
             for (ListStruct listStruct : listStructs) {
                 listStruct.setCar(o);
             }
