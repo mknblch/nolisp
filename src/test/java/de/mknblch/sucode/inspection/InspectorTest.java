@@ -2,10 +2,8 @@ package de.mknblch.sucode.inspection;
 
 import de.mknblch.sucode.ast.ListStruct;
 import de.mknblch.sucode.helper.FormatHelper;
-import de.mknblch.sucode.helper.TypeHelper;
 import de.mknblch.sucode.parser.Parser;
 import de.mknblch.sucode.parser.Program;
-import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +24,7 @@ public class InspectorTest {
 
         final Program parse = PARSER.parse("(1 (2 nil) 4 ) 5");
 
-        final InspectionRule replaceRule = new InspectionRule() {
+        final ElementInspectionRule replaceRule = new ElementInspectionRule() {
             @Override
             public void inspect(ListStruct listElement) {
 
@@ -37,9 +35,6 @@ public class InspectorTest {
                     listElement.setCar(42);
                 }
             }
-
-            @Override
-            public void inspectList(ListStruct list) { }
         };
 
         LOGGER.debug("{}", FormatHelper.formatPretty(parse));
@@ -50,26 +45,33 @@ public class InspectorTest {
     }
 
     @Test
-    public void testInspectVisitLists() throws Exception {
+    public void testReplaceLists() throws Exception {
 
-        final Program parse = PARSER.parse("1 (1 (2 nil) 4 ) 5 6 (7)");
+        final Program parse = PARSER.parse("1 (3 (4 nil) 5 ) 6 7");
 
-        final InspectionRule replaceRule = new InspectionRule() {
+        final SubListInspectionRule replaceRule = new SubListInspectionRule() {
             @Override
-            public void inspect(ListStruct listElement) {}
+            public void inspect(ListStruct list) {
 
-            @Override
-            public void inspectList(ListStruct list) {
-
-                if(7 != list.car()) list.setCar("oO");
             }
+
+            @Override
+            public boolean inspectSubList(ListStruct list) {
+                if(7 != list.car()) {
+                    list.setCar("oO");
+                    return false;
+                }
+
+                return true;
+            }
+
         };
 
         LOGGER.debug("{}", FormatHelper.formatPretty(parse));
         Inspector.inspect(parse, replaceRule);
         LOGGER.debug("{}", FormatHelper.formatPretty(parse));
 
-        assertASTEquals("( 1 ( oO ( oO nil ) 4 ) 5 6 ( 7 ) )", parse);
+        assertASTEquals("( 1 oO 6 7 )", parse);
     }
 
     public void assertASTEquals(String expected, Program parse) {
