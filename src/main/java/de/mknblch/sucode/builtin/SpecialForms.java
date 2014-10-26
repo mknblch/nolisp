@@ -4,6 +4,7 @@ import de.mknblch.sucode.ast.forms.Form;
 import de.mknblch.sucode.ast.forms.LambdaForm;
 import de.mknblch.sucode.ast.forms.MacroForm;
 import de.mknblch.sucode.func.*;
+import de.mknblch.sucode.helper.Expectations;
 import de.mknblch.sucode.helper.FormatHelper;
 import de.mknblch.sucode.interpreter.Context;
 import de.mknblch.sucode.interpreter.EvaluationException;
@@ -12,6 +13,7 @@ import de.mknblch.sucode.ast.ListStruct;
 
 import java.util.List;
 
+import static de.mknblch.sucode.helper.Expectations.*;
 import static de.mknblch.sucode.helper.TypeHelper.*;
 
 /**

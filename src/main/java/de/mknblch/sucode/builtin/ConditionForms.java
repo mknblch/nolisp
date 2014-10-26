@@ -1,12 +1,9 @@
 package de.mknblch.sucode.builtin;
 
-import de.mknblch.sucode.ast.Atom;
-import de.mknblch.sucode.ast.forms.Function;
-import de.mknblch.sucode.ast.forms.LambdaForm;
 import de.mknblch.sucode.ast.ListStruct;
-import de.mknblch.sucode.ast.SymbolStruct;
 import de.mknblch.sucode.func.Define;
 import de.mknblch.sucode.func.Special;
+import de.mknblch.sucode.helper.Expectations;
 import de.mknblch.sucode.helper.TypeHelper;
 import de.mknblch.sucode.interpreter.Context;
 import de.mknblch.sucode.interpreter.Interpreter;
@@ -33,7 +30,7 @@ public class ConditionForms {
     @Define(value = "cond") // (cond () () ())
     public static Object cond(Interpreter interpreter, Context context, ListStruct args) throws Exception {
         for (Object arg : args) {
-            TypeHelper.expectList(arg);
+            Expectations.expectList(arg);
             // (bool form)
             final ListStruct pair = (ListStruct) arg;
             final Object condition = interpreter.eval(pair.car(), context);
