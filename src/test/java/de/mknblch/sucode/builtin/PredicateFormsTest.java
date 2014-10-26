@@ -1,6 +1,6 @@
 package de.mknblch.sucode.builtin;
 
-import de.mknblch.sucode.func.AbstractFormTest;
+import de.mknblch.sucode.testHelper.AbstractFormTest;
 import org.junit.Test;
 
 import java.util.List;

@@ -1,7 +1,7 @@
 package de.mknblch.sucode.builtin;
 
 import de.mknblch.sucode.ast.forms.Function;
-import de.mknblch.sucode.func.AbstractFormTest;
+import de.mknblch.sucode.testHelper.AbstractFormTest;
 import de.mknblch.sucode.interpreter.EvaluationException;
 import org.junit.Test;
 
@@ -43,7 +43,7 @@ public class SpecialFormsTest extends AbstractFormTest {
 
     @Test
     public void testEmptyLambda() throws Exception {
-        List<Object> result = eval("((lambda () 1))");
+        List<Object> result = eval("( (lambda () 1) )");
         dump(result);
         assertEquals(1, result.get(0));
     }
@@ -145,8 +145,8 @@ public class SpecialFormsTest extends AbstractFormTest {
     @Test
     public void testDefmacroComplex() throws Exception {
 
-        final List<Object> result = eval("(defmacro s2 (a b v) (setq a v) (setq b v)) (setq x 0) (setq y 0) (s2 x y 1) x y (s2 x y 2) x y");
-        assertASTEquals("L[ nil 0 0 1 1 1 2 2 2 ]", result);
+        final List<Object> result = eval("(defmacro s2 (a b v) (setq a v) (setq b v)) (setq x 0) (setq y 0) (s2 x y 1) x y (s2 x y 2) x y (s2 a b 3) a b");
+        assertASTEquals("L[ nil 0 0 1 1 1 2 2 2 3 3 3 ]", result);
     }
 
     @Test

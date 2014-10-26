@@ -1,10 +1,10 @@
-package de.mknblch.sucode.func;
+package de.mknblch.sucode.testHelper;
 
 import de.mknblch.sucode.builtin.*;
 import de.mknblch.sucode.interpreter.Context;
 import de.mknblch.sucode.interpreter.CoreInterpreter;
 import de.mknblch.sucode.interpreter.Interpreter;
-import de.mknblch.sucode.interpreter.LoggingInterpreter;
+import de.mknblch.sucode.testHelper.LoggingInterpreter;
 import de.mknblch.sucode.helper.FormatHelper;
 import de.mknblch.sucode.parser.Parser;
 import de.mknblch.sucode.parser.ParserException;

@@ -1,6 +1,8 @@
-package de.mknblch.sucode.interpreter;
+package de.mknblch.sucode.testHelper;
 
 import de.mknblch.sucode.helper.FormatHelper;
+import de.mknblch.sucode.interpreter.Context;
+import de.mknblch.sucode.interpreter.CoreInterpreter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
