@@ -16,23 +16,31 @@ import java.util.List;
 public class TypeHelper {
 
     public static Integer asInt(Object o) throws EvaluationException {
-        if (o instanceof Integer) {
+        if (isInt(o)) {
             return (Integer) o;
         }
-        if (o instanceof Double) {
+        if (isReal(o)) {
             return ((Double) o).intValue();
         }
         throw new EvaluationException("Illegal INT cast.");
     }
 
+    public static boolean isInt(Object o) {
+        return o instanceof Integer;
+    }
+
     public static Double asReal(Object o) throws EvaluationException {
-        if (o instanceof Integer) {
+        if (isInt(o)) {
             return (double) (Integer) o;
         }
-        if (o instanceof Double) {
+        if (isReal(o)) {
             return ((Double) o);
         }
         throw new EvaluationException("Illegal REAL cast.");
+    }
+
+    public static boolean isReal(Object o) {
+        return o instanceof Double;
     }
 
     public static String asString(Object o) throws EvaluationException {
@@ -40,9 +48,17 @@ public class TypeHelper {
         return (String) o;
     }
 
+    public static boolean isString(Object o) {
+        return o instanceof String;
+    }
+
     public static ListStruct asList(Object o) throws EvaluationException {
         Expectations.expectList(o);
         return (ListStruct) o;
+    }
+
+    public static boolean isList(Object o) {
+        return o instanceof ListStruct;
     }
 
     public static String symbolLiteral(Object o) throws EvaluationException {
@@ -55,14 +71,26 @@ public class TypeHelper {
         return ((LambdaForm) o);
     }
 
+    public static boolean isLambda(Object o) {
+        return o instanceof LambdaForm;
+    }
+
     public static Form asForm(Object o) throws EvaluationException {
         Expectations.expectForm(o);
         return ((Form) o);
     }
 
+    public static boolean isForm(Object o) {
+        return o instanceof Form;
+    }
+
     public static Function asFunction(Object o) throws EvaluationException {
         Expectations.expectFunction(o);
         return ((Function) o);
+    }
+
+    public static boolean isFunction(Object o) {
+        return o instanceof Function;
     }
 
     public static Boolean asBoolean(Object o) {
@@ -71,6 +99,10 @@ public class TypeHelper {
         }
         // TODO review
         return !Boolean.FALSE.equals(o);
+    }
+
+    public static boolean isBoolean(Object o) {
+        return Boolean.FALSE.equals(o) || Boolean.TRUE.equals(o);
     }
 
     public static List<String> symbolList(Object o) throws EvaluationException {
@@ -83,5 +115,14 @@ public class TypeHelper {
         return flat;
     }
 
+    public static List<Object> asJavaList(ListStruct listStruct) {
+        final List<Object> flat = new ArrayList<Object>();
+        ListStruct temp = listStruct;
+        while (temp != null) {
+            flat.add(temp.car());
+            temp = temp.cdr();
+        }
+        return flat;
+    }
 
 }

@@ -5,6 +5,7 @@ import de.mknblch.sucode.ast.ListStruct;
 import de.mknblch.sucode.ast.SymbolStruct;
 import de.mknblch.sucode.ast.forms.Function;
 import de.mknblch.sucode.ast.forms.LambdaForm;
+import de.mknblch.sucode.ast.forms.MacroForm;
 import de.mknblch.sucode.interpreter.Context;
 import de.mknblch.sucode.interpreter.EvaluationException;
 
@@ -49,7 +50,7 @@ public class FormatHelper {
                 if (sb.length() > 0) sb.append(" ");
                 sb.append(formatPretty(o));
             }
-            return String.format("[ %s ]", sb.toString());
+            return String.format("L[ %s ]", sb.toString());
         }
         // return Non-Atoms
         if (!(obj instanceof Atom)) {
@@ -70,20 +71,19 @@ public class FormatHelper {
                 return String.format("( %s )", sb.toString());
             case LAMBDA:
                 final LambdaForm lambda = (LambdaForm) atom;
-                return String.format("#<LAMBDA> (%s) %s", formatLambdaSymbols(lambda.getSymbols()), formatPretty(lambda.getForm()));
-            case FORM:
-                return String.format("#<BUILTIN %s>", ((Function) atom).getSymbol());
+                return String.format("#<LAMBDA> (%s) %s", formatSymbols(lambda.getSymbols()), formatPretty(lambda.getForm()));
             case MACRO:
-                return String.format("#<MACRO %s>", ((Function) atom).getSymbol());
+                final MacroForm macro = (MacroForm) atom;
+                return String.format("#<MACRO %s> (%s) %s", macro.getSymbol(), formatSymbols(macro.getFormSymbols()), formatPretty(macro.getForm()));
             case SYMBOL:
                 return String.format("%s", ((SymbolStruct) atom).literal);
+            case FORM:
+                return String.format("#<BUILTIN %s>", ((Function) atom).getSymbol());
         }
         throw new IllegalArgumentException(String.format("%s:UNKNOWN_ATOM", atom));
-
-//        return atom.getType().name();
     }
 
-    private static String formatLambdaSymbols(List<String> symbols) {
+    private static String formatSymbols(List<String> symbols) {
         final StringBuffer sb = new StringBuffer();
         for (String symbol : symbols) {
             if (sb.length() > 0) sb.append(" ");
@@ -116,7 +116,10 @@ public class FormatHelper {
                 return String.format("[ %s ]", buffer.toString());
             case LAMBDA:
                 final LambdaForm lambda = (LambdaForm) atom;
-                return String.format("#<LAMBDA> (%s) %s", formatLambdaSymbols(lambda.getSymbols()), formatAtom(lambda.getForm()));
+                return String.format("#<LAMBDA> (%s) %s", formatSymbols(lambda.getSymbols()), formatAtom(lambda.getForm()));
+            case MACRO:
+                final MacroForm macro = (MacroForm) atom;
+                return String.format("#<MACRO %s> (%s) %s", macro.getSymbol(), formatSymbols(macro.getFormSymbols()), formatPretty(macro.getForm()));
             case FORM:
                 return String.format("#<BUILTIN %s>", ((Function) atom).getSymbol());
         }

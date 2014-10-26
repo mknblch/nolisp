@@ -136,22 +136,12 @@ public class SpecialForms {
     @Special
     @Define("defmacro") // (defmacro name (arg*) form+)
     public static Object defmacro(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
-
-        System.out.println(String.format("ARGS: %s", FormatHelper.formatPretty(args)));
-
         expectCdr(args);
-
         final String name = symbolLiteral(args.car());
-        System.out.println(String.format("%s", FormatHelper.formatPretty(name)));
-
         final List<String> argumentSymbols = symbolList(args.cdar());
-        System.out.println(String.format("%s", FormatHelper.formatPretty(argumentSymbols)));
-
         final ListStruct forms = args.cddr();
-
         final MacroForm macroForm = new MacroForm(name, argumentSymbols, forms);
         parentContext.bind(name, macroForm);
-
-        return macroForm;
+        return null;
     }
 }
