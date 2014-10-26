@@ -21,6 +21,6 @@ public interface Interpreter {
     /**
      * evaluates each element in the list without treating it as function call.
      */
-    public ListStruct evalList(ListStruct list, Context context) throws Exception;
+    public ListStruct evalEach(ListStruct list, Context context) throws Exception;
 
 }

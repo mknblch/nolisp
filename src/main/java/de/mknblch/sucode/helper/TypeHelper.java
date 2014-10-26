@@ -42,6 +42,11 @@ public class TypeHelper {
         return (String) o;
     }
 
+    public static ListStruct asList(Object o) throws EvaluationException {
+        expectList(o);
+        return (ListStruct) o;
+    }
+
     public static String symbolLiteral(Object o) throws EvaluationException {
         expectSymbol(o);
         return ((SymbolStruct) o).literal;
@@ -55,6 +60,11 @@ public class TypeHelper {
     public static Form asForm(Object o) throws EvaluationException {
         expectForm(o);
         return ((Form) o);
+    }
+
+    public static Function asFunction(Object o) throws EvaluationException {
+        expectFunction(o);
+        return ((Function) o);
     }
 
     public static Boolean asBoolean(Object o) {
@@ -128,9 +138,13 @@ public class TypeHelper {
     public static void expectQuotedList(Object o) throws EvaluationException {
         if (!(o instanceof ListStruct)) {
             throw new EvaluationException(
-                    String.format("Expected LIST but was: %s", FormatHelper.formatAtom(o)));
+                    String.format("Expected QUOTED LIST but was: %s", FormatHelper.formatAtom(o)));
         }
-        expectQuote(((ListStruct)o).car());
+        final ListStruct q = (ListStruct) o;
+        if (q.car() != Parser.QUOTE_STRUCT) {
+            throw new EvaluationException(
+                    String.format("Expected QUOTED LIST but was: %s", FormatHelper.formatAtom(o)));
+        }
     }
 
     public static void expectCdr(Object o) throws EvaluationException {

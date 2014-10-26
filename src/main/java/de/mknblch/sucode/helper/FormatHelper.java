@@ -2,6 +2,7 @@ package de.mknblch.sucode.helper;
 
 import de.mknblch.sucode.ast.Atom;
 import de.mknblch.sucode.ast.ListStruct;
+import de.mknblch.sucode.ast.Reference;
 import de.mknblch.sucode.ast.SymbolStruct;
 import de.mknblch.sucode.ast.forms.Form;
 import de.mknblch.sucode.ast.forms.Function;
@@ -43,6 +44,16 @@ public class FormatHelper {
         if (null == obj) {
             return "nil";
         }
+        //special case List<Object>
+        if(obj instanceof List) {
+            final StringBuffer sb = new StringBuffer();
+            final List list = (List) obj;
+            for (Object o : list) {
+                if (sb.length() > 0) sb.append(" ");
+                sb.append(formatPretty(o));
+            }
+            return String.format("[ %s ]", sb.toString());
+        }
         // return Non-Atoms
         if (!(obj instanceof Atom)) {
             return String.valueOf(obj);
@@ -65,10 +76,16 @@ public class FormatHelper {
                 return String.format("#<LAMBDA> (%s) %s", formatLambdaSymbols(lambda.getSymbols()), formatPretty(lambda.getForm()));
             case FORM:
                 return String.format("#<BUILTIN %s>", ((Function) atom).getSymbol());
+            case MACRO:
+                return String.format("#<MACRO %s>", ((Function) atom).getSymbol());
             case SYMBOL:
                 return String.format("%s", ((SymbolStruct) atom).literal);
+            case REFERENCE:
+                return String.format("@%s", ((Reference) atom).target);
         }
-        return atom.getType().name();
+        throw new IllegalArgumentException(String.format("%s:UNKNOWN_ATOM", atom));
+
+//        return atom.getType().name();
     }
 
     private static String formatLambdaSymbols(List<String> symbols) {
@@ -107,8 +124,10 @@ public class FormatHelper {
                 return String.format("#<LAMBDA> (%s) %s", formatLambdaSymbols(lambda.getSymbols()), formatAtom(lambda.getForm()));
             case FORM:
                 return String.format("#<BUILTIN %s>", ((Function) atom).getSymbol());
+            case REFERENCE:
+                return String.format("%s:REF", ((Reference) atom).target);
         }
 
-        return String.format("%s:UNKNOWN_ATOM", atom);
+        throw new IllegalArgumentException(String.format("%s:UNKNOWN_ATOM", atom));
     }
 }

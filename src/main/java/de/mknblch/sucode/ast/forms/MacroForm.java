@@ -8,37 +8,48 @@ import de.mknblch.sucode.interpreter.Interpreter;
 import java.util.List;
 
 /**
+ *
+ *
+ * (defmacro target (arg*) from+)
+ *
  * @author mknblch
  */
 public class MacroForm extends SpecialForm {
-    private final List<String> symbols;
-    private final Object form;
 
-    public MacroForm(List<String> symbols, Object form) {
-        this.symbols = symbols;
+    private final String symbol;
+    private final List<String> formSymbols;
+    private final ListStruct form;
+
+    // (defmacro symbol (args*) from+)
+    public MacroForm(String symbol, List<String> formSymbols, ListStruct form) {
+        this.symbol = symbol;
+        this.formSymbols = formSymbols;
         this.form = form;
     }
 
-    @Override
+    @Override // args=(arg1 arg2 ...)
     public Object eval(Interpreter interpreter, Context localContext, ListStruct args) throws Exception {
         // bind args to context
-//        bind(interpreter, definitionScopeContext, localContext, symbols, args);
+//        bind(interpreter, definitionScopeContext, localContext, formSymbols, args);
+
+
+
         // eval with local
         return interpreter.eval(form, localContext);
     }
 
     @Override
     public String getSymbol() {
-        return null;
+        return symbol;
     }
 
     @Override
     public Type getType() {
-        return Type.LAMBDA;
+        return Type.MACRO;
     }
 
-    public List<String> getSymbols() {
-        return symbols;
+    public List<String> getFormSymbols() {
+        return formSymbols;
     }
 
     public Object getForm() {
@@ -46,7 +57,7 @@ public class MacroForm extends SpecialForm {
     }
 
     /**
-     * bind each argument in args with key at args index in symbols to the local context by evaluating it with the
+     * bind each argument in args with key at args index in formSymbols to the local context by evaluating it with the
      * parent context.
      */
     private static void bind(Interpreter interpreter,

@@ -149,6 +149,19 @@ public class SpecialFormsTest extends AbstractFormTest {
     }
 
     @Test
+    public void testReference() throws Exception {
+
+        final List<Object> result = eval(
+                        "(setq a 1)" + // 1
+                        "(setq b a)" + // 1
+                        "(setq c (ref a))" + // 1
+                        "(setq a 2)" + // 2
+                        "a b c" );
+
+        assertASTEquals("[ 1 1 @a 2 2 1 2 ]", result);
+    }
+
+    @Test
     public void testFuncallPlus() throws Exception {
         final List<Object> result = eval("(funcall #'+ 3 4 5 6 7 8 9)");
         assertEquals(42, result.get(0));
