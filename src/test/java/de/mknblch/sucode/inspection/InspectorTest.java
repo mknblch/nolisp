@@ -22,18 +22,28 @@ public class InspectorTest {
     @Test
     public void testInspect() throws Exception {
 
-        final Program parse = PARSER.parse("(1 (2 nil) 4 ) 5");
+        final Program parse = PARSER.parse("(1 (2 nil) 3 ) 5 (6(7)) 8 9");
 
-        final ElementInspectionRule replaceRule = new ElementInspectionRule() {
+        final InspectionRule replaceRule = new InspectionRule() {
+
+            private int c = 0;
+
             @Override
             public void inspect(ListStruct listElement) {
 
                 final Object car = listElement.car();
                 if (null == car) {
-                    listElement.setCar(new ListStruct(null));
+                    listElement.setCar(new ListStruct(++c));
                 } else {
-                    listElement.setCar(42);
+                    final Integer o = (Integer) listElement.car();
+                    c += o;
+                    listElement.setCar(new ListStruct(c));
                 }
+            }
+
+            @Override
+            public boolean followSublist(ListStruct list) {
+                return true;
             }
         };
 
@@ -41,7 +51,7 @@ public class InspectorTest {
         Inspector.inspect(parse, replaceRule);
         LOGGER.debug("{}", FormatHelper.formatPretty(parse));
 
-        assertASTEquals("( ( 42 ( 42 ( nil ) ) 42 ) 42 )", parse);
+        assertASTEquals("( ( ( 1 ) ( ( 3 ) ( 4 ) ) ( 7 ) ) ( 12 ) ( ( 18 ) ( ( 25 ) ) ) ( 33 ) ( 42 ) )", parse);
     }
 
     @Test
@@ -56,7 +66,7 @@ public class InspectorTest {
             }
 
             @Override
-            public boolean inspectSubList(ListStruct list) {
+            public boolean followSublist(ListStruct list) {
                 if(7 != list.car()) {
                     list.setCar("oO");
                     return false;

@@ -9,5 +9,5 @@ public interface InspectionRule {
 
     public void inspect(ListStruct list);
 
-    public boolean inspectSubList(ListStruct list);
+    public boolean followSublist(ListStruct list);
 }

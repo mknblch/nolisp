@@ -15,10 +15,8 @@ public class Inspector {
 
         while(temp != null) {
             final Object car = temp.car();
-            if(isList(car)) {
-                final ListStruct listStruct = (ListStruct) car;
-                if (!rule.inspectSubList(temp)) continue; // TODO review
-                inspect(listStruct, rule);
+            if(isList(car) && rule.followSublist(temp)) {
+                inspect((ListStruct) car, rule); // TODO review
             } else {
                 rule.inspect(temp);
             }
