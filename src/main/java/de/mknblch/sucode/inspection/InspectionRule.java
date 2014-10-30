@@ -5,7 +5,7 @@ import de.mknblch.sucode.ast.ListStruct;
 /**
  * @author mknblch
  */
-public interface SubListInspectionRule {
+public interface InspectionRule {
 
     public void inspect(ListStruct list);
 

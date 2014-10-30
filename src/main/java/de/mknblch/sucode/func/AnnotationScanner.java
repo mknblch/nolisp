@@ -134,7 +134,7 @@ public class AnnotationScanner {
     }
 
     /**
-     * checks if the method signature is isMethodSuitable for Forms.
+     * checks if the method signature is suitable for SpecialForm.
      */
     private static boolean isNonSpecialForm(Method method) throws FunctionDefinitionException {
         if (!method.isAnnotationPresent(Define.class)) return false;
@@ -146,16 +146,16 @@ public class AnnotationScanner {
         final Class<?>[] types = method.getParameterTypes();
         if (
                 2 != types.length ||
-                        !ListStruct.class.equals(types[1]) ||
-                        !Context.class.equals(types[0])) throw new FunctionDefinitionException(String.format(
-                "Invalid method signature in '%s.%s(..)'. Expected: 'func(env:Context, args:ListStruct):Object'",
+                !ListStruct.class.equals(types[1]) ||
+                !Context.class.equals(types[0])) throw new FunctionDefinitionException(String.format(
+                    "Invalid method signature in '%s.%s(..)'. Expected: 'func(env:Context, args:ListStruct):Object'",
                 method.getDeclaringClass().getSimpleName(), method.getName()));
 
         return true;
     }
 
     /**
-     * checks if the method signature is isMethodSuitable for Forms.
+     * checks if the method signature is suitable for Forms.
      */
     private static boolean isSpecialForm(Method method) throws FunctionDefinitionException {
         if (!method.isAnnotationPresent(Define.class)) return false;

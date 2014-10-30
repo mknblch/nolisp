@@ -69,7 +69,7 @@ public class Parser {
         final Token next = lexer.next();
         // expect QUOTE
         if (null == next || next.type != Token.Type.QUOTE) {
-            throw new ParserException("Invalid syntax #'...");
+            throw new ParserException("Invalid syntax #'");
         }
         return new ListStruct(FUNCTION_STRUCT).append(parseOne());
     }

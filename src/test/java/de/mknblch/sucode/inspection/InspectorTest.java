@@ -49,7 +49,7 @@ public class InspectorTest {
 
         final Program parse = PARSER.parse("1 (3 (4 nil) 5 ) 6 7");
 
-        final SubListInspectionRule replaceRule = new SubListInspectionRule() {
+        final InspectionRule replaceRule = new InspectionRule() {
             @Override
             public void inspect(ListStruct list) {
 
