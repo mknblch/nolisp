@@ -29,29 +29,17 @@ public class MacroForms {
         expectCdr(args);
         final Object symbol = args.car();
         final String name = symbolLiteral(symbol);
-
-
-        final ListStruct forms = args.cddr();
-
-        System.out.printf("forms: %s%n", FormatHelper.formatPretty(forms));
-
-        final MacroForm macroForm = new MacroForm(name, symbolList(args.cdar()), forms);
-
-
-
-        parentContext.bind(name, macroForm);
+        parentContext.bind(name, new MacroForm(name, symbolList(args.cdar()), args.cddr()));
         return symbol;
     }
 
     @Special
     @Define("backquote")
     public static Object backquote(final Interpreter interpreter, final Context parentContext, ListStruct args) throws Exception {
-
         final Object car = args.car();
         if (!isList(car)) {
             return car;
         }
-
         final Rule replacementRule = new RuleAdapter() {
             @Override
             public void inspect(ListStruct container, Object element) throws Exception {
@@ -60,14 +48,8 @@ public class MacroForms {
                     container.setCar(interpreter.eval(((ListStruct) element).cdar(), parentContext));
                 }
             }
-
             @Override
             public boolean inspectSublists() {
-                return true;
-            }
-
-            @Override
-            public boolean follow(ListStruct container, ListStruct listElement) {
                 return true;
             }
         };
@@ -78,8 +60,7 @@ public class MacroForms {
     @Special
     @Define("comma")
     public static Object comma(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
-
-        throw new EvaluationException("Misplaced COMMA");
+        throw new EvaluationException("Bad syntax. Comma not inside a backquote environment.");
     }
 
     @Special
