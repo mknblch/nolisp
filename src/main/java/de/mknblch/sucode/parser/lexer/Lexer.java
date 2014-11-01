@@ -1,5 +1,7 @@
 package de.mknblch.sucode.parser.lexer;
 
+import static de.mknblch.sucode.parser.lexer.TokenHelper.*;
+
 /**
  * basic lisp lexer.
  *
@@ -8,7 +10,7 @@ public class Lexer {
 
     public static final char[] IGNORE_CHARS = new char[]{' ', '\t', '\r'};
     public static final char[] NEWLINE_CHARS = new char[]{'\n'};
-    public static final char[] SPECIAL_TOKEN_CHARS = new char[]{'(', ')', '\'', '#'};
+    public static final char[] SPECIAL_TOKEN_CHARS = new char[]{'(', ')', '\'', '#', '`', ',', '@'};
     public static final char[] DOUBLEQUOTE_CHARS = new char[]{'"'};
     public static final String INT_REGEX = "^\\-?[0-9]+$";
     public static final String REAL_REGEX = "^\\-?[0-9]+\\.[0-9]+$";
@@ -73,20 +75,29 @@ public class Lexer {
         switch (c) {
             case '(':
                 offset++;
-                return TokenHelper.makeListBeginToken(position);
+                return makeListBeginToken(position);
             case ')':
                 offset++;
-                return TokenHelper.makeListEndToken(position);
+                return makeListEndToken(position);
             case '\'':
                 offset++;
-                return TokenHelper.makeQuoteToken(position);
+                return makeQuoteToken(position);
             case '#':
                 offset++;
-                return TokenHelper.makeSharpToken(position);
+                return makeSharpToken(position);
+            case '`':
+                offset++;
+                return makeBackquoteToken(position);
+            case ',':
+                offset++;
+                return makeCommaToken(position);
+            case '@':
+                offset++;
+                return makeSpliceToken(position);
             case ';':
-                return TokenHelper.makeCommentToken(tokenizeComment(), position);
+                return makeCommentToken(tokenizeComment(), position);
             case '"':
-                return TokenHelper.makeStringToken(tokenizeString(), position);
+                return makeStringToken(tokenizeString(), position);
             default:
                 return decideSymbolType(tokenizeSymbol(), position);
         }
@@ -95,15 +106,15 @@ public class Lexer {
     private Token decideSymbolType(String literal, int position) throws LexerException {
 
         if (literal.matches(INT_REGEX)) {
-            return TokenHelper.makeIntToken(literal, position);
+            return makeIntToken(literal, position);
         } else if (literal.matches(REAL_REGEX)) {
-            return TokenHelper.makeRealToken(literal, position);
+            return makeRealToken(literal, position);
         } else if (literal.matches(NIL_REGEX)) {
-            return TokenHelper.makeNilToken(position);
+            return makeNilToken(position);
         } else if (literal.matches(TRUE_REGEX)) {
-            return TokenHelper.makeTrueToken(position);
+            return makeTrueToken(position);
         } else {
-            return TokenHelper.makeSymbolToken(literal, position);
+            return makeSymbolToken(literal, position);
         }
     }
 

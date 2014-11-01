@@ -119,9 +119,6 @@ public class SpecialForms {
     public static Object function(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
 //       TODO REVIEW!
         final Object eval = interpreter.eval(args.car(), parentContext);
-
-//        System.out.println(String.format("%s", FormatHelper.formatPretty(eval)));
-
         return interpreter.eval(eval, parentContext);
     }
 
@@ -147,6 +144,35 @@ public class SpecialForms {
         final ListStruct forms = args.cddr();
         final MacroForm macroForm = new MacroForm(name, argumentSymbols, forms);
         parentContext.bind(name, macroForm);
+        return null;
+    }
+
+    @Special
+    @Define("backquote")
+    public static Object backquote(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
+
+        final Object car = args.car();
+
+        System.out.printf("` => %s%n", FormatHelper.formatPretty(car));
+
+        return null;
+    }
+
+    @Special
+    @Define("comma")
+    public static Object comma(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
+
+        return null;
+    }
+
+    @Special
+    @Define("splice")
+    public static Object at(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
+
+        final Object car = args.car();
+
+
+
         return null;
     }
 }

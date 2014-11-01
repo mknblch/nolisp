@@ -60,4 +60,16 @@ public class TokenHelper {
     public static Token makeSharpToken(int position) {
         return new Token(Token.Type.SHARP, "#", "#", position);
     }
+
+    public static Token makeBackquoteToken(int position) {
+        return new Token(Token.Type.BACKQUOTE, "`", "`", position);
+    }
+
+    public static Token makeCommaToken(int position) {
+        return new Token(Token.Type.COMMA, ",", ",", position);
+    }
+
+    public static Token makeSpliceToken(int position) {
+        return new Token(Token.Type.SPLICE, "@", "@", position);
+    }
 }
