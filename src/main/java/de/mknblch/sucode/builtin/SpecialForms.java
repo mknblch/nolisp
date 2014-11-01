@@ -96,118 +96,11 @@ public class SpecialForms {
     }
 
     @Special
-    @Define("lambda") // ((lambda (a) (+ a 1)) 1) => 2
-    public static Object lambda(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
-        expectCdr(args);
-        return new LambdaForm(interpreter, parentContext, symbolList(args.car()), args.cdar());
-    }
-
-    @Special
-    @Define("defun") // (defun bla (a) (+ a 1) ) => form
-    public static Object defun(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
-        // TODO review
-        expectCdr(args);
-        final String functionName = symbolLiteral(args.car());
-        final List<String> symbols = symbolList(args.cdar());
-        final LambdaForm lambda = new LambdaForm(interpreter, parentContext, symbols, args.cddar());
-        parentContext.bindGlobal(functionName, lambda);
-        return lambda;
-    }
-
-    @Special
     @Define("eval") // (eval '(+ 20 22)) :> (eval (quote (+ 20 22))) => 42
     public static Object eval(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
         // TODO Test
         return interpreter.eval(interpreter.eval(args.car(), parentContext), parentContext);
     }
 
-    @Special
-    @Define("function") // (function +)
-    public static Object function(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
-//       TODO REVIEW & TEST
-        final Object eval = interpreter.eval(args.car(), parentContext);
-        return interpreter.eval(eval, parentContext);
-    }
 
-    @Special
-    @Define("funcall") // (funcall (function +) 1 2 3 4 5) => 15
-    public static Object funcall(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
-        final Object car = args.car();
-        final Form form = asForm(interpreter.eval(car, parentContext));
-        Object ret = args.cdar();
-        ListStruct rest = args.cddr();
-        for (Object o : rest) {
-            ret = form.eval(parentContext, new ListStruct(ret, interpreter.eval(o, parentContext)));
-        }
-        return ret;
-    }
-
-    @Special
-    @Define("defmacro") // (defmacro name (arg*) form+)
-    public static Object defmacro(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
-        expectCdr(args);
-        final Object symbol = args.car();
-        final String name = symbolLiteral(symbol);
-
-
-        final ListStruct forms = args.cddr();
-
-        System.out.printf("forms: %s%n", FormatHelper.formatPretty(forms));
-
-        final MacroForm macroForm = new MacroForm(name, symbolList(args.cdar()), forms);
-
-
-
-        parentContext.bind(name, macroForm);
-        return symbol;
-    }
-
-    @Special
-    @Define("backquote")
-    public static Object backquote(final Interpreter interpreter, final Context parentContext, ListStruct args) throws Exception {
-
-        final Object car = args.car();
-        if (!isList(car)) {
-            return car;
-        }
-
-        final Rule replacementRule = new RuleAdapter() {
-            @Override
-            public void inspect(ListStruct container, Object element) throws Exception {
-                // evaluate (comma <form>) structs only
-                if (isList(element) && ((ListStruct) element).car() == Parser.COMMA_STRUCT) {
-                    container.setCar(interpreter.eval(((ListStruct) element).cdar(), parentContext));
-                }
-            }
-
-            @Override
-            public boolean inspectSublists() {
-                return true;
-            }
-
-            @Override
-            public boolean follow(ListStruct container, ListStruct listElement) {
-                return true;
-            }
-        };
-        Inspector.inspect(args, replacementRule);
-        return args.car(); //
-    }
-
-    @Special
-    @Define("comma")
-    public static Object comma(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
-
-        throw new EvaluationException("Misplaced COMMA");
-    }
-
-    @Special
-    @Define("splice")
-    public static Object splice(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
-
-        final Object car = args.car();
-
-
-        return null;
-    }
 }

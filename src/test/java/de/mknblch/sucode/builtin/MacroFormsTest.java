@@ -16,11 +16,12 @@ import static org.junit.Assert.assertEquals;
 public class MacroFormsTest extends AbstractFormTest {
 
 
-    // TODO test name collision
+    // TODO check correctness
     @Test
     public void testDefmacroComplex() throws Exception {
 
-        final List<Object> result = eval("(defmacro s2 (a b v) (setq a v) (setq b v)) (setq x 0) (setq y 0) (s2 x y 1) x y (s2 x y 2) x y (s2 a b 3) a b");
+        final List<Object> result = eval("(defmacro s2 (a b v) (setq a v) (setq b v)) (setq x 0) (setq y 0) (s2 x y 1)" +
+                "x y (s2 x y 2) x y (s2 a b 3) a b");
         assertASTEquals("L[ s2 0 0 1 1 1 2 2 2 3 3 3 ]", result);
     }
 
@@ -48,7 +49,7 @@ public class MacroFormsTest extends AbstractFormTest {
     @Test
     public void testDefmacroBQ() throws Exception {
 
-        final List<Object> result = eval("(defmacro aif (test then else) `(let ((it ,test)) (if it ,then ,else))) (aif (eq? 1 1) 1 2)");
+        final List<Object> result = eval("(defmacro aif (test then else) `(let ((it ,test)) (if it ,then ,else))) (aif 1 (- 2 1) 2)");
 
         assertASTEquals("L[ aif 1 ]", result);
 

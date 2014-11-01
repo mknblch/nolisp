@@ -1,5 +1,6 @@
 package de.mknblch.sucode.testHelper;
 
+import de.mknblch.sucode.ast.forms.LambdaForm;
 import de.mknblch.sucode.builtin.*;
 import de.mknblch.sucode.interpreter.Context;
 import de.mknblch.sucode.interpreter.CoreInterpreter;
@@ -30,6 +31,8 @@ public abstract class AbstractFormTest {
 
     public static final Class[] BUILTIN_FORMS = new Class[]{
             SpecialForms.class,
+            LambdaForms.class,
+            MacroForms.class,
             ConditionForms.class,
             PredicateForms.class,
             MathForms.class,

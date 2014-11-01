@@ -35,8 +35,6 @@ public class MacroForm extends SpecialForm {
     public Object eval(Interpreter interpreter, Context localContext, ListStruct args) throws Exception {
         final List<Object> flatten = asJavaList(args);
         replace(index, flatten, forms);
-
-        System.out.printf("macroeval: %s%n", FormatHelper.formatPretty(forms));
         Object ret = null;
         for (Object o : forms) {
             ret = interpreter.eval(o, localContext);
