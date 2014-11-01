@@ -41,7 +41,7 @@ public class MacroForm extends SpecialForm {
         for (Object o : forms) {
             ret = interpreter.eval(o, localContext);
         }
-        return ret;
+        return interpreter.eval(ret, localContext);
     }
 
     @Override

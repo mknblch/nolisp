@@ -1,11 +1,13 @@
 package de.mknblch.sucode.builtin;
 
 import de.mknblch.sucode.ast.ListStruct;
+import de.mknblch.sucode.ast.SymbolStruct;
 import de.mknblch.sucode.ast.forms.Form;
 import de.mknblch.sucode.ast.forms.LambdaForm;
 import de.mknblch.sucode.ast.forms.MacroForm;
 import de.mknblch.sucode.func.Define;
 import de.mknblch.sucode.func.Special;
+import de.mknblch.sucode.helper.FormatHelper;
 import de.mknblch.sucode.inspection.Inspector;
 import de.mknblch.sucode.inspection.Rule;
 import de.mknblch.sucode.inspection.RuleAdapter;
@@ -115,13 +117,14 @@ public class SpecialForms {
     @Special
     @Define("eval") // (eval '(+ 20 22)) :> (eval (quote (+ 20 22))) => 42
     public static Object eval(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
+        // TODO Test
         return interpreter.eval(interpreter.eval(args.car(), parentContext), parentContext);
     }
 
     @Special
     @Define("function") // (function +)
     public static Object function(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
-//       TODO REVIEW!
+//       TODO REVIEW & TEST
         final Object eval = interpreter.eval(args.car(), parentContext);
         return interpreter.eval(eval, parentContext);
     }
@@ -143,10 +146,20 @@ public class SpecialForms {
     @Define("defmacro") // (defmacro name (arg*) form+)
     public static Object defmacro(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
         expectCdr(args);
-        final String name = symbolLiteral(args.car());
-        final MacroForm macroForm = new MacroForm(name, symbolList(args.cdar()), args.cddr());
+        final Object symbol = args.car();
+        final String name = symbolLiteral(symbol);
+
+
+        final ListStruct forms = args.cddr();
+
+        System.out.printf("forms: %s%n", FormatHelper.formatPretty(forms));
+
+        final MacroForm macroForm = new MacroForm(name, symbolList(args.cdar()), forms);
+
+
+
         parentContext.bind(name, macroForm);
-        return null;
+        return symbol;
     }
 
     @Special

@@ -11,6 +11,43 @@ import java.util.List;
 public class BackquoteTest extends AbstractFormTest {
 
     @Test
+    public void testBackquoteSimple() throws Exception {
+        final String code = "`(a (+ 1 2) c)";
+        final List<Object> evaluated = eval(code);
+        assertASTEquals("L[ ( a ( + 1 2 ) c ) ]", evaluated);
+    }
+
+    @Test
+    public void testBackquoteSimple2() throws Exception {
+        final String code = "`(a ,(+ 1 2) c)";
+        final List<Object> evaluated = eval(code);
+        assertASTEquals("L[ ( a 3 c ) ]", evaluated);
+    }
+
+    @Test
+    public void testBackquoteSimple3() throws Exception {
+        final String code = "`(a (list 1 2) c)";
+        final List<Object> evaluated = eval(code);
+        assertASTEquals("L[ ( a ( list 1 2 ) c ) ]", evaluated);
+    }
+
+
+    @Test
+    public void testBackquoteSimple4() throws Exception {
+        final String code = "`(a ,(list 1 (+ 2 3)) c)";
+        final List<Object> evaluated = eval(code);
+        assertASTEquals("L[ ( a ( 1 5 ) c ) ]", evaluated);
+    }
+
+
+    @Test
+    public void testBackquoteSimple5() throws Exception {
+        final String code = "`(a ,(list 1 `(+ ,2 ,3)) c)";
+        final List<Object> evaluated = eval(code);
+        assertASTEquals("L[ ( a ( 1 ( + 2 3 ) ) c ) ]", evaluated);
+    }
+
+    @Test
     public void testBackquoteOnNonList() throws Exception {
         final String code = "(setq a 42) a `a";
         final List<Object> evaluated = eval(code);
