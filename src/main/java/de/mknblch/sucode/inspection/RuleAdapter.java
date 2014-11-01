@@ -9,13 +9,15 @@ import de.mknblch.sucode.interpreter.EvaluationException;
 public class RuleAdapter implements Rule {
 
     @Override
-    public void startAt(Object element) {}
-
-    @Override
     public void inspect(ListStruct container, Object element) {}
 
     @Override
-    public boolean follow(ListStruct list) {
+    public boolean inspectSublists() {
+        return false;
+    }
+
+    @Override
+    public boolean follow(ListStruct container, ListStruct listElement) {
         return true;
     }
 }

@@ -68,11 +68,6 @@ public class InspectorTest {
 
                 }
             }
-
-            @Override
-            public boolean follow(ListStruct list) {
-                return true;
-            }
         };
 
         LOGGER.debug("{}", FormatHelper.formatPretty(program));
@@ -99,11 +94,6 @@ public class InspectorTest {
                     final Integer n = (Integer) element;
                     container.setCar(sum += n);
                 }
-            }
-
-            @Override
-            public boolean follow(ListStruct list) {
-                return true;
             }
         };
 
