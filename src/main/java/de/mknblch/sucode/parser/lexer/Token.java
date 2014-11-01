@@ -6,7 +6,7 @@ package de.mknblch.sucode.parser.lexer;
 public class Token {
 
     public enum Type {
-        SYMBOL, LIST_BEGIN, LIST_END, STRING, INT, REAL, TRUE, QUOTE, NIL, LINE_COMMENT, SHARP;
+        SYMBOL, LIST_BEGIN, LIST_END, STRING, INT, REAL, TRUE, QUOTE, NIL, LINE_COMMENT, SHARP, BACKQUOTE, COMMA
     }
 
     public final Type type;

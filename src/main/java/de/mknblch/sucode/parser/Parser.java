@@ -26,6 +26,8 @@ public class Parser {
     };
     public static final SymbolStruct QUOTE_STRUCT = new SymbolStruct("quote");
     public static final SymbolStruct FUNCTION_STRUCT = new SymbolStruct("function");
+    public static final SymbolStruct BACKQUOTE_STRUCT = new SymbolStruct("backquote");
+    public static final SymbolStruct COMMA_STRUCT = new SymbolStruct("comma");
 
     private final Lexer lexer = new Lexer();
 
@@ -47,12 +49,16 @@ public class Parser {
 
             case LIST_BEGIN: return parseList();
             case LIST_END: return END_STRUCT;
+
             case QUOTE: return new ListStruct(QUOTE_STRUCT).append(parseOne());
+            case SHARP: return new ListStruct(FUNCTION_STRUCT).append(parseOne());
+            case BACKQUOTE: return new ListStruct(BACKQUOTE_STRUCT).append(parseOne());
+            case COMMA: return new ListStruct(COMMA_STRUCT).append(parseOne());
+
             case SYMBOL: return new SymbolStruct(token.literal);
             case NIL: return null;
             case TRUE: return Boolean.TRUE;
             case LINE_COMMENT: return COMMENT_STRUCT;
-            case SHARP: return parseSharp();
 
             case STRING:
             case INT:
@@ -65,10 +71,6 @@ public class Parser {
         }
     }
 
-    private Object parseSharp() throws LexerException, ParserException {
-        // TODO review
-        return new ListStruct(FUNCTION_STRUCT).append(parseOne());
-    }
 
     private ListStruct parseList() throws LexerException, ParserException {
         final ListStruct listStruct = new ListStruct();
