@@ -14,8 +14,9 @@ public interface Rule {
      * to continues with the next concrete element or with follow(..) which can skip sublists completely.
      * @param container the container listStruct of element
      * @param element the actual element ( container.car )
+     * @param depth
      */
-    public void inspect(ListStruct container, Object element) throws Exception;
+    public void inspect(ListStruct container, Object element, int depth) throws Exception;
 
     /**
      * tells if inspect(..) should be called whenever the head element is a ListStruct.
@@ -28,7 +29,8 @@ public interface Rule {
      * omit it and continue with next element in the container list.
      * @param container parent container of the listElement.
      * @param listElement element of the list which itself is a ListStruct.
+     * @param depth
      * @return true if inspector should dive into listElement, false otherwise.
      */
-    public boolean follow(ListStruct container, ListStruct listElement);
+    public boolean follow(ListStruct container, ListStruct listElement, int depth);
 }

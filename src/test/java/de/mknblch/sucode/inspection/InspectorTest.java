@@ -9,9 +9,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static de.mknblch.sucode.helper.TypeHelper.asInt;
-import static de.mknblch.sucode.helper.TypeHelper.asList;
-import static de.mknblch.sucode.helper.TypeHelper.isList;
+import static de.mknblch.sucode.helper.TypeHelper.*;
 import static org.junit.Assert.*;
 
 /**
@@ -29,7 +27,7 @@ public class InspectorTest {
         final Rule replaceRule = new RuleAdapter() {
             private int c = 0;
             @Override
-            public void inspect(ListStruct listElement, Object car) {
+            public void inspect(ListStruct listElement, Object car, int depth) {
                 LOGGER.trace(FormatHelper.formatPretty(listElement));
 
                 if (null == car) {
@@ -42,7 +40,7 @@ public class InspectorTest {
         };
 
         LOGGER.debug("{}", FormatHelper.formatPretty(program));
-        Inspector.inspect(program, replaceRule);
+        Inspector.inspect((ListStruct) program, (Rule) replaceRule);
         LOGGER.debug("{}", FormatHelper.formatPretty(program));
 
         assertASTEquals("( ( ( 1 ) ( ( 3 ) ( 4 ) ) ( 7 ) ) ( 12 ) ( ( 18 ) ( ( 25 ) ) ) ( 33 ) ( 42 ) )", program);
@@ -56,7 +54,7 @@ public class InspectorTest {
         final Rule replaceRule = new RuleAdapter() {
 
             @Override
-            public void inspect(ListStruct container, Object element) {
+            public void inspect(ListStruct container, Object element, int depth) {
                 LOGGER.trace(FormatHelper.formatPretty(container));
                 if(isList(element)) {
                     try {
@@ -71,7 +69,7 @@ public class InspectorTest {
         };
 
         LOGGER.debug("{}", FormatHelper.formatPretty(program));
-        Inspector.inspect(program, replaceRule);
+        Inspector.inspect((ListStruct) program, (Rule) replaceRule);
         LOGGER.debug("{}", FormatHelper.formatPretty(program));
 
         assertASTEquals("( ( 1 ( 2 .. 5 ) 6 ) )", program);
@@ -87,7 +85,7 @@ public class InspectorTest {
             private int sum = 0; // ;)
 
             @Override
-            public void inspect(ListStruct container, Object element) {
+            public void inspect(ListStruct container, Object element, int depth) {
                 LOGGER.trace(FormatHelper.formatPretty(container));
 
                 if(!isList(element)) {
@@ -98,10 +96,31 @@ public class InspectorTest {
         };
 
         LOGGER.debug("{}", FormatHelper.formatPretty(program));
-        Inspector.inspect(program, replaceRule);
+        Inspector.inspect((ListStruct) program, (Rule) replaceRule);
         LOGGER.debug("{}", FormatHelper.formatPretty(program));
 
         assertASTEquals("( ( 1 ( ( 3 6 ( 10 18 ) 25 33 ) ) 42 ) )", program);
+    }
+
+    @Test
+    public void testDepth() throws Exception {
+
+        final Program program = PARSER.parse("0(1(2(3(4(5)))))0(1(2(3)))");
+
+        final Rule replaceRule = new RuleAdapter() {
+
+            @Override
+            public void inspect(ListStruct container, Object element, int depth) {
+
+                if(isInt(element)) container.setCar(depth);
+            }
+        };
+
+        LOGGER.debug("{}", FormatHelper.formatPretty(program));
+        Inspector.inspect((ListStruct) program, (Rule) replaceRule);
+        LOGGER.debug("{}", FormatHelper.formatPretty(program));
+
+        assertASTEquals("( 0 ( 1 ( 2 ( 3 ( 4 ( 5 ) ) ) ) ) 0 ( 1 ( 2 ( 3 ) ) ) )", program);
     }
 
     public void assertASTEquals(String expected, Program parse) {

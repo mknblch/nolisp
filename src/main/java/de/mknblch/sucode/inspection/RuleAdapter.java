@@ -1,7 +1,6 @@
 package de.mknblch.sucode.inspection;
 
 import de.mknblch.sucode.ast.ListStruct;
-import de.mknblch.sucode.interpreter.EvaluationException;
 
 /**
  * @author mknblch
@@ -9,7 +8,7 @@ import de.mknblch.sucode.interpreter.EvaluationException;
 public class RuleAdapter implements Rule {
 
     @Override
-    public void inspect(ListStruct container, Object element) throws Exception {}
+    public void inspect(ListStruct container, Object element, int depth) throws Exception {}
 
     @Override
     public boolean inspectSublists() {
@@ -17,7 +16,7 @@ public class RuleAdapter implements Rule {
     }
 
     @Override
-    public boolean follow(ListStruct container, ListStruct listElement) {
+    public boolean follow(ListStruct container, ListStruct listElement, int depth) {
         return true;
     }
 }

@@ -4,7 +4,6 @@ import de.mknblch.sucode.ast.ListStruct;
 import de.mknblch.sucode.ast.forms.MacroForm;
 import de.mknblch.sucode.func.Define;
 import de.mknblch.sucode.func.Special;
-import de.mknblch.sucode.helper.FormatHelper;
 import de.mknblch.sucode.inspection.Inspector;
 import de.mknblch.sucode.inspection.Rule;
 import de.mknblch.sucode.inspection.RuleAdapter;
@@ -42,7 +41,7 @@ public class MacroForms {
         }
         final Rule replacementRule = new RuleAdapter() {
             @Override
-            public void inspect(ListStruct container, Object element) throws Exception {
+            public void inspect(ListStruct container, Object element, int depth) throws Exception {
                 // evaluate (comma <form>) structs only
                 if (isList(element) && ((ListStruct) element).car() == Parser.COMMA_STRUCT) {
                     container.setCar(interpreter.eval(((ListStruct) element).cdar(), parentContext));
@@ -53,7 +52,7 @@ public class MacroForms {
                 return true;
             }
         };
-        Inspector.inspect(args, replacementRule);
+        Inspector.inspect((ListStruct) args, (Rule) replacementRule);
         return args.car(); //
     }
 
