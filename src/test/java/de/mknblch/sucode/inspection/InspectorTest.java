@@ -30,6 +30,8 @@ public class InspectorTest {
             private int c = 0;
             @Override
             public void inspect(ListStruct listElement, Object car) {
+                LOGGER.trace(FormatHelper.formatPretty(listElement));
+
                 if (null == car) {
                     listElement.setCar(new ListStruct(++c));
                 } else if(!isList(car)) {
@@ -55,6 +57,7 @@ public class InspectorTest {
 
             @Override
             public void inspect(ListStruct container, Object element) {
+                LOGGER.trace(FormatHelper.formatPretty(container));
                 if(isList(element)) {
                     try {
                         final ListStruct listStruct = asList(element);
@@ -82,7 +85,7 @@ public class InspectorTest {
     @Test
     public void testSum() throws Exception {
 
-        final Program program = PARSER.parse("(1 (2 (3 (4 8) 7) 8) 9 ) ;)");
+        final Program program = PARSER.parse("(1 (( 2 3 (4 8) 7 8)) 9 ) ;)");
 
         final Rule replaceRule = new RuleAdapter() {
 
@@ -90,6 +93,8 @@ public class InspectorTest {
 
             @Override
             public void inspect(ListStruct container, Object element) {
+                LOGGER.trace(FormatHelper.formatPretty(container));
+
                 if(!isList(element)) {
                     final Integer n = (Integer) element;
                     container.setCar(sum += n);
@@ -106,7 +111,7 @@ public class InspectorTest {
         Inspector.inspect(program, replaceRule);
         LOGGER.debug("{}", FormatHelper.formatPretty(program));
 
-        assertASTEquals("( ( 1 ( 3 ( 6 ( 10 18 ) 25 ) 33 ) 42 ) )", program);
+        assertASTEquals("( ( 1 ( ( 3 6 ( 10 18 ) 25 33 ) ) 42 ) )", program);
     }
 
     public void assertASTEquals(String expected, Program parse) {
