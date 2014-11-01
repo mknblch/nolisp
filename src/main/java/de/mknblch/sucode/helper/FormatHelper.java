@@ -74,7 +74,7 @@ public class FormatHelper {
                 return String.format("#<LAMBDA> (%s) %s", formatSymbols(lambda.getSymbols()), formatPretty(lambda.getForm()));
             case MACRO:
                 final MacroForm macro = (MacroForm) atom;
-                return String.format("#<MACRO %s> (%s) %s", macro.getSymbol(), formatSymbols(macro.getFormSymbols()), formatPretty(macro.getForm()));
+                return String.format("#<MACRO %s> (%s) %s", macro.getSymbol(), formatSymbols(macro.getFormSymbols()), formatPretty(macro.getForms()));
             case SYMBOL:
                 return String.format("%s", ((SymbolStruct) atom).literal);
             case FORM:
@@ -119,7 +119,7 @@ public class FormatHelper {
                 return String.format("#<LAMBDA> (%s) %s", formatSymbols(lambda.getSymbols()), formatAtom(lambda.getForm()));
             case MACRO:
                 final MacroForm macro = (MacroForm) atom;
-                return String.format("#<MACRO %s> (%s) %s", macro.getSymbol(), formatSymbols(macro.getFormSymbols()), formatPretty(macro.getForm()));
+                return String.format("#<MACRO %s> (%s) %s", macro.getSymbol(), formatSymbols(macro.getFormSymbols()), formatPretty(macro.getForms()));
             case FORM:
                 return String.format("#<BUILTIN %s>", ((Function) atom).getSymbol());
         }

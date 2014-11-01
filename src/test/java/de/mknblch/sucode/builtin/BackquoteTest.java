@@ -1,15 +1,9 @@
 package de.mknblch.sucode.builtin;
 
-import de.mknblch.sucode.ast.forms.Function;
-import de.mknblch.sucode.interpreter.EvaluationException;
 import de.mknblch.sucode.testHelper.AbstractFormTest;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
-
-import static junit.framework.TestCase.assertTrue;
-import static org.junit.Assert.assertEquals;
 
 /**
  * @author mknblch

@@ -144,9 +144,7 @@ public class SpecialForms {
     public static Object defmacro(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
         expectCdr(args);
         final String name = symbolLiteral(args.car());
-        final List<String> argumentSymbols = symbolList(args.cdar());
-        final ListStruct forms = args.cddr();
-        final MacroForm macroForm = new MacroForm(name, argumentSymbols, forms);
+        final MacroForm macroForm = new MacroForm(name, symbolList(args.cdar()), args.cddr());
         parentContext.bind(name, macroForm);
         return null;
     }
@@ -171,6 +169,11 @@ public class SpecialForms {
 
             @Override
             public boolean inspectSublists() {
+                return true;
+            }
+
+            @Override
+            public boolean follow(ListStruct container, ListStruct listElement) {
                 return true;
             }
         };

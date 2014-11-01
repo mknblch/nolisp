@@ -169,6 +169,14 @@ public class SpecialFormsTest extends AbstractFormTest {
         assertASTEquals("L[ 1 nil 1 1 ]", result);
 
     }
+    @Test
+    public void testDefmacroBQ() throws Exception {
+
+        final List<Object> result = eval("(defmacro aif (test then else) `(let ((it ,test)) (if it ,then ,else))) (aif (eq? 1 1) 1 2)");
+
+        assertASTEquals("L[ 1 nil 1 1 ]", result);
+
+    }
 
     @Test
     public void testFuncallPlus() throws Exception {

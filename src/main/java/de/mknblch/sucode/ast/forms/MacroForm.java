@@ -2,6 +2,7 @@ package de.mknblch.sucode.ast.forms;
 
 import de.mknblch.sucode.ast.ListStruct;
 import de.mknblch.sucode.ast.SymbolStruct;
+import de.mknblch.sucode.helper.FormatHelper;
 import de.mknblch.sucode.interpreter.Context;
 import de.mknblch.sucode.interpreter.Interpreter;
 
@@ -18,24 +19,26 @@ import static de.mknblch.sucode.helper.TypeHelper.*;
 public class MacroForm extends SpecialForm {
 
     private final String symbol;
-    private final ListStruct form;
+    private final ListStruct forms;
     private final List<ListStruct>[] index;
     private final List<String> formSymbols;
 
     // (defmacro symbol (args*) from+)
-    public MacroForm(String symbol, List<String> formSymbols, ListStruct form) {
-        index = buildIndex(formSymbols, form);
+    public MacroForm(String symbol, List<String> formSymbols, ListStruct forms) {
+        index = buildIndex(formSymbols, forms);
         this.symbol = symbol;
         this.formSymbols = formSymbols;
-        this.form = form;
+        this.forms = forms;
     }
 
     @Override // args=(arg1 arg2 ...)
     public Object eval(Interpreter interpreter, Context localContext, ListStruct args) throws Exception {
         final List<Object> flatten = asJavaList(args);
-        replace(index, flatten, form);
+        replace(index, flatten, forms);
+
+        System.out.printf("macroeval: %s%n", FormatHelper.formatPretty(forms));
         Object ret = null;
-        for (Object o : form) {
+        for (Object o : forms) {
             ret = interpreter.eval(o, localContext);
         }
         return ret;
@@ -56,8 +59,8 @@ public class MacroForm extends SpecialForm {
         return formSymbols;
     }
 
-    public Object getForm() {
-        return form;
+    public Object getForms() {
+        return forms;
     }
 
     private static List<ListStruct>[] buildIndex(List<String> formSymbols, ListStruct form) {
