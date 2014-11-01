@@ -15,7 +15,7 @@ public interface Rule {
      * @param container the container listStruct of element
      * @param element the actual element ( container.car )
      */
-    public void inspect(ListStruct container, Object element);
+    public void inspect(ListStruct container, Object element) throws Exception;
 
     /**
      * tells if inspect(..) should be called whenever the head element is a ListStruct.

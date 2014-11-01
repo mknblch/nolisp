@@ -9,7 +9,7 @@ import de.mknblch.sucode.interpreter.EvaluationException;
 public class RuleAdapter implements Rule {
 
     @Override
-    public void inspect(ListStruct container, Object element) {}
+    public void inspect(ListStruct container, Object element) throws Exception {}
 
     @Override
     public boolean inspectSublists() {

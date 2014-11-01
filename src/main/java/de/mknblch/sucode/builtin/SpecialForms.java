@@ -1,19 +1,23 @@
 package de.mknblch.sucode.builtin;
 
+import de.mknblch.sucode.ast.ListStruct;
 import de.mknblch.sucode.ast.forms.Form;
 import de.mknblch.sucode.ast.forms.LambdaForm;
 import de.mknblch.sucode.ast.forms.MacroForm;
-import de.mknblch.sucode.func.*;
-import de.mknblch.sucode.helper.Expectations;
-import de.mknblch.sucode.helper.FormatHelper;
+import de.mknblch.sucode.func.Define;
+import de.mknblch.sucode.func.Special;
+import de.mknblch.sucode.inspection.Inspector;
+import de.mknblch.sucode.inspection.Rule;
+import de.mknblch.sucode.inspection.RuleAdapter;
 import de.mknblch.sucode.interpreter.Context;
 import de.mknblch.sucode.interpreter.EvaluationException;
 import de.mknblch.sucode.interpreter.Interpreter;
-import de.mknblch.sucode.ast.ListStruct;
+import de.mknblch.sucode.parser.Parser;
 
 import java.util.List;
 
-import static de.mknblch.sucode.helper.Expectations.*;
+import static de.mknblch.sucode.helper.Expectations.expectCdr;
+import static de.mknblch.sucode.helper.Expectations.expectList;
 import static de.mknblch.sucode.helper.TypeHelper.*;
 
 /**
@@ -149,28 +153,43 @@ public class SpecialForms {
 
     @Special
     @Define("backquote")
-    public static Object backquote(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
+    public static Object backquote(final Interpreter interpreter, final Context parentContext, ListStruct args) throws Exception {
 
         final Object car = args.car();
+        if (!isList(car)) {
+            return car;
+        }
 
-        System.out.printf("` => %s%n", FormatHelper.formatPretty(car));
+        final Rule replacementRule = new RuleAdapter() {
+            @Override
+            public void inspect(ListStruct container, Object element) throws Exception {
+                // evaluate (comma <form>) structs only
+                if (isList(element) && ((ListStruct) element).car() == Parser.COMMA_STRUCT) {
+                    container.setCar(interpreter.eval(((ListStruct) element).cdar(), parentContext));
+                }
+            }
 
-        return null;
+            @Override
+            public boolean inspectSublists() {
+                return true;
+            }
+        };
+        Inspector.inspect(args, replacementRule);
+        return args.car(); //
     }
 
     @Special
     @Define("comma")
     public static Object comma(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
 
-        return null;
+        throw new EvaluationException("Misplaced COMMA");
     }
 
     @Special
     @Define("splice")
-    public static Object at(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
+    public static Object splice(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
 
         final Object car = args.car();
-
 
 
         return null;

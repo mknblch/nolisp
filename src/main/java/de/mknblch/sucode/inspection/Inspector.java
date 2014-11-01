@@ -11,7 +11,7 @@ public class Inspector {
 
 
 
-    public static void inspect(ListStruct tree, Rule rule) {
+    public static void inspect(ListStruct tree, Rule rule) throws Exception {
 
         ListStruct temp = tree;
 
