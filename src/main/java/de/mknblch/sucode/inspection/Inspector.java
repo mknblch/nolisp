@@ -15,10 +15,10 @@ public class Inspector {
 
         while(temp != null) {
             final Object car = temp.car();
-            if(isList(car) && rule.followSublist(temp)) {
+            if(isList(car) && rule.follow(temp)) {
                 inspect((ListStruct) car, rule); // TODO review
             } else {
-                rule.inspect(temp);
+                rule.inspect(temp, temp.car());
             }
             temp = temp.cdr();
         }

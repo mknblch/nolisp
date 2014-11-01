@@ -1,12 +1,10 @@
 package de.mknblch.sucode.ast;
 
-import de.mknblch.sucode.helper.TypeHelper;
-
 import java.util.Iterator;
-import java.util.Stack;
 
 /**
  * custom linked list impl.
+ *
  * @author mknblch
  */
 public class ListStruct implements Atom, Iterable {
@@ -125,8 +123,9 @@ public class ListStruct implements Atom, Iterable {
 
     public ListStruct cddr() {
 
-        if (cdr != null)
+        if (cdr != null) {
             return cdr.cdr;
+        }
 
         return null;
     }
@@ -139,15 +138,17 @@ public class ListStruct implements Atom, Iterable {
 
     public ListStruct cdddr() {
 
-        if (cdr != null && cdr.cdr != null)
+        if (cdr != null && cdr.cdr != null) {
             return cdr.cdr.cdr;
-
+        }
         return null;
     }
 
     public Object cdddar() {
         final ListStruct cdddr = cdddr();
-        if (cdddr != null) return cdddr.car();
+        if (cdddr != null) {
+            return cdddr.car();
+        }
         return null;
     }
 
@@ -160,6 +161,11 @@ public class ListStruct implements Atom, Iterable {
             temp = temp.cdr;
         }
         return i;
+    }
+
+    public ListStruct setCar(Object o) {
+        car = o;
+        return this;
     }
 
     /**
@@ -189,9 +195,5 @@ public class ListStruct implements Atom, Iterable {
                 throw new RuntimeException("unbindLocal() not implemented");
             }
         };
-    }
-
-    public void setCar(Object o) {
-        car = o;
     }
 }

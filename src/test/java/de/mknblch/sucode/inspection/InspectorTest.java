@@ -25,8 +25,7 @@ public class InspectorTest {
         final InspectionRule replaceRule = new InspectionRule() {
             private int c = 0;
             @Override
-            public void inspect(ListStruct listElement) {
-                final Object car = listElement.car();
+            public void inspect(ListStruct listElement, Object car) {
                 if (null == car) {
                     listElement.setCar(new ListStruct(++c));
                 } else {
@@ -35,7 +34,7 @@ public class InspectorTest {
                 }
             }
             @Override
-            public boolean followSublist(ListStruct list) {
+            public boolean follow(ListStruct list) {
                 return true;
             }
         };
@@ -54,10 +53,10 @@ public class InspectorTest {
 
         final InspectionRule replaceRule = new InspectionRule() {
             @Override
-            public void inspect(ListStruct list) {}
+            public void inspect(ListStruct list, Object car) {}
 
             @Override
-            public boolean followSublist(ListStruct list) {
+            public boolean follow(ListStruct list) {
                 if(7 != list.car()) {
                     list.setCar("oO");
                     return false;
