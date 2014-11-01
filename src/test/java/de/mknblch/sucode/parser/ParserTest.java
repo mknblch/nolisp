@@ -106,8 +106,8 @@ public class ParserTest {
 
     @Test
     public void testFunction() throws Exception {
-        String code = "#'(list 42)";
-        evalAssertASTEquals("( ( function ( list 42 ) ) )", code);
+        String code = "#'+";
+        evalAssertASTEquals("( ( function ( quote + ) ) )", code);
     }
 
     private Program parse(String code) throws ParserException, LexerException {

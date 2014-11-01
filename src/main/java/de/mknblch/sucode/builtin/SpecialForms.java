@@ -117,14 +117,19 @@ public class SpecialForms {
     @Special
     @Define("function") // (function +)
     public static Object function(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
-        return args.car();
+//       TODO REVIEW!
+        final Object eval = interpreter.eval(args.car(), parentContext);
+
+//        System.out.println(String.format("%s", FormatHelper.formatPretty(eval)));
+
+        return interpreter.eval(eval, parentContext);
     }
 
     @Special
     @Define("funcall") // (funcall (function +) 1 2 3 4 5) => 15
     public static Object funcall(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
-        final String symbol = symbolLiteral(interpreter.eval(args.car(), parentContext));
-        final Form form = asForm(parentContext.get(symbol));
+        final Object car = args.car();
+        final Form form = asForm(interpreter.eval(car, parentContext));
         Object ret = args.cdar();
         ListStruct rest = args.cddr();
         for (Object o : rest) {

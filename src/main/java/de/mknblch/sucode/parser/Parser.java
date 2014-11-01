@@ -66,14 +66,9 @@ public class Parser {
     }
 
     private Object parseSharp() throws LexerException, ParserException {
-        final Token next = lexer.next();
-        // expect QUOTE
-        if (null == next || next.type != Token.Type.QUOTE) {
-            throw new ParserException("Invalid syntax #'");
-        }
+        // TODO review
         return new ListStruct(FUNCTION_STRUCT).append(parseOne());
     }
-
 
     private ListStruct parseList() throws LexerException, ParserException {
         final ListStruct listStruct = new ListStruct();
