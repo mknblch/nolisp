@@ -21,6 +21,10 @@ public class PredicateForms {
     public static Object equal(Interpreter interpreter, Context context, ListStruct args) throws Exception {
         final Object a = interpreter.eval(args.car(), context);
         final Object b = args.cdr() != null ? interpreter.eval(args.cdr().car(), context) : null;
+        return equal(a, b);
+    }
+
+    public static Object equal(Object a, Object b) {
         if (null == a && null == b) return true;
         if(null == a) return false;
         if(null == b) return false;

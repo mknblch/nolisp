@@ -49,9 +49,9 @@ public class MacroFormsTest extends AbstractFormTest {
     @Test
     public void testDefmacroBQ() throws Exception {
 
-        final List<Object> result = eval("(defmacro aif (test then else) `(let ((it ,test)) (if it ,then ,else))) (aif 1 (- 2 1) 2)");
+        final List<Object> result = eval("(defmacro aif (test then else) `(let ((it ,test)) (if it ,then ,else))) (aif 1 (setq y 0 x 1) (setq y 1 x 0)) x y");
 
-        assertASTEquals("L[ aif 1 ]", result);
+        assertASTEquals("L[ aif 1 1 0 ]", result);
 
     }
 

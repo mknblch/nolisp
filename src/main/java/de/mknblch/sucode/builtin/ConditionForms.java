@@ -43,21 +43,6 @@ public class ConditionForms {
         return null;
     }
 
-    @Special
-    @Define(value = "fori") // (fori ( start:INT end:INT [step:INT | 1] ) <form>)
-    public static Object foriForm(Interpreter interpreter, Context context, ListStruct args) throws Exception {
-        final ListStruct loopArgs = asList(args.car());
-        final int from = asInt(interpreter.eval(loopArgs.car(), context)); // from
-        final int to = asInt(interpreter.eval(loopArgs.cdar(), context)); // to
-        final Object stepRaw = interpreter.eval(loopArgs.cddar(), context); // step if not null
-        final int step = isInt(stepRaw) ? asInt(stepRaw) : 1;
-        final Object form = args.cdar();
-        Object result = null;
-        for (int i = from; i < to; i += step) {
-            result = interpreter.eval(form, context);
-        }
-        return result;
-    }
 
 
 }

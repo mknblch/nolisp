@@ -33,13 +33,19 @@ public class MacroForm extends SpecialForm {
 
     @Override // args=(arg1 arg2 ...)
     public Object eval(Interpreter interpreter, Context localContext, ListStruct args) throws Exception {
+        System.out.printf("evaluating macro: %s%n", FormatHelper.formatPretty(args));
         final List<Object> flatten = asJavaList(args);
         replace(index, flatten, forms);
         Object ret = null;
         for (Object o : forms) {
-            ret = interpreter.eval(o, localContext);
+            System.out.printf("doing somthing with %s%n", FormatHelper.formatPretty(o));
+            final Object eval = interpreter.eval(o, localContext);
+            System.out.printf("first step: %s%n", FormatHelper.formatPretty(eval));
+            ret = interpreter.eval(eval, localContext);
+            System.out.printf("second step: %s%n", FormatHelper.formatPretty(ret));
+
         }
-        return interpreter.eval(ret, localContext);
+        return ret;
     }
 
     @Override
