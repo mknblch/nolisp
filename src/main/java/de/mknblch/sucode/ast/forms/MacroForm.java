@@ -3,7 +3,9 @@ package de.mknblch.sucode.ast.forms;
 import de.mknblch.sucode.ast.ListStruct;
 import de.mknblch.sucode.ast.SymbolStruct;
 import de.mknblch.sucode.helper.FormatHelper;
+import de.mknblch.sucode.helper.TypeHelper;
 import de.mknblch.sucode.interpreter.Context;
+import de.mknblch.sucode.interpreter.EvaluationException;
 import de.mknblch.sucode.interpreter.Interpreter;
 
 import java.util.ArrayList;
@@ -20,29 +22,25 @@ public class MacroForm extends SpecialForm {
 
     private final String symbol;
     private final ListStruct forms;
-    private final List<ListStruct>[] index;
     private final List<String> formSymbols;
 
-    // (defmacro symbol (args*) from+)
+    // TODO remove symbol
     public MacroForm(String symbol, List<String> formSymbols, ListStruct forms) {
-        index = buildIndex(formSymbols, forms);
         this.symbol = symbol;
         this.formSymbols = formSymbols;
         this.forms = forms;
     }
 
     @Override // args=(arg1 arg2 ...)
-    public Object eval(Interpreter interpreter, Context localContext, ListStruct args) throws Exception {
-        System.out.printf("evaluating macro: %s%n", FormatHelper.formatPretty(args));
-        final List<Object> flatten = asJavaList(args);
-        replace(index, flatten, forms);
+    public Object eval(Interpreter interpreter, Context context, ListStruct args) throws Exception {
+        System.out.printf("evaluating macro: %s%n", FormatHelper.formatPretty(forms));
+        bind(context, formSymbols, args);
         Object ret = null;
         for (Object o : forms) {
-            System.out.printf("doing somthing with %s%n", FormatHelper.formatPretty(o));
-            final Object eval = interpreter.eval(o, localContext);
-            System.out.printf("first step: %s%n", FormatHelper.formatPretty(eval));
-            ret = interpreter.eval(eval, localContext);
-            System.out.printf("second step: %s%n", FormatHelper.formatPretty(ret));
+            final Object eval = interpreter.eval(o, context);
+            System.out.printf("macroform: %s ==> %s%n", FormatHelper.formatPretty(o), FormatHelper.formatPretty(eval));
+
+            ret = interpreter.eval(eval, context);
 
         }
         return ret;
@@ -67,49 +65,22 @@ public class MacroForm extends SpecialForm {
         return forms;
     }
 
-    private static List<ListStruct>[] buildIndex(List<String> formSymbols, ListStruct form) {
-        final List<ListStruct>[] index = new List[formSymbols.size()];
-        extractPointer(index, formSymbols, form);
-        return index;
-    }
+    /**
+     * bind each argument in args with key at args index in symbols to the local context by evaluating it with the
+     * parent context.
+     */
+    private static void bind(Context context,
+                             List<String> symbols,
+                             ListStruct args) throws Exception {
 
-    private static void extractPointer(List<ListStruct>[] list, List<String> formSymbols, ListStruct form) {
-        // find each occurrence of the formSymbols and bind it's parent ListStruct to the map
-        ListStruct temp = form;
-        while (null != temp) {
-            final Object car = temp.car();
-            if (isList(car)) {
-                extractPointer(list, formSymbols, (ListStruct) car);
-            } else {
-                final int matchingSymbol = findMatchingSymbol(formSymbols, car);
-                if (matchingSymbol != -1) {
-                    if (null == list[matchingSymbol]) list[matchingSymbol] = new ArrayList<ListStruct>();
-                    list[matchingSymbol].add(temp);
-                }
+        ListStruct temp = args;
+        for (int i = 0; i < symbols.size(); i++) {
+            if(null == temp) {
+                throw new EvaluationException(String.format(
+                        "procedure expects %d arguments, given %d", symbols.size(), i));
             }
+            context.bind(symbols.get(i), temp.car());
             temp = temp.cdr();
         }
     }
-
-    private static int findMatchingSymbol(List<String> search, Object o) {
-        if (!(o instanceof SymbolStruct)) return -1;
-        final String literal = ((SymbolStruct) o).literal;
-        for (int i = search.size()-1; i >= 0; i--) {
-            if(search.get(i).equals(literal)) return i;
-        }
-        return -1;
-    }
-
-    private static void replace(List<ListStruct>[] index, List<Object> replacements, Object form) {
-        final int min = Math.min(index.length, replacements.size());
-        for (int i = 0; i < min; i++) {
-            final List<ListStruct> listStructs = index[i];
-            final Object o = replacements.get(i);
-            if (null == o) continue;
-            for (ListStruct listStruct : listStructs) {
-                listStruct.setCar(o);
-            }
-        }
-    }
-
 }

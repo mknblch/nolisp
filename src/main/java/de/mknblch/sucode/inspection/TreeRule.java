@@ -6,7 +6,7 @@ import de.mknblch.sucode.interpreter.EvaluationException;
 /**
  * @author mknblch
  */
-public interface Rule {
+public interface TreeRule {
 
     /**
      * called upon inspection of each element in the list.

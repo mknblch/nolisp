@@ -5,17 +5,15 @@ import de.mknblch.sucode.ast.forms.MacroForm;
 import de.mknblch.sucode.func.Define;
 import de.mknblch.sucode.func.Special;
 import de.mknblch.sucode.inspection.Inspector;
-import de.mknblch.sucode.inspection.Rule;
-import de.mknblch.sucode.inspection.RuleAdapter;
+import de.mknblch.sucode.inspection.TreeRule;
+import de.mknblch.sucode.inspection.TreeRuleAdapter;
 import de.mknblch.sucode.interpreter.Context;
 import de.mknblch.sucode.interpreter.EvaluationException;
 import de.mknblch.sucode.interpreter.Interpreter;
 import de.mknblch.sucode.parser.Parser;
 
 import static de.mknblch.sucode.helper.Expectations.expectCdr;
-import static de.mknblch.sucode.helper.TypeHelper.isList;
-import static de.mknblch.sucode.helper.TypeHelper.symbolList;
-import static de.mknblch.sucode.helper.TypeHelper.symbolLiteral;
+import static de.mknblch.sucode.helper.TypeHelper.*;
 
 /**
  * @author mknblch
@@ -39,7 +37,7 @@ public class MacroForms {
         if (!isList(car)) {
             return car;
         }
-        final Rule replacementRule = new RuleAdapter() {
+        final TreeRule replacementRule = new TreeRuleAdapter() {
             @Override
             public void inspect(ListStruct container, Object element, int depth) throws Exception {
                 // evaluate (comma <form>) structs only
@@ -47,12 +45,13 @@ public class MacroForms {
                     container.setCar(interpreter.eval(((ListStruct) element).cdar(), parentContext));
                 }
             }
+
             @Override
             public boolean inspectSublists() {
                 return true;
             }
         };
-        Inspector.inspect((ListStruct) args, (Rule) replacementRule);
+        Inspector.inspectTree(args, replacementRule);
         return args.car(); //
     }
 

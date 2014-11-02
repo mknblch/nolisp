@@ -5,7 +5,7 @@ import de.mknblch.sucode.ast.ListStruct;
 /**
  * @author mknblch
  */
-public class RuleAdapter implements Rule {
+public class TreeRuleAdapter implements TreeRule {
 
     @Override
     public void inspect(ListStruct container, Object element, int depth) throws Exception {}

@@ -1,22 +1,11 @@
 package de.mknblch.sucode.builtin;
 
 import de.mknblch.sucode.ast.ListStruct;
-import de.mknblch.sucode.ast.SymbolStruct;
-import de.mknblch.sucode.ast.forms.Form;
-import de.mknblch.sucode.ast.forms.LambdaForm;
-import de.mknblch.sucode.ast.forms.MacroForm;
 import de.mknblch.sucode.func.Define;
 import de.mknblch.sucode.func.Special;
-import de.mknblch.sucode.helper.FormatHelper;
-import de.mknblch.sucode.inspection.Inspector;
-import de.mknblch.sucode.inspection.Rule;
-import de.mknblch.sucode.inspection.RuleAdapter;
 import de.mknblch.sucode.interpreter.Context;
 import de.mknblch.sucode.interpreter.EvaluationException;
 import de.mknblch.sucode.interpreter.Interpreter;
-import de.mknblch.sucode.parser.Parser;
-
-import java.util.List;
 
 import static de.mknblch.sucode.helper.Expectations.expectCdr;
 import static de.mknblch.sucode.helper.Expectations.expectList;
