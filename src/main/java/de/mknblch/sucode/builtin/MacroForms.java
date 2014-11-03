@@ -4,6 +4,7 @@ import de.mknblch.sucode.ast.ListStruct;
 import de.mknblch.sucode.ast.forms.MacroForm;
 import de.mknblch.sucode.func.Define;
 import de.mknblch.sucode.func.Special;
+import de.mknblch.sucode.inspection.CloneRule;
 import de.mknblch.sucode.inspection.Inspector;
 import de.mknblch.sucode.inspection.TreeRule;
 import de.mknblch.sucode.inspection.TreeRuleAdapter;
@@ -37,22 +38,19 @@ public class MacroForms {
         if (!isList(car)) {
             return car;
         }
-        final TreeRule replacementRule = new TreeRuleAdapter() {
-            @Override
-            public void inspect(ListStruct container, Object element, int depth) throws Exception {
-                // evaluate (comma <form>) structs only
-                if (isList(element) && ((ListStruct) element).car() == Parser.COMMA_STRUCT) {
-                    container.setCar(interpreter.eval(((ListStruct) element).cdar(), parentContext));
-                }
-            }
 
+        final CloneRule cloneRule = new CloneRule() {
             @Override
-            public boolean inspectSublists() {
-                return true;
+            public Object clone(Object element) throws Exception {
+                // TODO refactor
+                if (isList(element) && isSymbolWithLiteral(((ListStruct) element).car(), "comma")) { // == Parser.COMMA_STRUCT) {
+                    return interpreter.eval(((ListStruct) element).cdar(), parentContext);
+                }
+                return element;
             }
         };
-        Inspector.inspectTree(args, replacementRule);
-        return args.car(); //
+
+        return Inspector.cloneTree(args, cloneRule).car();
     }
 
     @Special
