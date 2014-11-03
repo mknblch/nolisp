@@ -12,7 +12,7 @@ public class TreeRuleAdapter implements TreeRule {
 
     @Override
     public boolean inspectSublists() {
-        return false;
+        return true;
     }
 
     @Override

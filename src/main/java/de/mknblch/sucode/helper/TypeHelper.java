@@ -52,6 +52,14 @@ public class TypeHelper {
         return o instanceof String;
     }
 
+    public static boolean isSymbol(Object o) {
+        return o instanceof SymbolStruct;
+    }
+
+    public static boolean isSymbolWithLiteral(Object o, String literal) {
+        return isSymbol(o) && literal.equals(((SymbolStruct) o).literal);
+    }
+
     public static ListStruct asList(Object o) throws EvaluationException {
         Expectations.expectList(o);
         return (ListStruct) o;

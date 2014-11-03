@@ -123,7 +123,31 @@ public class InspectorTest {
         assertASTEquals("( 0 ( 1 ( 2 ( 3 ( 4 ( 5 ) ) ) ) ) 0 ( 1 ( 2 ( 3 ) ) ) )", program);
     }
 
-    public void assertASTEquals(String expected, Program parse) {
+    @Test
+    public void testCloneTree() throws Exception {
+
+        final Program program = PARSER.parse("( 1 2 (0 3 ) 4 ( (0 (1 (0 5)) ) 6 ) 7 )");
+
+        final CloneRule cloneRule = new CloneRule() {
+
+            @Override
+            public Object clone(Object element) throws Exception {
+
+                System.out.printf("cloning: %s%n", FormatHelper.formatPretty(element));
+                if (isList(element) && 0 == ((ListStruct) element).car()) {
+                    return ((ListStruct) element).cdar();
+                }
+                return element;
+            }
+        };
+
+        final ListStruct ret = Inspector.cloneTree(program, cloneRule);
+
+        assertASTEquals("( ( 1 2 3 4 ( ( 1 5 ) 6 ) 7 ) )", ret);
+
+    }
+
+    public void assertASTEquals(String expected, ListStruct parse) {
         assertEquals(expected, FormatHelper.formatPretty(parse));
     }
 }
