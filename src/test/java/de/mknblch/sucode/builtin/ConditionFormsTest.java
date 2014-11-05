@@ -60,9 +60,9 @@ public class ConditionFormsTest extends AbstractFormTest {
     @Test
     public void testForiTime() throws Exception {
 
-        int count = 1000000;
+        int count = 10000000;
         final String code =
-                "(setq a 1)" +
+                "(setq a 0)" +
                 "(fori (0 " + count + ") " +
                         "(setq a (+ a 1)))";
 

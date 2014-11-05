@@ -25,11 +25,11 @@ public class Parser {
         }
     };
 
-    public static final SymbolStruct QUOTE_STRUCT = new SymbolStruct("quote");
-    public static final SymbolStruct FUNCTION_STRUCT = new SymbolStruct("function");
-    public static final SymbolStruct BACKQUOTE_STRUCT = new SymbolStruct("backquote");
-    public static final SymbolStruct COMMA_STRUCT = new SymbolStruct("comma");
-    public static final SymbolStruct AT_STRUCT = new SymbolStruct("splice");
+    private static final SymbolStruct QUOTE_STRUCT = new SymbolStruct("quote");
+    private static final SymbolStruct FUNCTION_STRUCT = new SymbolStruct("function");
+    private static final SymbolStruct BACKQUOTE_STRUCT = new SymbolStruct("backquote");
+    private static final SymbolStruct COMMA_STRUCT = new SymbolStruct("comma");
+    private static final SymbolStruct AT_STRUCT = new SymbolStruct("splice");
 
     private final Lexer lexer = new Lexer();
 

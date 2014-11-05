@@ -55,7 +55,7 @@ public abstract class AbstractFormTest {
         LOGGER.debug("evaluating: {}", FormatHelper.formatPretty(program));
         for (Object p : program) {
             final Object eval = interpreter.eval(p, context);
-            LOGGER.debug("eval: {}", FormatHelper.formatPretty(eval));
+            LOGGER.debug("result: {}", FormatHelper.formatPretty(eval));
             ret.add(eval);
         }
         LOGGER.debug("Context: [ {} ]", FormatHelper.formatContext(context, false));
