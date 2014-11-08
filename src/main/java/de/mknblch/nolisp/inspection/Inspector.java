@@ -30,8 +30,8 @@ public class Inspector {
     }
 
     private static void inspectTree(ListStruct tree, TreeRule rule, int depth) throws Exception {
-        ListStruct temp = tree;
 
+        ListStruct temp = tree;
         while(temp != null) {
             final Object car = temp.car();
             if(isList(car) && rule.follow(temp, (ListStruct) car, depth)) {

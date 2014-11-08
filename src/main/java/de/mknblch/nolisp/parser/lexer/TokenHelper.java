@@ -17,7 +17,7 @@ public class TokenHelper {
         try {
             return new Token(Token.Type.CONST, literal, Integer.parseInt(literal));
         } catch (Exception e) {
-            throw new LexerException(String.format("[@%04d] Parsing '%s' to INT failed", literal), e);
+            throw new LexerException(String.format("Parsing '%s' to INT failed", literal), e);
         }
     }
 
