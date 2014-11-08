@@ -28,13 +28,10 @@ public class MacroForm extends SpecialForm {
 
     @Override // args=(arg1 arg2 ...)
     public Object eval(Interpreter interpreter, Context context, ListStruct args) throws Exception {
-        System.out.printf("evaluating macro: %s%n", FormatHelper.formatPretty(forms));
         bind(context, formSymbols, args);
         Object ret = null;
         for (Object o : forms) {
             final Object eval = interpreter.eval(o, context);
-            System.out.printf("macroform: %s ==> %s%n", FormatHelper.formatPretty(o), FormatHelper.formatPretty(eval));
-
             ret = interpreter.eval(eval, context);
 
         }
