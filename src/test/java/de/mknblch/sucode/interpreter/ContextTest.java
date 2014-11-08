@@ -31,7 +31,7 @@ public class ContextTest {
             for(String key : env.keySetLocal()) {
                 LOGGER.debug("{} = {}", key, env.get(key));
             }
-            env = env.getParentEnv();
+            env = env.getParent();
         } while (env != null);
     }
 

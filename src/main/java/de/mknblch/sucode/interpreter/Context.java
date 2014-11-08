@@ -15,15 +15,15 @@ import java.util.*;
  */
 public class Context {
 
-    private final Context parentEnv;
-    private final HashMap<String, Object> localMap;
+    private final Context parent;
+    private final HashMap<String, Object> map;
 
     /**
      * construct empty environment.
      */
     public Context() {
-        this.parentEnv = null;
-        this.localMap = new HashMap<String, Object>();
+        this.parent = null;
+        this.map = new HashMap<String, Object>();
     }
     public Context(Class<?> ...buildInFunctionContainer) throws FunctionDefinitionException {
         this();
@@ -34,9 +34,9 @@ public class Context {
     /**
      * used for derivation.
      */
-    public Context(Context parentEnv) {
-        this.parentEnv = parentEnv;
-        this.localMap = new HashMap<String, Object>();
+    public Context(Context parent) {
+        this.parent = parent;
+        this.map = new HashMap<String, Object>();
     }
 
     /**
@@ -49,15 +49,15 @@ public class Context {
     /**
      * retrieve parent environment
      */
-    public Context getParentEnv() {
-        return parentEnv;
+    public Context getParent() {
+        return parent;
     }
 
     /**
      * retrieve size of local map.
      */
     public int size() {
-        return localMap.size();
+        return map.size();
     }
 
     /**
@@ -73,27 +73,27 @@ public class Context {
          * check if local env is empty.
          */
     public boolean isEmptyLocal() {
-        return localMap.isEmpty();
+        return map.isEmpty();
     }
 
     /**
          * decides whether the env (including it's parents) is empty.
          */
     public boolean isEmptyGlobal() {
-        if (null == parentEnv) {
-            return localMap.isEmpty();
+        if (null == parent) {
+            return map.isEmpty();
         }
-        return localMap.isEmpty() && parentEnv.isEmptyLocal();
+        return map.isEmpty() && parent.isEmptyLocal();
     }
 
     /**
      * check if local or global env contains the key.
      */
     public boolean containsKey(Object key) {
-        if (null == parentEnv) {
-            return localMap.containsKey(key);
+        if (null == parent) {
+            return map.containsKey(key);
         }
-        return localMap.containsKey(key) || parentEnv.containsKey(key);
+        return map.containsKey(key) || parent.containsKey(key);
     }
 
     /**
@@ -102,11 +102,11 @@ public class Context {
      * env is specified, null is returned.
      */
     public Object get(Object key) throws EvaluationException {
-        if(localMap.containsKey(key)) {
-            return localMap.get(key);
+        if(map.containsKey(key)) {
+            return map.get(key);
         }
-        if(null != parentEnv && parentEnv.containsKey(key)) {
-            return parentEnv.get(key);
+        if(null != parent && parent.containsKey(key)) {
+            return parent.get(key);
         }
         throw new EvaluationException(String.format("Reference to undefined identifier: '%s'.", key));
     }
@@ -115,18 +115,18 @@ public class Context {
      * unbindLocal element from local env only.
      */
     public Object unbindLocal(Object key) {
-        return localMap.remove(key);
+        return map.remove(key);
     }
 
     /**
      * global operation. unbindLocal key-value pair from local and all parent environments.
      */
     public void unbind(String key) {
-        localMap.remove(key);
-        if (null == parentEnv) {
+        map.remove(key);
+        if (null == parent) {
             return;
         }
-        parentEnv.unbind(key);
+        parent.unbind(key);
     }
 
     /**
@@ -169,17 +169,17 @@ public class Context {
      * put value into local environment.
      */
     public void bind(String key, Object value) {
-        localMap.put(key, value);
+        map.put(key, value);
     }
 
     /**
      * put value in the most significant env if any. put to local env otherwise.
      */
     public void bindGlobal(String key, Object value) {
-        if (null != parentEnv) {
-            parentEnv.bindGlobal(key, value);
+        if (null != parent) {
+            parent.bindGlobal(key, value);
         } else {
-            localMap.put(key, value);
+            map.put(key, value);
         }
     }
 
@@ -205,35 +205,35 @@ public class Context {
      * clearLocal local environment.
      */
     public void clearLocal() {
-        localMap.clear();
+        map.clear();
     }
 
     /**
      * clearLocal local and global env.
       */
     public void clearGlobal() {
-        localMap.clear();
-        if (null == parentEnv) {
+        map.clear();
+        if (null == parent) {
             return;
         }
-        parentEnv.clearGlobal();
+        parent.clearGlobal();
     }
 
     /**
          * get local keySetLocal
          */
     public Set<String> keySetLocal() {
-        return localMap.keySet();
+        return map.keySet();
     }
 
     /**
          * get union from local and all global keySets.
          */
     public Set<String> keySetGlobal() {
-        if (null != parentEnv) {
-            return union(keySetLocal(), parentEnv.keySetLocal());
+        if (null != parent) {
+            return union(keySetLocal(), parent.keySetLocal());
         }
-        return localMap.keySet();
+        return map.keySet();
     }
 
     private static <U> Set<U> union(Set<U> a, Set<U> globalSet) {
