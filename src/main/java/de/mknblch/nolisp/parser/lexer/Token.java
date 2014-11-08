@@ -6,17 +6,15 @@ package de.mknblch.nolisp.parser.lexer;
 public class Token {
 
     public enum Type {
-        SYMBOL, LIST_BEGIN, LIST_END, STRING, INT, REAL, TRUE, QUOTE, NIL, LINE_COMMENT, SHARP, BACKQUOTE, SPLICE, COMMA
+        SYMBOL, LIST_BEGIN, LIST_END, QUOTE, SHARP, BACKQUOTE, SPLICE, COMMA, LINE_COMMENT, CONST
     }
 
     public final Type type;
     public final String literal;
     public final Object value;
-    public final int position;
 
-    public Token(Type type, String literal, Object value, int position) {
+    public Token(Type type, String literal, Object value) {
         this.value = value;
-        this.position = position;
         this.type = type;
         this.literal = literal;
     }

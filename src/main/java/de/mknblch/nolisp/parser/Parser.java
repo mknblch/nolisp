@@ -33,16 +33,13 @@ public class Parser {
 
     private final Lexer lexer = new Lexer();
 
-    public Program parse(String code) throws ParserException, LexerException {
+    public ListStruct parse(String code) throws ParserException, LexerException {
         lexer.setCode(code);
-        final Program program = new Program();
+        final ListStruct program = new ListStruct();
         while (lexer.hasNext()) {
             final Object o = parseOne();
-            // cut comments, interpreter cant handle them
             if(COMMENT_STRUCT == o) continue;
-            // if an EndStruct reaches this point the ast is unbalanced
             if(END_STRUCT == o) throw new ParserException(String.format("[%03d] Unbalanced AST. One or more opening braces missing.", lexer.getOffset()));
-            // add to program
             program.add(o);
         }
         return program;
@@ -54,19 +51,9 @@ public class Parser {
 
             case LIST_BEGIN: return parseList();
             case LIST_END: return END_STRUCT;
-
-            // lexicographic symbols
             case SYMBOL: return new SymbolStruct(token.literal);
-            //
             case LINE_COMMENT: return COMMENT_STRUCT;
-
-            // constants
-            case TRUE: return Boolean.TRUE;
-            case NIL: return null;
-            case STRING: return token.value;
-            case INT: return token.value;
-            case REAL: return token.value;
-
+            case CONST: return token.value;
             // syntactic sugar
             case BACKQUOTE: return new ListStruct(BACKQUOTE_STRUCT, parseOne());
             case SHARP: return new ListStruct(FUNCTION_STRUCT, parseOne());

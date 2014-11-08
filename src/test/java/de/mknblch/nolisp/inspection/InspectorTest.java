@@ -4,7 +4,6 @@ import de.mknblch.nolisp.ast.ListStruct;
 import de.mknblch.nolisp.helper.FormatHelper;
 import de.mknblch.nolisp.interpreter.EvaluationException;
 import de.mknblch.nolisp.parser.Parser;
-import de.mknblch.nolisp.parser.Program;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +21,7 @@ public class InspectorTest {
 
     @Test
     public void testInspect() throws Exception {
-        final Program program = PARSER.parse("(1 (2 nil) 3 ) 5 (6(7)) 8 9");
+        final ListStruct program = PARSER.parse("(1 (2 nil) 3 ) 5 (6(7)) 8 9");
 
         final TreeRule replaceRule = new TreeRuleAdapter() {
             private int c = 0;
@@ -49,7 +48,7 @@ public class InspectorTest {
     @Test
     public void testReplaceLists() throws Exception {
 
-        final Program program = PARSER.parse("(1 (2 (3 4) 5) 6)");
+        final ListStruct program = PARSER.parse("(1 (2 (3 4) 5) 6)");
 
         final TreeRule replaceRule = new TreeRuleAdapter() {
 
@@ -78,7 +77,7 @@ public class InspectorTest {
     @Test
     public void testSum() throws Exception {
 
-        final Program program = PARSER.parse("(1 (( 2 3 (4 8) 7 8)) 9 ) ;)");
+        final ListStruct program = PARSER.parse("(1 (( 2 3 (4 8) 7 8)) 9 ) ;)");
 
         final TreeRule replaceRule = new TreeRuleAdapter() {
 
@@ -105,7 +104,7 @@ public class InspectorTest {
     @Test
     public void testDepth() throws Exception {
 
-        final Program program = PARSER.parse("0(1(2(3(4(5)))))0(1(2(3)))");
+        final ListStruct program = PARSER.parse("0(1(2(3(4(5)))))0(1(2(3)))");
 
         final TreeRule replaceRule = new TreeRuleAdapter() {
 
@@ -126,7 +125,7 @@ public class InspectorTest {
     @Test
     public void testCloneTree() throws Exception {
 
-        final Program program = PARSER.parse("( 1 2 (0 3 ) 4 ( (0 (1 (0 5)) ) 6 ) 7 )");
+        final ListStruct program = PARSER.parse("( 1 2 (0 3 ) 4 ( (0 (1 (0 5)) ) 6 ) 7 )");
 
         final CloneRule cloneRule = new CloneRule() {
 

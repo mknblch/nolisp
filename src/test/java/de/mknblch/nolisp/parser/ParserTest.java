@@ -110,13 +110,13 @@ public class ParserTest {
         evalAssertASTEquals("( ( function ( quote + ) ) )", code);
     }
 
-    private Program parse(String code) throws ParserException, LexerException {
+    private ListStruct parse(String code) throws ParserException, LexerException {
         return PARSER.parse(code);
     }
 
     private void evalAssertASTEquals(String expected, String code) throws LexerException, ParserException {
         LOGGER.debug("code : {}", code.replaceAll("[\r\n]", "\\\\n"));
-        Program parse = parse(code);
+        ListStruct parse = parse(code);
         String pretty = FormatHelper.formatPretty(parse);
         LOGGER.debug("AST  : {}", pretty);
         LOGGER.debug("sExp : {}", FormatHelper.formatAsSExpression(parse));

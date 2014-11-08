@@ -35,6 +35,13 @@ public class LexerTest {
         assertTokenEquals(new String[]{"(", "sugar", "1", "(", "+", "23", "345", ")", ")" }, lexer);
     }
 
+    @Test(expected = LexerException.class)
+    public void testIntOverflow() throws Exception {
+        final String code = "10000000000";
+        final Lexer lexer = new Lexer(code);
+        assertTokenEquals(new String[]{"123" }, lexer);
+    }
+
     @Test
     public void testCodeWithTabs() throws Exception {
         final String code = " (sugar 1     (+      23 345) ) ";
@@ -101,10 +108,10 @@ public class LexerTest {
     }
 
     @Test
-    public void testTrue() throws Exception {
-        final String code = "T";
+    public void testTrueFalse() throws Exception {
+        final String code = "T t true TRUE false FALSE";
         final Lexer lexer = new Lexer(code);
-        assertTokenEquals(new String[]{"t"}, lexer);
+        assertTokenEquals(new String[]{"true", "true", "true", "true", "false", "false"}, lexer);
     }
 
     @Test
@@ -120,14 +127,6 @@ public class LexerTest {
         final String code = "abc ;; hallo welt\n123";
         final Lexer lexer = new Lexer(code);
         assertTokenEquals(new String[]{"abc", ";; hallo welt", "123"}, lexer);
-    }
-
-    private List<Token> asList(Lexer lexer) throws LexerException {
-        final ArrayList<Token> codeList = new ArrayList<Token>();
-        while (lexer.hasNext()) {
-            codeList.add(lexer.next());
-        }
-        return Collections.unmodifiableList(codeList);
     }
 
     /**

@@ -12,10 +12,12 @@ public class Lexer {
     public static final char[] NEWLINE_CHARS = new char[]{'\n'};
     public static final char[] SPECIAL_TOKEN_CHARS = new char[]{'(', ')', '\'', '#', '`', ',', '@'};
     public static final char[] DOUBLEQUOTE_CHARS = new char[]{'"'};
+
     public static final String INT_REGEX = "^\\-?[0-9]+$";
     public static final String REAL_REGEX = "^\\-?[0-9]+\\.[0-9]+$";
-    public static final String NIL_REGEX = "^(nil)|(NIL)$";
-    public static final String TRUE_REGEX = "^(t)|(T)$";
+    public static final String NIL_REGEX = "^(nil)|(NIL)|(null)|(NULL)$";
+    public static final String TRUE_REGEX = "^(t)|(T)|(true)|(TRUE)$";
+    public static final String FALSE_REGEX = "^(false)|(FALSE)$";
 
     private String code;
     private int offset = 0;
@@ -64,14 +66,11 @@ public class Lexer {
      */
     public Token next() throws LexerException {
         skipIgnorable();
-        // return null if end already reached
         if (offset >= code.length()) return null;
-        // fetch char at offset and tokenize
         return tokenize(offset, code.charAt(offset));
     }
 
     private Token tokenize(int position, char c) throws LexerException {
-        // first char of each token must decide it's type or it's treated as value
         switch (c) {
             case '(':
                 offset++;
@@ -113,6 +112,8 @@ public class Lexer {
             return makeNilToken(position);
         } else if (literal.matches(TRUE_REGEX)) {
             return makeTrueToken(position);
+        } else if (literal.matches(FALSE_REGEX)) {
+            return makeFalseToken(position);
         } else {
             return makeSymbolToken(literal, position);
         }
