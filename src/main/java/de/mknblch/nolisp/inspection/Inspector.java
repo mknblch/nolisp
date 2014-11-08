@@ -29,7 +29,7 @@ public class Inspector {
         inspectTree(tree, rule, 0);
     }
 
-    public static void inspectTree(ListStruct tree, TreeRule rule, int depth) throws Exception {
+    private static void inspectTree(ListStruct tree, TreeRule rule, int depth) throws Exception {
         ListStruct temp = tree;
 
         while(temp != null) {
@@ -61,21 +61,4 @@ public class Inspector {
 
         return clone;
     }
-
-//    public static void cloneTree(ListStruct tree, ListStruct clone, CloneRule rule) throws Exception {
-//
-//        ListStruct temp = tree;
-//
-//        while(temp != null) {
-//            final Object car = temp.car();
-//            if(isList(car) && rule.follow((ListStruct) car)) {
-//                final ListStruct subList = new ListStruct();
-//                clone.add(subList);
-//                cloneTree((ListStruct) car, subList, rule);
-//            } else {
-//                clone.add(rule.clone(temp.car()));
-//            }
-//            temp = temp.cdr();
-//        }
-//    }
 }

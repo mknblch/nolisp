@@ -67,55 +67,55 @@ public class Lexer {
     public Token next() throws LexerException {
         skipIgnorable();
         if (offset >= code.length()) return null;
-        return tokenize(offset, code.charAt(offset));
+        return tokenize(code.charAt(offset));
     }
 
-    private Token tokenize(int position, char c) throws LexerException {
+    private Token tokenize(char c) throws LexerException {
         switch (c) {
             case '(':
                 offset++;
-                return makeListBeginToken(position);
+                return makeListBeginToken();
             case ')':
                 offset++;
-                return makeListEndToken(position);
+                return makeListEndToken();
             case '\'':
                 offset++;
-                return makeQuoteToken(position);
+                return makeQuoteToken();
             case '#':
                 offset++;
-                return makeSharpToken(position);
+                return makeSharpToken();
             case '`':
                 offset++;
-                return makeBackquoteToken(position);
+                return makeBackquoteToken();
             case ',':
                 offset++;
-                return makeCommaToken(position);
+                return makeCommaToken();
             case '@':
                 offset++;
-                return makeSpliceToken(position);
+                return makeSpliceToken();
             case ';':
-                return makeCommentToken(tokenizeComment(), position);
+                return makeCommentToken(tokenizeComment());
             case '"':
-                return makeStringToken(tokenizeString(), position);
+                return makeStringToken(tokenizeString());
             default:
-                return decideSymbolType(tokenizeSymbol(), position);
+                return decideConstType(tokenizeConst());
         }
     }
 
-    private Token decideSymbolType(String literal, int position) throws LexerException {
+    private Token decideConstType(String literal) throws LexerException {
 
         if (literal.matches(INT_REGEX)) {
-            return makeIntToken(literal, position);
+            return makeIntToken(literal);
         } else if (literal.matches(REAL_REGEX)) {
-            return makeRealToken(literal, position);
+            return makeRealToken(literal);
         } else if (literal.matches(NIL_REGEX)) {
-            return makeNilToken(position);
+            return makeNilToken();
         } else if (literal.matches(TRUE_REGEX)) {
-            return makeTrueToken(position);
+            return makeTrueToken();
         } else if (literal.matches(FALSE_REGEX)) {
-            return makeFalseToken(position);
+            return makeFalseToken();
         } else {
-            return makeSymbolToken(literal, position);
+            return makeSymbolToken(literal);
         }
     }
 
@@ -126,7 +126,7 @@ public class Lexer {
         return code.substring(startIndex, offset);
     }
 
-    private String tokenizeSymbol() {
+    private String tokenizeConst() {
         int startIndex = offset;
         until(IGNORE_CHARS, SPECIAL_TOKEN_CHARS, NEWLINE_CHARS);
         return code.substring(startIndex, offset);

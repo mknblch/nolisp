@@ -16,7 +16,7 @@ import de.mknblch.nolisp.interpreter.Interpreter;
 public class PredicateForms {
 
     @Special
-    @Define(value = {"=", "==", "eq", "eq?", "equal?"}) // (eq? 1 3)
+    @Define({"=", "==", "eq", "eq?", "equal?"}) // (eq? 1 3)
     public static Object equal(Interpreter interpreter, Context context, ListStruct args) throws Exception {
         final Object a = interpreter.eval(args.car(), context);
         final Object b = args.cdr() != null ? interpreter.eval(args.cdr().car(), context) : null;
@@ -30,52 +30,52 @@ public class PredicateForms {
         return a.equals(b);
     }
 
-    @Define(value = "null?")
+    @Define("null?")
     public static Object isNull(Context context, ListStruct args) {
         return null == args.car();
     }
 
-    @Define(value = "int?")
+    @Define("int?")
     public static Object isInt(Context context, ListStruct args) {
         return args.car() instanceof Integer;
     }
 
-    @Define(value = "real?")
+    @Define("real?")
     public static Object isReal(Context context, ListStruct args) {
         return args.car() instanceof Double;
     }
 
-    @Define(value = "string?")
+    @Define("string?")
     public static Object isString(Context context, ListStruct args) {
         return args.car() instanceof String;
     }
 
     @Special
-    @Define(value = "value?")
+    @Define("value?")
     public static Object isSymbol(Interpreter interpreter, Context context, ListStruct args) {
         return args.car() instanceof SymbolStruct;
     }
 
     @Special
-    @Define(value = "list?")
+    @Define("list?")
     public static Object isList(Interpreter interpreter, Context context, ListStruct args) {
         return args.car() instanceof ListStruct;
     }
 
     @Special
-    @Define(value = "lambda?")
+    @Define("lambda?")
     public static Object isLambda(Interpreter interpreter, Context context, ListStruct args) {
         return args.car() instanceof LambdaForm;
     }
 
     @Special
-    @Define(value = {"function?", "functional?"})
+    @Define({"function?", "functional?"})
     public static Object isFunctional(Interpreter interpreter, Context context, ListStruct args) {
         return args.car() instanceof Function;
     }
 
     @Special
-    @Define(value = {"atom?", "atomar?"})
+    @Define("atom?")
     public static Object isAtom(Interpreter interpreter, Context context, ListStruct args) {
         return args.car() instanceof Atom;
     }

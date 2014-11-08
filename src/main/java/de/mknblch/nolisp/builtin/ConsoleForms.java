@@ -10,13 +10,13 @@ import de.mknblch.nolisp.ast.ListStruct;
  */
 public class ConsoleForms {
 
-    @Define(value = "print")
+    @Define("print")
     public static Object print(Context context, ListStruct args) throws Exception {
         System.out.print(args.car());
         return null;
     }
 
-    @Define(value = "printf")
+    @Define("printf")
     public static Object printf(Context context, ListStruct args) throws Exception {
         final String format = TypeHelper.asString(args.car());
         final int size = args.size()-1;

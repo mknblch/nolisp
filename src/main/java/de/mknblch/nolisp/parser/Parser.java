@@ -39,7 +39,7 @@ public class Parser {
         while (lexer.hasNext()) {
             final Object o = parseOne();
             if(COMMENT_STRUCT == o) continue;
-            if(END_STRUCT == o) throw new ParserException(String.format("[%03d] Unbalanced AST. One or more opening braces missing.", lexer.getOffset()));
+            if(END_STRUCT == o) throw new ParserException(String.format("Unbalanced AST. One or more opening braces missing."));
             program.add(o);
         }
         return program;
@@ -62,7 +62,7 @@ public class Parser {
             case SPLICE: return new ListStruct(AT_STRUCT, parseOne());
 
             default:
-                throw new ParserException(String.format("[%03d] Type '%s' Not yet implemented.", lexer.getOffset(), token.type.name()));
+                throw new ParserException(String.format("Type '%s' Not yet implemented.", token.type.name()));
         }
     }
 
@@ -76,6 +76,6 @@ public class Parser {
             }
             listStruct.add(o);
         }
-        throw new ParserException(String.format("[%03d] Unbalanced AST. One or more closing braces missing.", lexer.getOffset()));
+        throw new ParserException(String.format("Unbalanced AST. One or more closing braces missing."));
     }
 }
