@@ -6,7 +6,7 @@ import static de.mknblch.nolisp.parser.lexer.TokenHelper.*;
  * basic lisp lexer.
  *
  */
-public class Lexer extends StringRunner {
+public class Lexer extends StringCutter {
 
     public static final char[] IGNORE_CHARS = new char[]{' ', '\t', '\r'};
     public static final char[] NEWLINE_CHARS = new char[]{'\n'};
@@ -20,11 +20,6 @@ public class Lexer extends StringRunner {
     public static final String FALSE_REGEX = "^(false)|(FALSE)$";
 
     public Lexer() {
-    }
-
-    public Lexer(String code) {
-        super();
-        setCode(code);
     }
 
     public void setCode(String code) {
@@ -112,16 +107,16 @@ public class Lexer extends StringRunner {
         // store start index of string including " and inc offset
         sync();
         inc();
+        // go until "
         until(DOUBLEQUOTE_CHARS);
         // inc offset and store end of string including "
         inc();
         // if the last increment grows offset above code.length throw an exception
-        if (getOffset() > getStr().length()) {
+        if(isOverflow()) {
             throw new LexerException("premature end of string.");
         }
         // TODO escapes
-        final String token = getToken();
-        return token; // code.substring(startIndex, endIndex);
+        return getToken();
     }
 
     /**

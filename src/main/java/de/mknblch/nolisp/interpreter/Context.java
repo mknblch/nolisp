@@ -1,7 +1,6 @@
 package de.mknblch.nolisp.interpreter;
 
-import de.mknblch.nolisp.func.AnnotationScanner;
-import de.mknblch.nolisp.func.FunctionDefinitionException;
+import de.mknblch.nolisp.annotations.FunctionDefinitionException;
 
 import java.util.*;
 
@@ -16,24 +15,30 @@ public class Context {
 
     private final Context parent;
     private final HashMap<String, Object> map;
+    private final boolean global;
 
     /**
-     * construct empty environment.
+     * construct empty global environment.
      */
-    public Context() {
+    public Context() { // TODO remove ?
+        global = true;
         this.parent = null;
         this.map = new HashMap<>();
     }
-    public Context(Class<?> ...buildInFunctionContainer) throws FunctionDefinitionException {
+
+    public Context(Language language) throws FunctionDefinitionException {
         this();
-        bindAll(AnnotationScanner.scanMethods(buildInFunctionContainer));
-        bindAll(AnnotationScanner.scanFields(buildInFunctionContainer));
+        bindAll(language.getConstants());
+        bindAll(language.getFunctions());
+        bind("_lang", language.getName());
+        bind("_version", language.getVersion());
     }
 
     /**
      * used for derivation.
      */
     private Context(Context parent) {
+        global = false;
         this.parent = parent;
         this.map = new HashMap<>();
     }
@@ -71,25 +76,15 @@ public class Context {
     /**
          * check if local env is empty.
          */
-    public boolean isEmptyLocal() {
+    public boolean isEmpty() {
         return map.isEmpty();
-    }
-
-    /**
-         * decides whether the env (including it's parents) is empty.
-         */
-    public boolean isEmptyGlobal() {
-        if (null == parent) {
-            return map.isEmpty();
-        }
-        return map.isEmpty() && parent.isEmptyLocal();
     }
 
     /**
      * check if local or global env contains the key.
      */
     public boolean containsKey(Object key) {
-        if (null == parent) {
+        if (global) {
             return map.containsKey(key);
         }
         return map.containsKey(key) || parent.containsKey(key);
@@ -113,19 +108,8 @@ public class Context {
     /**
      * unbindLocal element from local env only.
      */
-    public Object unbindLocal(Object key) {
+    public Object unbind(Object key) {
         return map.remove(key);
-    }
-
-    /**
-     * global operation. unbindLocal key-value pair from local and all parent environments.
-     */
-    public void unbind(String key) {
-        map.remove(key);
-        if (null == parent) {
-            return;
-        }
-        parent.unbind(key);
     }
 
     /**
@@ -153,33 +137,6 @@ public class Context {
         for (Map.Entry<String, Object> v : m.entrySet()) {
             bind(v.getKey(), v.getValue());
         }
-    }
-
-    /**
-     * put all into local env.
-     */
-    public void bindAllGlobal(Map<String, Object> m) {
-        for (Map.Entry<String, Object> v : m.entrySet()) {
-            bindGlobal(v.getKey(), v.getValue());
-        }
-    }
-
-    /**
-     * clearLocal local environment.
-     */
-    public void clearLocal() {
-        map.clear();
-    }
-
-    /**
-     * clearLocal local and global env.
-      */
-    public void clearGlobal() {
-        map.clear();
-        if (null == parent) {
-            return;
-        }
-        parent.clearGlobal();
     }
 
     /**

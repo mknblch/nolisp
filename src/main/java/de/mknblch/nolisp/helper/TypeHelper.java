@@ -95,7 +95,6 @@ public class TypeHelper {
         if (null == o) {
             return false;
         }
-        // TODO review
         return !Boolean.FALSE.equals(o);
     }
 

@@ -1,6 +1,6 @@
 package de.mknblch.nolisp.testHelper;
 
-import de.mknblch.nolisp.builtin.*;
+import de.mknblch.nolisp.minimallisp.*;
 import de.mknblch.nolisp.interpreter.Context;
 import de.mknblch.nolisp.interpreter.CoreInterpreter;
 import de.mknblch.nolisp.interpreter.Interpreter;
@@ -27,15 +27,6 @@ public abstract class AbstractFormTest {
     protected static final Interpreter LOGGING_INTERPRETER = new LoggingInterpreter();
     protected static final Interpreter CORE_INTERPRETER = new CoreInterpreter();
 
-    public static final Class[] BUILTIN_FORMS = new Class[]{
-            SpecialForms.class,
-            LambdaForms.class,
-            MacroForms.class,
-            ConditionForms.class,
-            PredicateForms.class,
-            MathForms.class,
-            ConsoleForms.class};
-
     protected void dump(List<Object> evaluated) throws ParserException {
         for (int i = 0; i < evaluated.size(); i++) {
             LOGGER.debug("evaluates to {}", FormatHelper.formatPretty(evaluated.get(i)));
@@ -43,7 +34,7 @@ public abstract class AbstractFormTest {
     }
 
     protected List<Object> eval(String code) throws Exception {
-        final Context context = new Context(BUILTIN_FORMS);
+        final Context context = new Context(new MinimalLisp());
         return eval(code, LOGGING_INTERPRETER, context);
     }
 
@@ -63,7 +54,7 @@ public abstract class AbstractFormTest {
 
     protected static void assertASTEquals(String expected, Object evaluated) throws LexerException, ParserException {
         String pretty = FormatHelper.formatPretty(evaluated);
-        LOGGER.debug("AST  : {}", pretty);
+        LOGGER.debug("AST : {}", pretty);
         assertEquals(expected, pretty);
     }
 }

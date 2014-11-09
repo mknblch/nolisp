@@ -1,10 +1,8 @@
 package de.mknblch.nolisp.launcher;
 
 import de.mknblch.nolisp.ast.ListStruct;
-import de.mknblch.nolisp.ast.forms.LambdaForm;
-import de.mknblch.nolisp.ast.forms.MacroForm;
-import de.mknblch.nolisp.builtin.*;
-import de.mknblch.nolisp.func.FunctionDefinitionException;
+import de.mknblch.nolisp.minimallisp.*;
+import de.mknblch.nolisp.annotations.FunctionDefinitionException;
 import de.mknblch.nolisp.helper.FormatHelper;
 import de.mknblch.nolisp.interpreter.Context;
 import de.mknblch.nolisp.interpreter.CoreInterpreter;
@@ -44,21 +42,19 @@ public class NOLISP {
     }
 
     private static Context makeContext() throws FunctionDefinitionException {
-        return new Context(new Class[]{ConditionForms.class, ConsoleForms.class, LambdaForms.class, MacroForms.class, MathForms.class, PredicateForms.class, SpecialForms.class});
+        return new Context(new MinimalLisp());
     }
 
     private static void repl() throws FunctionDefinitionException, LexerException, ParserException {
         final Context context = makeContext();
         final Console console = System.console();
-        String line = null;
 
         while (true) {
             System.out.print("> ");
-            line = console.readLine();
+            final String line = console.readLine();
             if("exit".equals(line)) System.exit(0);
             final ListStruct prg = parser.parse(line);
             try {
-
                 for (Object p : prg) {
                     final Object obj = interpreter.eval(p, context);
                     System.out.printf("%s%n", FormatHelper.formatPretty(obj));

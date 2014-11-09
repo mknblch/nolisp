@@ -19,67 +19,77 @@ public class LexerTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testNull() throws Exception {
-        final Lexer lexer = new Lexer(null);
+        final Lexer lexer = new Lexer();
+        lexer.setCode(null);
     }
 
     @Test
     public void testEmpty() throws Exception {
-        final Lexer lexer = new Lexer("     ");
+        final Lexer lexer = new Lexer();
+        lexer.setCode("     ");
         assertFalse(lexer.hasNext());
     }
 
     @Test
     public void testCodeWithSpaces() throws Exception {
         final String code = " (sugar 1(+ 23 345)) ";
-        final Lexer lexer = new Lexer(code);
+        final Lexer lexer = new Lexer();
+	lexer.setCode(code);
         assertTokenEquals(new String[]{"(", "sugar", "1", "(", "+", "23", "345", ")", ")" }, lexer);
     }
 
     @Test(expected = LexerException.class)
     public void testIntOverflow() throws Exception {
         final String code = "10000000000";
-        final Lexer lexer = new Lexer(code);
+        final Lexer lexer = new Lexer();
+	lexer.setCode(code);
         assertTokenEquals(new String[]{"123" }, lexer);
     }
 
     @Test
     public void testCodeWithTabs() throws Exception {
         final String code = " (sugar 1     (+      23 345) ) ";
-        final Lexer lexer = new Lexer(code);
+        final Lexer lexer = new Lexer();
+	lexer.setCode(code);
         assertTokenEquals(new String[]{"(", "sugar", "1", "(", "+", "23", "345", ")", ")" }, lexer);
     }
     @Test
     public void testCodeWithNewline() throws Exception {
         final String code = " (sugar\n1\n (+\n 23 345))";
-        final Lexer lexer = new Lexer(code);
+        final Lexer lexer = new Lexer();
+	lexer.setCode(code);
         assertTokenEquals(new String[]{"(", "sugar", "1", "(", "+", "23", "345", ")", ")" }, lexer);
     }
 
     @Test
     public void testQuote() throws Exception {
         final String code = "'(+ a b)";
-        final Lexer lexer = new Lexer(code);
+        final Lexer lexer = new Lexer();
+	lexer.setCode(code);
         assertTokenEquals(new String[]{"'", "(", "+", "a", "b", ")"}, lexer);
     }
 
     @Test
     public void testString() throws Exception {
         final String code = "\"abc\"";
-        final Lexer lexer = new Lexer(code);
+        final Lexer lexer = new Lexer();
+	lexer.setCode(code);
         assertTokenEquals(new String[]{"\"abc\""}, lexer);
     }
 
     @Test
     public void testEmptyString() throws Exception {
         final String code = "\"\"";
-        final Lexer lexer = new Lexer(code);
+        final Lexer lexer = new Lexer();
+	lexer.setCode(code);
         assertTokenEquals(new String[]{"\"\""}, lexer);
     }
 
     @Test(expected = LexerException.class)
     public void testUnbalancedString() throws Exception {
         final String code = " \"abc\" \" ";
-        final Lexer lexer = new Lexer(code);
+        final Lexer lexer = new Lexer();
+	lexer.setCode(code);
 
         while (lexer.hasNext()) {
             lexer.next();
@@ -89,35 +99,40 @@ public class LexerTest {
     @Test
     public void testNegativeInteger() throws Exception {
         final String code = "-5";
-        final Lexer lexer = new Lexer(code);
+        final Lexer lexer = new Lexer();
+	lexer.setCode(code);
         assertTokenEquals(new String[]{"-5"}, lexer);
     }
 
     @Test
     public void testNegativeFloat() throws Exception {
         final String code = "-3.1415";
-        final Lexer lexer = new Lexer(code);
+        final Lexer lexer = new Lexer();
+	lexer.setCode(code);
         assertTokenEquals(new String[]{"-3.1415"}, lexer);
     }
 
     @Test
     public void testNIL() throws Exception {
         final String code = "NIL";
-        final Lexer lexer = new Lexer(code);
+        final Lexer lexer = new Lexer();
+	lexer.setCode(code);
         assertTokenEquals(new String[]{"nil"}, lexer);
     }
 
     @Test
     public void testTrueFalse() throws Exception {
         final String code = "T t true TRUE false FALSE";
-        final Lexer lexer = new Lexer(code);
+        final Lexer lexer = new Lexer();
+	lexer.setCode(code);
         assertTokenEquals(new String[]{"true", "true", "true", "true", "false", "false"}, lexer);
     }
 
     @Test
     public void testNegativeFloatCode() throws Exception {
         final String code = "(- -3.1415 -1)";
-        final Lexer lexer = new Lexer(code);
+        final Lexer lexer = new Lexer();
+	lexer.setCode(code);
         assertTokenEquals(new String[]{"(", "-", "-3.1415", "-1", ")"}, lexer);
     }
 
@@ -125,7 +140,8 @@ public class LexerTest {
     @Test
     public void testLineComment() throws Exception {
         final String code = "abc ;; hallo welt\n123";
-        final Lexer lexer = new Lexer(code);
+        final Lexer lexer = new Lexer();
+	lexer.setCode(code);
         assertTokenEquals(new String[]{"abc", ";; hallo welt", "123"}, lexer);
     }
 

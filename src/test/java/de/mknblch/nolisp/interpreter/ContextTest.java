@@ -85,8 +85,8 @@ public class ContextTest {
         Context derived = global.derive();
         dump(derived);
 
-        assertTrue(global.isEmptyLocal());
-        assertTrue(derived.isEmptyLocal());
+        assertTrue(global.isEmpty());
+        assertTrue(derived.isEmpty());
     }
 
     @Test
@@ -97,8 +97,8 @@ public class ContextTest {
         derived.bind("c", 3);
         dump(derived);
 
-        assertTrue(global.isEmptyLocal());
-        assertFalse(derived.isEmptyLocal());
+        assertTrue(global.isEmpty());
+        assertFalse(derived.isEmpty());
     }
 
     @Test
@@ -109,8 +109,8 @@ public class ContextTest {
         derived.bind("c", 3);
         dump(derived);
 
-        assertFalse(global.isEmptyLocal());
-        assertFalse(derived.isEmptyLocal());
+        assertFalse(global.isEmpty());
+        assertFalse(derived.isEmpty());
     }
 
     @Test
@@ -168,29 +168,12 @@ public class ContextTest {
         Context derived = derive(global);
         derived.bind("c", 3);
 
-        derived.unbindLocal("c");
-        derived.unbindLocal("b");
-        derived.unbindLocal("a");
-
-        dump(derived);
-        assertTrue(derived.isEmptyLocal());
-        assertFalse(derived.isEmptyGlobal());
-        assertFalse(global.isEmptyLocal());
-    }
-
-    @Test
-    public void testRemoveGlobal() throws Exception {
-
-        Context global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
-        Context derived = derive(global);
-        derived.bind("c", 3);
-
         derived.unbind("c");
         derived.unbind("b");
         derived.unbind("a");
 
         dump(derived);
-        assertTrue(derived.isEmptyGlobal());
+        assertTrue(derived.isEmpty());
     }
 
     @Test
@@ -204,26 +187,6 @@ public class ContextTest {
 
         e1.bindAll(e2);
         assertEquals(3, e1.sizeGlobal());
-    }
-
-    @Test
-    public void testClearLocal() throws Exception {
-
-        Context global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
-        Context derived = derive(global);
-        derived.bind("c", 3);
-        derived.clearLocal();
-        assertEquals(0, derived.size());
-        assertEquals(2, global.size());
-    }
-
-    @Test
-    public void testClearGlobal() throws Exception {
-        Context global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
-        Context derived = derive(global);
-        derived.bind("c", 3);
-        derived.clearGlobal();
-        assertEquals(0, derived.sizeGlobal());
     }
 
     @Test

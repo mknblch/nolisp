@@ -5,7 +5,7 @@ import de.mknblch.nolisp.ast.ListStruct;
 import de.mknblch.nolisp.ast.SymbolStruct;
 import de.mknblch.nolisp.ast.forms.LambdaForm;
 import de.mknblch.nolisp.ast.forms.MacroForm;
-import de.mknblch.nolisp.func.BuiltIn;
+import de.mknblch.nolisp.annotations.BuiltIn;
 import de.mknblch.nolisp.interpreter.Context;
 import de.mknblch.nolisp.interpreter.EvaluationException;
 
