@@ -16,7 +16,7 @@ import java.util.List;
 public class MacroForm implements SpecialForm {
 
     private final ListStruct forms;
-    private final List<String> formSymbols; // TODO replace with listStruct
+    private final List<String> formSymbols;
 
     public MacroForm(List<String> formSymbols, ListStruct forms) {
         this.formSymbols = formSymbols;

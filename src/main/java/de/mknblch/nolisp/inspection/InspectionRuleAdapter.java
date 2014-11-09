@@ -5,7 +5,7 @@ import de.mknblch.nolisp.ast.ListStruct;
 /**
  * @author mknblch
  */
-public class TreeRuleAdapter implements TreeRule {
+public class InspectionRuleAdapter implements InspectionRule {
 
     @Override
     public void inspect(ListStruct container, Object element, int depth) throws Exception {}

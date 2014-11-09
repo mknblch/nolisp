@@ -13,8 +13,6 @@ import static org.junit.Assert.assertEquals;
  */
 public class MacroFormsTest extends AbstractFormTest {
 
-
-    // TODO check correctness
     @Test
     public void testDefmacroComplex() throws Exception {
 

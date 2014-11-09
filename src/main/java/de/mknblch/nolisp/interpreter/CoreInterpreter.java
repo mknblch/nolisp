@@ -25,7 +25,6 @@ public class CoreInterpreter implements Interpreter {
             case LIST:
                 return functionCall((ListStruct) atom, context);
 
-            // TODO review
             case BUILTIN:
             case LAMBDA:
             case MACRO:
@@ -56,7 +55,6 @@ public class CoreInterpreter implements Interpreter {
     private Object functionCall(ListStruct list, Context context) throws Exception {
         // retrieve the function at list.car from context
         final Object func = eval(list.car(), context);
-
         if (null == func) {
             throw new EvaluationException(String.format("Procedure application: expected procedure, given: nil"));
         } else if (func instanceof Form) {

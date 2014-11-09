@@ -5,7 +5,7 @@ import de.mknblch.nolisp.ast.ListStruct;
 /**
  * @author mknblch
  */
-public interface TreeRule {
+public interface InspectionRule {
 
     /**
      * called upon inspection of each element in the list.

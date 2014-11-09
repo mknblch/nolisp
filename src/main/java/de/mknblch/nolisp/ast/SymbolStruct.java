@@ -30,7 +30,6 @@ public class SymbolStruct implements Atom {
 
     @Override
     public int hashCode() {
-        // TODO review
         return literal.hashCode();
     }
 }

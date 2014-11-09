@@ -113,7 +113,7 @@ public class FormatHelper {
                     if (buffer.length() > 0) buffer.append(", ");
                     buffer.append(formatAtom(element));
                 }
-                return String.format("[ %s ]", buffer.toString());
+                return String.format("( %s )", buffer.toString());
             case LAMBDA:
                 final LambdaForm lambda = (LambdaForm) atom;
                 return String.format("#<LAMBDA> (%s) %s", formatSymbols(lambda.getArgumentSymbols()), formatAtom(lambda.getForm()));

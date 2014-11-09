@@ -5,15 +5,19 @@ import de.mknblch.nolisp.ast.forms.Form;
 import de.mknblch.nolisp.ast.forms.LambdaForm;
 import de.mknblch.nolisp.func.Define;
 import de.mknblch.nolisp.func.Special;
+import de.mknblch.nolisp.helper.FormatHelper;
 import de.mknblch.nolisp.interpreter.Context;
 import de.mknblch.nolisp.interpreter.Interpreter;
 
 import java.util.List;
 
 import static de.mknblch.nolisp.helper.Expectations.expectCdr;
+import static de.mknblch.nolisp.helper.Expectations.expectList;
+import static de.mknblch.nolisp.helper.Expectations.expectQuotedList;
 import static de.mknblch.nolisp.helper.TypeHelper.asForm;
 import static de.mknblch.nolisp.helper.TypeHelper.symbolList;
 import static de.mknblch.nolisp.helper.TypeHelper.symbolLiteral;
+import static java.lang.System.out;
 
 /**
  * @author mknblch
@@ -30,7 +34,6 @@ public class LambdaForms {
     @Special
     @Define("defun") // (defun bla (a) (+ a 1) ) => form
     public static Object defun(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
-        // TODO review
         expectCdr(args);
         final String functionName = symbolLiteral(args.car());
         final List<String> symbols = symbolList(args.cdar());
@@ -42,9 +45,9 @@ public class LambdaForms {
     @Special
     @Define("function") // (function +)
     public static Object function(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
-//       TODO REVIEW & TEST
-        final Object eval = interpreter.eval(args.car(), parentContext);
-        return interpreter.eval(eval, parentContext);
+        final Object car = args.car();
+        expectQuotedList(car);
+        return interpreter.eval(((ListStruct) car).cdar(), parentContext);
     }
 
     @Special
@@ -65,4 +68,6 @@ public class LambdaForms {
     public static Object eval(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
         return interpreter.eval(interpreter.eval(args.car(), parentContext), parentContext);
     }
+
+
 }

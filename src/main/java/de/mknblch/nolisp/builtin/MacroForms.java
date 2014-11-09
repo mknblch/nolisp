@@ -38,7 +38,6 @@ public class MacroForms {
         final CloneRule cloneRule = new CloneRule() {
             @Override
             public Object clone(Object element) throws Exception {
-                // TODO refactor
                 if (isList(element) && isSymbolWithLiteral(((ListStruct) element).car(), "comma")) { // == Parser.COMMA_STRUCT) {
                     return interpreter.eval(((ListStruct) element).cdar(), parentContext);
                 }
@@ -58,10 +57,7 @@ public class MacroForms {
     @Special
     @Define("splice")
     public static Object splice(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
-
-        final Object car = args.car();
-
-
-        return null;
+        // TODO implement
+        throw new EvaluationException("Bad syntax. @ not inside a backquote environment.");
     }
 }
