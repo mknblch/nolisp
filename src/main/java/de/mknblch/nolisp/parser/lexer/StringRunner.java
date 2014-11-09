@@ -17,33 +17,59 @@ public class StringRunner {
         reset();
     }
 
+    public void setString(String str) {
+        this.str = str;
+        reset();
+    }
+
+    public String getStr() {
+        return str;
+    }
+
     public void reset() {
         offset = 0;
         prev = 0;
     }
 
-    public String getToken() {
-        return str.substring(prev, offset);
-    }
     public boolean hasNext() {
         return offset < str.length();
+    }
+
+    public String getToken() {
+        return str.substring(prev, offset);
     }
 
     public int getOffset() {
         return offset;
     }
 
-    public void setString(String str) {
-        this.str = str;
-        reset();
+    public void setOffset(int offset) {
+        sync();
+        this.offset = offset;
     }
+
+    public char charAtOffset() {
+        return str.charAt(offset);
+    }
+
+    public void sync() {
+        prev = offset;
+    }
+
+    public void inc() {
+        offset++;
+    }
+
+    public char popChar() {
+        return str.charAt(offset++);
+    }
+
     /**
      * increment offset until any char OTHER THEN charsToSkip is found
      *
      * @param charsToSkip these chars should be ignored
      */
     public void skip(char[]... charsToSkip) {
-        prev = offset;
         for (int i = offset; i < str.length(); i++) {
             if (E(str.charAt(offset), charsToSkip)) {
                 offset++;
@@ -59,7 +85,6 @@ public class StringRunner {
      * @param charsToStop chars to search for
      */
     public void until(char[]... charsToStop) {
-        prev = offset;
         for (int i = offset; i < str.length(); i++) {
             if (!E(str.charAt(offset), charsToStop)) {
                 offset++;

@@ -6,7 +6,7 @@ import static de.mknblch.nolisp.parser.lexer.TokenHelper.*;
  * basic lisp lexer.
  *
  */
-public class Lexer {
+public class Lexer extends StringRunner {
 
     public static final char[] IGNORE_CHARS = new char[]{' ', '\t', '\r'};
     public static final char[] NEWLINE_CHARS = new char[]{'\n'};
@@ -19,13 +19,11 @@ public class Lexer {
     public static final String TRUE_REGEX = "^(t)|(T)|(true)|(TRUE)$";
     public static final String FALSE_REGEX = "^(false)|(FALSE)$";
 
-    private String code;
-    private int offset = 0;
-
     public Lexer() {
     }
 
     public Lexer(String code) {
+        super();
         setCode(code);
     }
 
@@ -33,31 +31,9 @@ public class Lexer {
         if (null == code) {
             throw new IllegalArgumentException("null not allowed");
         } else {
-            this.code = code.trim();
+            setString(code.trim());
         }
-        reset();
     }
-
-    /**
-     * reset state
-     */
-    public void reset() {
-        offset = 0;
-    }
-
-    public int getOffset() {
-        return offset;
-    }
-
-    /**
-     * determine if lexer has more tokens.
-     *
-     * @return true if tokens left
-     */
-    public boolean hasNext() {
-        return offset < code.length();
-    }
-
 
     /**
      * fetch next token and increment offset.
@@ -66,32 +42,32 @@ public class Lexer {
      */
     public Token next() throws LexerException {
         skipIgnorable();
-        if (offset >= code.length()) return null;
-        return tokenize(code.charAt(offset));
+        if (!hasNext()) return null;
+        return tokenize(charAtOffset());
     }
 
     private Token tokenize(char c) throws LexerException {
         switch (c) {
             case '(':
-                offset++;
+                inc();
                 return makeListBeginToken();
             case ')':
-                offset++;
+                inc();
                 return makeListEndToken();
             case '\'':
-                offset++;
+                inc();
                 return makeQuoteToken();
             case '#':
-                offset++;
+                inc();
                 return makeSharpToken();
             case '`':
-                offset++;
+                inc();
                 return makeBackquoteToken();
             case ',':
-                offset++;
+                inc();
                 return makeCommaToken();
             case '@':
-                offset++;
+                inc();
                 return makeSpliceToken();
             case ';':
                 return makeCommentToken(tokenizeComment());
@@ -121,29 +97,31 @@ public class Lexer {
 
 
     private String tokenizeComment() {
-        int startIndex = offset;
+        sync();
         until(NEWLINE_CHARS);
-        return code.substring(startIndex, offset);
+        return getToken();
     }
 
     private String tokenizeConst() {
-        int startIndex = offset;
+        sync();
         until(IGNORE_CHARS, SPECIAL_TOKEN_CHARS, NEWLINE_CHARS);
-        return code.substring(startIndex, offset);
+        return getToken();
     }
 
     private String tokenizeString() throws LexerException {
         // store start index of string including " and inc offset
-        int startIndex = offset++;
+        sync();
+        inc();
         until(DOUBLEQUOTE_CHARS);
         // inc offset and store end of string including "
-        int endIndex = ++offset;
+        inc();
         // if the last increment grows offset above code.length throw an exception
-        if (offset > code.length()) {
-            throw new LexerException(String.format("[%03d] premature end of string found.", startIndex));
+        if (getOffset() > getStr().length()) {
+            throw new LexerException("premature end of string.");
         }
         // TODO escapes
-        return code.substring(startIndex, endIndex);
+        final String token = getToken();
+        return token; // code.substring(startIndex, endIndex);
     }
 
     /**
@@ -153,49 +131,4 @@ public class Lexer {
         skip(IGNORE_CHARS, NEWLINE_CHARS);
     }
 
-    /**
-     * increment offset until any char OTHER THEN charsToSkip is found
-     *
-     * @param charsToSkip these chars should be ignored
-     */
-    private void skip(char[]... charsToSkip) {
-        for (int i = offset; i < code.length(); i++) {
-            if (E(code.charAt(offset), charsToSkip)) {
-                offset++;
-            } else {
-                return;
-            }
-        }
-    }
-
-    /**
-     * increment offset until any of charsToStop is found
-     *
-     * @param charsToStop chars to search for
-     */
-    private void until(char[]... charsToStop) {
-        for (int i = offset; i < code.length(); i++) {
-            if (!E(code.charAt(offset), charsToStop)) {
-                offset++;
-            } else {
-                return;
-            }
-        }
-    }
-
-    /**
-     * determine if char a is element of c
-     *
-     * @param a single char for comparision
-     * @param c set of chars
-     * @return true if a is element of c. false otherwise
-     */
-    public static boolean E (char a, char[]... c) {
-        for (char[] chs : c) {
-            for (int i = 0; i < chs.length; i++) {
-                if (a == chs[i]) return true;
-            }
-        }
-        return false;
-    }
 }
