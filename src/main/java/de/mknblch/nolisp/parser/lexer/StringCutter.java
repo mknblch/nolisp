@@ -43,10 +43,6 @@ public class StringCutter {
         return offset;
     }
 
-    public boolean isOverflow() {
-        return offset > str.length();
-    }
-
     public void setOffset(int offset) {
         this.offset = offset;
     }

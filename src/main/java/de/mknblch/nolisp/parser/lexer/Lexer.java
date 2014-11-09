@@ -1,7 +1,5 @@
 package de.mknblch.nolisp.parser.lexer;
 
-import static de.mknblch.nolisp.parser.lexer.TokenHelper.*;
-
 /**
  * basic lisp lexer.
  *
@@ -11,7 +9,6 @@ public class Lexer extends StringCutter {
     public static final char[] IGNORE_CHARS = new char[]{' ', '\t', '\r'};
     public static final char[] NEWLINE_CHARS = new char[]{'\n'};
     public static final char[] SPECIAL_TOKEN_CHARS = new char[]{'(', ')', '\'', '#', '`', ',', '@'};
-    public static final char[] DOUBLEQUOTE_CHARS = new char[]{'"'};
 
     public static final String INT_REGEX = "^\\-?[0-9]+$";
     public static final String REAL_REGEX = "^\\-?[0-9]+\\.[0-9]+$";
@@ -38,85 +35,77 @@ public class Lexer extends StringCutter {
     public Token next() throws LexerException {
         skipIgnorable();
         if (!hasNext()) return null;
-        return tokenize(charAtOffset());
+        sync();
+        return tokenize(popChar());
     }
 
     private Token tokenize(char c) throws LexerException {
         switch (c) {
             case '(':
-                inc();
-                return makeListBeginToken();
+                return new Token(Token.Type.LIST_BEGIN, "(", "(");
             case ')':
-                inc();
-                return makeListEndToken();
+                return new Token(Token.Type.LIST_END, ")", ")");
             case '\'':
-                inc();
-                return makeQuoteToken();
+                return new Token(Token.Type.QUOTE, "'", "'");
             case '#':
-                inc();
-                return makeSharpToken();
+                return new Token(Token.Type.SHARP, "#", "#");
             case '`':
-                inc();
-                return makeBackquoteToken();
+                return new Token(Token.Type.BACKQUOTE, "`", "`");
             case ',':
-                inc();
-                return makeCommaToken();
+                return new Token(Token.Type.COMMA, ",", ",");
             case '@':
-                inc();
-                return makeSpliceToken();
+                return new Token(Token.Type.SPLICE, "@", "@");
             case ';':
-                return makeCommentToken(tokenizeComment());
+                final String comment = tokenizeComment();
+                return new Token(Token.Type.LINE_COMMENT, comment, comment);
             case '"':
-                return makeStringToken(tokenizeString());
+                final String str = tokenizeString();
+                if (null == str) {
+                    throw new LexerException(String.format("Parsing STRING failed - arg was null", str));
+                }
+                return new Token(Token.Type.CONST, str, str);
             default:
                 return decideConstType(tokenizeConst());
         }
     }
 
-    private Token decideConstType(String literal) throws LexerException {
-
-        if (literal.matches(INT_REGEX)) {
-            return makeIntToken(literal);
-        } else if (literal.matches(REAL_REGEX)) {
-            return makeRealToken(literal);
-        } else if (literal.matches(NIL_REGEX)) {
-            return makeNilToken();
-        } else if (literal.matches(TRUE_REGEX)) {
-            return makeTrueToken();
-        } else if (literal.matches(FALSE_REGEX)) {
-            return makeFalseToken();
-        } else {
-            return makeSymbolToken(literal);
-        }
-    }
-
-
     private String tokenizeComment() {
-        sync();
         until(NEWLINE_CHARS);
         return getToken();
     }
 
+
     private String tokenizeConst() {
-        sync();
         until(IGNORE_CHARS, SPECIAL_TOKEN_CHARS, NEWLINE_CHARS);
         return getToken();
     }
 
     private String tokenizeString() throws LexerException {
-        // store start index of string including " and inc offset
-        sync();
-        inc();
-        // go until "
-        until(DOUBLEQUOTE_CHARS);
-        // inc offset and store end of string including "
-        inc();
-        // if the last increment grows offset above code.length throw an exception
-        if(isOverflow()) {
-            throw new LexerException("premature end of string.");
+        final StringBuffer buffer = new StringBuffer();
+        while (true) {
+            if(!hasNext()) {
+                throw new LexerException("Premature end of string.");
+            }
+            final char c = popChar();
+            if ('\\' == c) {
+                final char n = popChar();
+                switch (n) {
+                    case '"': buffer.append("\""); break;
+                    case 't': buffer.append("\t"); break;
+                    case 'n': buffer.append("\n"); break;
+                    case 'r': buffer.append("\r"); break;
+                    case '\\': buffer.append("\\"); break;
+                    default: throw new LexerException(String.format("Invalid escape sequence '\\%c'", n));
+                }
+            } else if ('"' == c) {
+                break;
+            } else {
+                buffer.append(c);
+            }
         }
-        // TODO escapes
-        return getToken();
+
+        sync();
+        return buffer.toString();
     }
 
     /**
@@ -124,6 +113,31 @@ public class Lexer extends StringCutter {
      */
     private void skipIgnorable() {
         skip(IGNORE_CHARS, NEWLINE_CHARS);
+    }
+
+    private Token decideConstType(String literal) throws LexerException {
+
+        if (literal.matches(INT_REGEX)) {
+            try {
+                return new Token(Token.Type.CONST, literal, Integer.parseInt(literal));
+            } catch (Exception e) {
+                throw new LexerException(String.format("Parsing '%s' to INT failed", literal), e);
+            }
+        } else if (literal.matches(REAL_REGEX)) {
+            try {
+                return new Token(Token.Type.CONST, literal, Double.parseDouble(literal));
+            } catch (Exception e) {
+                throw new LexerException(String.format("Parsing '%s' to REAL failed", literal), e);
+            }
+        } else if (literal.matches(NIL_REGEX)) {
+            return new Token(Token.Type.CONST, "nil", null);
+        } else if (literal.matches(TRUE_REGEX)) {
+            return new Token(Token.Type.CONST, "true", Boolean.TRUE);
+        } else if (literal.matches(FALSE_REGEX)) {
+            return new Token(Token.Type.CONST, "false", Boolean.FALSE);
+        } else {
+            return new Token(Token.Type.SYMBOL, literal, literal);
+        }
     }
 
 }

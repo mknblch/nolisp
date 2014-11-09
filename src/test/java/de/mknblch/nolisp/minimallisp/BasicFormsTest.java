@@ -12,7 +12,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * @author mknblch
  */
-public class SpecialFormsTest extends AbstractFormTest {
+public class BasicFormsTest extends AbstractFormTest {
 
     @Test
     public void testQuote() throws Exception {

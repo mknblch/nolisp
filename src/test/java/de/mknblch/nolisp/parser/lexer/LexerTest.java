@@ -74,7 +74,15 @@ public class LexerTest {
         final String code = "\"abc\"";
         final Lexer lexer = new Lexer();
 	lexer.setCode(code);
-        assertTokenEquals(new String[]{"\"abc\""}, lexer);
+        assertTokenEquals(new String[]{"abc"}, lexer);
+    }
+
+    @Test
+    public void testEscapedString() throws Exception {
+        final String code = "\"a\nb\\\"c\"";
+        final Lexer lexer = new Lexer();
+	lexer.setCode(code);
+        assertTokenEquals(new String[]{"a\nb\"c"}, lexer);
     }
 
     @Test
@@ -82,7 +90,7 @@ public class LexerTest {
         final String code = "\"\"";
         final Lexer lexer = new Lexer();
 	lexer.setCode(code);
-        assertTokenEquals(new String[]{"\"\""}, lexer);
+        assertTokenEquals(new String[]{""}, lexer);
     }
 
     @Test(expected = LexerException.class)
@@ -139,10 +147,18 @@ public class LexerTest {
 
     @Test
     public void testLineComment() throws Exception {
-        final String code = "abc ;; hallo welt\n123";
+        final String code = "abc ; hallo welt\n123";
         final Lexer lexer = new Lexer();
 	lexer.setCode(code);
-        assertTokenEquals(new String[]{"abc", ";; hallo welt", "123"}, lexer);
+        assertTokenEquals(new String[]{"abc", "; hallo welt", "123"}, lexer);
+    }
+
+    @Test
+    public void testLineCommentAtEnd() throws Exception {
+        final String code = ";hallo";
+        final Lexer lexer = new Lexer();
+	lexer.setCode(code);
+        assertTokenEquals(new String[]{";hallo"}, lexer);
     }
 
     /**
@@ -152,11 +168,12 @@ public class LexerTest {
      * @throws LexerException
      */
     private static void assertTokenEquals (String[] expected, Lexer lexer) throws LexerException {
-        LOGGER.debug("comparing: {}", merge(expected));
         for (int i = 0; i < expected.length; i++) {
 
             assertTrue("premature end at token " + i, lexer.hasNext());
-            assertEquals("token " + i + " did not match", expected[i], lexer.next().literal);
+            final String literal = lexer.next().literal;
+            LOGGER.debug("comparing expected '{}' with result '{}'", merge(expected), literal);
+            assertEquals("token " + i + " did not match", expected[i], literal);
         }
         assertFalse("lexer has more tokens", lexer.hasNext());
     }

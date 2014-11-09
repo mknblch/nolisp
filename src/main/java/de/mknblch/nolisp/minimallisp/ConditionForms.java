@@ -14,11 +14,8 @@ import static de.mknblch.nolisp.helper.TypeHelper.*;
  */
 public class ConditionForms {
 
-    /*
-        (if condition yes no)
-     */
     @Special
-    @Define(value = "if")
+    @Define(value = "if") // (if condition yes no)
     public static Object ifForm(Interpreter interpreter, Context context, ListStruct args) throws Exception {
         final boolean condition = asBoolean(interpreter.eval(args.car(), context));
         final Object trueBranch = args.cdar();

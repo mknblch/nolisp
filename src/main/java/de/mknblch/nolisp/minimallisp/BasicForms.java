@@ -14,7 +14,7 @@ import static de.mknblch.nolisp.helper.TypeHelper.*;
 /**
  * @author mknblch
  */
-public class SpecialForms {
+public class BasicForms {
 
     @Special
     @Define("setq")
@@ -26,6 +26,22 @@ public class SpecialForms {
             expectCdr(temp);
             value = interpreter.eval(temp.cdr().car(), context);
             context.bindGlobal(key, value);
+            temp = temp.cdr().cdr();
+        } while (temp != null);
+
+        return value;
+    }
+
+    @Special
+    @Define({"set", "define"})
+    public static Object define(Interpreter interpreter, Context context, ListStruct args) throws Exception {
+        ListStruct temp = args;
+        Object value;
+        do {
+            final String key = symbolLiteral(temp.car());
+            expectCdr(temp);
+            value = interpreter.eval(temp.cdr().car(), context);
+            context.bind(key, value);
             temp = temp.cdr().cdr();
         } while (temp != null);
 

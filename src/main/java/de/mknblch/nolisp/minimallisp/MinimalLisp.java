@@ -18,7 +18,7 @@ public class MinimalLisp implements Language {
             MacroForms.class,
             MathForms.class,
             PredicateForms.class,
-            SpecialForms.class
+            BasicForms.class
     };
 
     private final Map<String, Object> constants;

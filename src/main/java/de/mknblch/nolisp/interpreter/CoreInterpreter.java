@@ -61,7 +61,7 @@ public class CoreInterpreter implements Interpreter {
             // arguments of Forms are executed before function call
             return ((Form) func).eval(context, evalEach(list.cdr(), context));
         } else if (func instanceof SpecialForm) {
-            // arguments of SpecialForms will NOT become evaluated before call
+            // arguments of BasicForms will NOT become evaluated before call
             return ((SpecialForm) func).eval(this, context, list.cdr());
         } else {
             throw new EvaluationException(String.format("Procedure application: expected procedure, given: %s:%s", func, func.getClass().getName()));
