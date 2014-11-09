@@ -121,7 +121,7 @@ public class FormatHelper {
                 final MacroForm macro = (MacroForm) atom;
                 return String.format("#<MACRO> (%s) %s", formatSymbols(macro.getArgumentSymbols()), formatPretty(macro.getForms()));
             case BUILTIN:
-                return "#<BUILTIN>";
+                return String.format("#<BUILTIN %s>", ((BuiltIn) atom).getSymbol());
         }
 
         throw new IllegalArgumentException(String.format("%s:UNKNOWN_ATOM", atom));
