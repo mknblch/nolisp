@@ -1,5 +1,6 @@
 package de.mknblch.nolisp.ast.forms;
 
+import de.mknblch.nolisp.ast.Atom;
 import de.mknblch.nolisp.ast.ListStruct;
 import de.mknblch.nolisp.interpreter.Context;
 import de.mknblch.nolisp.interpreter.Interpreter;
@@ -11,12 +12,7 @@ import de.mknblch.nolisp.interpreter.Interpreter;
  *
  * @author mknblch
  */
-public abstract class SpecialForm implements Function {
+public interface SpecialForm extends Atom {
 
     public abstract Object eval(Interpreter interpreter, Context context, ListStruct args) throws Exception;
-
-    @Override
-    public Type getType() {
-        return Type.FORM;
-    }
 }

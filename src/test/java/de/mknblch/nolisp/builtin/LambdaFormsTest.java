@@ -1,6 +1,6 @@
 package de.mknblch.nolisp.builtin;
 
-import de.mknblch.nolisp.ast.forms.Function;
+import de.mknblch.nolisp.ast.forms.LambdaForm;
 import de.mknblch.nolisp.testHelper.AbstractFormTest;
 import org.junit.Test;
 
@@ -111,7 +111,7 @@ public class LambdaFormsTest extends AbstractFormTest {
     public void testLambdaFunc() throws Exception {
         List<Object> result = eval("(lambda () 1)");
         dump(result);
-        assertTrue(result.get(0) instanceof Function);
+        assertTrue(result.get(0) instanceof LambdaForm);
     }
 
     @Test

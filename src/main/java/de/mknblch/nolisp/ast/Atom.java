@@ -7,7 +7,7 @@ package de.mknblch.nolisp.ast;
 public interface Atom {
 
     public enum Type {
-        SYMBOL, LIST, FORM, LAMBDA, MACRO
+        SYMBOL, LIST, BUILTIN, LAMBDA, MACRO
     }
 
     public Type getType();

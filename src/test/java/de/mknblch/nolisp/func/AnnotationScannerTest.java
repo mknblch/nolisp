@@ -1,13 +1,11 @@
 package de.mknblch.nolisp.func;
 
-import de.mknblch.nolisp.ast.forms.Function;
 import de.mknblch.nolisp.func.testforms.*;
 import org.junit.Test;
 
-import java.util.Set;
+import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-
+import static org.junit.Assert.*;
 
 /**
  * @author mknblch
@@ -37,7 +35,7 @@ public class AnnotationScannerTest {
     @Test
     public void shouldWork_registerValid() throws Exception {
 
-        final Set<Function> scan = AnnotationScanner.scanMethods(Working.class);
+        final Map<String, Object> scan = AnnotationScanner.scanMethods(Working.class);
         assertEquals(4, scan.size());
     }
 }

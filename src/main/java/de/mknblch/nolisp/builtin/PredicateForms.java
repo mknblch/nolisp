@@ -3,8 +3,8 @@ package de.mknblch.nolisp.builtin;
 import de.mknblch.nolisp.ast.Atom;
 import de.mknblch.nolisp.ast.ListStruct;
 import de.mknblch.nolisp.ast.SymbolStruct;
-import de.mknblch.nolisp.ast.forms.Function;
 import de.mknblch.nolisp.ast.forms.LambdaForm;
+import de.mknblch.nolisp.ast.forms.MacroForm;
 import de.mknblch.nolisp.func.Define;
 import de.mknblch.nolisp.func.Special;
 import de.mknblch.nolisp.interpreter.Context;
@@ -69,9 +69,9 @@ public class PredicateForms {
     }
 
     @Special
-    @Define({"function?", "functional?"})
-    public static Object isFunctional(Interpreter interpreter, Context context, ListStruct args) {
-        return args.car() instanceof Function;
+    @Define("macro?")
+    public static Object isMacro(Interpreter interpreter, Context context, ListStruct args) {
+        return args.car() instanceof MacroForm;
     }
 
     @Special

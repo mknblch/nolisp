@@ -13,15 +13,12 @@ import java.util.List;
  *
  * @author mknblch
  */
-public class MacroForm extends SpecialForm {
+public class MacroForm implements SpecialForm {
 
-    private final String symbol;
     private final ListStruct forms;
-    private final List<String> formSymbols;
+    private final List<String> formSymbols; // TODO replace with listStruct
 
-    // TODO remove symbol
-    public MacroForm(String symbol, List<String> formSymbols, ListStruct forms) {
-        this.symbol = symbol;
+    public MacroForm(List<String> formSymbols, ListStruct forms) {
         this.formSymbols = formSymbols;
         this.forms = forms;
     }
@@ -39,17 +36,11 @@ public class MacroForm extends SpecialForm {
     }
 
     @Override
-    public String getSymbol() {
-        return symbol;
-    }
-
-    @Override
     public Type getType() {
         return Type.MACRO;
     }
 
-
-    public List<String> getFormSymbols() {
+    public List<String> getArgumentSymbols() {
         return formSymbols;
     }
 

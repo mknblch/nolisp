@@ -3,7 +3,6 @@ package de.mknblch.nolisp.helper;
 import de.mknblch.nolisp.ast.ListStruct;
 import de.mknblch.nolisp.ast.SymbolStruct;
 import de.mknblch.nolisp.ast.forms.Form;
-import de.mknblch.nolisp.ast.forms.Function;
 import de.mknblch.nolisp.ast.forms.LambdaForm;
 import de.mknblch.nolisp.interpreter.EvaluationException;
 
@@ -90,15 +89,6 @@ public class TypeHelper {
 
     public static boolean isForm(Object o) {
         return o instanceof Form;
-    }
-
-    public static Function asFunction(Object o) throws EvaluationException {
-        Expectations.expectFunction(o);
-        return ((Function) o);
-    }
-
-    public static boolean isFunction(Object o) {
-        return o instanceof Function;
     }
 
     public static Boolean asBoolean(Object o) {

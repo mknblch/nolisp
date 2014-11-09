@@ -1,6 +1,5 @@
 package de.mknblch.nolisp.interpreter;
 
-import de.mknblch.nolisp.ast.forms.Function;
 import de.mknblch.nolisp.func.AnnotationScanner;
 import de.mknblch.nolisp.func.FunctionDefinitionException;
 
@@ -23,20 +22,20 @@ public class Context {
      */
     public Context() {
         this.parent = null;
-        this.map = new HashMap<String, Object>();
+        this.map = new HashMap<>();
     }
     public Context(Class<?> ...buildInFunctionContainer) throws FunctionDefinitionException {
         this();
-        defineAll(AnnotationScanner.scanMethods(buildInFunctionContainer));
+        bindAll(AnnotationScanner.scanMethods(buildInFunctionContainer));
         bindAll(AnnotationScanner.scanFields(buildInFunctionContainer));
     }
 
     /**
      * used for derivation.
      */
-    public Context(Context parent) {
+    private Context(Context parent) {
         this.parent = parent;
-        this.map = new HashMap<String, Object>();
+        this.map = new HashMap<>();
     }
 
     /**
@@ -130,42 +129,6 @@ public class Context {
     }
 
     /**
-     * local operation.
-     */
-    public void define (Function function) {
-        bind(function.getSymbol(), function);
-    }
-
-    public void defineAll (Collection<Function> functions) {
-        for (Function function : functions) {
-            define(function);
-        }
-    }
-
-    public void defineGlobal (Function function) {
-        bindGlobal(function.getSymbol(), function);
-    }
-
-    public void defineAllGlobal (Collection<Function> functions) {
-        for (Function function : functions) {
-            defineGlobal(function);
-        }
-    }
-
-
-    public void undefineLocal(String key) {
-        unbindLocal(key);
-    }
-
-    /**
-     * global operation
-     */
-    public void undefine(String key) {
-        unbind(key);
-    }
-
-
-    /**
      * put value into local environment.
      */
     public void bind(String key, Object value) {
@@ -237,7 +200,7 @@ public class Context {
     }
 
     private static <U> Set<U> union(Set<U> a, Set<U> globalSet) {
-        final Set<U> union = new HashSet<U>(a.size() + globalSet.size());
+        final Set<U> union = new HashSet<>(a.size() + globalSet.size());
         union.addAll(a);
         union.addAll(globalSet);
         return union;

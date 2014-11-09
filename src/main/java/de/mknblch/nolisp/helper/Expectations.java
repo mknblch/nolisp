@@ -3,7 +3,6 @@ package de.mknblch.nolisp.helper;
 import de.mknblch.nolisp.ast.ListStruct;
 import de.mknblch.nolisp.ast.SymbolStruct;
 import de.mknblch.nolisp.ast.forms.Form;
-import de.mknblch.nolisp.ast.forms.Function;
 import de.mknblch.nolisp.ast.forms.LambdaForm;
 import de.mknblch.nolisp.ast.forms.SpecialForm;
 import de.mknblch.nolisp.interpreter.EvaluationException;
@@ -77,13 +76,6 @@ public class Expectations {
                 null == ((ListStruct) o).cdr()) {
             throw new EvaluationException(
                     String.format("Expected LIST with rest"));
-        }
-    }
-
-    public static void expectFunction(Object o) throws EvaluationException {
-        if (!(o instanceof Function)) {
-            throw new EvaluationException(
-                    String.format("Expected FUNCTION but was: %s", FormatHelper.formatAtom(o)));
         }
     }
 

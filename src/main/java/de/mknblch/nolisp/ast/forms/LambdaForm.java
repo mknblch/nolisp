@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * @author mknblch
  */
-public class LambdaForm extends Form {
+public class LambdaForm implements Form {
     private final Interpreter interpreter;
     private final Context definitionScopeContext;
     private final List<String> symbols;
@@ -32,16 +32,11 @@ public class LambdaForm extends Form {
     }
 
     @Override
-    public String getSymbol() {
-        return null;
-    }
-
-    @Override
     public Type getType() {
         return Type.LAMBDA;
     }
 
-    public List<String> getSymbols() {
+    public List<String> getArgumentSymbols() {
         return symbols;
     }
 

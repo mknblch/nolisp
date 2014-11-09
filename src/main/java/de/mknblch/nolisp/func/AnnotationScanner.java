@@ -1,7 +1,6 @@
 package de.mknblch.nolisp.func;
 
 import de.mknblch.nolisp.ast.forms.Form;
-import de.mknblch.nolisp.ast.forms.Function;
 import de.mknblch.nolisp.ast.forms.SpecialForm;
 import de.mknblch.nolisp.interpreter.Context;
 import de.mknblch.nolisp.interpreter.EvaluationException;
@@ -13,9 +12,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The AnnotationScanner constructs a set of functions from
@@ -25,8 +22,8 @@ import java.util.Set;
  */
 public class AnnotationScanner {
 
-    public static Set<Function> scanMethods(Class<?>... classes) throws FunctionDefinitionException {
-        final Set<Function> functions = new HashSet<Function>();
+    public static Map<String, Object> scanMethods(Class<?>... classes) throws FunctionDefinitionException {
+        final Map<String, Object> functions = new HashMap<String, Object>();
         for (Class<?> clazz : classes) {
             final Method[] declaredMethods = clazz.getDeclaredMethods();
             for (final Method method : declaredMethods) {
@@ -54,7 +51,6 @@ public class AnnotationScanner {
     }
 
     private static void addConstant(Map<String, Object> constants, Field field) throws FunctionDefinitionException {
-
         final Constant annotation = field.getAnnotation(Constant.class);
         final String[] symbols = annotation.value();
         for (String symbol : symbols) {
@@ -69,9 +65,7 @@ public class AnnotationScanner {
     }
 
     private static boolean isConstantField(Field field) throws FunctionDefinitionException {
-
         if(!field.isAnnotationPresent(Constant.class)) return false;
-
         final int modifiers = field.getModifiers();
         if (!Modifier.isStatic(modifiers))
             throw new FunctionDefinitionException("Invalid signature - FIELD must be STATIC");
@@ -80,29 +74,29 @@ public class AnnotationScanner {
         return true;
     }
 
-    private static void addSpecialForm(Set<Function> functions, Method method) throws FunctionDefinitionException {
+    private static void addSpecialForm(Map<String, Object> functions, Method method) throws FunctionDefinitionException {
         final Define annotation = method.getAnnotation(Define.class);
         final String[] symbols = annotation.value();
         for (String symbol : symbols) {
-            if (!functions.add(wrapSpecialForm(method, symbol))) {
+            if (null != functions.put(symbol, wrapSpecialForm(method, symbol))) {
                 throw new FunctionDefinitionException(String.format("Ambiguous function definition for '%s'", method.getName()));
             }
         }
     }
 
-    private static void addNonSpecialForm(Set<Function> functions, Method method) throws FunctionDefinitionException {
+    private static void addNonSpecialForm(Map<String, Object> functions, Method method) throws FunctionDefinitionException {
         final Define annotation = method.getAnnotation(Define.class);
         final String[] symbols = annotation.value();
         for (String symbol : symbols) {
-            if (!functions.add(wrapNonSpecialForm(method, symbol))) {
+            if (null != functions.put(symbol, wrapNonSpecialForm(method, symbol))) {
                 throw new FunctionDefinitionException(String.format("Ambiguous function definition for '%s'", method.getName()));
             }
         }
     }
 
 
-    public static Function wrapNonSpecialForm(final Method method, final String symbol) {
-        return new Form() {
+    public static Form wrapNonSpecialForm(final Method method, final String symbol) {
+        return new BuiltInForm() {
             @Override
             public Object eval(Context context, ListStruct args) throws Exception {
                 return method.invoke(null, context, args);
@@ -114,8 +108,8 @@ public class AnnotationScanner {
         };
     }
 
-    public static Function wrapSpecialForm(final Method method, final String symbol) {
-        return new SpecialForm() {
+    public static SpecialForm wrapSpecialForm(final Method method, final String symbol) {
+        return new BuiltInSpecialForm() {
             @Override
             public Object eval(Interpreter interpreter, Context context, ListStruct args) throws EvaluationException {
                 try {

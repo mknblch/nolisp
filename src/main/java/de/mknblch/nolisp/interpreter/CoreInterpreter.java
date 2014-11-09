@@ -4,10 +4,7 @@ import de.mknblch.nolisp.ast.Atom;
 import de.mknblch.nolisp.ast.ListStruct;
 import de.mknblch.nolisp.ast.SymbolStruct;
 import de.mknblch.nolisp.ast.forms.Form;
-import de.mknblch.nolisp.ast.forms.Function;
 import de.mknblch.nolisp.ast.forms.SpecialForm;
-
-import static de.mknblch.nolisp.helper.TypeHelper.asFunction;
 
 /**
  * ListStruct Interpreter
@@ -26,10 +23,10 @@ public class CoreInterpreter implements Interpreter {
             case SYMBOL:
                 return retrieveFromContext((SymbolStruct) atom, context);
             case LIST:
-                return evalList((ListStruct) atom, context);
+                return functionCall((ListStruct) atom, context);
 
             // TODO review
-            case FORM:
+            case BUILTIN:
             case LAMBDA:
             case MACRO:
                 return obj;
@@ -56,7 +53,7 @@ public class CoreInterpreter implements Interpreter {
         return context.get(((SymbolStruct) atom).literal);
     }
 
-    private Object evalList(ListStruct list, Context context) throws Exception {
+    private Object functionCall(ListStruct list, Context context) throws Exception {
         // retrieve the function at list.car from context
         final Object func = eval(list.car(), context);
 
