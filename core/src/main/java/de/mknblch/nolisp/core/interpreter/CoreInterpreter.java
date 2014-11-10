@@ -1,10 +1,14 @@
 package de.mknblch.nolisp.core.interpreter;
 
+import de.mknblch.nolisp.core.annotations.FunctionDefinitionException;
 import de.mknblch.nolisp.core.ast.Atom;
 import de.mknblch.nolisp.core.ast.ListStruct;
 import de.mknblch.nolisp.core.ast.SymbolStruct;
 import de.mknblch.nolisp.core.ast.forms.Form;
 import de.mknblch.nolisp.core.ast.forms.SpecialForm;
+import de.mknblch.nolisp.core.parser.Parser;
+import de.mknblch.nolisp.core.parser.ParserException;
+import de.mknblch.nolisp.core.parser.lexer.LexerException;
 
 /**
  * ListStruct Interpreter
@@ -12,6 +16,25 @@ import de.mknblch.nolisp.core.ast.forms.SpecialForm;
  * @author mknblch
  */
 public class CoreInterpreter implements Interpreter {
+
+    private final Language language;
+    private final Parser parser;
+
+    public CoreInterpreter(Language language) {
+        this.language = language;
+        this.parser = new Parser();
+    }
+
+    @Override
+    public Language getLanguage() {
+        return language;
+    }
+
+    @Override
+    public Object eval(String code) throws Exception {
+        final Context context = new Context(language);
+        return evalEach(parser.parse(code), context);
+    }
 
     @Override
     public Object eval(Object obj, Context context) throws Exception {

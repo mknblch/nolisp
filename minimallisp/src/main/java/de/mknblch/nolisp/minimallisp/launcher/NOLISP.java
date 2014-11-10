@@ -18,7 +18,7 @@ import java.io.Console;
  */
 public class NOLISP {
 
-    private static Interpreter interpreter = new CoreInterpreter();
+
     private static Parser parser = new Parser();
 
     public static void main(String[] args) throws Exception {
@@ -36,6 +36,7 @@ public class NOLISP {
     }
 
     private static void eval(String code) throws Exception {
+        Interpreter interpreter = new CoreInterpreter(new MinimalLisp());
         Context context = makeContext();
         final ListStruct prg = parser.parse(code);
         System.out.printf(">%s%n", FormatHelper.formatPretty(interpreter.eval(prg, context)));
@@ -46,6 +47,7 @@ public class NOLISP {
     }
 
     private static void repl() throws FunctionDefinitionException, LexerException, ParserException {
+        Interpreter interpreter = new CoreInterpreter(new MinimalLisp());
         final Context context = makeContext();
         final Console console = System.console();
 

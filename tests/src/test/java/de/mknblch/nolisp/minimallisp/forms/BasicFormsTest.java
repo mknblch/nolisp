@@ -74,7 +74,7 @@ public class BasicFormsTest extends AbstractFormTest {
         final String code = "x";
         final Context env = new Context();
         env.bind("x", 3);
-        final List<Object> evaluated = eval(code, LOGGING_INTERPRETER, env);
+        final List<Object> evaluated = eval(code, loggingInterpreter, env);
         dump(evaluated);
         assertEquals(3, evaluated.get(0));
     }

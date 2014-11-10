@@ -77,7 +77,7 @@ public class ConditionFormsTest extends AbstractFormTest {
                         "(setq a (+ a 1)))";
 
         final long start = System.currentTimeMillis();
-        eval(code, AbstractFormTest.CORE_INTERPRETER, new Context(new MinimalLisp()));
+        eval(code, AbstractFormTest.coreInterpreter, new Context(new MinimalLisp()));
         final long end = System.currentTimeMillis();
 
         LOGGER.info("Done {} iterations in {}ms", count, (end - start));

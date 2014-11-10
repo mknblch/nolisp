@@ -1,11 +1,19 @@
 package de.mknblch.nolisp.core.interpreter;
 
+import de.mknblch.nolisp.core.annotations.FunctionDefinitionException;
 import de.mknblch.nolisp.core.ast.ListStruct;
+import de.mknblch.nolisp.core.parser.ParserException;
+import de.mknblch.nolisp.core.parser.lexer.LexerException;
 
 /**
  * @author mknblch
  */
 public interface Interpreter {
+
+    public Language getLanguage();
+
+    public Object eval (String code) throws Exception;
+
     /**
      * evaluate obj in context.
      * <ul>
