@@ -1,12 +1,12 @@
 package de.mknblch.nolisp.minimallisp.forms;
 
-import de.mknblch.nolisp.annotations.Constant;
-import de.mknblch.nolisp.annotations.Define;
-import de.mknblch.nolisp.ast.ListStruct;
-import de.mknblch.nolisp.helper.Expectations;
-import de.mknblch.nolisp.helper.TypeHelper;
-import de.mknblch.nolisp.interpreter.Context;
-import de.mknblch.nolisp.interpreter.EvaluationException;
+import de.mknblch.nolisp.core.annotations.Constant;
+import de.mknblch.nolisp.core.annotations.Define;
+import de.mknblch.nolisp.core.ast.ListStruct;
+import de.mknblch.nolisp.core.helper.Expectations;
+import de.mknblch.nolisp.core.helper.TypeHelper;
+import de.mknblch.nolisp.core.interpreter.EvaluationException;
+import de.mknblch.nolisp.core.interpreter.Context;
 
 /**
  * @author mknblch

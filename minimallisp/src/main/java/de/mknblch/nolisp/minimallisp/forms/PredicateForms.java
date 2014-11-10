@@ -1,14 +1,14 @@
 package de.mknblch.nolisp.minimallisp.forms;
 
-import de.mknblch.nolisp.annotations.Define;
-import de.mknblch.nolisp.annotations.Special;
-import de.mknblch.nolisp.ast.Atom;
-import de.mknblch.nolisp.ast.ListStruct;
-import de.mknblch.nolisp.ast.SymbolStruct;
-import de.mknblch.nolisp.ast.forms.LambdaForm;
-import de.mknblch.nolisp.ast.forms.MacroForm;
-import de.mknblch.nolisp.interpreter.Context;
-import de.mknblch.nolisp.interpreter.Interpreter;
+import de.mknblch.nolisp.core.annotations.Define;
+import de.mknblch.nolisp.core.annotations.Special;
+import de.mknblch.nolisp.core.ast.Atom;
+import de.mknblch.nolisp.core.ast.ListStruct;
+import de.mknblch.nolisp.core.ast.SymbolStruct;
+import de.mknblch.nolisp.core.ast.forms.LambdaForm;
+import de.mknblch.nolisp.core.ast.forms.MacroForm;
+import de.mknblch.nolisp.core.interpreter.Interpreter;
+import de.mknblch.nolisp.core.interpreter.Context;
 
 /**
  * @author mknblch

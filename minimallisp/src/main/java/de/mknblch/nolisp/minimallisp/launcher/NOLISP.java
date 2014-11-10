@@ -1,15 +1,15 @@
 package de.mknblch.nolisp.minimallisp.launcher;
 
-import de.mknblch.nolisp.annotations.FunctionDefinitionException;
-import de.mknblch.nolisp.ast.ListStruct;
-import de.mknblch.nolisp.helper.FormatHelper;
-import de.mknblch.nolisp.interpreter.Context;
-import de.mknblch.nolisp.interpreter.CoreInterpreter;
-import de.mknblch.nolisp.interpreter.Interpreter;
+import de.mknblch.nolisp.core.annotations.FunctionDefinitionException;
+import de.mknblch.nolisp.core.ast.ListStruct;
+import de.mknblch.nolisp.core.interpreter.CoreInterpreter;
+import de.mknblch.nolisp.core.interpreter.Interpreter;
+import de.mknblch.nolisp.core.parser.Parser;
+import de.mknblch.nolisp.core.parser.ParserException;
+import de.mknblch.nolisp.core.parser.lexer.LexerException;
+import de.mknblch.nolisp.core.helper.FormatHelper;
+import de.mknblch.nolisp.core.interpreter.Context;
 import de.mknblch.nolisp.minimallisp.MinimalLisp;
-import de.mknblch.nolisp.parser.Parser;
-import de.mknblch.nolisp.parser.ParserException;
-import de.mknblch.nolisp.parser.lexer.LexerException;
 
 import java.io.Console;
 

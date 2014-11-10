@@ -1,6 +1,6 @@
 package de.mknblch.nolisp.minimallisp.forms;
 
-import de.mknblch.nolisp.ast.forms.LambdaForm;
+import de.mknblch.nolisp.core.ast.forms.LambdaForm;
 import de.mknblch.nolisp.minimallisp.testHelper.AbstractFormTest;
 import org.junit.Test;
 

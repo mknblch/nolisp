@@ -1,8 +1,8 @@
 package de.mknblch.nolisp.minimallisp;
 
-import de.mknblch.nolisp.annotations.AnnotationScanner;
-import de.mknblch.nolisp.annotations.FunctionDefinitionException;
-import de.mknblch.nolisp.interpreter.Language;
+import de.mknblch.nolisp.core.annotations.AnnotationScanner;
+import de.mknblch.nolisp.core.annotations.FunctionDefinitionException;
+import de.mknblch.nolisp.core.interpreter.Language;
 import de.mknblch.nolisp.minimallisp.forms.*;
 
 import java.util.Map;

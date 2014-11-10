@@ -1,8 +1,8 @@
 package de.mknblch.nolisp.minimallisp.forms;
 
-import de.mknblch.nolisp.interpreter.Context;
-import de.mknblch.nolisp.interpreter.EvaluationException;
+import de.mknblch.nolisp.core.interpreter.EvaluationException;
 import de.mknblch.nolisp.minimallisp.testHelper.AbstractFormTest;
+import de.mknblch.nolisp.core.interpreter.Context;
 import org.junit.Assert;
 import org.junit.Test;
 

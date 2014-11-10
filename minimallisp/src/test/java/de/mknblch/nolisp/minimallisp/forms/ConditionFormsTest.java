@@ -1,8 +1,8 @@
 package de.mknblch.nolisp.minimallisp.forms;
 
-import de.mknblch.nolisp.interpreter.Context;
 import de.mknblch.nolisp.minimallisp.MinimalLisp;
 import de.mknblch.nolisp.minimallisp.testHelper.AbstractFormTest;
+import de.mknblch.nolisp.core.interpreter.Context;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
