@@ -8,14 +8,23 @@
     <groupId>de.mknblch.nolisp</groupId>
     <version>0.1.0-SNAPSHOT</version>
 
+    <packaging>pom</packaging>
     <name>NOLISP :: AGGREGATOR</name>
 
+    <profiles>
+        <profile>
+            <id>CORE</id>
+            <modules>
+                <module>core</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>MINIMALLISP</id>
+            <modules>
+                <module>minimallisp</module>
+            </modules>
+        </profile>
+    </profiles>
 
-
-    <modules>
-        <module>core</module>
-        <module>minilisp</module>
-    </modules>
-    <packaging>pom</packaging>
 
 </project>

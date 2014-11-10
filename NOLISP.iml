@@ -6,7 +6,7 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/.idea" />
       <excludeFolder url="file://$MODULE_DIR$/core" />
-      <excludeFolder url="file://$MODULE_DIR$/minilisp" />
+      <excludeFolder url="file://$MODULE_DIR$/minimallisp" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
