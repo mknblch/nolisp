@@ -20,8 +20,8 @@
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
-            <groupId>minilisp</groupId>
-            <artifactId>minilisp</artifactId>
+            <groupId>minimallisp</groupId>
+            <artifactId>minimallisp</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>

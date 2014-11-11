@@ -10,8 +10,8 @@
     <modelVersion>4.0.0</modelVersion>
     <version>${project.parent.version}</version>
 
-    <groupId>minilisp</groupId>
-    <artifactId>minilisp</artifactId>
+    <groupId>minimallisp</groupId>
+    <artifactId>minimallisp</artifactId>
     <name>MINIMALLISP</name>
 
     <dependencies>
