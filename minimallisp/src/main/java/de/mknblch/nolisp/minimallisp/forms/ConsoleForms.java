@@ -2,6 +2,7 @@ package de.mknblch.nolisp.minimallisp.forms;
 
 import de.mknblch.nolisp.core.annotations.Define;
 import de.mknblch.nolisp.core.ast.ListStruct;
+import de.mknblch.nolisp.core.helper.FormatHelper;
 import de.mknblch.nolisp.core.helper.TypeHelper;
 import de.mknblch.nolisp.core.interpreter.Context;
 
@@ -13,6 +14,18 @@ public class ConsoleForms {
     @Define("print")
     public static Object print(Context context, ListStruct args) throws Exception {
         System.out.print(args.car());
+        return null;
+    }
+
+    @Define("pprint")
+    public static Object pprint(Context context, ListStruct args) throws Exception {
+        System.out.print(FormatHelper.formatPretty(args.car()));
+        return null;
+    }
+
+    @Define("sprint")
+    public static Object sprint(Context context, ListStruct args) throws Exception {
+        System.out.print(FormatHelper.formatAsSExpression(args));
         return null;
     }
 
@@ -28,4 +41,6 @@ public class ConsoleForms {
         System.out.printf(format, objects);
         return null;
     }
+
+
 }

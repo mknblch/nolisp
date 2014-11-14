@@ -133,7 +133,7 @@ public class InspectorTest {
             public Object clone(Object element) throws Exception {
 
                 System.out.printf("cloning: %s%n", FormatHelper.formatPretty(element));
-                if (TypeHelper.isList(element) && 0 == ((ListStruct) element).car()) {
+                if (TypeHelper.isList(element) && ((Integer)0).equals (((ListStruct) element).car())) {
                     return ((ListStruct) element).cdar();
                 }
                 return element;
