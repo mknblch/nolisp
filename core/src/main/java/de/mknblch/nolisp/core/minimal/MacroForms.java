@@ -37,7 +37,7 @@ public class MacroForms {
         final CloneRule cloneRule = new CloneRule() {
             @Override
             public Object clone(Object element) throws Exception {
-                if (TypeHelper.isListWithSymbolHead(element, "comma")) { // == Parser.COMMA_STRUCT) {
+                if (TypeHelper.isListWithSymbolHead(element, "comma")) {
                     return interpreter.eval(((ListStruct) element).cdar(), parentContext);
                 }
                 return element;
