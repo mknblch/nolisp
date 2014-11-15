@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Iterator;
 
+import static org.junit.Assert.assertEquals;
+
 /**
  * @author mknblch
  */
@@ -17,14 +19,14 @@ public class ListStructTest {
 
     @Test
     public void testGetType() throws Exception {
-        Assert.assertEquals(Atom.Type.LIST, new ListStruct().getType());
+        assertEquals(Atom.Type.LIST, new ListStruct().getType());
     }
 
     @Test
     public void testLast() throws Exception {
         ListStruct listStruct = new ListStruct("1", "2", "3");
         LOGGER.debug("Testing '{}'", FormatHelper.formatAsSExpression(listStruct));
-        Assert.assertEquals("3", listStruct.last().car());
+        assertEquals("3", listStruct.last().car());
     }
 
     @Test
@@ -37,9 +39,9 @@ public class ListStructTest {
         LOGGER.debug("adding '3' to '{}'", FormatHelper.formatAsSExpression(listStruct));
         listStruct.add("3");
         LOGGER.debug("result : '{}'", FormatHelper.formatAsSExpression(listStruct));
-        Assert.assertEquals("1", listStruct.car());
-        Assert.assertEquals("2", listStruct.cdr().car());
-        Assert.assertEquals("3", listStruct.cdr().cdr().car());
+        assertEquals("1", listStruct.car());
+        assertEquals("2", listStruct.cdr().car());
+        assertEquals("3", listStruct.cdr().cdr().car());
         Assert.assertNull(listStruct.cdr().cdr().cdr());
     }
 
@@ -54,9 +56,9 @@ public class ListStructTest {
         listStruct.add("3");
         LOGGER.debug("result : '{}'", FormatHelper.formatAsSExpression(listStruct));
 
-        Assert.assertEquals("1", listStruct.get(0));
+        assertEquals("1", listStruct.get(0));
         Assert.assertNull(listStruct.get(1));
-        Assert.assertEquals("3", listStruct.get(2));
+        assertEquals("3", listStruct.get(2));
     }
 
     @Test
@@ -71,8 +73,8 @@ public class ListStructTest {
         LOGGER.debug("result : '{}'", FormatHelper.formatAsSExpression(listStruct));
 
         Assert.assertNull(listStruct.get(0));
-        Assert.assertEquals("1", listStruct.get(1));
-        Assert.assertEquals("3", listStruct.get(2));
+        assertEquals("1", listStruct.get(1));
+        assertEquals("3", listStruct.get(2));
     }
 
     @Test
@@ -91,9 +93,9 @@ public class ListStructTest {
         final ListStruct listStruct = new ListStruct("1", "2", "3");
         LOGGER.debug("Testing size of '{}'", FormatHelper.formatAsSExpression(listStruct));
 
-        Assert.assertEquals(3, listStruct.size());
-        Assert.assertEquals(2, listStruct.cdr().size());
-        Assert.assertEquals(1, listStruct.cdr().cdr().size());
+        assertEquals(3, listStruct.size());
+        assertEquals(2, listStruct.cdr().size());
+        assertEquals(1, listStruct.cdr().cdr().size());
     }
 
     @Test
@@ -104,11 +106,11 @@ public class ListStructTest {
         final Iterator iterator = listStruct.iterator();
 
         Assert.assertTrue(iterator.hasNext());
-        Assert.assertEquals("1", iterator.next());
+        assertEquals("1", iterator.next());
         Assert.assertTrue(iterator.hasNext());
-        Assert.assertEquals("2", iterator.next());
+        assertEquals("2", iterator.next());
         Assert.assertTrue(iterator.hasNext());
-        Assert.assertEquals("3", iterator.next());
+        assertEquals("3", iterator.next());
         Assert.assertFalse(iterator.hasNext());
     }
     @Test
@@ -127,9 +129,9 @@ public class ListStructTest {
         final ListStruct listStruct = new ListStruct("1", "2", "3");
         LOGGER.debug("Testing iterator for '{}'", FormatHelper.formatAsSExpression(listStruct));
 
-        Assert.assertEquals("1", listStruct.get(0));
-        Assert.assertEquals("2", listStruct.get(1));
-        Assert.assertEquals("3", listStruct.get(2));
+        assertEquals("1", listStruct.get(0));
+        assertEquals("2", listStruct.get(1));
+        assertEquals("3", listStruct.get(2));
     }
 
     @Test(expected = Exception.class)
@@ -152,9 +154,9 @@ public class ListStructTest {
     @Test
     public final void testListWithHeadNull() throws Exception {
         final ListStruct listStruct = new ListStruct(null, 1, 2);
-        Assert.assertEquals(null, listStruct.get(0));
-        Assert.assertEquals(1, listStruct.get(1));
-        Assert.assertEquals(2, listStruct.get(2));
+        assertEquals(null, listStruct.get(0));
+        assertEquals(1, listStruct.get(1));
+        assertEquals(2, listStruct.get(2));
     }
 
     @Test
@@ -163,18 +165,25 @@ public class ListStructTest {
         final ListStruct listStruct = new ListStruct(null, 1, 2);
         Iterator iterator = listStruct.iterator();
         Assert.assertTrue(iterator.hasNext());
-        Assert.assertEquals(null, iterator.next());
+        assertEquals(null, iterator.next());
         Assert.assertTrue(iterator.hasNext());
-        Assert.assertEquals(1, iterator.next());
+        assertEquals(1, iterator.next());
         Assert.assertTrue(iterator.hasNext());
-        Assert.assertEquals(2, iterator.next());
+        assertEquals(2, iterator.next());
     }
 
     @Test
     public final void testSizeForNulls() throws Exception {
 
         final ListStruct listStruct = new ListStruct(null, null, null);
-        Assert.assertEquals(3, listStruct.size());
+        assertEquals(3, listStruct.size());
 
+    }
+
+    @Test
+    public void testAttach() throws Exception {
+
+        final ListStruct listStruct = new ListStruct("a").attach(new ListStruct("b")).attach(new ListStruct("c"));
+        assertEquals("( a b c )", FormatHelper.formatPretty(listStruct));
     }
 }

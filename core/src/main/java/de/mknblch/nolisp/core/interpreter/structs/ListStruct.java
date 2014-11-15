@@ -152,12 +152,19 @@ public class ListStruct implements Atom, Iterable {
     }
 
     public ListStruct setCar(Object o) {
+        isEmptyList=false;
         car = o;
         return this;
     }
 
     public ListStruct setCdr(ListStruct cdr) {
         this.cdr = cdr;
+        return this;
+    }
+
+    public ListStruct attach(ListStruct cdr) {
+        isEmptyList = false;
+        last().setCdr(cdr);
         return this;
     }
 
@@ -172,7 +179,6 @@ public class ListStruct implements Atom, Iterable {
 
             @Override
             public boolean hasNext() {
-                if (isEmptyList) return false;
                 return null != head; // && null != head.car();
             }
 
@@ -181,6 +187,34 @@ public class ListStruct implements Atom, Iterable {
                 final Object car = head.car();
                 head = head.cdr();
                 return car;
+            }
+
+            @Override
+            public void remove() {
+                throw new RuntimeException("not implemented");
+            }
+        };
+    }
+
+    /**
+     * container iterator
+     */
+    public Iterator<ListStruct> containerIterator() {
+
+        return new Iterator<ListStruct>() {
+            private ListStruct head = ListStruct.this;
+
+            @Override
+            public boolean hasNext() {
+                if (isEmptyList) return false;
+                return null != head; // && null != head.car();
+            }
+
+            @Override
+            public ListStruct next() {
+                final ListStruct temp = head;
+                head = head.cdr();
+                return temp;
             }
 
             @Override

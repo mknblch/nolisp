@@ -13,6 +13,8 @@ import de.mknblch.nolisp.core.interpreter.EvaluationException;
 import de.mknblch.nolisp.core.interpreter.Interpreter;
 import de.mknblch.nolisp.core.interpreter.Context;
 
+import java.util.Iterator;
+
 /**
  * @author mknblch
  */
@@ -35,17 +37,19 @@ public class MacroForms {
             return car;
         }
 
-        final CloneRule cloneRule = new CloneRule() {
-            @Override
-            public Object clone(Object element) throws Exception {
-                if (TypeHelper.isListWithSymbolHead(element, "comma")) {
-                    return interpreter.eval(((ListStruct) element).cdar(), parentContext);
-                }
-                return element;
-            }
-        };
+//        final CloneRule cloneRule = new CloneRule() {
+//            @Override
+//            public Object clone(Object element) throws Exception {
+//                if (TypeHelper.isListWithSymbolHead(element, "comma")) {
+//                    return interpreter.eval(((ListStruct) element).cdar(), parentContext);
+//                }
+//                return element;
+//            }
+//        };
+//
+//        return Inspector.cloneTree(args, cloneRule).car();
 
-        return Inspector.cloneTree(args, cloneRule).car();
+        return replace(interpreter, parentContext, args);
     }
 
     @Special
@@ -59,5 +63,30 @@ public class MacroForms {
     public static Object splice(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
         // TODO implement
         throw new EvaluationException("Bad syntax. @ not inside a backquote environment.");
+    }
+
+    public static ListStruct replace (Interpreter interpreter, Context context, ListStruct tree) {
+
+        System.out.printf("cloning %s%n", FormatHelper.formatAtom(tree));
+        final ListStruct clone = new ListStruct();
+
+        final Iterator<ListStruct> iterator = tree.containerIterator();
+
+        for (; iterator.hasNext(); ) {
+            ListStruct next =  iterator.next();
+            final Object element = next.car();
+
+            System.out.printf("element %s%n", FormatHelper.formatAtom(element));
+
+            if (TypeHelper.isList(element)) {
+                final ListStruct listStruct = (ListStruct) element;
+                clone.attach(replace(interpreter, context, listStruct));
+            } else {
+                clone.attach(new ListStruct(element));
+            }
+        }
+
+        System.out.printf("result %s%n", FormatHelper.formatAtom(clone));
+        return clone;
     }
 }
