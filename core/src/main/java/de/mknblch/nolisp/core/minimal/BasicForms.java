@@ -4,7 +4,7 @@ import de.mknblch.nolisp.core.scanner.Define;
 import de.mknblch.nolisp.core.scanner.Special;
 import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
 import de.mknblch.nolisp.core.common.Expectations;
-import de.mknblch.nolisp.core.common.Converter;
+import de.mknblch.nolisp.core.common.TypeHelper;
 import de.mknblch.nolisp.core.interpreter.EvaluationException;
 import de.mknblch.nolisp.core.interpreter.Interpreter;
 import de.mknblch.nolisp.core.interpreter.Context;
@@ -20,7 +20,7 @@ public class BasicForms {
         ListStruct temp = args;
         Object value;
         do {
-            final String key = Converter.symbolLiteral(temp.car());
+            final String key = TypeHelper.symbolLiteral(temp.car());
             Expectations.expectCdr(temp);
             value = interpreter.eval(temp.cdr().car(), context);
             context.bindGlobal(key, value);
@@ -36,7 +36,7 @@ public class BasicForms {
         ListStruct temp = args;
         Object value;
         do {
-            final String key = Converter.symbolLiteral(temp.car());
+            final String key = TypeHelper.symbolLiteral(temp.car());
             Expectations.expectCdr(temp);
             value = interpreter.eval(temp.cdr().car(), context);
             context.bind(key, value);
@@ -67,7 +67,7 @@ public class BasicForms {
             final ListStruct pair = ((ListStruct) def);
             Expectations.expectCdr(pair);
             // bind to local and eval with local scope
-            localScope.bind(Converter.symbolLiteral(pair.car()), interpreter.eval(pair.cdr().car(), localScope));
+            localScope.bind(TypeHelper.symbolLiteral(pair.car()), interpreter.eval(pair.cdr().car(), localScope));
         }
         // evaluate cdar with newly build variable scope
         return interpreter.eval(args.cdr().car(), localScope);
@@ -85,7 +85,7 @@ public class BasicForms {
             final ListStruct pair = ((ListStruct) def);
             Expectations.expectCdr(pair);
             // bind to local but eval args with parent scope
-            localScope.bind(Converter.symbolLiteral(pair.car()), interpreter.eval(pair.cdr().car(), parentScope));
+            localScope.bind(TypeHelper.symbolLiteral(pair.car()), interpreter.eval(pair.cdr().car(), parentScope));
         }
         return interpreter.eval(args.cdr().car(), localScope);
     }
@@ -101,11 +101,11 @@ public class BasicForms {
     @Special
     @Define(value = "fori") // (fori ( start:INT end:INT [step:INT | 1] ) <form>)
     public static Object fori(Interpreter interpreter, Context context, ListStruct args) throws Exception {
-        final ListStruct loopArgs = Converter.asList(args.car());
-        final int from = Converter.asInt(interpreter.eval(loopArgs.car(), context)); // from
-        final int to = Converter.asInt(interpreter.eval(loopArgs.cdar(), context)); // to
+        final ListStruct loopArgs = TypeHelper.asList(args.car());
+        final int from = TypeHelper.asInt(interpreter.eval(loopArgs.car(), context)); // from
+        final int to = TypeHelper.asInt(interpreter.eval(loopArgs.cdar(), context)); // to
         final Object stepRaw = interpreter.eval(loopArgs.cddar(), context); // step if not null
-        final int step = Converter.isInt(stepRaw) ? Converter.asInt(stepRaw) : 1;
+        final int step = TypeHelper.isInt(stepRaw) ? TypeHelper.asInt(stepRaw) : 1;
         final Object form = args.cdar();
         Object result = null;
         for (int i = from; i < to; i += step) {

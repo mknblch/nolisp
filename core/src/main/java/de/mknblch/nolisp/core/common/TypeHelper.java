@@ -1,10 +1,10 @@
 package de.mknblch.nolisp.core.common;
 
+import de.mknblch.nolisp.core.interpreter.EvaluationException;
 import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
 import de.mknblch.nolisp.core.interpreter.structs.SymbolStruct;
 import de.mknblch.nolisp.core.interpreter.structs.forms.Form;
 import de.mknblch.nolisp.core.interpreter.structs.forms.LambdaForm;
-import de.mknblch.nolisp.core.interpreter.EvaluationException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * @author mknblch
  */
-public class Converter {
+public class TypeHelper {
 
     public static Integer asInt(Object o) throws EvaluationException {
         if (isInt(o)) {
@@ -63,6 +63,14 @@ public class Converter {
         Expectations.expectList(o);
         return (ListStruct) o;
     }
+
+    public static boolean isListWithSymbolHead(Object o, String symbolLiteral) {
+        if (!isList(o)) return false;
+        final Object head = ((ListStruct) o).car();
+        if (!isSymbol(head)) return false;
+        return symbolLiteral.equals(((SymbolStruct) head).literal);
+    }
+
 
     public static boolean isList(Object o) {
         return o instanceof ListStruct;

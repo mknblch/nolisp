@@ -4,7 +4,7 @@ import de.mknblch.nolisp.core.scanner.Constant;
 import de.mknblch.nolisp.core.scanner.Define;
 import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
 import de.mknblch.nolisp.core.common.Expectations;
-import de.mknblch.nolisp.core.common.Converter;
+import de.mknblch.nolisp.core.common.TypeHelper;
 import de.mknblch.nolisp.core.interpreter.EvaluationException;
 import de.mknblch.nolisp.core.interpreter.Context;
 
@@ -56,43 +56,43 @@ public class MathForms {
     public static Object pow(Context context, ListStruct args) throws Exception {
         Expectations.expectCdr(args);
         return Math.pow(
-                Converter.asReal(args.car()),
-                Converter.asReal(args.cdr().car()));
+                TypeHelper.asReal(args.car()),
+                TypeHelper.asReal(args.cdr().car()));
     }
 
     @Define({"log"})
     public static Object log(Context context, ListStruct args) throws Exception {
-        return Math.log(Converter.asReal(args.car()));
+        return Math.log(TypeHelper.asReal(args.car()));
     }
 
     @Define({"log10"})
     public static Object log10(Context context, ListStruct args) throws Exception {
-        return Math.log10(Converter.asReal(args.car()));
+        return Math.log10(TypeHelper.asReal(args.car()));
     }
 
     @Define({"ceil"})
     public static Object ceil(Context context, ListStruct args) throws Exception {
-        return Math.ceil(Converter.asReal(args.car()));
+        return Math.ceil(TypeHelper.asReal(args.car()));
     }
 
     @Define({"floor"})
     public static Object floor(Context context, ListStruct args) throws Exception {
-        return Math.floor(Converter.asReal(args.car()));
+        return Math.floor(TypeHelper.asReal(args.car()));
     }
 
     @Define({"sin"})
     public static Object sin(Context context, ListStruct args) throws Exception {
-        return Math.sin(Converter.asReal(args.car()));
+        return Math.sin(TypeHelper.asReal(args.car()));
     }
 
     @Define({"cos"})
     public static Object cos(Context context, ListStruct args) throws Exception {
-        return Math.cos(Converter.asReal(args.car()));
+        return Math.cos(TypeHelper.asReal(args.car()));
     }
 
     @Define({"tan"})
     public static Object tan(Context context, ListStruct args) throws Exception {
-        return Math.tan(Converter.asReal(args.car()));
+        return Math.tan(TypeHelper.asReal(args.car()));
     }
 
     private static Object mod(Object a, Object b) throws EvaluationException {

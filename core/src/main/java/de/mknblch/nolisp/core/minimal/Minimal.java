@@ -12,6 +12,7 @@ import java.util.Map;
 public class Minimal implements Language {
 
     private static final Class<?> [] clazzes = {
+            AccessorForms.class,
             ConditionForms.class,
             ConsoleForms.class,
             LambdaForms.class,

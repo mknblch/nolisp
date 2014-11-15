@@ -3,7 +3,7 @@ package de.mknblch.nolisp.core.minimal;
 import de.mknblch.nolisp.core.scanner.Define;
 import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
 import de.mknblch.nolisp.core.common.FormatHelper;
-import de.mknblch.nolisp.core.common.Converter;
+import de.mknblch.nolisp.core.common.TypeHelper;
 import de.mknblch.nolisp.core.interpreter.Context;
 
 /**
@@ -31,7 +31,7 @@ public class ConsoleForms {
 
     @Define("printf")
     public static Object printf(Context context, ListStruct args) throws Exception {
-        final String format = Converter.asString(args.car());
+        final String format = TypeHelper.asString(args.car());
         final int size = args.size() - 1;
         final Object[] objects = new Object[size];
         int count = 0;

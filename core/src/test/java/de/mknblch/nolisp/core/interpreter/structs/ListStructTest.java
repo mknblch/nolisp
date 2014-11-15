@@ -145,8 +145,8 @@ public class ListStructTest {
 
         final ListStruct listStruct = new ListStruct("1", "2", "3");
         LOGGER.debug("Testing iterator for '{}'", FormatHelper.formatAsSExpression(listStruct));
-        Assert.assertNotNull(listStruct.getOrNull(2));
-        Assert.assertNull(listStruct.getOrNull(3));
+        Assert.assertNotNull(listStruct.nth(2));
+        Assert.assertNull(listStruct.nth(3));
     }
 
     @Test

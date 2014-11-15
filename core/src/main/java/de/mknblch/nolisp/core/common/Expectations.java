@@ -52,7 +52,7 @@ public class Expectations {
     }
 
     public static void expectQuote(Object o) throws EvaluationException {
-        if (!Converter.isSymbolWithLiteral(o, "quote")) {
+        if (!TypeHelper.isSymbolWithLiteral(o, "quote")) {
             throw new EvaluationException(
                     String.format("Expected QUOTE:SYM but was: %s", FormatHelper.formatAtom(o)));
         }
@@ -64,7 +64,7 @@ public class Expectations {
                     String.format("Expected QUOTED LIST but was: %s", FormatHelper.formatAtom(o)));
         }
         final ListStruct q = (ListStruct) o;
-        if (!Converter.isSymbolWithLiteral(q.car(), "quote")) {
+        if (!TypeHelper.isSymbolWithLiteral(q.car(), "quote")) {
             throw new EvaluationException(
                     String.format("Expected QUOTED LIST but was: %s", FormatHelper.formatAtom(o)));
         }

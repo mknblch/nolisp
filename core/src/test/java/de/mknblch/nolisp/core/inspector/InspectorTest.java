@@ -6,7 +6,7 @@ import de.mknblch.nolisp.core.inspection.InspectionRuleAdapter;
 import de.mknblch.nolisp.core.inspection.Inspector;
 import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
 import de.mknblch.nolisp.core.common.FormatHelper;
-import de.mknblch.nolisp.core.common.Converter;
+import de.mknblch.nolisp.core.common.TypeHelper;
 import de.mknblch.nolisp.core.interpreter.EvaluationException;
 import de.mknblch.nolisp.core.interpreter.parser.Parser;
 import org.junit.Assert;
@@ -36,7 +36,7 @@ public class InspectorTest {
 
                 if (null == car) {
                     listElement.setCar(new ListStruct(++c));
-                } else if(!Converter.isList(car)) {
+                } else if(!TypeHelper.isList(car)) {
                     final Integer o = (Integer) listElement.car();
                     listElement.setCar(new ListStruct(c += o));
                 }
@@ -60,11 +60,11 @@ public class InspectorTest {
             @Override
             public void inspect(ListStruct container, Object element, int depth) {
                 LOGGER.trace(FormatHelper.formatPretty(container));
-                if(Converter.isList(element)) {
+                if(TypeHelper.isList(element)) {
                     try {
-                        final ListStruct listStruct = Converter.asList(element);
+                        final ListStruct listStruct = TypeHelper.asList(element);
                         final Object car = listStruct.car();
-                        final Integer n = Converter.asInt(car);
+                        final Integer n = TypeHelper.asInt(car);
                         if(n % 3 == 0) container.setCar("..");
                     } catch (EvaluationException e) { }
 
@@ -92,7 +92,7 @@ public class InspectorTest {
             public void inspect(ListStruct container, Object element, int depth) {
                 LOGGER.trace(FormatHelper.formatPretty(container));
 
-                if(!Converter.isList(element)) {
+                if(!TypeHelper.isList(element)) {
                     final Integer n = (Integer) element;
                     container.setCar(sum += n);
                 }
@@ -116,7 +116,7 @@ public class InspectorTest {
             @Override
             public void inspect(ListStruct container, Object element, int depth) {
 
-                if(Converter.isInt(element)) container.setCar(depth);
+                if(TypeHelper.isInt(element)) container.setCar(depth);
             }
         };
 
@@ -138,7 +138,7 @@ public class InspectorTest {
             public Object clone(Object element) throws Exception {
 
                 System.out.printf("cloning: %s%n", FormatHelper.formatPretty(element));
-                if (Converter.isList(element) && ((Integer)0).equals(((ListStruct) element).car())) {
+                if (TypeHelper.isList(element) && ((Integer)0).equals(((ListStruct) element).car())) {
                     return ((ListStruct) element).cdar();
                 }
                 return element;

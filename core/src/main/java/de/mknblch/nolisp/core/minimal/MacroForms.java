@@ -5,7 +5,7 @@ import de.mknblch.nolisp.core.scanner.Special;
 import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
 import de.mknblch.nolisp.core.interpreter.structs.forms.MacroForm;
 import de.mknblch.nolisp.core.common.Expectations;
-import de.mknblch.nolisp.core.common.Converter;
+import de.mknblch.nolisp.core.common.TypeHelper;
 import de.mknblch.nolisp.core.inspection.CloneRule;
 import de.mknblch.nolisp.core.inspection.Inspector;
 import de.mknblch.nolisp.core.interpreter.EvaluationException;
@@ -22,7 +22,7 @@ public class MacroForms {
     public static Object defmacro(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
         Expectations.expectCdr(args);
         final Object symbol = args.car();
-        parentContext.bind(Converter.symbolLiteral(symbol), new MacroForm(Converter.symbolList(args.cdar()), args.cddr()));
+        parentContext.bind(TypeHelper.symbolLiteral(symbol), new MacroForm(TypeHelper.symbolList(args.cdar()), args.cddr()));
         return symbol;
     }
 
@@ -30,14 +30,14 @@ public class MacroForms {
     @Define("backquote")
     public static Object backquote(final Interpreter interpreter, final Context parentContext, ListStruct args) throws Exception {
         final Object car = args.car();
-        if (!Converter.isList(car)) {
+        if (!TypeHelper.isList(car)) {
             return car;
         }
 
         final CloneRule cloneRule = new CloneRule() {
             @Override
             public Object clone(Object element) throws Exception {
-                if (Converter.isList(element) && Converter.isSymbolWithLiteral(((ListStruct) element).car(), "comma")) { // == Parser.COMMA_STRUCT) {
+                if (TypeHelper.isListWithSymbolHead(element, "comma")) { // == Parser.COMMA_STRUCT) {
                     return interpreter.eval(((ListStruct) element).cdar(), parentContext);
                 }
                 return element;
