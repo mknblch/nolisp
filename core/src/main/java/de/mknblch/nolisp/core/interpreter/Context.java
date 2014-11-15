@@ -1,6 +1,6 @@
 package de.mknblch.nolisp.core.interpreter;
 
-import de.mknblch.nolisp.core.annotations.FunctionDefinitionException;
+import de.mknblch.nolisp.core.scanner.FunctionDefinitionException;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -23,7 +23,7 @@ public class Context {
     /**
      * construct empty global environment.
      */
-    public Context() { // TODO remove ?
+    public Context() { // TODO remove ? used only in tests
         global = true;
         this.parent = null;
         this.map = new HashMap<>();
@@ -95,8 +95,7 @@ public class Context {
 
     /**
      * get value. if the key is found in local map it's value is used. if not
-     * the element will be retrieved from global environments. if no global
-     * env is specified, null is returned.
+     * the element will be retrieved from global environments.
      */
     public Object get(Object key) throws EvaluationException {
         if(map.containsKey(key)) {
@@ -150,11 +149,11 @@ public class Context {
     }
 
     /**
-         * get union from local and all global keySets.
-         */
+     * get union from local and all global keySets.
+     */
     public Set<String> keySetGlobal() {
         if (null != parent) {
-            return union(keySetLocal(), parent.keySetLocal());
+            return union(keySetLocal(), parent.keySetGlobal());
         }
         return map.keySet();
     }

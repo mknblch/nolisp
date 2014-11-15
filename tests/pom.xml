@@ -11,7 +11,7 @@
     <version>${project.parent.version}</version>
 
     <artifactId>tests</artifactId>
-    <name>TEST</name>
+    <name>INTEGRATION TEST</name>
 
     <dependencies>
         <dependency>

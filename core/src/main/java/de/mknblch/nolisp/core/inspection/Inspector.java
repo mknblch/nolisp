@@ -1,7 +1,7 @@
 package de.mknblch.nolisp.core.inspection;
 
-import de.mknblch.nolisp.core.ast.ListStruct;
-import de.mknblch.nolisp.core.helper.TypeHelper;
+import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
+import de.mknblch.nolisp.core.common.Converter;
 
 /**
  * @author mknblch
@@ -22,7 +22,7 @@ public class Inspector {
         ListStruct temp = tree;
         while(temp != null) {
             final Object car = temp.car();
-            if(TypeHelper.isList(car) && rule.follow(temp, (ListStruct) car, depth)) {
+            if(Converter.isList(car) && rule.follow(temp, (ListStruct) car, depth)) {
                 if(rule.inspectSublists()) rule.inspect(temp, temp.car(), depth);
                 inspectTree((ListStruct) car, rule, depth + 1);
             } else {
@@ -37,7 +37,7 @@ public class Inspector {
         ListStruct temp = tree;
         while(temp != null) {
             final Object car = temp.car();
-            if(TypeHelper.isList(car)) {
+            if(Converter.isList(car)) {
                 clone.add(rule.clone(cloneTree((ListStruct) car, rule)));
             } else {
                 clone.add(rule.clone(temp.car()));

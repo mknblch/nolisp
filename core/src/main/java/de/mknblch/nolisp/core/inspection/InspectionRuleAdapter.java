@@ -1,6 +1,6 @@
 package de.mknblch.nolisp.core.inspection;
 
-import de.mknblch.nolisp.core.ast.ListStruct;
+import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
 
 /**
  * @author mknblch

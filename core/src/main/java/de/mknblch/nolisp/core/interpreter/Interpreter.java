@@ -1,9 +1,6 @@
 package de.mknblch.nolisp.core.interpreter;
 
-import de.mknblch.nolisp.core.annotations.FunctionDefinitionException;
-import de.mknblch.nolisp.core.ast.ListStruct;
-import de.mknblch.nolisp.core.parser.ParserException;
-import de.mknblch.nolisp.core.parser.lexer.LexerException;
+import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
 
 /**
  * @author mknblch

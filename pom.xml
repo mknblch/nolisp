@@ -20,13 +20,7 @@
             </modules>
         </profile>
         <profile>
-            <id>MINIMALLISP</id>
-            <modules>
-                <module>minimallisp</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>TEST</id>
+            <id>INTEGRATION TEST</id>
             <modules>
                 <module>tests</module>
             </modules>
@@ -45,7 +39,10 @@
                     <target>1.7</target>
                 </configuration>
             </plugin>
+
+
         </plugins>
     </build>
+
 
 </project>
