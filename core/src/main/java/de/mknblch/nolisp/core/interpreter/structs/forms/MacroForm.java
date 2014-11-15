@@ -23,13 +23,20 @@ public class MacroForm implements SpecialForm {
         this.forms = forms;
     }
 
-    @Override // args=(arg1 arg2 ...)
+    @Override
     public Object eval(Interpreter interpreter, Context context, ListStruct args) throws Exception {
         bind(context, formSymbols, args);
-        Object ret = null;
+
+        // expand the macro to it's actual form
+        final ListStruct actual = new ListStruct();
         for (Object o : forms) {
-            final Object eval = interpreter.eval(o, context); //
-            ret = interpreter.eval(eval, context);
+            actual.add(interpreter.eval(o, context)); // TODO review: correct context?
+        }
+
+        // evaluate the form
+        Object ret = null;
+        for (Object o : actual) {
+            ret = interpreter.eval(o, context);
         }
         return ret;
     }
