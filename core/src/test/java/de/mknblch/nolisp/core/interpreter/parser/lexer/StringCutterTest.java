@@ -13,28 +13,29 @@ import static org.junit.Assert.assertEquals;
 public class StringCutterTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StringCutterTest.class);
-    
+    public static final char[] SPACE = new char[]{' '};
+
     @Test
     public void testRunner() throws Exception {
         final StringCutter stringCutter = new StringCutter("a ab 1 23");
-        stringCutter.until(new char[]{' '});
+        stringCutter.until(SPACE);
         assertToken(stringCutter, "a");
-        stringCutter.skip(new char[]{' '});
+        stringCutter.skip(SPACE);
         stringCutter.sync();
 
-        stringCutter.until(new char[]{' '});
+        stringCutter.until(SPACE);
         assertToken(stringCutter, "ab");
-        stringCutter.skip(new char[]{' '});
+        stringCutter.skip(SPACE);
         stringCutter.sync();
 
-        stringCutter.until(new char[]{' '});
+        stringCutter.until(SPACE);
         assertToken(stringCutter, "1");
-        stringCutter.skip(new char[]{' '});
+        stringCutter.skip(SPACE);
         stringCutter.sync();
 
-        stringCutter.until(new char[]{' '});
+        stringCutter.until(SPACE);
         assertToken(stringCutter, "23");
-        stringCutter.skip(new char[]{' '});
+        stringCutter.skip(SPACE);
         stringCutter.sync();
 
     }

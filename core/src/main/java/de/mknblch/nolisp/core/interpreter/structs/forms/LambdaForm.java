@@ -13,21 +13,22 @@ import java.util.List;
  */
 public class LambdaForm implements Form {
     private final Interpreter interpreter;
-    private final Context definitionScopeContext;
     private final List<String> symbols;
     private final Object form;
 
-    public LambdaForm(Interpreter interpreter, Context definitionScopeContext, List<String> formSymbols, Object form) {
+    public LambdaForm(Interpreter interpreter, List<String> formSymbols, Object form) {
         this.interpreter = interpreter;
-        this.definitionScopeContext = definitionScopeContext;
         this.symbols = formSymbols;
         this.form = form;
     }
 
     @Override
-    public Object eval(Context localContext, ListStruct args) throws Exception {
+    public Object eval(Context context, ListStruct args) throws Exception {
+        final Context localContext = context.derive(); // TODO move to definition scope ??
         // bind args to context
-        bind(interpreter, definitionScopeContext, localContext, symbols, args);
+        bind(interpreter, context, localContext, symbols, args);
+        // bind this
+        localContext.bind("this", this);
         // eval with local
         return interpreter.eval(form, localContext);
     }

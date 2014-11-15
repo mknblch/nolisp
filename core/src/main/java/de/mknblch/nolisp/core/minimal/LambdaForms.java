@@ -21,7 +21,7 @@ public class LambdaForms {
     @Define("lambda") // ((lambda (a) (+ a 1)) 1) => 2
     public static Object lambda(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
         Expectations.expectCdr(args);
-        return new LambdaForm(interpreter, parentContext.derive(), Converter.symbolList(args.car()), args.cdar());
+        return new LambdaForm(interpreter, Converter.symbolList(args.car()), args.cdar());
     }
 
     @Special
@@ -30,7 +30,7 @@ public class LambdaForms {
         Expectations.expectCdr(args);
         final String functionName = Converter.symbolLiteral(args.car());
         final List<String> symbols = Converter.symbolList(args.cdar());
-        final LambdaForm lambda = new LambdaForm(interpreter, parentContext, symbols, args.cddar());
+        final LambdaForm lambda = new LambdaForm(interpreter, symbols, args.cddar());
         parentContext.bindGlobal(functionName, lambda);
         return lambda;
     }

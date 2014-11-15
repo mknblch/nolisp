@@ -60,9 +60,6 @@ public class Lexer extends StringCutter {
                 return new Token(Token.Type.LINE_COMMENT, comment, comment);
             case '"':
                 final String str = tokenizeString();
-                if (null == str) {
-                    throw new LexerException(String.format("Parsing STRING failed - arg was null", str));
-                }
                 return new Token(Token.Type.CONST, str, str);
             default:
                 return decideConstType(tokenizeConst());
