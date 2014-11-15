@@ -58,6 +58,30 @@ public class ParserTest {
     }
 
     @Test
+    public void testBackQuotedList() throws Exception {
+        String code = "`(1 2 3) x";
+        evalAssertASTEquals("( ( backquote ( 1 2 3 ) ) x )", code);
+    }
+
+    @Test
+    public void testBackQuotedSplicedList() throws Exception {
+        String code = "`(1 @(a b) 3) x";
+        evalAssertASTEquals("( ( backquote ( 1 ( splice ( a b ) ) 3 ) ) x )", code);
+    }
+
+    @Test
+    public void testBackQuotedCommaList() throws Exception {
+        String code = "`(,1 2 3) x";
+        evalAssertASTEquals("( ( backquote ( ( comma 1 ) 2 3 ) ) x )", code);
+    }
+
+    @Test
+    public void testBackQuotedSpliceList() throws Exception {
+        String code = "`(,1 2 3) x";
+        evalAssertASTEquals("( ( backquote ( ( comma 1 ) 2 3 ) ) x )", code);
+    }
+
+    @Test
     public void testQuotedList() throws Exception {
         String code = "'(1 2 3) x";
         evalAssertASTEquals("( ( quote ( 1 2 3 ) ) x )", code);
