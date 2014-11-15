@@ -24,7 +24,7 @@ public class MacroFormsTest extends AbstractFormTest {
                 "x y " +
                 "(setq x 0 y 0)" +
                 "x y " +
-                "(s2 x y 2) " +
+                "(s2 x y (+ 1 1)) " +
                 "x y"
         );
         AbstractFormTest.assertASTEquals("L[ s2 0 1 1 1 0 0 0 2 2 2 ]", result);
@@ -54,9 +54,9 @@ public class MacroFormsTest extends AbstractFormTest {
     @Test
     public void testDefmacroBQ() throws Exception {
 
-        final List<Object> result = eval("(defmacro aif (test then else) `(if ,test ,then ,else)) (aif 1 (setq y 0 x 1) (setq y 1 x 0)) x y");
+        final List<Object> result = eval("(defmacro aif (test then else) `(if ,test ,then ,else)) (aif 1 (setq y 0 x 1) (setq y 1 x 0)) x y (aif false (setq y 0 x 1) (setq y 1 x 0)) x y");
 
-        AbstractFormTest.assertASTEquals("L[ aif 1 1 0 ]", result);
+        AbstractFormTest.assertASTEquals("L[ aif 1 1 0 0 0 1 ]", result);
 
     }
 

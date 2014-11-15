@@ -28,9 +28,8 @@ public class MacroForm implements SpecialForm {
         bind(context, formSymbols, args);
         Object ret = null;
         for (Object o : forms) {
-            final Object eval = interpreter.eval(o, context);
+            final Object eval = interpreter.eval(o, context); //
             ret = interpreter.eval(eval, context);
-
         }
         return ret;
     }
@@ -56,7 +55,7 @@ public class MacroForm implements SpecialForm {
         for (int i = 0; i < symbols.size(); i++) {
             if(null == temp) {
                 throw new EvaluationException(String.format(
-                        "procedure expects %d arguments, given %d", symbols.size(), i));
+                        "macro expects %d arguments, given %d", symbols.size(), i));
             }
             context.bind(symbols.get(i), temp.car());
             temp = temp.cdr();
