@@ -163,9 +163,8 @@ public class ListStruct implements Atom, Iterable {
         return i;
     }
 
-    public ListStruct setCar(Object o) {
+    public void setCar(Object o) {
         car = o;
-        return this;
     }
 
     /**
