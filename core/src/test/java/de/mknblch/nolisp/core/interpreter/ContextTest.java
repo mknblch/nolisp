@@ -27,11 +27,7 @@ public class ContextTest {
         public Map<String, Object> getFunctions() {
             return new HashMap<>();
         }
-
-        @Override
-        public void include(Language language) {}
     };
-
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ContextTest.class);
 

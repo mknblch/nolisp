@@ -48,13 +48,6 @@ public class BasicFormsTest extends AbstractFormTest {
         assertEquals(2.0, evaluated.get(0));
     }
 
-//    @Test
-//    public void testQuote() throws Exception {
-//        final String code = "'a";
-//        final List<Object> evaluated = eval(code);
-//        dump(evaluated);
-//    }
-
     @Test
     public void testComment() throws Exception {
         final String code = ";hallo\n'a";

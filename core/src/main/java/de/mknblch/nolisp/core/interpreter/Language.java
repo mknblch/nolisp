@@ -11,5 +11,4 @@ public interface Language {
 
     public Map<String, Object> getFunctions();
 
-    public void include(Language language);
 }

@@ -44,9 +44,4 @@ public class Minimal implements Language {
         return functions;
     }
 
-    @Override
-    public void include(Language language) {
-        constants.putAll(language.getConstants());
-        functions.putAll(language.getFunctions());
-    }
 }
