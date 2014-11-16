@@ -66,7 +66,7 @@ public class ParserTest {
     @Test
     public void testBackQuotedSplicedList() throws Exception {
         String code = "`(1 @(a b) 3) x";
-        evalAssertASTEquals("( ( backquote ( 1 ( splice ( a b ) ) 3 ) ) x )", code);
+        evalAssertASTEquals("( ( backquote ( 1 a b 3 ) ) x )", code);
     }
 
     @Test
