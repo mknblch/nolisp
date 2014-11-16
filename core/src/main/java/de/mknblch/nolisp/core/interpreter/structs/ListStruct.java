@@ -180,7 +180,7 @@ public class ListStruct implements Atom, Iterable {
             @Override
             public boolean hasNext() {
                 if (isEmptyList) return false;
-                return null != head; // && null != head.car();
+                return null != head;
             }
 
             @Override
@@ -207,7 +207,7 @@ public class ListStruct implements Atom, Iterable {
 
             @Override
             public boolean hasNext() {
-                return null != head; // && null != head.car();
+                return null != head;
             }
 
             @Override

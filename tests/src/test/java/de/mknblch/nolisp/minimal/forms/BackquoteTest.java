@@ -1,6 +1,7 @@
 package de.mknblch.nolisp.minimal.forms;
 
 import de.mknblch.nolisp.minimal.testHelper.AbstractFormTest;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
@@ -77,9 +78,25 @@ public class BackquoteTest extends AbstractFormTest {
 
     @Test
     public void testSplice() throws Exception {
-        final String code = "`(a @(b c))";
+        final String code = "(+ @(21 21))";
         final List<Object> evaluated = eval(code);
-        AbstractFormTest.assertASTEquals("L[ ( a b c ) ]", evaluated);
+        AbstractFormTest.assertASTEquals("L[ 42 ]", evaluated);
+    }
+
+    @Ignore
+    @Test
+    public void testSpliceEval() throws Exception {
+        final String code = "`(a @(,(+ 1 1) c))";
+        final List<Object> evaluated = eval(code);
+        AbstractFormTest.assertASTEquals("L[ ( a 2 c ) ]", evaluated);
+    }
+
+    @Ignore
+    @Test
+    public void testSpliceEvalComplex() throws Exception {
+        final String code = "`(1 ,(+ 1 1) @(3 ,(+ @(2 2))))";
+        final List<Object> evaluated = eval(code);
+        AbstractFormTest.assertASTEquals("L[ ( a 2 c ) ]", evaluated);
     }
 
 }

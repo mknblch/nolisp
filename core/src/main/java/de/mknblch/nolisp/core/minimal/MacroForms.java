@@ -37,19 +37,19 @@ public class MacroForms {
             return car;
         }
 
-//        final CloneRule cloneRule = new CloneRule() {
-//            @Override
-//            public Object clone(Object element) throws Exception {
-//                if (TypeHelper.isListWithSymbolHead(element, "comma")) {
-//                    return interpreter.eval(((ListStruct) element).cdar(), parentContext);
-//                }
-//                return element;
-//            }
-//        };
-//
-//        return Inspector.cloneTree(args, cloneRule).car();
+        final CloneRule cloneRule = new CloneRule() {
+            @Override
+            public Object clone(Object element) throws Exception {
+                if (TypeHelper.isListWithSymbolHead(element, "comma")) {
+                    return interpreter.eval(((ListStruct) element).cdar(), parentContext);
+                }
+                return element;
+            }
+        };
 
-        return replace(interpreter, parentContext, args).car();
+        return Inspector.cloneTree(args, cloneRule).car();
+
+//        return replace(interpreter, parentContext, args).car();
     }
 
     @Special
@@ -65,45 +65,53 @@ public class MacroForms {
         throw new EvaluationException("Bad syntax. @ not inside a backquote environment.");
     }
 
-    public static ListStruct replace (Interpreter interpreter, Context context, ListStruct tree) throws Exception {
-
-        System.out.printf("cloning %s%n", FormatHelper.formatAtom(tree));
-        final ListStruct clone = new ListStruct();
-
-        final Iterator<ListStruct> iterator = tree.containerIterator();
-
-        for (; iterator.hasNext(); ) {
-            ListStruct next =  iterator.next();
-            final Object element = next.car();
-
-            System.out.printf("element %s%n", FormatHelper.formatAtom(element));
-
-            if (TypeHelper.isList(element)) {
-                final ListStruct listStruct = (ListStruct) element;
-
-                if (TypeHelper.isListWithSymbolHead(listStruct, "comma")) {
-                    clone.attach(new ListStruct(interpreter.eval(listStruct.cdar(), context)));
-                } else if (TypeHelper.isListWithSymbolHead(listStruct, "splice")) {
-
-                    System.out.printf("splicing %s into %s%n", FormatHelper.formatAtom(listStruct), FormatHelper.formatAtom(clone));
-                    final ListStruct temp = (ListStruct) listStruct.cdar();
-
-                    for (Object o : temp) {
-                        clone.add(o);
-                    }
-
+//    public static ListStruct replace (Interpreter interpreter, Context context, Object obj) throws Exception {
+//
+//        if(!TypeHelper.isList(obj)) {
+//            return new ListStruct(obj);
+//        }
+//
+//        ListStruct tree = (ListStruct) obj;
+//
+//        System.out.printf("cloning %s%n", FormatHelper.formatAtom(tree));
+//        final ListStruct clone = new ListStruct();
+//
+//        final Iterator<ListStruct> iterator = tree.containerIterator();
+//
+//        for (; iterator.hasNext(); ) {
+//            ListStruct next =  iterator.next();
+//            final Object element = next.car();
+//
+//            System.out.printf("element %s%n", FormatHelper.formatAtom(element));
+//
+//            if (TypeHelper.isList(element)) {
+//                final ListStruct listStruct = (ListStruct) element;
+//
+//                if (TypeHelper.isListWithSymbolHead(listStruct, "comma")) {
 //                    clone.attach(new ListStruct(interpreter.eval(listStruct.cdar(), context)));
-
-
-                } else {
-                    clone.attach(new ListStruct(replace(interpreter, context, listStruct)));
-                }
-            } else {
-                clone.attach(new ListStruct(element));
-            }
-        }
-
-        System.out.printf("result %s%n", FormatHelper.formatAtom(clone));
-        return clone.cdr();
-    }
+//                } else if (TypeHelper.isListWithSymbolHead(listStruct, "splice")) {
+//
+//                    System.out.printf("splicing %s into %s%n", FormatHelper.formatAtom(listStruct), FormatHelper.formatAtom(clone));
+//                    final ListStruct toSplice = TypeHelper.asList(listStruct.cdar());
+//
+//
+//
+//                    for (Object o : toSplice) {
+//                        clone.attach(replace(interpreter, context, o));
+//                    }
+//
+////                    clone.attach(new ListStruct(interpreter.eval(listStruct.cdar(), context)));
+//
+//
+//                } else {
+//                    clone.attach(new ListStruct(replace(interpreter, context, listStruct)));
+//                }
+//            } else {
+//                clone.attach(new ListStruct(element));
+//            }
+//        }
+//
+//        System.out.printf("result %s%n", FormatHelper.formatAtom(clone));
+//        return clone.cdr();
+//    }
 }

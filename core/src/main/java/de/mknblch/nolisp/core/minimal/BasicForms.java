@@ -61,9 +61,9 @@ public class BasicForms {
     @Define("let*") // (let* ((a 1) (b a)) b) => 1
     public static Object letAsterisk(Interpreter interpreter, Context parentScope, ListStruct args) throws Exception {
         final Context localScope = parentScope.derive();
-        // car must be list
+        // car must be list // TODO expectations
         for (Object def : (ListStruct) args.car()) {
-            // each element must be a value-value pair.
+            // each element must be a key-value pair (2 element list).
             final ListStruct pair = ((ListStruct) def);
             Expectations.expectCdr(pair);
             // bind to local and eval with local scope
