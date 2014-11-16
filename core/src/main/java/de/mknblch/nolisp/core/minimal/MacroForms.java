@@ -49,7 +49,7 @@ public class MacroForms {
 //
 //        return Inspector.cloneTree(args, cloneRule).car();
 
-        return replace(interpreter, parentContext, args);
+        return replace(interpreter, parentContext, args).car();
     }
 
     @Special
@@ -65,7 +65,7 @@ public class MacroForms {
         throw new EvaluationException("Bad syntax. @ not inside a backquote environment.");
     }
 
-    public static ListStruct replace (Interpreter interpreter, Context context, ListStruct tree) {
+    public static ListStruct replace (Interpreter interpreter, Context context, ListStruct tree) throws Exception {
 
         System.out.printf("cloning %s%n", FormatHelper.formatAtom(tree));
         final ListStruct clone = new ListStruct();
@@ -80,13 +80,30 @@ public class MacroForms {
 
             if (TypeHelper.isList(element)) {
                 final ListStruct listStruct = (ListStruct) element;
-                clone.attach(replace(interpreter, context, listStruct));
+
+                if (TypeHelper.isListWithSymbolHead(listStruct, "comma")) {
+                    clone.attach(new ListStruct(interpreter.eval(listStruct.cdar(), context)));
+                } else if (TypeHelper.isListWithSymbolHead(listStruct, "splice")) {
+
+                    System.out.printf("splicing %s%n", FormatHelper.formatAtom(listStruct));
+                    final ListStruct temp = listStruct.cdr();
+
+                    for (Object o : temp) {
+                        clone.add(o);
+                    }
+
+//                    clone.attach(new ListStruct(interpreter.eval(listStruct.cdar(), context)));
+
+
+                } else {
+                    clone.attach(new ListStruct(replace(interpreter, context, listStruct)));
+                }
             } else {
                 clone.attach(new ListStruct(element));
             }
         }
 
         System.out.printf("result %s%n", FormatHelper.formatAtom(clone));
-        return clone;
+        return clone.cdr();
     }
 }
