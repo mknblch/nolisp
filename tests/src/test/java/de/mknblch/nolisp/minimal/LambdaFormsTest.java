@@ -1,4 +1,4 @@
-package de.mknblch.nolisp.minimal.forms;
+package de.mknblch.nolisp.minimal;
 
 import de.mknblch.nolisp.core.interpreter.structs.forms.LambdaForm;
 import de.mknblch.nolisp.minimal.testHelper.AbstractFormTest;

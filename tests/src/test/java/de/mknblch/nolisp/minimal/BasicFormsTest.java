@@ -1,4 +1,4 @@
-package de.mknblch.nolisp.minimal.forms;
+package de.mknblch.nolisp.minimal;
 
 import de.mknblch.nolisp.core.interpreter.EvaluationException;
 import de.mknblch.nolisp.core.interpreter.Language;

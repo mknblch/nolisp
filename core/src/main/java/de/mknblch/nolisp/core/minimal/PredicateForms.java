@@ -16,7 +16,7 @@ import de.mknblch.nolisp.core.interpreter.Context;
 public class PredicateForms {
 
     @Special
-    @Define({"=", "==", "eq", "eq?", "equal?"}) // (eq? 1 3)
+    @Define({"eq?", "equal?"}) // (eq? 1 3)
     public static Object equal(Interpreter interpreter, Context context, ListStruct args) throws Exception {
         final Object a = interpreter.eval(args.car(), context);
         final Object b = args.cdr() != null ? interpreter.eval(args.cdr().car(), context) : null;

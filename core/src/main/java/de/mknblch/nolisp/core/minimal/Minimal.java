@@ -14,8 +14,10 @@ public class Minimal implements Language {
     private static final Class<?> [] clazzes = {
             AccessorForms.class,
             ConditionForms.class,
+            ComparisonForms.class,
             ConsoleForms.class,
             LambdaForms.class,
+            LogicForms.class,
             MacroForms.class,
             MathForms.class,
             PredicateForms.class,
