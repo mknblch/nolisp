@@ -163,7 +163,7 @@ public class ListStruct implements Atom, Iterable {
     }
 
     public ListStruct attach(ListStruct cdr) {
-        isEmptyList = false;
+        isEmptyList = false; //cdr != null; // TODO review
         last().setCdr(cdr);
         return this;
     }

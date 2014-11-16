@@ -1,5 +1,6 @@
 package de.mknblch.nolisp.core.interpreter.parser;
 
+import de.mknblch.nolisp.core.inspection.Inspector;
 import de.mknblch.nolisp.core.interpreter.structs.Atom;
 import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
 import de.mknblch.nolisp.core.interpreter.structs.SymbolStruct;
@@ -32,10 +33,11 @@ public class Parser {
     private static final SymbolStruct BACKQUOTE_STRUCT = new SymbolStruct("backquote");
     private static final SymbolStruct COMMA_STRUCT = new SymbolStruct("comma");
     private static final SymbolStruct AT_STRUCT = new SymbolStruct("splice");
+    public static final SpliceRule SPLICE_RULE = new SpliceRule();
 
     private final Lexer lexer = new Lexer();
 
-    public ListStruct parse(String code) throws ParserException, LexerException {
+    public ListStruct parse(String code) throws Exception {
         lexer.setCode(code);
         final ListStruct program = new ListStruct();
         while (lexer.hasNext()) {
@@ -44,7 +46,12 @@ public class Parser {
             if(END_STRUCT == o) throw new ParserException(String.format("Unbalanced AST. One or more opening braces missing."));
             program.add(o);
         }
-        return program;
+
+        return postProcesses(program);
+    }
+
+    private ListStruct postProcesses(ListStruct program) throws Exception {
+        return Inspector.cloneTree(program, SPLICE_RULE);
     }
 
     private Object parseOne() throws LexerException, ParserException {

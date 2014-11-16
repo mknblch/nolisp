@@ -115,6 +115,10 @@ public class TypeHelper {
         final ArrayList<String> flat = new ArrayList<String>();
         final ListStruct listStruct = (ListStruct) o;
         for (Object t : listStruct) {
+            if (null == t) {
+                continue;
+            }
+
             flat.add(symbolLiteral(t));
         }
         return flat;

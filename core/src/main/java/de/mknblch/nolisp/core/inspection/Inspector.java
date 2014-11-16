@@ -46,4 +46,19 @@ public class Inspector {
         }
         return clone;
     }
+
+    public static ListStruct cloneTree(ListStruct tree, ContainerCloneRule rule) throws Exception {
+        final ListStruct clone = new ListStruct();
+        ListStruct temp = tree;
+        while(temp != null) {
+            final Object car = temp.car();
+            if(TypeHelper.isList(car)) {
+                clone.attach(rule.cloneSublist(cloneTree((ListStruct) car, rule)));
+            } else {
+                clone.attach(rule.cloneElement(temp.car()));
+            }
+            temp = temp.cdr();
+        }
+        return clone.cdr();
+    }
 }

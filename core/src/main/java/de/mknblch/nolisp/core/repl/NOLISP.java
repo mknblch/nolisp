@@ -46,7 +46,7 @@ public class NOLISP {
         return new Context(new Minimal());
     }
 
-    private static void repl() throws FunctionDefinitionException, LexerException, ParserException {
+    private static void repl() throws Exception {
         Interpreter interpreter = new CoreInterpreter(new Minimal());
         final Context context = makeContext();
         final Console console = System.console();

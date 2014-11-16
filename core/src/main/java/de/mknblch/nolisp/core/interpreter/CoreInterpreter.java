@@ -57,10 +57,8 @@ public class CoreInterpreter implements Interpreter {
 
     @Override
     public ListStruct evalEach(ListStruct list, Context context) throws Exception {
+        if (null == list) return null;
         final ListStruct ret = new ListStruct();
-        if (null == list) {
-            return null;
-        }
         for (Object l : list) {
             if (!(l instanceof Atom)) ret.add(l);
             else ret.add(eval(l, context));
@@ -69,7 +67,7 @@ public class CoreInterpreter implements Interpreter {
     }
 
     private Object retrieveFromContext(SymbolStruct atom, Context context) throws EvaluationException {
-        return context.get(((SymbolStruct) atom).literal);
+        return context.get(atom.literal);
     }
 
     private Object functionCall(ListStruct list, Context context) throws Exception {
