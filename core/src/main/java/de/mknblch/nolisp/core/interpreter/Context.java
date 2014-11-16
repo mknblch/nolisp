@@ -23,7 +23,7 @@ public class Context {
     /**
      * construct empty global environment.
      */
-    public Context() { // TODO remove ? used only in tests
+    private Context() {
         global = true;
         this.parent = null;
         this.map = new HashMap<>();
@@ -33,8 +33,6 @@ public class Context {
         this();
         bindAll(language.getConstants());
         bindAll(language.getFunctions());
-        bind("_lang", language.getName());
-        bind("_version", language.getVersion());
     }
 
     /**

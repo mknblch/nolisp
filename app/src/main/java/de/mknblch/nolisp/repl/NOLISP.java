@@ -36,7 +36,7 @@ public class NOLISP {
     }
 
     private static void eval(String code) throws Exception {
-        final Interpreter interpreter = new CoreInterpreter(new Minimal());
+        final Interpreter interpreter = new CoreInterpreter();
         final Context context = makeContext();
         final ListStruct prg = parser.parse(code);
         System.out.printf(">%s%n", FormatHelper.formatPretty(interpreter.eval(prg, context)));
@@ -47,7 +47,7 @@ public class NOLISP {
     }
 
     private static void repl() throws Exception {
-        Interpreter interpreter = new CoreInterpreter(new Minimal());
+        Interpreter interpreter = new CoreInterpreter();
         final Context context = makeContext();
         final Console console = System.console();
 

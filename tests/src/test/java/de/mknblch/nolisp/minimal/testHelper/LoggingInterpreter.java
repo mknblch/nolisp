@@ -14,10 +14,6 @@ public class LoggingInterpreter extends CoreInterpreter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LoggingInterpreter.class);
 
-    public LoggingInterpreter(Language language) {
-        super(language);
-    }
-
     @Override
     public Object eval(Object obj, Context context) throws Exception {
         final Object evaluated = super.eval(obj, context);

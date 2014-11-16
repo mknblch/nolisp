@@ -32,8 +32,8 @@ public abstract class AbstractFormTest {
 
     @BeforeClass
     public static void setUp() throws FunctionDefinitionException {
-        loggingInterpreter = new LoggingInterpreter(new Minimal());
-        coreInterpreter = new CoreInterpreter(new Minimal());
+        loggingInterpreter = new LoggingInterpreter();
+        coreInterpreter = new CoreInterpreter();
     }
 
     protected void dump(List<Object> evaluated) throws ParserException {

@@ -1,11 +1,15 @@
 package de.mknblch.nolisp.minimal.forms;
 
 import de.mknblch.nolisp.core.interpreter.EvaluationException;
+import de.mknblch.nolisp.core.interpreter.Language;
+import de.mknblch.nolisp.core.minimal.Minimal;
 import de.mknblch.nolisp.minimal.testHelper.AbstractFormTest;
 import de.mknblch.nolisp.core.interpreter.Context;
 import org.junit.Test;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
@@ -13,7 +17,6 @@ import static org.junit.Assert.assertEquals;
  * @author mknblch
  */
 public class BasicFormsTest extends AbstractFormTest {
-
 
     @Test
     public void testPrint() throws Exception {
@@ -71,7 +74,7 @@ public class BasicFormsTest extends AbstractFormTest {
     @Test
     public void testEnvironment() throws Exception {
         final String code = "x";
-        final Context env = new Context();
+        final Context env = new Context(new Minimal());
         env.bind("x", 3);
         final List<Object> evaluated = eval(code, loggingInterpreter, env);
         dump(evaluated);

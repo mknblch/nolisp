@@ -127,10 +127,10 @@ public class LexerTest {
 
     @Test
     public void testTrueFalse() throws Exception {
-        final String code = "T t true TRUE false FALSE";
+        final String code = "true TRUE false FALSE";
         final Lexer lexer = new Lexer();
 	lexer.setCode(code);
-        assertTokenEquals(new String[]{"true", "true", "true", "true", "false", "false"}, lexer);
+        assertTokenEquals(new String[]{"true", "true", "false", "false"}, lexer);
     }
 
     @Test

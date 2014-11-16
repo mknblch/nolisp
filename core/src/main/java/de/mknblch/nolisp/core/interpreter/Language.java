@@ -7,10 +7,6 @@ import java.util.Map;
  */
 public interface Language {
 
-    public String getName();
-
-    public String getVersion();
-
     public Map<String, Object> getConstants();
 
     public Map<String, Object> getFunctions();

@@ -13,7 +13,7 @@ public class Lexer extends StringCutter {
     public static final String INT_REGEX = "^\\-?[0-9]+$";
     public static final String REAL_REGEX = "^\\-?[0-9]+\\.[0-9]+$";
     public static final String NIL_REGEX = "^(nil)|(NIL)|(null)|(NULL)$";
-    public static final String TRUE_REGEX = "^(t)|(T)|(true)|(TRUE)$";
+    public static final String TRUE_REGEX = "^(true)|(TRUE)$";
     public static final String FALSE_REGEX = "^(false)|(FALSE)$";
 
     public Lexer() {
@@ -53,6 +53,8 @@ public class Lexer extends StringCutter {
                 return new Token(Token.Type.BACKQUOTE, "`", "`");
             case ',':
                 return new Token(Token.Type.COMMA, ",", ",");
+            case '.':
+                return new Token(Token.Type.SPLICE, ".", ".");
             case '@':
                 return new Token(Token.Type.SPLICE, "@", "@");
             case ';':

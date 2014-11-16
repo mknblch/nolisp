@@ -1,11 +1,13 @@
 package de.mknblch.nolisp.core.interpreter;
 
+import de.mknblch.nolisp.core.scanner.FunctionDefinitionException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import static org.junit.Assert.*;
@@ -15,11 +17,27 @@ import static org.junit.Assert.*;
  */
 public class ContextTest {
 
+    private static final Language NULL_LANG = new Language() {
+        @Override
+        public Map<String, Object> getConstants() {
+            return new HashMap<>();
+        }
+
+        @Override
+        public Map<String, Object> getFunctions() {
+            return new HashMap<>();
+        }
+
+        @Override
+        public void include(Language language) {}
+    };
+
+
     private static final Logger LOGGER = LoggerFactory.getLogger(ContextTest.class);
 
-    public static Context makeEnv(String[] keys, Object[] values) {
+    public static Context makeEnv(String[] keys, Object[] values) throws FunctionDefinitionException {
         Assert.assertEquals("Erroneous test", keys.length, values.length);
-        final Context env = new Context();
+        final Context env = new Context(NULL_LANG);
         for (int i = 0; i < keys.length; i++) {
             env.bind(keys[i], values[i]);
         }

@@ -28,17 +28,11 @@ public class Minimal implements Language {
     public Minimal() throws FunctionDefinitionException {
         constants = AnnotationScanner.scanForConstants(clazzes);
         functions = AnnotationScanner.scanForFunctions(clazzes);
+
+        constants.put("_lang", "nolisp.minimal");
+        constants.put("_version", "0.1.0");
     }
 
-    @Override
-    public String getName() {
-        return "Minimal Lisp";
-    }
-
-    @Override
-    public String getVersion() {
-        return "0.1.0";
-    }
 
     @Override
     public Map<String, Object> getConstants() {

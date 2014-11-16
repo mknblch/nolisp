@@ -8,30 +8,11 @@ import de.mknblch.nolisp.core.interpreter.structs.forms.SpecialForm;
 import de.mknblch.nolisp.core.interpreter.parser.Parser;
 
 /**
- * ListStruct Interpreter
+ * Interpreter
  *
  * @author mknblch
  */
 public class CoreInterpreter implements Interpreter {
-
-    private final Language language;
-    protected final Parser parser;
-
-    public CoreInterpreter(Language language) {
-        this.language = language;
-        this.parser = new Parser();
-    }
-
-    @Override
-    public Language getLanguage() {
-        return language;
-    }
-
-    @Override
-    public Object eval(String code) throws Exception {
-        final Context context = new Context(language);
-        return evalEach(parser.parse(code), context);
-    }
 
     @Override
     public Object eval(Object obj, Context context) throws Exception {
@@ -46,24 +27,13 @@ public class CoreInterpreter implements Interpreter {
                 return functionCall((ListStruct) atom, context);
 
             case BUILTIN:
-            case LAMBDA:
             case MACRO:
+            case LAMBDA:
                 return obj;
 
             default:
                 throw new EvaluationException(String.format("Unknown Atom %s:%s", atom, atom.getType()));
         }
-    }
-
-    @Override
-    public ListStruct evalEach(ListStruct list, Context context) throws Exception {
-        if (null == list) return null;
-        final ListStruct ret = new ListStruct();
-        for (Object l : list) {
-            if (!(l instanceof Atom)) ret.add(l);
-            else ret.add(eval(l, context));
-        }
-        return ret;
     }
 
     private Object retrieveFromContext(SymbolStruct atom, Context context) throws EvaluationException {
@@ -76,14 +46,24 @@ public class CoreInterpreter implements Interpreter {
         if (null == func) {
             throw new EvaluationException(String.format("Procedure application: expected procedure, given: nil"));
         } else if (func instanceof Form) {
-            // arguments of Forms are executed before function call
+            // each argument of Forms must be evaluated before function call
             return ((Form) func).eval(context, evalEach(list.cdr(), context));
         } else if (func instanceof SpecialForm) {
-            // arguments of SpecialForms will NOT become evaluated before call
+            // arguments of SpecialForms must NOT be evaluated before call
             return ((SpecialForm) func).eval(this, context, list.cdr());
         } else {
             throw new EvaluationException(String.format("Procedure application: expected procedure, given: %s:%s", func, func.getClass().getName()));
         }
+    }
+
+    private ListStruct evalEach(ListStruct list, Context context) throws Exception {
+        if (null == list) return null;
+        final ListStruct ret = new ListStruct();
+        for (Object l : list) {
+            if (!(l instanceof Atom)) ret.add(l);
+            else ret.add(eval(l, context));
+        }
+        return ret;
     }
 
 }
