@@ -12,8 +12,8 @@ public class JavaFormsTest extends AbstractFormTest{
     public void testThrow() throws Exception {
         boolean ex = false;
         try {
-            eval("(throw SomeException)");
-        } catch (EvaluationException e) {
+            eval("(throw (new java.lang.Exception))");
+        } catch (Exception e) {
             ex = true;
         }
         assertTrue("Exception not thrown", ex);
