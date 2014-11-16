@@ -21,17 +21,14 @@ public class Context {
     private final HashMap<String, Object> map;
     private final boolean global;
 
-    /**
-     * construct empty global environment.
-     */
-    private Context() {
-        global = true;
+    public Context(Language language) throws FunctionDefinitionException {
+        this.global = true;
         this.parent = null;
         this.map = new HashMap<>();
+        implement(language);
     }
 
-    public Context(Language language) throws FunctionDefinitionException {
-        this();
+    public void implement(Language language) {
         bindAll(language.getConstants());
         bindAll(language.getFunctions());
     }
@@ -40,7 +37,7 @@ public class Context {
      * used for derivation.
      */
     private Context(Context parent) {
-        global = false;
+        this.global = false;
         this.parent = parent;
         this.map = new HashMap<>();
     }

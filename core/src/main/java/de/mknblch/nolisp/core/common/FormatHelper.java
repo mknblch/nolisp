@@ -61,7 +61,7 @@ public class FormatHelper {
         switch (atom.getType()) {
             case LIST:
                 final StringBuffer sb = new StringBuffer();
-                ListStruct temp = (ListStruct) (ListStruct) atom;
+                ListStruct temp = (ListStruct) obj;
                 do {
                     if (sb.length() > 0) sb.append(" ");
                     sb.append(formatPretty(temp.car()));

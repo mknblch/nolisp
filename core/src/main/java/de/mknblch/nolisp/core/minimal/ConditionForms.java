@@ -25,7 +25,7 @@ public class ConditionForms {
 
     @Special
     @Define(value = "cond")
-    public static Object condForm(Interpreter interpreter, Context context, ListStruct args) throws Exception {
+    public static Object cond(Interpreter interpreter, Context context, ListStruct args) throws Exception {
         for (Object arg : args) {
             Expectations.expectList(arg);
             final ListStruct pair = (ListStruct) arg;

@@ -6,6 +6,7 @@ import de.mknblch.nolisp.core.interpreter.structs.SymbolStruct;
 import de.mknblch.nolisp.core.interpreter.structs.forms.Form;
 import de.mknblch.nolisp.core.interpreter.structs.forms.LambdaForm;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +27,30 @@ public class TypeHelper {
 
     public static boolean isInt(Object o) {
         return o instanceof Integer;
+    }
+
+    public static boolean isObjectType(Object o, String type) throws ClassNotFoundException {
+
+        final Class<?> typeClass = Class.forName(type);
+
+        return typeClass.isAssignableFrom(o.getClass());
+    }
+
+    public static boolean isPrimitiveObjectType(Object o, String type) throws ClassNotFoundException {
+
+        final Class<?> typeClass = Class.forName("java.lang.".concat(type));
+
+        return typeClass.isAssignableFrom(o.getClass());
+    }
+
+    public static <T> T castToType (Object o, String type) throws ClassNotFoundException {
+        final Class<?> typeClass = Class.forName(type);
+        return (T) typeClass.cast(o);
+    }
+
+    public static Exception asException(Object o) throws ClassNotFoundException, EvaluationException {
+        if(isPrimitiveObjectType(o, "Exception")) return castToType(o, "java.lang.Exception");
+        throw new EvaluationException("Illegal Exception cast.");
     }
 
     public static Double asReal(Object o) throws EvaluationException {
@@ -67,8 +92,7 @@ public class TypeHelper {
     public static boolean isListWithSymbolHead(Object o, String symbolLiteral) {
         if (!isList(o)) return false;
         final Object head = ((ListStruct) o).car();
-        if (!isSymbol(head)) return false;
-        return symbolLiteral.equals(((SymbolStruct) head).literal);
+        return isSymbol(head) && symbolLiteral.equals(((SymbolStruct) head).literal);
     }
 
 
@@ -100,10 +124,7 @@ public class TypeHelper {
     }
 
     public static Boolean asBoolean(Object o) {
-        if (null == o) {
-            return false;
-        }
-        return !Boolean.FALSE.equals(o);
+        return null != o && !Boolean.FALSE.equals(o);
     }
 
     public static boolean isBoolean(Object o) {

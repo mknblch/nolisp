@@ -26,8 +26,7 @@ public class PredicateForms {
     public static Object equal(Object a, Object b) {
         if (null == a && null == b) return true;
         if (null == a) return false;
-        if (null == b) return false;
-        return a.equals(b);
+        return null != b && a.equals(b);
     }
 
     @Define("null?")

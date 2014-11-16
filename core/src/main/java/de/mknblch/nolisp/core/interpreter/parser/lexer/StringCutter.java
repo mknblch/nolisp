@@ -96,7 +96,7 @@ public class StringCutter {
     /**
      * determine if char a is element of c
      *
-     * @param a single char for comparision
+     * @param a single char for comparison
      * @param c set of chars
      * @return true if a is element of c. false otherwise
      */

@@ -13,20 +13,20 @@ public class ConsoleForms {
 
     @Define("print")
     public static Object print(Context context, ListStruct args) throws Exception {
-        System.out.print(args.car());
-        return null;
+        System.out.println(args.car());
+        return args.car();
     }
 
     @Define("pprint")
     public static Object pprint(Context context, ListStruct args) throws Exception {
-        System.out.print(FormatHelper.formatPretty(args.car()));
-        return null;
+        System.out.println(FormatHelper.formatPretty(args.car()));
+        return args.car();
     }
 
     @Define("sprint")
     public static Object sprint(Context context, ListStruct args) throws Exception {
-        System.out.print(FormatHelper.formatAsSExpression(args));
-        return null;
+        System.out.println(FormatHelper.formatAsSExpression(args));
+        return args.car();
     }
 
     @Define("printf")
@@ -39,7 +39,7 @@ public class ConsoleForms {
             objects[count++] = o;
         }
         System.out.printf(format, objects);
-        return null;
+        return args.car();
     }
 
 

@@ -20,8 +20,8 @@ public class BasicForms {
         ListStruct temp = args;
         Object value;
         do {
-            final String key = TypeHelper.symbolLiteral(temp.car());
             Expectations.expectCdr(temp);
+            final String key = TypeHelper.symbolLiteral(temp.car());
             value = interpreter.eval(temp.cdr().car(), context);
             context.bindGlobal(key, value);
             temp = temp.cdr().cdr();

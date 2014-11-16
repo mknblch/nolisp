@@ -53,12 +53,10 @@ public class ListStruct implements Atom, Iterable {
      *
      * @param atom
      */
-    public ListStruct append(Object atom) {
+    private void append(Object atom) {
 
         if (cdr == null) cdr = new ListStruct(atom);
         else last().cdr = new ListStruct(atom);
-
-        return this;
     }
 
     public void add(Object o) {
@@ -179,8 +177,7 @@ public class ListStruct implements Atom, Iterable {
 
             @Override
             public boolean hasNext() {
-                if (isEmptyList) return false;
-                return null != head;
+                return !isEmptyList && null != head;
             }
 
             @Override

@@ -16,6 +16,7 @@ public class Minimal implements Language {
             ConditionForms.class,
             ComparisonForms.class,
             ConsoleForms.class,
+            JavaForms.class,
             LambdaForms.class,
             LogicForms.class,
             MacroForms.class,

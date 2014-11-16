@@ -77,8 +77,9 @@ public class AnnotationScanner {
     private static void addSpecialForm(Map<String, Object> functions, Method method) throws FunctionDefinitionException {
         final Define annotation = method.getAnnotation(Define.class);
         final String[] symbols = annotation.value();
+        final SpecialForm func = wrapSpecialForm(method, symbols[0]);
         for (String symbol : symbols) {
-            if (null != functions.put(symbol, wrapSpecialForm(method, symbol))) {
+            if (null != functions.put(symbol, func)) {
                 throw new FunctionDefinitionException(String.format("Ambiguous function definition for '%s'", method.getName()));
             }
         }
@@ -87,8 +88,9 @@ public class AnnotationScanner {
     private static void addNonSpecialForm(Map<String, Object> functions, Method method) throws FunctionDefinitionException {
         final Define annotation = method.getAnnotation(Define.class);
         final String[] symbols = annotation.value();
+        final Form func = wrapNonSpecialForm(method, symbols[0]);
         for (String symbol : symbols) {
-            if (null != functions.put(symbol, wrapNonSpecialForm(method, symbol))) {
+            if (null != functions.put(symbol, func)) {
                 throw new FunctionDefinitionException(String.format("Ambiguous function definition for '%s'", method.getName()));
             }
         }
@@ -99,7 +101,11 @@ public class AnnotationScanner {
         return new FormAdapter() {
             @Override
             public Object eval(Context context, ListStruct args) throws Exception {
-                return method.invoke(null, context, args);
+                try {
+                    return method.invoke(null, context, args);
+                } catch (InvocationTargetException e) {
+                    throw unwrapInvocationException(e);
+                }
             }
 
             @Override
@@ -112,13 +118,11 @@ public class AnnotationScanner {
     public static SpecialForm wrapSpecialForm(final Method method, final String symbol) {
         return new SpecialFormAdapter() {
             @Override
-            public Object eval(Interpreter interpreter, Context context, ListStruct args) throws EvaluationException {
+            public Object eval(Interpreter interpreter, Context context, ListStruct args) throws Exception {
                 try {
                     return method.invoke(null, interpreter, context, args);
-                } catch (IllegalAccessException e) {
-                    throw new EvaluationException(e.getCause());
                 } catch (InvocationTargetException e) {
-                    throw new EvaluationException(e.getCause());
+                    throw unwrapInvocationException(e);
                 }
             }
 
@@ -127,6 +131,14 @@ public class AnnotationScanner {
                 return symbol;
             }
         };
+    }
+
+    private static Exception unwrapInvocationException(InvocationTargetException ite) {
+        final Throwable cause = ite.getCause();
+        if(cause instanceof Exception) {
+            return (Exception) cause;
+        }
+        return ite;
     }
 
     /**
