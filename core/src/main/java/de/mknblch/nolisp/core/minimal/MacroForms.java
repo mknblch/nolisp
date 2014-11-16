@@ -85,8 +85,8 @@ public class MacroForms {
                     clone.attach(new ListStruct(interpreter.eval(listStruct.cdar(), context)));
                 } else if (TypeHelper.isListWithSymbolHead(listStruct, "splice")) {
 
-                    System.out.printf("splicing %s%n", FormatHelper.formatAtom(listStruct));
-                    final ListStruct temp = listStruct.cdr();
+                    System.out.printf("splicing %s into %s%n", FormatHelper.formatAtom(listStruct), FormatHelper.formatAtom(clone));
+                    final ListStruct temp = (ListStruct) listStruct.cdar();
 
                     for (Object o : temp) {
                         clone.add(o);
