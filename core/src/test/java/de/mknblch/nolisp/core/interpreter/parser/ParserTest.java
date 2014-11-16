@@ -1,15 +1,12 @@
 package de.mknblch.nolisp.core.interpreter.parser;
 
+import de.mknblch.nolisp.core.common.FormatHelper;
 import de.mknblch.nolisp.core.interpreter.EvaluationException;
 import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
-import de.mknblch.nolisp.core.common.FormatHelper;
-import de.mknblch.nolisp.core.interpreter.parser.lexer.LexerException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * @author mknblch

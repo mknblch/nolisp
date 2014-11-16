@@ -1,8 +1,8 @@
 package de.mknblch.nolisp.core.minimal;
 
+import de.mknblch.nolisp.core.interpreter.Language;
 import de.mknblch.nolisp.core.scanner.AnnotationScanner;
 import de.mknblch.nolisp.core.scanner.FunctionDefinitionException;
-import de.mknblch.nolisp.core.interpreter.Language;
 
 import java.util.Map;
 
@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public class Minimal implements Language {
 
-    private static final Class<?> [] clazzes = {
+    private static final Class<?>[] clazzes = {
             AccessorForms.class,
             ConditionForms.class,
             ComparisonForms.class,

@@ -12,6 +12,7 @@ import java.util.Set;
  * alters only the local environment and get() operations pass from local to global<br/>
  * environment until the key is found.
  * <p/>
+ *
  * @author mknblch
  */
 public class Context {
@@ -75,8 +76,8 @@ public class Context {
     }
 
     /**
-         * check if local env is empty.
-         */
+     * check if local env is empty.
+     */
     public boolean isEmpty() {
         return map.isEmpty();
     }
@@ -96,10 +97,10 @@ public class Context {
      * the element will be retrieved from global environments.
      */
     public Object get(Object key) throws EvaluationException {
-        if(map.containsKey(key)) {
+        if (map.containsKey(key)) {
             return map.get(key);
         }
-        if(null != parent && parent.containsKey(key)) {
+        if (null != parent && parent.containsKey(key)) {
             return parent.get(key);
         }
         throw new EvaluationException(String.format("Reference to undefined identifier: '%s'.", key));
@@ -140,8 +141,8 @@ public class Context {
     }
 
     /**
-         * get local keySetLocal
-         */
+     * get local keySetLocal
+     */
     public Set<String> keySetLocal() {
         return map.keySet();
     }

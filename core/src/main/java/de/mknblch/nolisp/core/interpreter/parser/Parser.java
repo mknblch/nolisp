@@ -1,17 +1,18 @@
 package de.mknblch.nolisp.core.interpreter.parser;
 
 import de.mknblch.nolisp.core.inspection.Inspector;
-import de.mknblch.nolisp.core.interpreter.structs.Atom;
-import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
-import de.mknblch.nolisp.core.interpreter.structs.SymbolStruct;
 import de.mknblch.nolisp.core.interpreter.parser.lexer.Lexer;
 import de.mknblch.nolisp.core.interpreter.parser.lexer.LexerException;
 import de.mknblch.nolisp.core.interpreter.parser.lexer.Token;
+import de.mknblch.nolisp.core.interpreter.structs.Atom;
+import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
+import de.mknblch.nolisp.core.interpreter.structs.SymbolStruct;
 
 /**
  * The parser transforms a token stream into an abstract syntax tree in form of ListStructs
  * which is basically a linked list
  * <p/>
+ *
  * @author mknblch
  */
 public class Parser {
@@ -44,8 +45,9 @@ public class Parser {
         final ListStruct program = new ListStruct();
         while (lexer.hasNext()) {
             final Object o = parseOne();
-            if(COMMENT_STRUCT == o) continue;
-            if(END_STRUCT == o) throw new ParserException(String.format("Unbalanced AST. One or more opening braces missing."));
+            if (COMMENT_STRUCT == o) continue;
+            if (END_STRUCT == o)
+                throw new ParserException(String.format("Unbalanced AST. One or more opening braces missing."));
             program.add(o);
         }
         return postProcesses(program);
@@ -59,18 +61,28 @@ public class Parser {
         final Token token = lexer.next();
         switch (token.type) {
 
-            case LIST_BEGIN: return parseList();
-            case LIST_END: return END_STRUCT;
-            case SYMBOL: return new SymbolStruct(token.literal);
-            case LINE_COMMENT: return COMMENT_STRUCT;
-            case CONST: return token.value;
+            case LIST_BEGIN:
+                return parseList();
+            case LIST_END:
+                return END_STRUCT;
+            case SYMBOL:
+                return new SymbolStruct(token.literal);
+            case LINE_COMMENT:
+                return COMMENT_STRUCT;
+            case CONST:
+                return token.value;
 
             // syntactic sugar
-            case BACKQUOTE: return new ListStruct(BACKQUOTE_STRUCT, parseOne());
-            case SHARP: return new ListStruct(FUNCTION_STRUCT, parseOne());
-            case QUOTE: return new ListStruct(QUOTE_STRUCT, parseOne());
-            case COMMA: return new ListStruct(COMMA_STRUCT, parseOne());
-            case SPLICE: return new ListStruct(AT_STRUCT, parseOne());
+            case BACKQUOTE:
+                return new ListStruct(BACKQUOTE_STRUCT, parseOne());
+            case SHARP:
+                return new ListStruct(FUNCTION_STRUCT, parseOne());
+            case QUOTE:
+                return new ListStruct(QUOTE_STRUCT, parseOne());
+            case COMMA:
+                return new ListStruct(COMMA_STRUCT, parseOne());
+            case SPLICE:
+                return new ListStruct(AT_STRUCT, parseOne());
 
             default:
                 throw new ParserException(String.format("Type '%s' Not yet implemented.", token.type.name()));
@@ -82,7 +94,7 @@ public class Parser {
         final ListStruct listStruct = new ListStruct();
         while (lexer.hasNext()) {
             final Object o = parseOne();
-            if(o == END_STRUCT) {
+            if (o == END_STRUCT) {
                 return listStruct;
             }
             listStruct.add(o);

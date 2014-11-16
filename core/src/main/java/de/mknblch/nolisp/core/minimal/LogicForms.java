@@ -1,6 +1,5 @@
 package de.mknblch.nolisp.core.minimal;
 
-import de.mknblch.nolisp.core.common.FormatHelper;
 import de.mknblch.nolisp.core.common.TypeHelper;
 import de.mknblch.nolisp.core.interpreter.Context;
 import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
@@ -14,7 +13,7 @@ public class LogicForms {
     @Define("and")
     public static Object and(Context context, ListStruct args) throws Exception {
         for (Object arg : args) {
-            if(!TypeHelper.asBoolean(arg)) return false;
+            if (!TypeHelper.asBoolean(arg)) return false;
         }
         return true;
     }
@@ -22,14 +21,14 @@ public class LogicForms {
     @Define("or")
     public static Object or(Context context, ListStruct args) throws Exception {
         for (Object arg : args) {
-            if(TypeHelper.asBoolean(arg)) return true;
+            if (TypeHelper.asBoolean(arg)) return true;
         }
         return false;
     }
 
     @Define("xor")
     public static Object xor(Context context, ListStruct args) throws Exception {
-        return TypeHelper.asBoolean(args.car()) ^ TypeHelper.asBoolean(args.cdar()) ;
+        return TypeHelper.asBoolean(args.car()) ^ TypeHelper.asBoolean(args.cdar());
     }
 
     @Define("not")

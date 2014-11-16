@@ -113,6 +113,7 @@ public class ListStructTest {
         assertEquals("3", iterator.next());
         Assert.assertFalse(iterator.hasNext());
     }
+
     @Test
     public void testEmptyIterator() throws Exception {
 

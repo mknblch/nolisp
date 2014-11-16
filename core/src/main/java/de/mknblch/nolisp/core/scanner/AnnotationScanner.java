@@ -1,11 +1,11 @@
 package de.mknblch.nolisp.core.scanner;
 
-import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
-import de.mknblch.nolisp.core.interpreter.structs.forms.Form;
-import de.mknblch.nolisp.core.interpreter.structs.forms.SpecialForm;
 import de.mknblch.nolisp.core.interpreter.Context;
 import de.mknblch.nolisp.core.interpreter.EvaluationException;
 import de.mknblch.nolisp.core.interpreter.Interpreter;
+import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
+import de.mknblch.nolisp.core.interpreter.structs.forms.Form;
+import de.mknblch.nolisp.core.interpreter.structs.forms.SpecialForm;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -29,7 +29,7 @@ public class AnnotationScanner {
             for (final Method method : declaredMethods) {
                 if (isNonSpecialForm(method)) {
                     addNonSpecialForm(functions, method);
-                } else if(isSpecialForm(method)) {
+                } else if (isSpecialForm(method)) {
                     addSpecialForm(functions, method);
                 }
             }
@@ -65,7 +65,7 @@ public class AnnotationScanner {
     }
 
     private static boolean isConstantField(Field field) throws FunctionDefinitionException {
-        if(!field.isAnnotationPresent(Constant.class)) return false;
+        if (!field.isAnnotationPresent(Constant.class)) return false;
         final int modifiers = field.getModifiers();
         if (!Modifier.isStatic(modifiers))
             throw new FunctionDefinitionException("Invalid signature - FIELD must be STATIC");
@@ -101,6 +101,7 @@ public class AnnotationScanner {
             public Object eval(Context context, ListStruct args) throws Exception {
                 return method.invoke(null, context, args);
             }
+
             @Override
             public String getSymbol() {
                 return symbol;
@@ -120,6 +121,7 @@ public class AnnotationScanner {
                     throw new EvaluationException(e.getCause());
                 }
             }
+
             @Override
             public String getSymbol() {
                 return symbol;
@@ -140,9 +142,9 @@ public class AnnotationScanner {
         final Class<?>[] types = method.getParameterTypes();
         if (
                 2 != types.length ||
-                !ListStruct.class.equals(types[1]) ||
-                !Context.class.equals(types[0])) throw new FunctionDefinitionException(String.format(
-                    "Invalid method signature in '%s.%s(..)'. Expected: 'scanner(env:Context, args:ListStruct):Object'",
+                        !ListStruct.class.equals(types[1]) ||
+                        !Context.class.equals(types[0])) throw new FunctionDefinitionException(String.format(
+                "Invalid method signature in '%s.%s(..)'. Expected: 'scanner(env:Context, args:ListStruct):Object'",
                 method.getDeclaringClass().getSimpleName(), method.getName()));
 
         return true;

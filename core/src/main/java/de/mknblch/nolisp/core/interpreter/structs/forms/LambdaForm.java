@@ -1,10 +1,10 @@
 package de.mknblch.nolisp.core.interpreter.structs.forms;
 
-import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
-import de.mknblch.nolisp.core.interpreter.structs.Atom;
+import de.mknblch.nolisp.core.interpreter.Context;
 import de.mknblch.nolisp.core.interpreter.EvaluationException;
 import de.mknblch.nolisp.core.interpreter.Interpreter;
-import de.mknblch.nolisp.core.interpreter.Context;
+import de.mknblch.nolisp.core.interpreter.structs.Atom;
+import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
 
 import java.util.List;
 
@@ -58,7 +58,7 @@ public class LambdaForm implements Form {
 
         ListStruct temp = args;
         for (int i = 0; i < symbols.size(); i++) {
-            if(null == temp) {
+            if (null == temp) {
                 throw new EvaluationException(String.format(
                         "procedure expects %d arguments, given %d", symbols.size(), i));
             }

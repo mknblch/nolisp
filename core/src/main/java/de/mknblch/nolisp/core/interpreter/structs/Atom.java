@@ -1,7 +1,6 @@
 package de.mknblch.nolisp.core.interpreter.structs;
 
 /**
- *
  * @author mknblch
  */
 public interface Atom {

@@ -1,7 +1,5 @@
 package de.mknblch.nolisp.core.interpreter;
 
-import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
-
 /**
  * @author mknblch
  */

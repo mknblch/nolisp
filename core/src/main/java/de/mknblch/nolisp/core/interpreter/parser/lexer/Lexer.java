@@ -2,7 +2,6 @@ package de.mknblch.nolisp.core.interpreter.parser.lexer;
 
 /**
  * basic lisp lexer.
- *
  */
 public class Lexer extends StringCutter {
 
@@ -82,19 +81,30 @@ public class Lexer extends StringCutter {
     private String tokenizeString() throws LexerException {
         final StringBuffer buffer = new StringBuffer();
         while (true) {
-            if(!hasNext()) {
+            if (!hasNext()) {
                 throw new LexerException("Premature end of string.");
             }
             final char c = popChar();
             if ('\\' == c) {
                 final char n = popChar();
                 switch (n) {
-                    case '"': buffer.append("\""); break;
-                    case 't': buffer.append("\t"); break;
-                    case 'n': buffer.append("\n"); break;
-                    case 'r': buffer.append("\r"); break;
-                    case '\\': buffer.append("\\"); break;
-                    default: throw new LexerException(String.format("Invalid escape sequence '\\%c'", n));
+                    case '"':
+                        buffer.append("\"");
+                        break;
+                    case 't':
+                        buffer.append("\t");
+                        break;
+                    case 'n':
+                        buffer.append("\n");
+                        break;
+                    case 'r':
+                        buffer.append("\r");
+                        break;
+                    case '\\':
+                        buffer.append("\\");
+                        break;
+                    default:
+                        throw new LexerException(String.format("Invalid escape sequence '\\%c'", n));
                 }
             } else if ('"' == c) {
                 break;

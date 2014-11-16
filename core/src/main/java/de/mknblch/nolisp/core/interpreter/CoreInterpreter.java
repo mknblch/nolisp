@@ -5,7 +5,6 @@ import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
 import de.mknblch.nolisp.core.interpreter.structs.SymbolStruct;
 import de.mknblch.nolisp.core.interpreter.structs.forms.Form;
 import de.mknblch.nolisp.core.interpreter.structs.forms.SpecialForm;
-import de.mknblch.nolisp.core.interpreter.parser.Parser;
 
 /**
  * Interpreter

@@ -1,13 +1,13 @@
 package de.mknblch.nolisp.core.common;
 
-import de.mknblch.nolisp.core.scanner.BuiltIn;
+import de.mknblch.nolisp.core.interpreter.Context;
+import de.mknblch.nolisp.core.interpreter.EvaluationException;
 import de.mknblch.nolisp.core.interpreter.structs.Atom;
 import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
 import de.mknblch.nolisp.core.interpreter.structs.SymbolStruct;
 import de.mknblch.nolisp.core.interpreter.structs.forms.LambdaForm;
 import de.mknblch.nolisp.core.interpreter.structs.forms.MacroForm;
-import de.mknblch.nolisp.core.interpreter.EvaluationException;
-import de.mknblch.nolisp.core.interpreter.Context;
+import de.mknblch.nolisp.core.scanner.BuiltIn;
 
 import java.util.List;
 import java.util.Set;
@@ -43,7 +43,7 @@ public class FormatHelper {
             return "nil";
         }
         //special case List<Object>
-        if(obj instanceof List) {
+        if (obj instanceof List) {
             final StringBuffer sb = new StringBuffer();
             final List list = (List) obj;
             for (Object o : list) {

@@ -10,8 +10,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import static org.junit.Assert.*;
-
 /**
  * @author mknblch
  */
@@ -43,7 +41,7 @@ public class ContextTest {
     public static void dump(Context env) throws EvaluationException {
         do {
             LOGGER.debug("dumping Context ");
-            for(String key : env.keySetLocal()) {
+            for (String key : env.keySetLocal()) {
                 LOGGER.debug("{} = {}", key, env.get(key));
             }
             env = env.getParent();

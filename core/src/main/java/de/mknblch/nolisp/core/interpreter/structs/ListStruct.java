@@ -152,7 +152,7 @@ public class ListStruct implements Atom, Iterable {
     }
 
     public ListStruct setCar(Object o) {
-        isEmptyList=false;
+        isEmptyList = false;
         car = o;
         return this;
     }
