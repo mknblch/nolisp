@@ -1,4 +1,4 @@
-package de.mknblch.nolisp.core.repl;
+package de.mknblch.nolisp.repl;
 
 import de.mknblch.nolisp.core.scanner.FunctionDefinitionException;
 import de.mknblch.nolisp.core.interpreter.structs.ListStruct;

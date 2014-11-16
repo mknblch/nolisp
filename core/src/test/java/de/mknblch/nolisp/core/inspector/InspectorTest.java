@@ -1,6 +1,6 @@
 package de.mknblch.nolisp.core.inspector;
 
-import de.mknblch.nolisp.core.inspection.CloneRule;
+import de.mknblch.nolisp.core.inspection.ValueCloneRule;
 import de.mknblch.nolisp.core.inspection.InspectionRule;
 import de.mknblch.nolisp.core.inspection.InspectionRuleAdapter;
 import de.mknblch.nolisp.core.inspection.Inspector;
@@ -132,7 +132,7 @@ public class InspectorTest {
 
         final ListStruct program = PARSER.parse("( 1 2 (0 3 ) 4 ( (0 (1 (0 5)) ) 6 ) 7 )");
 
-        final CloneRule cloneRule = new CloneRule() {
+        final ValueCloneRule valueCloneRule = new ValueCloneRule() {
 
             @Override
             public Object clone(Object element) throws Exception {
@@ -145,7 +145,7 @@ public class InspectorTest {
             }
         };
 
-        final ListStruct ret = Inspector.cloneTree(program, cloneRule);
+        final ListStruct ret = Inspector.cloneTree(program, valueCloneRule);
 
         assertASTEquals("( ( 1 2 3 4 ( ( 1 5 ) 6 ) 7 ) )", ret);
 

@@ -1,19 +1,16 @@
 package de.mknblch.nolisp.core.minimal;
 
-import de.mknblch.nolisp.core.common.FormatHelper;
 import de.mknblch.nolisp.core.scanner.Define;
 import de.mknblch.nolisp.core.scanner.Special;
 import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
 import de.mknblch.nolisp.core.interpreter.structs.forms.MacroForm;
 import de.mknblch.nolisp.core.common.Expectations;
 import de.mknblch.nolisp.core.common.TypeHelper;
-import de.mknblch.nolisp.core.inspection.CloneRule;
+import de.mknblch.nolisp.core.inspection.ValueCloneRule;
 import de.mknblch.nolisp.core.inspection.Inspector;
 import de.mknblch.nolisp.core.interpreter.EvaluationException;
 import de.mknblch.nolisp.core.interpreter.Interpreter;
 import de.mknblch.nolisp.core.interpreter.Context;
-
-import java.util.Iterator;
 
 /**
  * @author mknblch
@@ -37,7 +34,7 @@ public class MacroForms {
             return car;
         }
 
-        final CloneRule cloneRule = new CloneRule() {
+        final ValueCloneRule valueCloneRule = new ValueCloneRule() {
             @Override
             public Object clone(Object element) throws Exception {
                 if (TypeHelper.isListWithSymbolHead(element, "comma")) {
@@ -47,7 +44,7 @@ public class MacroForms {
             }
         };
 
-        return Inspector.cloneTree(args, cloneRule).car();
+        return Inspector.cloneTree(args, valueCloneRule).car();
     }
 
     @Special

@@ -1,5 +1,6 @@
 package de.mknblch.nolisp.core.interpreter.parser;
 
+import de.mknblch.nolisp.core.interpreter.EvaluationException;
 import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
 import de.mknblch.nolisp.core.common.FormatHelper;
 import de.mknblch.nolisp.core.interpreter.parser.lexer.LexerException;
@@ -61,6 +62,18 @@ public class ParserTest {
     public void testBackQuotedList() throws Exception {
         String code = "`(1 2 3) x";
         evalAssertASTEquals("( ( backquote ( 1 2 3 ) ) x )", code);
+    }
+
+    @Test(expected = EvaluationException.class)
+    public void testSpliceError() throws Exception {
+        String code = "(1 @(a @b) 3)";
+        evalAssertASTEquals("does not matter", code);
+    }
+
+    @Test
+    public void testSplicedList() throws Exception {
+        String code = "(1 @(a @(b)) 3)";
+        evalAssertASTEquals("( ( 1 a b 3 ) )", code);
     }
 
     @Test
