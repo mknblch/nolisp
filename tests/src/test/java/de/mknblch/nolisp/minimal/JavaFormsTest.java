@@ -41,7 +41,9 @@ public class JavaFormsTest extends AbstractFormTest{
     public void testTry() throws Exception {
 
 
-        eval("(try (throw (new java.lang.Exception)) (catch java.lang.Exception e (...))  )");
+        eval("(try " +
+                    "(throw (new java.lang.Exception) " +
+                        "(catch java.lang.Exception e (...)))))  ");
 
     }
 }
