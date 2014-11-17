@@ -36,4 +36,12 @@ public class JavaFormsTest extends AbstractFormTest{
         assertASTEquals("L[ Test ]", eval("(new java.lang.String (\"Test\"))"));
 
     }
+
+    @Test
+    public void testTry() throws Exception {
+
+
+        eval("(try (throw (new java.lang.Exception)) (catch java.lang.Exception e (...))  )");
+
+    }
 }
