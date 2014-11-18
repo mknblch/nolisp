@@ -13,6 +13,7 @@ public class Minimal implements Language {
 
     private static final Class<?>[] clazzes = {
             AccessorForms.class,
+            BasicForms.class,
             ConditionForms.class,
             ComparisonForms.class,
             ConsoleForms.class,
@@ -22,7 +23,6 @@ public class Minimal implements Language {
             MacroForms.class,
             MathForms.class,
             PredicateForms.class,
-            BasicForms.class
     };
 
     private final Map<String, Object> constants;

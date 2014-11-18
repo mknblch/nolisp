@@ -52,22 +52,24 @@ public class Expectations {
     }
 
     public static void expectQuote(Object o) throws EvaluationException {
-        if (!TypeHelper.isSymbolWithLiteral(o, "quote")) {
+        expectSymbolWithLiteral(o, "quote");
+    }
+
+
+    public static void expectSymbolWithLiteral(Object o, String literal) throws EvaluationException {
+        if (!TypeHelper.isSymbolWithLiteral(o, literal)) {
             throw new EvaluationException(
-                    String.format("Expected QUOTE:SYM but was: %s", FormatHelper.formatAtom(o)));
+                    String.format("Expected SYM<%s> but was: %s", literal, FormatHelper.formatAtom(o)));
         }
     }
 
     public static void expectQuotedList(Object o) throws EvaluationException {
-        if (!(o instanceof ListStruct)) {
-            throw new EvaluationException(
-                    String.format("Expected QUOTED LIST but was: %s", FormatHelper.formatAtom(o)));
-        }
-        final ListStruct q = (ListStruct) o;
-        if (!TypeHelper.isSymbolWithLiteral(q.car(), "quote")) {
-            throw new EvaluationException(
-                    String.format("Expected QUOTED LIST but was: %s", FormatHelper.formatAtom(o)));
-        }
+        expectListWithSymbol(o, "quote");
+    }
+
+    public static void expectListWithSymbol(Object o, String head) throws EvaluationException {
+        expectList(o);
+        expectSymbolWithLiteral(((ListStruct) o).car(), head); // TODO review
     }
 
     public static void expectCdr(Object o) throws EvaluationException {
@@ -96,7 +98,7 @@ public class Expectations {
     public static void expectSpecialForm(Object o) throws EvaluationException {
         if (!(o instanceof SpecialForm)) {
             throw new EvaluationException(
-                    String.format("Expected SPECIAL_FORM but was: %s", FormatHelper.formatAtom(o)));
+                    String.format("Expected SPECIAL FORM but was: %s", FormatHelper.formatAtom(o)));
         }
     }
 }

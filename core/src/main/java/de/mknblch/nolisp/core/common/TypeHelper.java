@@ -80,6 +80,11 @@ public class TypeHelper {
         return o instanceof SymbolStruct;
     }
 
+    public static SymbolStruct asSymbol(Object o) throws EvaluationException {
+        if (!isSymbol(o)) throw new EvaluationException("Illegal Symbol cast.");
+        return (SymbolStruct) o;
+    }
+
     public static boolean isSymbolWithLiteral(Object o, String literal) {
         return isSymbol(o) && literal.equals(((SymbolStruct) o).literal);
     }

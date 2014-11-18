@@ -4,6 +4,8 @@ import de.mknblch.nolisp.core.interpreter.EvaluationException;
 import de.mknblch.nolisp.minimal.testHelper.AbstractFormTest;
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class JavaFormsTest extends AbstractFormTest{
@@ -39,11 +41,23 @@ public class JavaFormsTest extends AbstractFormTest{
 
     @Test
     public void testTry() throws Exception {
+        final List<Object> eval = eval(
+                "(try " +
+                    "(throw (new java.lang.Exception)) " +
+                        "(" +
+                            "(catch java.lang.RuntimeException 0)" +
+                            "(catch java.lang.Exception 42)))");
 
+        assertASTEquals("L[ 42 ]", eval);
 
-        eval("(try " +
-                    "(throw (new java.lang.Exception) " +
-                        "(catch java.lang.Exception e (...)))))  ");
+    }
 
+    @Test
+    public void testTryBaseEx() throws Exception {
+
+        final List<Object> eval = eval(
+                "(try " +
+                        "(/ 1 0)" +
+                        "((catch java.lang.ArithmeticException 42)))");
     }
 }
