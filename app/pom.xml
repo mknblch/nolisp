@@ -14,6 +14,8 @@
 
     <name>APP</name>
 
+    <properties><outputFile>target/NOLISP_APP.jar</outputFile></properties>
+
     <dependencies>
         <dependency>
             <groupId>de.mknblch.nolisp</groupId>
@@ -22,7 +24,7 @@
         </dependency>
     </dependencies>
 
-
+    <!-- build runnable jar -->
     <build>
         <plugins>
             <plugin>
@@ -43,7 +45,7 @@
                                     </manifestEntries>
                                 </transformer>
                             </transformers>
-                            <outputFile>../target/NOLISP.jar</outputFile>
+                            <outputFile>${outputFile}</outputFile>
                         </configuration>
                     </execution>
                 </executions>

@@ -51,6 +51,21 @@ public class Expectations {
         }
     }
 
+
+    public static void expectNull(Object o) throws EvaluationException {
+        if (null != o) {
+            throw new EvaluationException(
+                    String.format("Expected NULL but was: %s", FormatHelper.formatAtom(o)));
+        }
+    }
+
+    public static void expectNotNull(Object o) throws EvaluationException {
+        if (null == o) {
+            throw new EvaluationException(
+                    String.format("Expected NOT NULL but was: %s", FormatHelper.formatAtom(o)));
+        }
+    }
+
     public static void expectQuote(Object o) throws EvaluationException {
         expectSymbolWithLiteral(o, "quote");
     }

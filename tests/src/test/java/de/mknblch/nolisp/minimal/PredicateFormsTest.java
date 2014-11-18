@@ -17,37 +17,37 @@ public class PredicateFormsTest extends AbstractFormTest {
     @Test
     public final void testIsInt() throws Exception {
         final List<Object> result = eval("(int? 1)");
-        assertEquals(true, result.get(0));
+        assertASTEquals("L[ true ]", result);
     }
 
     @Test
     public final void testIsNotInt() throws Exception {
         final List<Object> result = eval("(int? 1.2)");
-        assertEquals(false, result.get(0));
+        assertASTEquals("L[ false ]", result);
     }
 
     @Test
     public final void testIsReal() throws Exception {
         final List<Object> result = eval("(real? 1.2)");
-        assertEquals(true, result.get(0));
+        assertASTEquals("L[ true ]", result);
     }
 
     @Test
     public final void testIsNotReal() throws Exception {
         final List<Object> result = eval("(real? nil)");
-        assertEquals(false, result.get(0));
+        assertASTEquals("L[ false ]", result);
     }
 
     @Test
     public final void testIsString() throws Exception {
         final List<Object> result = eval("(string? \"hallo\")");
-        assertEquals(true, result.get(0));
+        assertASTEquals("L[ true ]", result);
     }
 
     @Test
     public final void testIsNotString() throws Exception {
         final List<Object> result = eval("(string? 1.2)");
-        assertEquals(false, result.get(0));
+        assertASTEquals("L[ false ]", result);
     }
 
     @Test
@@ -59,6 +59,19 @@ public class PredicateFormsTest extends AbstractFormTest {
     @Test
     public final void testIsNotList() throws Exception {
         final List<Object> result = eval("(list? 1.2)");
-        assertEquals(false, result.get(0));
+        assertASTEquals("L[ false ]", result);
+    }
+
+    @Test
+    public final void testInstaneof() throws Exception {
+        final List<Object> result = eval("(instanceof? java.lang.Integer 42)");
+        assertASTEquals("L[ true ]", result);
+    }
+
+    @Test
+    public final void testNotInstaneof() throws Exception {
+        final List<Object> result = eval("(instanceof? java.lang.Integer 42.235)");
+        assertASTEquals("L[ false ]", result);
+
     }
 }

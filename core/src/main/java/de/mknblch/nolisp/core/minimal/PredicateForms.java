@@ -1,6 +1,9 @@
 package de.mknblch.nolisp.core.minimal;
 
+import de.mknblch.nolisp.core.common.Expectations;
+import de.mknblch.nolisp.core.common.TypeHelper;
 import de.mknblch.nolisp.core.interpreter.Context;
+import de.mknblch.nolisp.core.interpreter.EvaluationException;
 import de.mknblch.nolisp.core.interpreter.Interpreter;
 import de.mknblch.nolisp.core.interpreter.structs.Atom;
 import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
@@ -32,6 +35,16 @@ public class PredicateForms {
     @Define("null?")
     public static Object isNull(Context context, ListStruct args) {
         return null == args.car();
+    }
+
+    @Special
+    @Define("instanceof?") // (instanceof? java.lang.String "bla") => true
+    public static Object isInstance(Interpreter interpreter, Context context, ListStruct args) throws Exception {
+        final String className = TypeHelper.symbolLiteral(args.car());
+        final Object cdar = args.cdar();
+        Expectations.expectNotNull(cdar);
+        final Object value = interpreter.eval(cdar, context);
+        return className.equals(value.getClass().getName());
     }
 
     @Define("int?")

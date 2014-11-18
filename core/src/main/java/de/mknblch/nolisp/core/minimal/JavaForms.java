@@ -11,6 +11,7 @@ import de.mknblch.nolisp.core.scanner.Define;
 import de.mknblch.nolisp.core.scanner.Special;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 /**
@@ -49,7 +50,7 @@ public class JavaForms {
     }
 
     @Special
-    @Define("try") // (try <form> (catch <Exception> <form>)+) // TODO where is the exception?!?
+    @Define("try") // (try <form> (catch <Exception> <SYM> <form>)+)
     public static Object tryForm(Interpreter interpreter, Context context, ListStruct args) throws Exception {
         final Object tryBlock = args.car();
         final ListStruct catchBlocks = TypeHelper.asList(args.cdar());
@@ -62,10 +63,39 @@ public class JavaForms {
                 Expectations.expectSymbolWithLiteral(listStruct.car(), "catch");
                 final SymbolStruct exClassSymbol = TypeHelper.asSymbol(listStruct.cdar());
                 if(Class.forName(exClassSymbol.literal).isAssignableFrom(exClazz)) {
-                    return interpreter.eval(listStruct.cddar(), context);
+                    final String literal = TypeHelper.symbolLiteral(listStruct.cddar());
+                    final Context derive = context.derive();
+                    derive.bind(literal, e);
+                    return interpreter.eval(listStruct.nth(3), derive);
                 }
             }
             throw e;
         }
     }
+
+
+    @Special
+    @Define("call") // (call <form> method-name [(<arg>+)])
+    public static Object call(Interpreter interpreter, Context context, ListStruct args) throws Exception {
+
+        System.out.printf("args: %s%n", FormatHelper.formatAtom(args));
+
+        final Object obj = interpreter.eval(args.car(), context);
+        final String methodName = TypeHelper.symbolLiteral(args.cdar());
+        final Object methodArgsRaw = args.cddar();
+
+        if (null == methodArgsRaw) {
+            return obj.getClass().getDeclaredMethod(methodName).invoke(obj);
+        }
+        final ArrayList<Class> argTypes = new ArrayList<Class>();
+        final ArrayList<Object> argValues = new ArrayList<Object>();
+        for (Object arg : args) {
+            final Object evaluated = interpreter.eval(arg, context);
+            argTypes.add(evaluated.getClass());
+            argValues.add(evaluated);
+        }
+        final Method method = obj.getClass().getDeclaredMethod(methodName, argTypes.toArray(new Class<?>[]{}));
+        return method.invoke(obj, argValues.toArray());
+    }
+
 }

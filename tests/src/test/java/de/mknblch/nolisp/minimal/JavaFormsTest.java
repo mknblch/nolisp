@@ -45,20 +45,22 @@ public class JavaFormsTest extends AbstractFormTest{
                 "(try " +
                     "(throw (new java.lang.Exception)) " +
                         "(" +
-                            "(catch java.lang.ArithmeticException 0)" +
-                            "(catch java.lang.Exception 42)))");
+                            "(catch java.lang.ArithmeticException e 0)" +
+                            "(catch java.lang.Exception e 42)))");
 
         assertASTEquals("L[ 42 ]", eval);
 
     }
 
     @Test
-    public void testTryBaseEx() throws Exception {
+    public void testTryBasicException() throws Exception {
 
         final List<Object> eval = eval(
                 "(try " +
                         "(/ 1 0)" +
-                        "((catch java.lang.Exception 42)))");
+                        "((catch java.lang.Exception e e)))");
+
+        assertASTEquals("L[ java.lang.ArithmeticException: / by zero ]", eval);
     }
 
     @Test(expected = ClassNotFoundException.class)
@@ -67,6 +69,13 @@ public class JavaFormsTest extends AbstractFormTest{
         final List<Object> eval = eval(
                 "(try " +
                         "(/ 1 0)" +
-                        "((catch java.lang.BadbadException 42)))");
+                        "((catch java.lang.BadbadException oO 42)))");
+    }
+
+    @Test
+    public void testCall() throws Exception {
+
+        final List<Object> eval = eval("(call \"just an overlong hello world thingy blblbl\" length)");
+        assertASTEquals("L[ 42 ]", eval);
     }
 }
