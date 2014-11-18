@@ -49,29 +49,23 @@ public class JavaForms {
     }
 
     @Special
-    @Define("try") // (try <form> (catch <Exception> <form>)+)
+    @Define("try") // (try <form> (catch <Exception> <form>)+) // TODO where is the exception?!?
     public static Object tryForm(Interpreter interpreter, Context context, ListStruct args) throws Exception {
-        System.out.printf("args: %s%n", FormatHelper.formatAtom(args));
-
         final Object tryBlock = args.car();
         final ListStruct catchBlocks = TypeHelper.asList(args.cdar());
-
-        Object ret = null;
         try {
-            ret = interpreter.eval(tryBlock, context);
+            return interpreter.eval(tryBlock, context);
         } catch (Exception e) {
-            final String exName = e.getClass().getName();
+            final Class<?> exClazz = e.getClass();
             for (Object element : catchBlocks) {
                 final ListStruct listStruct = TypeHelper.asList(element);
                 Expectations.expectSymbolWithLiteral(listStruct.car(), "catch");
                 final SymbolStruct exClassSymbol = TypeHelper.asSymbol(listStruct.cdar());
-                if(exClassSymbol.literal.equals(exName)) {
+                if(Class.forName(exClassSymbol.literal).isAssignableFrom(exClazz)) {
                     return interpreter.eval(listStruct.cddar(), context);
                 }
             }
             throw e;
         }
-
-        return ret;
     }
 }

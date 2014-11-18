@@ -45,7 +45,7 @@ public class JavaFormsTest extends AbstractFormTest{
                 "(try " +
                     "(throw (new java.lang.Exception)) " +
                         "(" +
-                            "(catch java.lang.RuntimeException 0)" +
+                            "(catch java.lang.ArithmeticException 0)" +
                             "(catch java.lang.Exception 42)))");
 
         assertASTEquals("L[ 42 ]", eval);
@@ -58,6 +58,15 @@ public class JavaFormsTest extends AbstractFormTest{
         final List<Object> eval = eval(
                 "(try " +
                         "(/ 1 0)" +
-                        "((catch java.lang.ArithmeticException 42)))");
+                        "((catch java.lang.Exception 42)))");
+    }
+
+    @Test(expected = ClassNotFoundException.class)
+    public void testBadException() throws Exception {
+
+        final List<Object> eval = eval(
+                "(try " +
+                        "(/ 1 0)" +
+                        "((catch java.lang.BadbadException 42)))");
     }
 }
