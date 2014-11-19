@@ -84,17 +84,24 @@ public class BackquoteTest extends AbstractFormTest {
     }
 
     @Test
-    public void testSpliceEval() throws Exception {
+    public void testSpliceComma() throws Exception {
         final String code = "`(a @(,(+ 1 1) c))";
         final List<Object> evaluated = eval(code);
         AbstractFormTest.assertASTEquals("L[ ( a 2 c ) ]", evaluated);
     }
 
     @Test
-    public void testSpliceEvalComplex() throws Exception {
-        final String code = "`(1 ,(+ 1 1) @(3 ,(+ @(2 2))))";
+    public void testSplice42() throws Exception {
+        final String code = "`,(+ @(-2 -1 1 2 3 4 5 6 7 8 9))";
         final List<Object> evaluated = eval(code);
-        AbstractFormTest.assertASTEquals("L[ ( 1 2 3 4 ) ]", evaluated);
+        AbstractFormTest.assertASTEquals("L[ 42 ]", evaluated);
+    }
+
+    @Test
+    public void testSpliceEvalComplex() throws Exception {
+        final String code = "(eval `(+,(- -1 1) -1 1 ,(+ 1 1) @(3 ,(+ @(2 2)),(+ @(2 1)2),(+@(2 1)@(2 1)),(+ 4 @(2 1)),(+ 4 4),(+ 5 4))))";
+        final List<Object> evaluated = eval(code);
+        AbstractFormTest.assertASTEquals("L[ 42 ]", evaluated);
     }
 
 }
