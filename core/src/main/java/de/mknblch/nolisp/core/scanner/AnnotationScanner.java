@@ -11,6 +11,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,6 +22,23 @@ import java.util.Map;
  * @author mknblch
  */
 public class AnnotationScanner {
+
+    public static void dumpFunctions(Class<?>... classes) throws FunctionDefinitionException {
+        for (Class<?> clazz : classes) {
+            final String simpleName = clazz.getSimpleName();
+            final Method[] declaredMethods = clazz.getDeclaredMethods();
+            for (final Method method : declaredMethods) {
+                final Define annotation = method.getAnnotation(Define.class);
+                if (isNonSpecialForm(method)) {
+                    System.out.printf("<form>: %s.%s%n", simpleName, Arrays.toString(annotation.value()));
+                } else if (isSpecialForm(method)) {
+                    System.out.printf("<special>: %s.%s%n", simpleName, Arrays.toString(annotation.value()));
+
+                }
+            }
+        }
+    }
+
 
     public static Map<String, Object> scanForFunctions(Class<?>... classes) throws FunctionDefinitionException {
         final Map<String, Object> functions = new HashMap<String, Object>();
