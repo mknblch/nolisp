@@ -4,6 +4,7 @@ import de.mknblch.nolisp.core.common.Expectations;
 import de.mknblch.nolisp.core.common.FormatHelper;
 import de.mknblch.nolisp.core.common.TypeHelper;
 import de.mknblch.nolisp.core.interpreter.Context;
+import de.mknblch.nolisp.core.interpreter.EvaluationException;
 import de.mknblch.nolisp.core.interpreter.Interpreter;
 import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
 import de.mknblch.nolisp.core.interpreter.structs.SymbolStruct;
@@ -13,11 +14,15 @@ import de.mknblch.nolisp.core.scanner.Special;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author mknblch
  */
 public class JavaForms {
+
+    public static final Pattern CLASS_METHOD_PATTERN = Pattern.compile("(.+)\\.(.+)");
 
     @Special
     @Define("new") // (new java.lang.Integer [ ( args+ ) ] )
@@ -77,25 +82,47 @@ public class JavaForms {
     @Special
     @Define("call") // (call <form> method-name [(<arg>+)])
     public static Object call(Interpreter interpreter, Context context, ListStruct args) throws Exception {
-
-        System.out.printf("args: %s%n", FormatHelper.formatAtom(args));
-
         final Object obj = interpreter.eval(args.car(), context);
         final String methodName = TypeHelper.symbolLiteral(args.cdar());
         final Object methodArgsRaw = args.cddar();
-
         if (null == methodArgsRaw) {
             return obj.getClass().getDeclaredMethod(methodName).invoke(obj);
         }
+        final ListStruct methodArgs = TypeHelper.asList(methodArgsRaw);
         final ArrayList<Class> argTypes = new ArrayList<Class>();
         final ArrayList<Object> argValues = new ArrayList<Object>();
-        for (Object arg : args) {
+        for (Object arg : methodArgs) {
             final Object evaluated = interpreter.eval(arg, context);
             argTypes.add(evaluated.getClass());
             argValues.add(evaluated);
         }
         final Method method = obj.getClass().getDeclaredMethod(methodName, argTypes.toArray(new Class<?>[]{}));
         return method.invoke(obj, argValues.toArray());
+    }
+
+    @Special
+    @Define({"call-static"}) // (call class.method [(<arg>+)])
+    public static Object callStatic(Interpreter interpreter, Context context, ListStruct args) throws Exception {
+        final String fqName = TypeHelper.symbolLiteral(args.car());
+        final Matcher matcher = CLASS_METHOD_PATTERN.matcher(fqName);
+        if(!matcher.matches()) throw new EvaluationException("Invalid class name in static method call.");
+        final String fqClassName = matcher.group(1);
+        final String methodName = matcher.group(2);
+        final Class<?> clazz = Class.forName(fqClassName);
+        final Object methodArgsRaw = args.cdar();
+        if (null == methodArgsRaw) {
+            return clazz.getMethod(methodName).invoke(null);
+        }
+        final ListStruct methodArgs = TypeHelper.asList(methodArgsRaw);
+        final ArrayList<Class> argTypes = new ArrayList<Class>();
+        final ArrayList<Object> argValues = new ArrayList<Object>();
+        for (Object arg : methodArgs) {
+            final Object evaluated = interpreter.eval(arg, context);
+            argTypes.add(evaluated.getClass());
+            argValues.add(evaluated);
+        }
+        final Method method = clazz.getDeclaredMethod(methodName, argTypes.toArray(new Class<?>[]{}));
+        return method.invoke(null, argValues.toArray());
     }
 
 }
