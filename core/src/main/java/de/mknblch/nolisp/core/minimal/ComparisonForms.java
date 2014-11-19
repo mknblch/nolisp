@@ -12,30 +12,30 @@ import de.mknblch.nolisp.core.scanner.Define;
 public class ComparisonForms {
 
     @Define("==")
-    public static Object equal(Context context, ListStruct args) throws Exception {
+    public static Object equal(ListStruct args) throws Exception {
         return equal(args.car(), args.cdar());
     }
 
     @Define(">")
-    public static Object greater(Context context, ListStruct args) throws Exception {
+    public static Object greater(ListStruct args) throws Exception {
         Expectations.expectCdr(args);
         return greater(args.car(), args.cdar());
     }
 
     @Define(">=")
-    public static Object greaterEqual(Context context, ListStruct args) throws Exception {
+    public static Object greaterEqual(ListStruct args) throws Exception {
         Expectations.expectCdr(args);
         return greaterEqual(args.car(), args.cdar());
     }
 
     @Define("<")
-    public static Object lower(Context context, ListStruct args) throws Exception {
+    public static Object lower(ListStruct args) throws Exception {
         Expectations.expectCdr(args);
         return lower(args.car(), args.cdar());
     }
 
     @Define("<=")
-    public static Object lowerEqual(Context context, ListStruct args) throws Exception {
+    public static Object lowerEqual(ListStruct args) throws Exception {
         Expectations.expectCdr(args);
         return lowerEqual(args.car(), args.cdar());
     }

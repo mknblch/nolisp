@@ -118,9 +118,9 @@ public class AnnotationScanner {
     public static Form wrapNonSpecialForm(final Method method, final String symbol) {
         return new FormAdapter() {
             @Override
-            public Object eval(Context context, ListStruct args) throws Exception {
+            public Object eval(ListStruct args) throws Exception {
                 try {
-                    return method.invoke(null, context, args);
+                    return method.invoke(null, args);
                 } catch (InvocationTargetException e) {
                     throw unwrapInvocationException(e);
                 }
@@ -170,12 +170,12 @@ public class AnnotationScanner {
         if (!Modifier.isStatic(method.getModifiers()))
             throw new FunctionDefinitionException("Invalid signature - METHOD must be static");
         final Class<?>[] types = method.getParameterTypes();
-        if (
-                2 != types.length ||
-                        !ListStruct.class.equals(types[1]) ||
-                        !Context.class.equals(types[0])) throw new FunctionDefinitionException(String.format(
-                "Invalid method signature in '%s.%s(..)'. Expected: 'scanner(env:Context, args:ListStruct):Object'",
-                method.getDeclaringClass().getSimpleName(), method.getName()));
+
+        if (1 != types.length || !ListStruct.class.equals(types[0])) {
+            throw new FunctionDefinitionException(String.format(
+                    "Invalid method signature in '%s.%s(..)'. Expected: 'scanner(env:Context, args:ListStruct):Object'",
+                    method.getDeclaringClass().getSimpleName(), method.getName()));
+        }
 
         return true;
     }

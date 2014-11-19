@@ -12,25 +12,25 @@ import de.mknblch.nolisp.core.scanner.Define;
 public class ConsoleForms {
 
     @Define("print")
-    public static Object print(Context context, ListStruct args) throws Exception {
+    public static Object print(ListStruct args) throws Exception {
         System.out.println(args.car());
         return args.car();
     }
 
     @Define("pprint")
-    public static Object pprint(Context context, ListStruct args) throws Exception {
+    public static Object pprint(ListStruct args) throws Exception {
         System.out.println(FormatHelper.formatPretty(args.car()));
         return args.car();
     }
 
     @Define("sprint")
-    public static Object sprint(Context context, ListStruct args) throws Exception {
+    public static Object sprint(ListStruct args) throws Exception {
         System.out.println(FormatHelper.formatAsSExpression(args));
         return args.car();
     }
 
     @Define("printf")
-    public static Object printf(Context context, ListStruct args) throws Exception {
+    public static Object printf(ListStruct args) throws Exception {
         final String format = TypeHelper.asString(args.car());
         final int size = args.size() - 1;
         final Object[] objects = new Object[size];

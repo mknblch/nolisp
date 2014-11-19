@@ -46,9 +46,9 @@ public class CoreInterpreter implements Interpreter {
             throw new EvaluationException(String.format("Procedure application: expected procedure, given: nil"));
         } else if (func instanceof Form) {
             // each argument of Forms must be evaluated before function call
-            return ((Form) func).eval(context, evalEach(list.cdr(), context));
+            return ((Form) func).eval(evalEach(list.cdr(), context));
         } else if (func instanceof SpecialForm) {
-            // arguments of SpecialForms must NOT be evaluated before call
+            // specialForms get their arguments as unevaluated AST
             return ((SpecialForm) func).eval(this, context, list.cdr());
         } else {
             throw new EvaluationException(String.format("Procedure application: expected procedure, given: %s:%s", func, func.getClass().getName()));

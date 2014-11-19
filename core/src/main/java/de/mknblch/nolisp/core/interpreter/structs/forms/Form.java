@@ -9,5 +9,5 @@ import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
  */
 public interface Form extends Atom {
 
-    public abstract Object eval(Context context, ListStruct args) throws Exception;
+    public abstract Object eval(ListStruct args) throws Exception;
 }

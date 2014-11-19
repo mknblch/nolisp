@@ -50,7 +50,7 @@ public class JavaForms {
     }
 
     @Define("throw") // (throw <exception>)
-    public static Object throwException(Context parentScope, ListStruct args) throws Exception {
+    public static Object throwException(ListStruct args) throws Exception {
         throw TypeHelper.asException(args.car());
     }
 

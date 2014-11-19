@@ -15,22 +15,25 @@ public class LambdaForm implements Form {
     private final Interpreter interpreter;
     private final List<String> symbols;
     private final Object form;
+    private final Context context;
 
-    public LambdaForm(Interpreter interpreter, List<String> formSymbols, Object form) {
+    public LambdaForm(Interpreter interpreter, Context context, List<String> formSymbols, Object form) {
         this.interpreter = interpreter;
+        this.context = context;
         this.symbols = formSymbols;
         this.form = form;
     }
 
     @Override
-    public Object eval(Context context, ListStruct args) throws Exception {
-        final Context localContext = context.derive(); // TODO move to definition scope ??
+    public Object eval(ListStruct args) throws Exception {
+        // derive local scope context
+        final Context executionContext = context.derive();
+        // bind this to context
+        executionContext.bind("this", this);
         // bind args to context
-        bind(interpreter, context, localContext, symbols, args);
-        // bind this
-        localContext.bind("this", this);
-        // eval with local
-        return interpreter.eval(form, localContext);
+        bind(executionContext, symbols, args);
+        // eval
+        return interpreter.eval(form, executionContext);
     }
 
     @Override
@@ -47,23 +50,22 @@ public class LambdaForm implements Form {
     }
 
     /**
-     * bind each argument in args with key at args index in symbols to the local context by evaluating it in the
-     * definition scope context. (TODO REVIEW)
+     * bind each argument to the symbol associated to its position
      */
-    private static void bind(Interpreter interpreter,
-                             Context parentContext,
-                             Context localContext,
-                             List<String> symbols,
-                             ListStruct args) throws Exception {
+    private static void bind(Context context, List<String> symbols, ListStruct values) throws Exception {
 
-        ListStruct temp = args;
+        ListStruct temp = values;
         for (int i = 0; i < symbols.size(); i++) {
             if (null == temp) {
                 throw new EvaluationException(String.format(
                         "procedure expects %d arguments, given %d", symbols.size(), i));
             }
-            localContext.bind(symbols.get(i), interpreter.eval(temp.car(), parentContext));
+            context.bind(symbols.get(i), temp.car());
             temp = temp.cdr();
+        }
+        if (null != temp) {
+            throw new EvaluationException(String.format(
+                    "procedure expects %d arguments, given %d", symbols.size(), values.size()));
         }
     }
 }

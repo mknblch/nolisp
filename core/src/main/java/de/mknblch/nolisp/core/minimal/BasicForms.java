@@ -53,7 +53,7 @@ public class BasicForms {
     }
 
     @Define("list")
-    public static Object list(Context context, ListStruct args) throws EvaluationException {
+    public static Object list(ListStruct args) throws EvaluationException {
         return args;
     }
 
@@ -91,7 +91,7 @@ public class BasicForms {
     }
 
     @Define("progn") // (progn 1 2 3) => 3
-    public static Object progn(Context parentScope, ListStruct args) throws Exception {
+    public static Object progn(ListStruct args) throws Exception {
         if (null == args) {
             return null;
         }

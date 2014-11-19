@@ -33,7 +33,7 @@ public class PredicateForms {
     }
 
     @Define("null?")
-    public static Object isNull(Context context, ListStruct args) {
+    public static Object isNull(ListStruct args) {
         return null == args.car();
     }
 
@@ -48,17 +48,17 @@ public class PredicateForms {
     }
 
     @Define("int?")
-    public static Object isInt(Context context, ListStruct args) {
+    public static Object isInt(ListStruct args) {
         return args.car() instanceof Integer;
     }
 
     @Define("real?")
-    public static Object isReal(Context context, ListStruct args) {
+    public static Object isReal(ListStruct args) {
         return args.car() instanceof Double;
     }
 
     @Define("string?")
-    public static Object isString(Context context, ListStruct args) {
+    public static Object isString(ListStruct args) {
         return args.car() instanceof String;
     }
 

@@ -19,19 +19,19 @@ public class LambdaForms {
 
     @Special
     @Define("lambda") // ((lambda (a) (+ a 1)) 1) => 2
-    public static Object lambda(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
+    public static Object lambda(Interpreter interpreter, Context context, ListStruct args) throws Exception {
         Expectations.expectCdr(args);
-        return new LambdaForm(interpreter, TypeHelper.symbolList(args.car()), args.cdar());
+        return new LambdaForm(interpreter, context, TypeHelper.symbolList(args.car()), args.cdar());
     }
 
     @Special
     @Define("defun") // (defun bla (a) (+ a 1) ) => form
-    public static Object defun(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
+    public static Object defun(Interpreter interpreter, Context context, ListStruct args) throws Exception {
         Expectations.expectCdr(args);
         final String functionName = TypeHelper.symbolLiteral(args.car());
         final List<String> symbols = TypeHelper.symbolList(args.cdar());
-        final LambdaForm lambda = new LambdaForm(interpreter, symbols, args.cddar());
-        parentContext.bindGlobal(functionName, lambda);
+        final LambdaForm lambda = new LambdaForm(interpreter, context, symbols, args.cddar());
+        context.bindGlobal(functionName, lambda);
         return lambda;
     }
 
@@ -51,7 +51,7 @@ public class LambdaForms {
         Object ret = interpreter.eval(args.cdar(), parentContext);
         ListStruct rest = args.cddr();
         for (Object o : rest) {
-            ret = form.eval(parentContext, new ListStruct(ret, interpreter.eval(o, parentContext)));
+            ret = form.eval(new ListStruct(ret, interpreter.eval(o, parentContext)));
         }
         return ret;
     }

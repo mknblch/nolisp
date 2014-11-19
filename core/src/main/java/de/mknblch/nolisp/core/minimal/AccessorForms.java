@@ -13,29 +13,29 @@ import static de.mknblch.nolisp.core.common.TypeHelper.*;
 public class AccessorForms {
 
     @Define("car")
-    public static Object car(Context context, ListStruct args) throws Exception {
+    public static Object car(ListStruct args) throws Exception {
         return asList(args.car()).car();
     }
 
     @Define("nth")
-    public static Object nth(Context context, ListStruct args) throws Exception {
+    public static Object nth(ListStruct args) throws Exception {
 
         return asList(args.cdar()).nth(asInt(args.car()));
     }
 
     @Define("cdr")
-    public static Object cdr(Context context, ListStruct args) throws Exception {
+    public static Object cdr(ListStruct args) throws Exception {
         return asList(args.car()).cdr();
     }
 
     @Define("nthcdr")
-    public static Object nthcdr(Context context, ListStruct args) throws Exception {
+    public static Object nthcdr(ListStruct args) throws Exception {
 
         return asList(args.cdar()).nthcdr(asInt(args.car()));
     }
 
     @Define("cons")
-    public static Object cons(Context context, ListStruct args) throws Exception {
+    public static Object cons(ListStruct args) throws Exception {
         Expectations.expectCdr(args);
         final Object car = args.car();
         final Object cdar = args.cdar();
