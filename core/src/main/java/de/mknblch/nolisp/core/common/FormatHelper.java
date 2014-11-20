@@ -71,7 +71,7 @@ public class FormatHelper {
                 return String.format("( %s )", sb.toString());
             case LAMBDA:
                 final LambdaForm lambda = (LambdaForm) atom;
-                return String.format("#<LAMBDA> (%s) %s", formatSymbols(lambda.getArgumentSymbols()), formatPretty(lambda.getForm()));
+                return String.format("#<LAMBDA> %s %s", formatPretty(lambda.getArgumentSymbols()), formatPretty(lambda.getForm()));
             case MACRO:
                 final MacroForm macro = (MacroForm) atom;
                 return String.format("#<MACRO> (%s) %s", formatSymbols(macro.getArgumentSymbols()), formatPretty(macro.getForms()));
@@ -116,7 +116,7 @@ public class FormatHelper {
                 return String.format("( %s )", buffer.toString());
             case LAMBDA:
                 final LambdaForm lambda = (LambdaForm) atom;
-                return String.format("#<LAMBDA> (%s) %s", formatSymbols(lambda.getArgumentSymbols()), formatAtom(lambda.getForm()));
+                return String.format("#<LAMBDA> (%s) %s", lambda.getArgumentSymbols(), formatAtom(lambda.getForm()));
             case MACRO:
                 final MacroForm macro = (MacroForm) atom;
                 return String.format("#<MACRO> (%s) %s", formatSymbols(macro.getArgumentSymbols()), formatPretty(macro.getForms()));

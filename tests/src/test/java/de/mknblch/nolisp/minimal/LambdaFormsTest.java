@@ -88,7 +88,7 @@ public class LambdaFormsTest extends AbstractFormTest {
     public void testEvalLambda() throws Exception {
         final String code = "(eval (lambda (x) (* 2 x)))";
         final List<Object> result = eval(code);
-        AbstractFormTest.assertASTEquals("#<LAMBDA> (x) ( * 2 x )", result.get(0));
+        AbstractFormTest.assertASTEquals("#<LAMBDA> ( x ) ( * 2 x )", result.get(0));
     }
 
     @Test
@@ -124,7 +124,7 @@ public class LambdaFormsTest extends AbstractFormTest {
         Assert.assertEquals(3, result.get(0));
     }
 
-    @Test
+    @Test // TODO possible bug in rest list isEmpty & size & iterator
     public void testEmptyLambda() throws Exception {
         List<Object> result = eval("( (lambda () 1) )");
         dump(result);

@@ -9,7 +9,7 @@ import java.util.Iterator;
  */
 public class ListStruct implements Atom, Iterable {
 
-    private boolean isEmptyList = false;
+    private boolean isEmptyList = true;
     private Object car = null;
     private ListStruct cdr = null;
 
@@ -17,6 +17,7 @@ public class ListStruct implements Atom, Iterable {
      * constructs an empty list
      */
     public ListStruct(Object car, Object... rest) {
+        this.isEmptyList = false;
         this.car = car;
         for (int i = 0; i < rest.length; i++) {
             append(rest[i]);
@@ -45,6 +46,9 @@ public class ListStruct implements Atom, Iterable {
         return temp;
     }
 
+    public boolean isEmpty() {
+        return isEmptyList;
+    }
 
     /**
      * add element to the list if:

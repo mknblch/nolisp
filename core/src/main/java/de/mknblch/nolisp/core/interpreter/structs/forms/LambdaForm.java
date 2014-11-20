@@ -1,11 +1,15 @@
 package de.mknblch.nolisp.core.interpreter.structs.forms;
 
+import de.mknblch.nolisp.core.common.Expectations;
+import de.mknblch.nolisp.core.common.TypeHelper;
 import de.mknblch.nolisp.core.interpreter.Context;
 import de.mknblch.nolisp.core.interpreter.EvaluationException;
 import de.mknblch.nolisp.core.interpreter.Interpreter;
 import de.mknblch.nolisp.core.interpreter.structs.Atom;
 import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
+import de.mknblch.nolisp.core.interpreter.structs.SymbolStruct;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -13,14 +17,14 @@ import java.util.List;
  */
 public class LambdaForm implements Form {
     private final Interpreter interpreter;
-    private final List<String> symbols;
+    private final ListStruct symbols;
     private final Object form;
     private final Context context;
 
-    public LambdaForm(Interpreter interpreter, Context context, List<String> formSymbols, Object form) {
+    public LambdaForm(Interpreter interpreter, Context context, ListStruct symbols, Object form) {
         this.interpreter = interpreter;
         this.context = context;
-        this.symbols = formSymbols;
+        this.symbols = symbols;
         this.form = form;
     }
 
@@ -41,7 +45,7 @@ public class LambdaForm implements Form {
         return Atom.Type.LAMBDA;
     }
 
-    public List<String> getArgumentSymbols() {
+    public ListStruct getArgumentSymbols() {
         return symbols;
     }
 
@@ -52,18 +56,20 @@ public class LambdaForm implements Form {
     /**
      * bind each argument to the symbol associated to its position
      */
-    private static void bind(Context context, List<String> symbols, ListStruct values) throws Exception {
+    private static void bind(Context context, ListStruct symbols, ListStruct values) throws Exception {
 
-        ListStruct temp = values;
-        for (int i = 0; i < symbols.size(); i++) {
-            if (null == temp) {
-                throw new EvaluationException(String.format(
-                        "procedure expects %d arguments, given %d", symbols.size(), i));
-            }
-            context.bind(symbols.get(i), temp.car());
-            temp = temp.cdr();
+        final Iterator symIt = symbols.iterator();
+
+        if(!symIt.hasNext()) {
+            Expectations.expectNull(values);
+            return;
         }
-        if (null != temp) {
+        Expectations.expectNotNull(values);
+        final Iterator valIt = values.iterator();
+        while (symIt.hasNext() && valIt.hasNext()) {
+            context.bind(TypeHelper.symbolLiteral(symIt.next()), valIt.next());
+        }
+        if(symIt.hasNext() ^ valIt.hasNext()) {
             throw new EvaluationException(String.format(
                     "procedure expects %d arguments, given %d", symbols.size(), values.size()));
         }

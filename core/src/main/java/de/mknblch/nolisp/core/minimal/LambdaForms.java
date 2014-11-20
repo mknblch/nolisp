@@ -21,28 +21,25 @@ public class LambdaForms {
     @Define("lambda") // ((lambda (a) (+ a 1)) 1) => 2
     public static Object lambda(Interpreter interpreter, Context context, ListStruct args) throws Exception {
         Expectations.expectCdr(args);
-        return new LambdaForm(interpreter, context, TypeHelper.symbolList(args.car()), args.cdar());
+        return new LambdaForm(interpreter, context, TypeHelper.asList(args.car()), args.cdar());
     }
 
     @Define("lbody") // (lbody (lambda (a) (+ a 1))) => (+ a 1)
     public static Object lbody(ListStruct args) throws Exception {
-        final LambdaForm lambda = TypeHelper.asLambda(args.car());
-        return lambda.getForm();
+        return TypeHelper.asLambda(args.car()).getForm();
     }
 
     @Define("largs") // (lbody (lambda (a) (+ a 1))) => (+ a 1)
     public static Object largs(ListStruct args) throws Exception {
-        final LambdaForm lambda = TypeHelper.asLambda(args.car());
-        return TypeHelper.javaListToListStruct(lambda.getArgumentSymbols());
-    }
+        return TypeHelper.asLambda(args.car()).getArgumentSymbols();
+}
 
     @Special
     @Define("defun") // (defun bla (a) (+ a 1) ) => form
     public static Object defun(Interpreter interpreter, Context context, ListStruct args) throws Exception {
         Expectations.expectCdr(args);
         final String functionName = TypeHelper.symbolLiteral(args.car());
-        final List<String> symbols = TypeHelper.symbolList(args.cdar());
-        final LambdaForm lambda = new LambdaForm(interpreter, context, symbols, args.cddar());
+        final LambdaForm lambda = new LambdaForm(interpreter, context, TypeHelper.asList(args.cdar()), args.cddar());
         context.bindGlobal(functionName, lambda);
         return lambda;
     }
