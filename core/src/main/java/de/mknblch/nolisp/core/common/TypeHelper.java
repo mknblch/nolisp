@@ -6,7 +6,6 @@ import de.mknblch.nolisp.core.interpreter.structs.SymbolStruct;
 import de.mknblch.nolisp.core.interpreter.structs.forms.Form;
 import de.mknblch.nolisp.core.interpreter.structs.forms.LambdaForm;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 

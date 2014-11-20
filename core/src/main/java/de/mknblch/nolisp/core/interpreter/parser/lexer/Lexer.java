@@ -5,15 +5,15 @@ package de.mknblch.nolisp.core.interpreter.parser.lexer;
  */
 public class Lexer extends StringCutter {
 
-    public static final char[] IGNORE_CHARS = new char[]{' ', '\t', '\r'};
-    public static final char[] NEWLINE_CHARS = new char[]{'\n'};
-    public static final char[] SPECIAL_TOKEN_CHARS = new char[]{'(', ')', '\'', '#', '`', ',', '@'};
+    private static final char[] IGNORE_CHARS = new char[]{' ', '\t', '\r'};
+    private static final char[] NEWLINE_CHARS = new char[]{'\n'};
+    private static final char[] SPECIAL_TOKEN_CHARS = new char[]{'(', ')', '\'', '#', '`', ',', '@'};
 
-    public static final String INT_REGEX = "^\\-?[0-9]+$";
-    public static final String REAL_REGEX = "^\\-?[0-9]+\\.[0-9]+$";
-    public static final String NIL_REGEX = "^(nil)|(NIL)|(null)|(NULL)$";
-    public static final String TRUE_REGEX = "^(true)|(TRUE)$";
-    public static final String FALSE_REGEX = "^(false)|(FALSE)$";
+    private static final String INT_REGEX = "^\\-?[0-9]+$";
+    private static final String REAL_REGEX = "^\\-?[0-9]+\\.[0-9]+$";
+    private static final String NIL_REGEX = "^(nil)|(NIL)|(null)|(NULL)$";
+    private static final String TRUE_REGEX = "^(true)|(TRUE)$";
+    private static final String FALSE_REGEX = "^(false)|(FALSE)$";
 
     public Lexer() {
     }
@@ -79,7 +79,7 @@ public class Lexer extends StringCutter {
     }
 
     private String tokenizeString() throws LexerException {
-        final StringBuffer buffer = new StringBuffer();
+        final StringBuilder buffer = new StringBuilder();
         while (true) {
             if (!hasNext()) {
                 throw new LexerException("Premature end of string.");

@@ -1,7 +1,6 @@
 package de.mknblch.nolisp.core.minimal;
 
 import de.mknblch.nolisp.core.common.Expectations;
-import de.mknblch.nolisp.core.interpreter.Context;
 import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
 import de.mknblch.nolisp.core.scanner.Define;
 
@@ -13,7 +12,7 @@ import static de.mknblch.nolisp.core.common.TypeHelper.*;
 public class AccessorForms {
 
     @Define("append")
-    public static Object append(ListStruct args) throws Exception {
+    public static Object append(ListStruct args) {
 
         final ListStruct ret = new ListStruct();
 

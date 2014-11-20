@@ -2,7 +2,6 @@ package de.mknblch.nolisp.core.minimal;
 
 import de.mknblch.nolisp.core.common.FormatHelper;
 import de.mknblch.nolisp.core.common.TypeHelper;
-import de.mknblch.nolisp.core.interpreter.Context;
 import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
 import de.mknblch.nolisp.core.scanner.Define;
 

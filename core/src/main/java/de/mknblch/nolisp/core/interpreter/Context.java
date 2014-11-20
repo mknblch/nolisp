@@ -1,7 +1,5 @@
 package de.mknblch.nolisp.core.interpreter;
 
-import de.mknblch.nolisp.core.scanner.FunctionDefinitionException;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -21,7 +19,7 @@ public class Context {
     private final HashMap<String, Object> map;
     private final boolean global;
 
-    public Context(Language language) throws FunctionDefinitionException {
+    public Context(Language language) {
         this.global = true;
         this.parent = null;
         this.map = new HashMap<>();

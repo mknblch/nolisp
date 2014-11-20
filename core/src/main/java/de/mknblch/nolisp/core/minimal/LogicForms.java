@@ -1,7 +1,6 @@
 package de.mknblch.nolisp.core.minimal;
 
 import de.mknblch.nolisp.core.common.TypeHelper;
-import de.mknblch.nolisp.core.interpreter.Context;
 import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
 import de.mknblch.nolisp.core.scanner.Define;
 
@@ -11,7 +10,7 @@ import de.mknblch.nolisp.core.scanner.Define;
 public class LogicForms {
 
     @Define("and")
-    public static Object and(ListStruct args) throws Exception {
+    public static Object and(ListStruct args) {
         for (Object arg : args) {
             if (!TypeHelper.asBoolean(arg)) return false;
         }
@@ -19,7 +18,7 @@ public class LogicForms {
     }
 
     @Define("or")
-    public static Object or(ListStruct args) throws Exception {
+    public static Object or(ListStruct args) {
         for (Object arg : args) {
             if (TypeHelper.asBoolean(arg)) return true;
         }
@@ -27,12 +26,12 @@ public class LogicForms {
     }
 
     @Define("xor")
-    public static Object xor(ListStruct args) throws Exception {
+    public static Object xor(ListStruct args) {
         return TypeHelper.asBoolean(args.car()) ^ TypeHelper.asBoolean(args.cdar());
     }
 
     @Define("not")
-    public static Object not(ListStruct args) throws Exception {
+    public static Object not(ListStruct args) {
         return !TypeHelper.asBoolean(args.car());
     }
 }

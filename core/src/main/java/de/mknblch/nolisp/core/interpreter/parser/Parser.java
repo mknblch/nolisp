@@ -19,14 +19,14 @@ public class Parser {
 
     private static final SpliceRule SPLICE_RULE = new SpliceRule();
 
-    public static final Atom END_STRUCT = new Atom() {
+    private static final Atom END_STRUCT = new Atom() {
         @Override
         public Type getType() {
             return null;
         }
     };
 
-    public static final Atom COMMENT_STRUCT = new Atom() {
+    private static final Atom COMMENT_STRUCT = new Atom() {
         @Override
         public Type getType() {
             return null;

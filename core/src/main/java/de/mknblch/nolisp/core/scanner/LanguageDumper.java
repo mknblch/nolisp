@@ -26,7 +26,7 @@ public class LanguageDumper {
             }
             return r;
         }
-    };
+    }
 
     public static void dump (Class<?>... classes) throws FunctionDefinitionException {
         System.out.println(export(classes));
@@ -54,7 +54,7 @@ public class LanguageDumper {
         }
 
         // export
-        final StringBuffer buffer = new StringBuffer();
+        final StringBuilder buffer = new StringBuilder();
         buffer.append(String.format("Special Forms [%02d]%n", specialForms.size()));
         for (String sourceClass : specialForms.keySet()) {
             buffer.append(String.format("\t%s:%n", sourceClass));

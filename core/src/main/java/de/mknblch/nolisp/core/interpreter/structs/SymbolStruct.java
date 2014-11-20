@@ -19,8 +19,7 @@ public class SymbolStruct implements Atom {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        return literal.equals(((SymbolStruct) o).literal);
+        return !(o == null || getClass() != o.getClass()) && literal.equals(((SymbolStruct) o).literal);
     }
 
     @Override

@@ -3,7 +3,6 @@ package de.mknblch.nolisp.core.minimal;
 import de.mknblch.nolisp.core.common.Expectations;
 import de.mknblch.nolisp.core.common.TypeHelper;
 import de.mknblch.nolisp.core.interpreter.Context;
-import de.mknblch.nolisp.core.interpreter.EvaluationException;
 import de.mknblch.nolisp.core.interpreter.Interpreter;
 import de.mknblch.nolisp.core.interpreter.structs.Atom;
 import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
@@ -26,10 +25,9 @@ public class PredicateForms {
         return equal(a, b);
     }
 
-    public static Object equal(Object a, Object b) {
+    private static Object equal(Object a, Object b) {
         if (null == a && null == b) return true;
-        if (null == a) return false;
-        return null != b && a.equals(b);
+        return null != a && null != b && a.equals(b);
     }
 
     @Define("null?")

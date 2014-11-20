@@ -1,7 +1,6 @@
 package de.mknblch.nolisp.core.minimal;
 
 import de.mknblch.nolisp.core.common.Expectations;
-import de.mknblch.nolisp.core.common.FormatHelper;
 import de.mknblch.nolisp.core.common.TypeHelper;
 import de.mknblch.nolisp.core.interpreter.Context;
 import de.mknblch.nolisp.core.interpreter.EvaluationException;
@@ -22,7 +21,7 @@ import java.util.regex.Pattern;
  */
 public class JavaForms {
 
-    public static final Pattern CLASS_METHOD_PATTERN = Pattern.compile("(.+)\\.(.+)");
+    private static final Pattern CLASS_METHOD_PATTERN = Pattern.compile("(.+)\\.(.+)");
 
     @Special
     @Define("new") // (new java.lang.Integer [ ( args+ ) ] )
@@ -45,7 +44,7 @@ public class JavaForms {
             classes.add(evaluated.getClass());
             initArgs.add(evaluated);
         }
-        final Constructor<?> declaredConstructor = clazz.getDeclaredConstructor(classes.toArray(new Class<?>[]{}));
+        final Constructor<?> declaredConstructor = clazz.getDeclaredConstructor(classes.toArray(new Class<?>[classes.size()]));
         return declaredConstructor.newInstance(initArgs.toArray());
     }
 
@@ -121,7 +120,7 @@ public class JavaForms {
             argTypes.add(evaluated.getClass());
             argValues.add(evaluated);
         }
-        final Method method = clazz.getDeclaredMethod(methodName, argTypes.toArray(new Class<?>[]{}));
+        final Method method = clazz.getDeclaredMethod(methodName, argTypes.toArray(new Class<?>[argTypes.size()]));
         return method.invoke(null, argValues.toArray());
     }
 

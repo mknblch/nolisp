@@ -10,8 +10,6 @@ import de.mknblch.nolisp.core.interpreter.structs.forms.LambdaForm;
 import de.mknblch.nolisp.core.scanner.Define;
 import de.mknblch.nolisp.core.scanner.Special;
 
-import java.util.List;
-
 /**
  * @author mknblch
  */

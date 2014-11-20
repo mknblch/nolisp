@@ -61,8 +61,7 @@ public class Expectations {
 
     public static void expectNotNull(Object o) throws EvaluationException {
         if (null == o) {
-            throw new EvaluationException(
-                    String.format("Expected NOT NULL but was: %s", FormatHelper.formatAtom(o)));
+            throw new EvaluationException("Expected NOT NULL but was: null");
         }
     }
 

@@ -85,7 +85,7 @@ public class BackquoteTest extends AbstractFormTest {
 
     @Test
     public void testSpliceComma() throws Exception {
-        final String code = "`(a @(,(+ 1 1) c))";
+        final String code = "`(a .(,(+ 1 1) c))";
         final List<Object> evaluated = eval(code);
         AbstractFormTest.assertASTEquals("L[ ( a 2 c ) ]", evaluated);
     }

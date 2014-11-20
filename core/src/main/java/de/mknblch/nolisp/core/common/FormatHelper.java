@@ -16,7 +16,7 @@ public class FormatHelper {
 
     public static String formatContext(Context context, boolean addBuiltInForms) {
         final Set<String> keys = context.keySetGlobal();
-        final StringBuffer sb = new StringBuffer();
+        final StringBuilder sb = new StringBuilder();
         for (String key : keys) {
             try {
                 final Object obj = context.get(key);
@@ -44,7 +44,7 @@ public class FormatHelper {
         }
         //special case List<Object>
         if (obj instanceof List) {
-            final StringBuffer sb = new StringBuffer();
+            final StringBuilder sb = new StringBuilder();
             final List list = (List) obj;
             for (Object o : list) {
                 if (sb.length() > 0) sb.append(" ");
@@ -60,7 +60,7 @@ public class FormatHelper {
 
         switch (atom.getType()) {
             case LIST:
-                final StringBuffer sb = new StringBuffer();
+                final StringBuilder sb = new StringBuilder();
                 ListStruct temp = (ListStruct) obj;
                 do {
                     if (sb.length() > 0) sb.append(" ");
@@ -84,7 +84,7 @@ public class FormatHelper {
     }
 
     private static String formatSymbols(List<String> symbols) {
-        final StringBuffer sb = new StringBuffer();
+        final StringBuilder sb = new StringBuilder();
         for (String symbol : symbols) {
             if (sb.length() > 0) sb.append(" ");
             sb.append(symbol);
@@ -108,7 +108,7 @@ public class FormatHelper {
                 return String.format("%s:SYM", ((SymbolStruct) atom).literal);
             case LIST:
                 final ListStruct listStruct = (ListStruct) atom;
-                final StringBuffer buffer = new StringBuffer();
+                final StringBuilder buffer = new StringBuilder();
                 for (Object element : listStruct) {
                     if (buffer.length() > 0) buffer.append(", ");
                     buffer.append(formatAtom(element));

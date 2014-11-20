@@ -100,7 +100,7 @@ public class StringCutter {
      * @param c set of chars
      * @return true if a is element of c. false otherwise
      */
-    public static boolean E(char a, char[]... c) {
+    private static boolean E(char a, char[]... c) {
         for (char[] chs : c) {
             for (int i = 0; i < chs.length; i++) {
                 if (a == chs[i]) return true;

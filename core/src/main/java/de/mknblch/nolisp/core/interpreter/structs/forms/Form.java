@@ -1,6 +1,5 @@
 package de.mknblch.nolisp.core.interpreter.structs.forms;
 
-import de.mknblch.nolisp.core.interpreter.Context;
 import de.mknblch.nolisp.core.interpreter.structs.Atom;
 import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
 

@@ -1,17 +1,11 @@
 package de.mknblch.nolisp.core.interpreter.structs.forms;
 
-import de.mknblch.nolisp.core.common.Expectations;
-import de.mknblch.nolisp.core.common.FormatHelper;
 import de.mknblch.nolisp.core.common.TypeHelper;
 import de.mknblch.nolisp.core.interpreter.Context;
 import de.mknblch.nolisp.core.interpreter.EvaluationException;
 import de.mknblch.nolisp.core.interpreter.Interpreter;
 import de.mknblch.nolisp.core.interpreter.structs.Atom;
 import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
-import de.mknblch.nolisp.core.interpreter.structs.SymbolStruct;
-
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * @author mknblch
