@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import java.util.Iterator;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author mknblch
@@ -20,6 +22,27 @@ public class ListStructTest {
     @Test
     public void testGetType() throws Exception {
         assertEquals(Atom.Type.LIST, new ListStruct().getType());
+    }
+
+    @Test
+    public void testCTorRestSize() throws Exception {
+
+        final ListStruct listStruct = new ListStruct(1, 2);
+        assertFalse(listStruct.isEmpty());
+
+        final ListStruct cdr = listStruct.cdr();
+        assertFalse(cdr.isEmpty());
+
+    }
+
+    @Test
+    public void testEmptyCTorRestSize() throws Exception {
+
+        final ListStruct listStruct = new ListStruct();
+        listStruct.add(null);
+        listStruct.add(null);
+        assertEquals(2, listStruct.size());
+        assertFalse(listStruct.isEmpty());
     }
 
     @Test
@@ -83,9 +106,9 @@ public class ListStructTest {
         final ListStruct listStruct = new ListStruct("1", "2", "3");
         LOGGER.debug("Testing successors of '{}'", FormatHelper.formatAsSExpression(listStruct));
 
-        Assert.assertTrue(listStruct.hasSuccessor());
-        Assert.assertTrue(listStruct.cdr().hasSuccessor());
-        Assert.assertFalse(listStruct.cdr().cdr().hasSuccessor());
+        assertTrue(listStruct.hasSuccessor());
+        assertTrue(listStruct.cdr().hasSuccessor());
+        assertFalse(listStruct.cdr().cdr().hasSuccessor());
     }
 
     @Test
@@ -105,13 +128,13 @@ public class ListStructTest {
         LOGGER.debug("Testing iterator for '{}'", FormatHelper.formatAsSExpression(listStruct));
         final Iterator iterator = listStruct.iterator();
 
-        Assert.assertTrue(iterator.hasNext());
+        assertTrue(iterator.hasNext());
         assertEquals("1", iterator.next());
-        Assert.assertTrue(iterator.hasNext());
+        assertTrue(iterator.hasNext());
         assertEquals("2", iterator.next());
-        Assert.assertTrue(iterator.hasNext());
+        assertTrue(iterator.hasNext());
         assertEquals("3", iterator.next());
-        Assert.assertFalse(iterator.hasNext());
+        assertFalse(iterator.hasNext());
     }
 
     @Test
@@ -121,7 +144,7 @@ public class ListStructTest {
         LOGGER.debug("Testing iterator for '{}'", FormatHelper.formatAsSExpression(listStruct));
         final Iterator iterator = listStruct.iterator();
 
-        Assert.assertFalse(iterator.hasNext());
+        assertFalse(iterator.hasNext());
     }
 
     @Test
@@ -165,11 +188,11 @@ public class ListStructTest {
 
         final ListStruct listStruct = new ListStruct(null, 1, 2);
         Iterator iterator = listStruct.iterator();
-        Assert.assertTrue(iterator.hasNext());
+        assertTrue(iterator.hasNext());
         assertEquals(null, iterator.next());
-        Assert.assertTrue(iterator.hasNext());
+        assertTrue(iterator.hasNext());
         assertEquals(1, iterator.next());
-        Assert.assertTrue(iterator.hasNext());
+        assertTrue(iterator.hasNext());
         assertEquals(2, iterator.next());
     }
 

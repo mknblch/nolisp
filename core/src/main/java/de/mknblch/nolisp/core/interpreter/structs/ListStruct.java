@@ -13,11 +13,8 @@ public class ListStruct implements Atom, Iterable {
     private Object car = null;
     private ListStruct cdr = null;
 
-    /**
-     * constructs an empty list
-     */
     public ListStruct(Object car, Object... rest) {
-        this.isEmptyList = false;
+        isEmptyList = false;
         this.car = car;
         for (int i = 0; i < rest.length; i++) {
             append(rest[i]);
@@ -128,11 +125,9 @@ public class ListStruct implements Atom, Iterable {
     }
 
     public ListStruct cddr() {
-
         if (cdr != null) {
             return cdr.cdr;
         }
-
         return null;
     }
 

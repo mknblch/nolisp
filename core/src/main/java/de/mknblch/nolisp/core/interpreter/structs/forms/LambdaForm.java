@@ -1,6 +1,7 @@
 package de.mknblch.nolisp.core.interpreter.structs.forms;
 
 import de.mknblch.nolisp.core.common.Expectations;
+import de.mknblch.nolisp.core.common.FormatHelper;
 import de.mknblch.nolisp.core.common.TypeHelper;
 import de.mknblch.nolisp.core.interpreter.Context;
 import de.mknblch.nolisp.core.interpreter.EvaluationException;
@@ -58,20 +59,17 @@ public class LambdaForm implements Form {
      */
     private static void bind(Context context, ListStruct symbols, ListStruct values) throws Exception {
 
-        final Iterator symIt = symbols.iterator();
-
-        if(!symIt.hasNext()) {
-            Expectations.expectNull(values);
-            return;
-        }
-        Expectations.expectNotNull(values);
-        final Iterator valIt = values.iterator();
-        while (symIt.hasNext() && valIt.hasNext()) {
-            context.bind(TypeHelper.symbolLiteral(symIt.next()), valIt.next());
-        }
-        if(symIt.hasNext() ^ valIt.hasNext()) {
-            throw new EvaluationException(String.format(
-                    "procedure expects %d arguments, given %d", symbols.size(), values.size()));
+        // TODO review values = null
+        for (Object symbol : symbols) {
+            if (null == symbol) {
+                return;
+            }
+            if (null == values) {
+                throw new EvaluationException(String.format(
+                        "procedure expects %d arguments, given: nil", symbols.size()));
+            }
+            context.bind(TypeHelper.symbolLiteral(symbol), values.car());
+            values = values.cdr();
         }
     }
 }
