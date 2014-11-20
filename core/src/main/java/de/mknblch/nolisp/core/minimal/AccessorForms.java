@@ -1,6 +1,7 @@
 package de.mknblch.nolisp.core.minimal;
 
 import de.mknblch.nolisp.core.common.Expectations;
+import de.mknblch.nolisp.core.common.TypeHelper;
 import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
 import de.mknblch.nolisp.core.scanner.Define;
 
@@ -13,9 +14,7 @@ public class AccessorForms {
 
     @Define("append")
     public static Object append(ListStruct args) {
-
         final ListStruct ret = new ListStruct();
-
         for (Object arg : args) {
             if (null == arg) continue;
             if(isList(arg)) {
@@ -28,6 +27,33 @@ public class AccessorForms {
             }
         }
         return ret;
+    }
+
+    /**
+     * retrieve nth element of an array
+     * usage: (aget [42 21 7] 0) => 42
+     */
+    @Define({"aget", "array-get"})
+    public static Object aget(ListStruct args) throws Exception {
+        return TypeHelper.asArray(args.car()) [ asInt(args.cdar()) ];
+    }
+
+    @Define({"aset", "array-set"}) // (aset (amake 2) 0 "hallo" 1 "welt") => "hallo welt"
+    public static Object[] aset(ListStruct args) throws Exception {
+        final Object[] objects = asArray(args.car());
+        ListStruct temp = args.cdr();
+        while (null != temp) {
+            final int index = asInt(temp.car());
+            Expectations.expectCdr(temp);
+            objects[ index ] = temp.cdar();
+            temp = temp.cddr();
+        }
+        return objects;
+    }
+
+    @Define({"amake", "array-make"}) // (amake 3)
+    public static Object amake(ListStruct args) throws Exception {
+        return new Object[asInt(args.car())];
     }
 
     @Define("car")

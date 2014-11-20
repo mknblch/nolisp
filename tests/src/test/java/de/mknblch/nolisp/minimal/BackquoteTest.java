@@ -99,7 +99,7 @@ public class BackquoteTest extends AbstractFormTest {
 
     @Test
     public void testSpliceEvalComplex() throws Exception {
-        final String code = "(eval `(+,(- -1 1) -1 1 ,(+ 1 1) @(3 ,(+ @(2 2)),(+ @(2 1)2),(+@(2 1)@(2 1)),(+ 4 @(2 1)),(+ 4 4),(+ 5 4))))";
+        final String code = "(eval `(+ ,(- -1 1) -1 1 ,(+ 1 1) @(3 ,(+ @(2 2)),(+ @(2 1)2),(+ @(2 1)@(2 1)),(+ 4 @(2 1)),(+ 4 4),(+ 5 4))))";
         final List<Object> evaluated = eval(code);
         AbstractFormTest.assertASTEquals("L[ 42 ]", evaluated);
     }

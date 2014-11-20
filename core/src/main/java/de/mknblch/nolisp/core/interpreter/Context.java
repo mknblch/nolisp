@@ -27,8 +27,7 @@ public class Context {
     }
 
     public void implement(Language language) {
-        bindAll(language.getConstants());
-        bindAll(language.getFunctions());
+        bindAll(language.getContextMap());
     }
 
     /**

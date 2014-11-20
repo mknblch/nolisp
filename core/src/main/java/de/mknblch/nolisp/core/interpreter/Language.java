@@ -7,8 +7,6 @@ import java.util.Map;
  */
 public interface Language {
 
-    public Map<String, Object> getConstants();
-
-    public Map<String, Object> getFunctions();
+    public Map<String, Object> getContextMap();
 
 }

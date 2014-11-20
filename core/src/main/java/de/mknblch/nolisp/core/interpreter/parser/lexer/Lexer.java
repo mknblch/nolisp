@@ -7,7 +7,7 @@ public class Lexer extends StringCutter {
 
     private static final char[] IGNORE_CHARS = new char[]{' ', '\t', '\r'};
     private static final char[] NEWLINE_CHARS = new char[]{'\n'};
-    private static final char[] SPECIAL_TOKEN_CHARS = new char[]{'(', ')', '\'', '#', '`', ',', '@'};
+    private static final char[] SPECIAL_TOKEN_CHARS = new char[]{'(', ')', '{', '}', '[', ']'};
 
     private static final String INT_REGEX = "^\\-?[0-9]+$";
     private static final String REAL_REGEX = "^\\-?[0-9]+\\.[0-9]+$";
@@ -40,10 +40,18 @@ public class Lexer extends StringCutter {
 
     private Token tokenize(char c) throws LexerException {
         switch (c) {
+            case '[':
+                return new Token(Token.Type.ARRAY_BEGIN, "[", "[");
+            case ']':
+                return new Token(Token.Type.ARRAY_END, "]", "]");
             case '(':
                 return new Token(Token.Type.LIST_BEGIN, "(", "(");
             case ')':
                 return new Token(Token.Type.LIST_END, ")", ")");
+            case '{':
+                return new Token(Token.Type.LIST_BEGIN, "{", "{");
+            case '}':
+                return new Token(Token.Type.LIST_END, "}", "}");
             case '\'':
                 return new Token(Token.Type.QUOTE, "'", "'");
             case '#':

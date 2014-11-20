@@ -17,12 +17,9 @@ import de.mknblch.nolisp.core.scanner.Special;
  */
 public class PredicateForms {
 
-    @Special
     @Define({"eq?", "equal?"}) // (eq? 1 3)
-    public static Object equal(Interpreter interpreter, Context context, ListStruct args) throws Exception {
-        final Object a = interpreter.eval(args.car(), context);
-        final Object b = args.cdr() != null ? interpreter.eval(args.cdr().car(), context) : null;
-        return equal(a, b);
+    public static Object equal(ListStruct args) throws Exception {
+        return equal(args.car(), args.cdar());
     }
 
     private static Object equal(Object a, Object b) {
@@ -61,32 +58,28 @@ public class PredicateForms {
     }
 
     @Special
-    @Define("value?")
+    @Define("symbol?")
     public static Object isSymbol(Interpreter interpreter, Context context, ListStruct args) {
         return args.car() instanceof SymbolStruct;
     }
 
-    @Special
     @Define("list?")
-    public static Object isList(Interpreter interpreter, Context context, ListStruct args) {
+    public static Object isList(ListStruct args) {
         return args.car() instanceof ListStruct;
     }
 
-    @Special
     @Define("lambda?")
-    public static Object isLambda(Interpreter interpreter, Context context, ListStruct args) {
+    public static Object isLambda( ListStruct args) {
         return args.car() instanceof LambdaForm;
     }
 
-    @Special
     @Define("macro?")
-    public static Object isMacro(Interpreter interpreter, Context context, ListStruct args) {
+    public static Object isMacro(ListStruct args) {
         return args.car() instanceof MacroForm;
     }
 
-    @Special
     @Define("atom?")
-    public static Object isAtom(Interpreter interpreter, Context context, ListStruct args) {
+    public static Object isAtom(ListStruct args) {
         return args.car() instanceof Atom;
     }
 }

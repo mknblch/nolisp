@@ -76,13 +76,6 @@ public class BasicFormsTest extends AbstractFormTest {
     }
 
     @Test
-    public void test() throws Exception {
-        final String code = ";hallo\n'a";
-        final List<Object> evaluated = eval(code);
-        dump(evaluated);
-    }
-
-    @Test
     public void testQuote() throws Exception {
         List<Object> result = eval("(quote 1)");
         dump(result);
@@ -144,5 +137,12 @@ public class BasicFormsTest extends AbstractFormTest {
         eval("(0 1 2 3)");
     }
 
+    @Test
+    public void testArray() throws Exception {
+
+        final List<Object> result = eval("[1 [2 3] 4]");
+        AbstractFormTest.assertASTEquals("L[ A[ 1 A[ 2 3 ] 4 ] ]", result);
+
+    }
 
 }

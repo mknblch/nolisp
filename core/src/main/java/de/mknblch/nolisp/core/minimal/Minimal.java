@@ -4,6 +4,7 @@ import de.mknblch.nolisp.core.interpreter.Language;
 import de.mknblch.nolisp.core.scanner.AnnotationScanner;
 import de.mknblch.nolisp.core.scanner.FunctionDefinitionException;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -25,26 +26,17 @@ public class Minimal implements Language {
             PredicateForms.class,
     };
 
-    private final Map<String, Object> constants;
-    private final Map<String, Object> functions;
+    private final Map<String, Object> contextMap = new HashMap<>();
 
     public Minimal() throws FunctionDefinitionException {
-        constants = AnnotationScanner.scanForConstants(clazzes);
-        functions = AnnotationScanner.scanForFunctions(clazzes);
-
-        constants.put("_lang", "nolisp.minimal");
-        constants.put("_version", "0.1.0");
-    }
-
-
-    @Override
-    public Map<String, Object> getConstants() {
-        return constants;
+        contextMap.putAll(AnnotationScanner.scanForConstants(clazzes));
+        contextMap.putAll(AnnotationScanner.scanForFunctions(clazzes));
+        contextMap.put("_lang", "nolisp.minimal");
+        contextMap.put("_version", "0.1.0");
     }
 
     @Override
-    public Map<String, Object> getFunctions() {
-        return functions;
+    public Map<String, Object> getContextMap() {
+        return contextMap;
     }
-
 }

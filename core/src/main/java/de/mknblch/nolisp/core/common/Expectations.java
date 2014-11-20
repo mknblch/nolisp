@@ -115,4 +115,10 @@ public class Expectations {
                     String.format("Expected SPECIAL FORM but was: %s", FormatHelper.formatAtom(o)));
         }
     }
+
+    public static void expectArray(Object o) throws EvaluationException {
+        if(!TypeHelper.isArray(o)) {
+            throw new EvaluationException(String.format("Expected ARRAY but was: %s", FormatHelper.formatAtom(o)));
+        }
+    }
 }

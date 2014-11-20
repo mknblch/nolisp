@@ -66,7 +66,7 @@ public class LambdaForms {
     @Special
     @Define("eval") // (eval '(+ 20 22)) => (eval (quote (+ 20 22))) => 42
     public static Object eval(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
-        return interpreter.eval(interpreter.eval(args.car(), parentContext), parentContext); // TODO review: replace double eval with asList ?
+        return interpreter.eval(interpreter.eval(args.car(), parentContext), parentContext);
     }
 
 

@@ -8,6 +8,7 @@ import de.mknblch.nolisp.core.interpreter.structs.forms.LambdaForm;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author mknblch
@@ -173,6 +174,16 @@ public class TypeHelper {
             temp = temp.cdr();
         }
         return flat;
+    }
+
+    public static boolean isArray(Object o) {
+        return o instanceof Object[];
+    }
+
+
+    public static Object[] asArray(Object o) throws EvaluationException {
+        Expectations.expectArray(o);
+        return (Object[]) o;
     }
 
 }

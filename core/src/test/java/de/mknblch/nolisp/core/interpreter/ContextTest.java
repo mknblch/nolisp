@@ -17,12 +17,7 @@ public class ContextTest {
 
     private static final Language NULL_LANG = new Language() {
         @Override
-        public Map<String, Object> getConstants() {
-            return new HashMap<>();
-        }
-
-        @Override
-        public Map<String, Object> getFunctions() {
+        public Map<String, Object> getContextMap() {
             return new HashMap<>();
         }
     };

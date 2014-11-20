@@ -8,6 +8,8 @@ import de.mknblch.nolisp.core.interpreter.structs.Atom;
 import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
 import de.mknblch.nolisp.core.interpreter.structs.SymbolStruct;
 
+import java.util.ArrayList;
+
 /**
  * The parser transforms a token stream into an abstract syntax tree in form of ListStructs
  * which is basically a linked list
@@ -19,7 +21,14 @@ public class Parser {
 
     private static final SpliceRule SPLICE_RULE = new SpliceRule();
 
-    private static final Atom END_STRUCT = new Atom() {
+    private static final Atom LIST_END_STRUCT = new Atom() {
+        @Override
+        public Type getType() {
+            return null;
+        }
+    };
+
+    private static final Atom ARRAY_END_STRUCT = new Atom() {
         @Override
         public Type getType() {
             return null;
@@ -32,6 +41,7 @@ public class Parser {
             return null;
         }
     };
+
     private static final SymbolStruct QUOTE_STRUCT = new SymbolStruct("quote");
     private static final SymbolStruct FUNCTION_STRUCT = new SymbolStruct("function");
     private static final SymbolStruct BACKQUOTE_STRUCT = new SymbolStruct("backquote");
@@ -46,8 +56,10 @@ public class Parser {
         while (lexer.hasNext()) {
             final Object o = parseOne();
             if (COMMENT_STRUCT == o) continue;
-            if (END_STRUCT == o)
+            if (LIST_END_STRUCT == o)
                 throw new ParserException(String.format("Unbalanced AST. One or more opening braces missing."));
+            if (ARRAY_END_STRUCT == o)
+                throw new ParserException(String.format("Unbalanced ARRAY. One or more opening braces missing."));
             program.add(o);
         }
         return postProcesses(program);
@@ -64,7 +76,11 @@ public class Parser {
             case LIST_BEGIN:
                 return parseList();
             case LIST_END:
-                return END_STRUCT;
+                return LIST_END_STRUCT;
+            case ARRAY_BEGIN:
+                return parseArray();
+            case ARRAY_END:
+                return ARRAY_END_STRUCT;
             case SYMBOL:
                 return new SymbolStruct(token.literal);
             case LINE_COMMENT:
@@ -89,12 +105,24 @@ public class Parser {
         }
     }
 
+    private Object[] parseArray() throws ParserException, LexerException {
+        final ArrayList<Object> list = new ArrayList<>();
+        while (lexer.hasNext()) {
+            final Object o = parseOne();
+            if (o == ARRAY_END_STRUCT) {
+                return list.toArray();
+            }
+            list.add(o);
+        }
+        throw new ParserException(String.format("Unbalanced ARRAY. One or more closing braces missing."));
+    }
+
 
     private ListStruct parseList() throws LexerException, ParserException {
         final ListStruct listStruct = new ListStruct();
         while (lexer.hasNext()) {
             final Object o = parseOne();
-            if (o == END_STRUCT) {
+            if (o == LIST_END_STRUCT) {
                 return listStruct;
             }
             listStruct.add(o);

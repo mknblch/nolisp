@@ -52,6 +52,16 @@ public class FormatHelper {
             }
             return String.format("L[ %s ]", sb.toString());
         }
+        //special case List<Object>
+        if (obj instanceof Object[]) {
+            final StringBuilder sb = new StringBuilder();
+            final Object[] list = (Object[]) obj;
+            for (Object o : list) {
+                if (sb.length() > 0) sb.append(" ");
+                sb.append(formatPretty(o));
+            }
+            return String.format("A[ %s ]", sb.toString());
+        }
         // return Non-Atoms
         if (!(obj instanceof Atom)) {
             return String.valueOf(obj);
