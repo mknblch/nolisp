@@ -11,6 +11,13 @@ public class AccessorFormsTest extends AbstractFormTest {
 
 
     @Test
+    public void testAppend() throws Exception {
+        final String code = "(eval (append + '(-2 -1) '(1 2 3 4 5 6 7 8 9)))";
+        final List<Object> evaluated = eval(code);
+        AbstractFormTest.assertASTEquals("L[ 42 ]", evaluated);
+    }
+
+    @Test
     public void testCar() throws Exception {
         final String code = "(car '(42 21 7))";
         final List<Object> evaluated = eval(code);

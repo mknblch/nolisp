@@ -12,6 +12,25 @@ import static de.mknblch.nolisp.core.common.TypeHelper.*;
  */
 public class AccessorForms {
 
+    @Define("append")
+    public static Object append(ListStruct args) throws Exception {
+
+        final ListStruct ret = new ListStruct();
+
+        for (Object arg : args) {
+            if (null == arg) continue;
+            if(isList(arg)) {
+                final ListStruct listStruct = (ListStruct) arg;
+                for (Object iArg : listStruct) {
+                    ret.add(iArg);
+                }
+            } else {
+                ret.add(arg);
+            }
+        }
+        return ret;
+    }
+
     @Define("car")
     public static Object car(ListStruct args) throws Exception {
         return asList(args.car()).car();

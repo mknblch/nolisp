@@ -1,7 +1,6 @@
 package de.mknblch.nolisp.core.scanner;
 
 import de.mknblch.nolisp.core.interpreter.Context;
-import de.mknblch.nolisp.core.interpreter.EvaluationException;
 import de.mknblch.nolisp.core.interpreter.Interpreter;
 import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
 import de.mknblch.nolisp.core.interpreter.structs.forms.Form;
@@ -11,6 +10,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,30 +23,14 @@ import java.util.Map;
  */
 public class AnnotationScanner {
 
-    public static void dumpFunctions(Class<?>... classes) throws FunctionDefinitionException {
-        for (Class<?> clazz : classes) {
-            final String simpleName = clazz.getSimpleName();
-            final Method[] declaredMethods = clazz.getDeclaredMethods();
-            for (final Method method : declaredMethods) {
-                final Define annotation = method.getAnnotation(Define.class);
-                if (isNonSpecialForm(method)) {
-                    System.out.printf("<form>: %s.%s%n", simpleName, Arrays.toString(annotation.value()));
-                } else if (isSpecialForm(method)) {
-                    System.out.printf("<special>: %s.%s%n", simpleName, Arrays.toString(annotation.value()));
-
-                }
-            }
-        }
-    }
-
 
     public static Map<String, Object> scanForFunctions(Class<?>... classes) throws FunctionDefinitionException {
         final Map<String, Object> functions = new HashMap<String, Object>();
         for (Class<?> clazz : classes) {
             final Method[] declaredMethods = clazz.getDeclaredMethods();
             for (final Method method : declaredMethods) {
-                if (isNonSpecialForm(method)) {
-                    addNonSpecialForm(functions, method);
+                if (isForm(method)) {
+                    addForm(functions, method);
                 } else if (isSpecialForm(method)) {
                     addSpecialForm(functions, method);
                 }
@@ -68,6 +52,40 @@ public class AnnotationScanner {
         return constants;
     }
 
+    private static Form wrapNonSpecialForm(final Method method, final String symbol) {
+        return new FormAdapter() {
+            @Override
+            public Object eval(ListStruct args) throws Exception {
+                try {
+                    return method.invoke(null, args);
+                } catch (InvocationTargetException e) {
+                    throw unwrapInvocationException(e);
+                }
+            }
+            @Override
+            public String getSymbol() {
+                return symbol;
+            }
+        };
+    }
+
+    private static SpecialForm wrapSpecialForm(final Method method, final String symbol) {
+        return new SpecialFormAdapter() {
+            @Override
+            public Object eval(Interpreter interpreter, Context context, ListStruct args) throws Exception {
+                try {
+                    return method.invoke(null, interpreter, context, args);
+                } catch (InvocationTargetException e) {
+                    throw unwrapInvocationException(e);
+                }
+            }
+            @Override
+            public String getSymbol() {
+                return symbol;
+            }
+        };
+    }
+
     private static void addConstant(Map<String, Object> constants, Field field) throws FunctionDefinitionException {
         final Constant annotation = field.getAnnotation(Constant.class);
         final String[] symbols = annotation.value();
@@ -82,7 +100,7 @@ public class AnnotationScanner {
         }
     }
 
-    private static boolean isConstantField(Field field) throws FunctionDefinitionException {
+    public static boolean isConstantField(Field field) throws FunctionDefinitionException {
         if (!field.isAnnotationPresent(Constant.class)) return false;
         final int modifiers = field.getModifiers();
         if (!Modifier.isStatic(modifiers))
@@ -91,6 +109,7 @@ public class AnnotationScanner {
             throw new FunctionDefinitionException("Invalid signature - FIELD must be FINAL");
         return true;
     }
+
 
     private static void addSpecialForm(Map<String, Object> functions, Method method) throws FunctionDefinitionException {
         final Define annotation = method.getAnnotation(Define.class);
@@ -103,7 +122,7 @@ public class AnnotationScanner {
         }
     }
 
-    private static void addNonSpecialForm(Map<String, Object> functions, Method method) throws FunctionDefinitionException {
+    private static void addForm(Map<String, Object> functions, Method method) throws FunctionDefinitionException {
         final Define annotation = method.getAnnotation(Define.class);
         final String[] symbols = annotation.value();
         final Form func = wrapNonSpecialForm(method, symbols[0]);
@@ -112,43 +131,6 @@ public class AnnotationScanner {
                 throw new FunctionDefinitionException(String.format("Ambiguous function definition for '%s'", method.getName()));
             }
         }
-    }
-
-
-    public static Form wrapNonSpecialForm(final Method method, final String symbol) {
-        return new FormAdapter() {
-            @Override
-            public Object eval(ListStruct args) throws Exception {
-                try {
-                    return method.invoke(null, args);
-                } catch (InvocationTargetException e) {
-                    throw unwrapInvocationException(e);
-                }
-            }
-
-            @Override
-            public String getSymbol() {
-                return symbol;
-            }
-        };
-    }
-
-    public static SpecialForm wrapSpecialForm(final Method method, final String symbol) {
-        return new SpecialFormAdapter() {
-            @Override
-            public Object eval(Interpreter interpreter, Context context, ListStruct args) throws Exception {
-                try {
-                    return method.invoke(null, interpreter, context, args);
-                } catch (InvocationTargetException e) {
-                    throw unwrapInvocationException(e);
-                }
-            }
-
-            @Override
-            public String getSymbol() {
-                return symbol;
-            }
-        };
     }
 
     private static Exception unwrapInvocationException(InvocationTargetException ite) {
@@ -160,9 +142,9 @@ public class AnnotationScanner {
     }
 
     /**
-     * checks if the method signature is suitable for SpecialForm.
+     * checks if the method signature is suitable for Forms.
      */
-    private static boolean isNonSpecialForm(Method method) throws FunctionDefinitionException {
+    public static boolean isForm(Method method) throws FunctionDefinitionException {
         if (!method.isAnnotationPresent(Define.class)) return false;
         if (method.isAnnotationPresent(Special.class)) return false;
         if (method.getReturnType().equals(Void.TYPE))
@@ -181,9 +163,9 @@ public class AnnotationScanner {
     }
 
     /**
-     * checks if the method signature is suitable for Forms.
+     * checks if the method signature is suitable for SpecialForms.
      */
-    private static boolean isSpecialForm(Method method) throws FunctionDefinitionException {
+    public static boolean isSpecialForm(Method method) throws FunctionDefinitionException {
         if (!method.isAnnotationPresent(Define.class)) return false;
         if (!method.isAnnotationPresent(Special.class)) return false;
         if (method.getReturnType().equals(Void.TYPE))

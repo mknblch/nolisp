@@ -18,11 +18,10 @@ public class MacroForm implements SpecialForm {
     private final ListStruct forms;
     private final List<String> formSymbols;
 
-    public MacroForm(List<String> formSymbols, ListStruct forms) {
-        this.formSymbols = formSymbols;
+    public MacroForm(List<String> argumentSymbols, ListStruct forms) {
+        this.formSymbols = argumentSymbols;
         this.forms = forms;
     }
-
 
     @Override
     public Object eval(Interpreter interpreter, Context context, ListStruct args) throws Exception {
@@ -57,18 +56,23 @@ public class MacroForm implements SpecialForm {
         return forms;
     }
 
-    private static void bind(Context context,
-                             List<String> symbols,
-                             ListStruct args) throws Exception {
+    /**
+     * bind each argument to the symbol associated to its position
+     */
+    private static void bind(Context context, List<String> symbols, ListStruct values) throws Exception {
 
-        ListStruct temp = args;
+        ListStruct temp = values;
         for (int i = 0; i < symbols.size(); i++) {
             if (null == temp) {
                 throw new EvaluationException(String.format(
-                        "macro expects %d arguments, given %d", symbols.size(), i));
+                        "procedure expects %d arguments, given %d", symbols.size(), i));
             }
             context.bind(symbols.get(i), temp.car());
             temp = temp.cdr();
+        }
+        if (null != temp) {
+            throw new EvaluationException(String.format(
+                    "procedure expects %d arguments, given %d", symbols.size(), values.size()));
         }
     }
 }

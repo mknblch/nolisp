@@ -27,7 +27,7 @@ public class LanguageDump {
     @Test
     public void testDumpMinimal() throws Exception {
 
-        AnnotationScanner.dumpFunctions(clazzes);
+        LanguageDumper.dump(clazzes);
 
     }
 }
