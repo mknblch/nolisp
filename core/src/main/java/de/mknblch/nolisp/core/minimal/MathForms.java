@@ -1,6 +1,7 @@
 package de.mknblch.nolisp.core.minimal;
 
 import de.mknblch.nolisp.core.common.Expectations;
+import de.mknblch.nolisp.core.common.FormatHelper;
 import de.mknblch.nolisp.core.common.TypeHelper;
 import de.mknblch.nolisp.core.interpreter.Context;
 import de.mknblch.nolisp.core.interpreter.EvaluationException;
@@ -97,7 +98,8 @@ public class MathForms {
 
     private static Object mod(Object a, Object b) throws EvaluationException {
         if (!(a instanceof Integer) || !(b instanceof Integer)) {
-            throw new EvaluationException("Invalid type cast.");
+            throw new EvaluationException(
+                    String.format("Expected NUMBER, NUMBER but was: %s, %s ", FormatHelper.formatAtom(a), FormatHelper.formatAtom(b)));
         }
         return (Integer) a % (Integer) b;
     }
@@ -119,7 +121,8 @@ public class MathForms {
                 return (Integer) a + (Integer) b;
             }
         }
-        throw new EvaluationException("Invalid type cast.");
+        throw new EvaluationException(
+                String.format("Expected NUMBER, NUMBER but was: %s, %s ", FormatHelper.formatAtom(a), FormatHelper.formatAtom(b)));
     }
 
     private static Object minus(Object a, Object b) throws EvaluationException {
@@ -139,7 +142,8 @@ public class MathForms {
                 return (Integer) a - (Integer) b;
             }
         }
-        throw new EvaluationException("Invalid type cast.");
+        throw new EvaluationException(
+                String.format("Expected NUMBER, NUMBER but was: %s, %s ", FormatHelper.formatAtom(a), FormatHelper.formatAtom(b)));
     }
 
     private static Object mul(Object a, Object b) throws EvaluationException {
@@ -159,7 +163,8 @@ public class MathForms {
                 return (Integer) a * (Integer) b;
             }
         }
-        throw new EvaluationException("Invalid type cast.");
+        throw new EvaluationException(
+                String.format("Expected NUMBER, NUMBER but was: %s, %s ", FormatHelper.formatAtom(a), FormatHelper.formatAtom(b)));
     }
 
     private static Object div(Object a, Object b) throws EvaluationException {
@@ -179,6 +184,7 @@ public class MathForms {
                 return (Integer) a / (Integer) b;
             }
         }
-        throw new EvaluationException("Invalid type cast.");
+        throw new EvaluationException(
+                String.format("Expected NUMBER, NUMBER but was: %s, %s ", FormatHelper.formatAtom(a), FormatHelper.formatAtom(b)));
     }
 }
