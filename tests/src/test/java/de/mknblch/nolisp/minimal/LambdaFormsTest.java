@@ -39,11 +39,28 @@ public class LambdaFormsTest extends AbstractFormTest {
         Assert.assertEquals(120, result.get(0));
     }
 
-
     @Test
     public final void testEvalBQ() throws Exception {
         final List<Object> result = eval("(eval `(+ 22 20))");
         Assert.assertEquals(42, result.get(0));
+    }
+
+    @Test
+    public final void testLArgs() throws Exception {
+        final List<Object> result = eval("(largs (lambda (x y) (+ x y)))");
+        assertASTEquals("L[ ( x y ) ]", result);
+    }
+
+    @Test
+    public final void testLBody() throws Exception {
+        final List<Object> result = eval("(lbody (lambda () (+ 1 1)))");
+        assertASTEquals("L[ ( + 1 1 ) ]", result);
+    }
+
+    @Test
+    public final void testLBody2() throws Exception {
+        final List<Object> result = eval("(progn (defun x (n) (+ 1 1)) (lbody x))");
+        assertASTEquals("L[ ( + 1 1 ) ]", result);
     }
 
     @Test

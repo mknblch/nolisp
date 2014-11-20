@@ -24,6 +24,18 @@ public class LambdaForms {
         return new LambdaForm(interpreter, context, TypeHelper.symbolList(args.car()), args.cdar());
     }
 
+    @Define("lbody") // (lbody (lambda (a) (+ a 1))) => (+ a 1)
+    public static Object lbody(ListStruct args) throws Exception {
+        final LambdaForm lambda = TypeHelper.asLambda(args.car());
+        return lambda.getForm();
+    }
+
+    @Define("largs") // (lbody (lambda (a) (+ a 1))) => (+ a 1)
+    public static Object largs(ListStruct args) throws Exception {
+        final LambdaForm lambda = TypeHelper.asLambda(args.car());
+        return TypeHelper.javaListToListStruct(lambda.getArgumentSymbols());
+    }
+
     @Special
     @Define("defun") // (defun bla (a) (+ a 1) ) => form
     public static Object defun(Interpreter interpreter, Context context, ListStruct args) throws Exception {

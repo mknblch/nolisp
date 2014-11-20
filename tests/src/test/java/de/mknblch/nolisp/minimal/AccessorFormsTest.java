@@ -12,7 +12,7 @@ public class AccessorFormsTest extends AbstractFormTest {
 
     @Test
     public void testAppend() throws Exception {
-        final String code = "(eval (append + '(-2 -1) '(1 2 3 4 5 6 7 8 9)))";
+        final String code = "(eval (append nil + '(-2 -1) nil '(1 2 3 4 5 6 7 8 9)))";
         final List<Object> evaluated = eval(code);
         AbstractFormTest.assertASTEquals("L[ 42 ]", evaluated);
     }

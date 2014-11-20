@@ -15,6 +15,22 @@ import java.util.List;
  */
 public class TypeHelper {
 
+    public static ListStruct javaListToListStruct (List<?> list) {
+        final ListStruct ret = new ListStruct();
+        for (Object object : list) {
+            ret.add(object);
+        }
+        return ret;
+    }
+
+    public static ListStruct arrayToListStruct (Object[] objects) {
+        final ListStruct ret = new ListStruct();
+        for (Object object : objects) {
+            ret.add(object);
+        }
+        return ret;
+    }
+
     public static Integer asInt(Object o) throws EvaluationException {
         if (isInt(o)) {
             return (Integer) o;
