@@ -1,9 +1,12 @@
 package de.mknblch.nolisp.core.interpreter.parser.lexer;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author mknblch
@@ -33,7 +36,7 @@ public class LexerTest {
         assertTokenEquals(new String[]{"(", "sugar", "1", "(", "+", "23", "345", ")", ")"}, lexer);
     }
 
-    @Test(expected = LexerException.class)
+    @Test(expected = NumberFormatException.class)
     public void testIntOverflow() throws Exception {
         final String code = "10000000000";
         final Lexer lexer = new Lexer();
@@ -129,15 +132,7 @@ public class LexerTest {
         final String code = "int boolean";
         final Lexer lexer = new Lexer();
         lexer.setCode(code);
-        assertTokenEquals(new String[]{"INT", "BOOLEAN"}, lexer);
-    }
-
-    @Test
-    public void testTrueFalse() throws Exception {
-        final String code = "true TRUE false FALSE";
-        final Lexer lexer = new Lexer();
-        lexer.setCode(code);
-        assertTokenEquals(new String[]{"true", "true", "false", "false"}, lexer);
+        assertTokenEquals(new String[]{"int", "boolean"}, lexer);
     }
 
     @Test
@@ -178,7 +173,7 @@ public class LexerTest {
             Assert.assertTrue("premature end at token " + i, lexer.hasNext());
             final String literal = lexer.next().literal;
             LOGGER.debug("comparing expected '{}' with result '{}'", merge(expected), literal);
-            Assert.assertEquals("token " + i + " did not match", expected[i], literal);
+            assertEquals("token " + i + " did not match", expected[i], literal);
         }
         Assert.assertFalse("lexer has more tokens", lexer.hasNext());
     }

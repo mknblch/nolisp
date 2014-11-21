@@ -1,10 +1,12 @@
 package de.mknblch.nolisp.minimal;
 
 import de.mknblch.nolisp.core.interpreter.EvaluationException;
+import de.mknblch.nolisp.core.interpreter.Interpreter;
 import de.mknblch.nolisp.minimal.testHelper.AbstractFormTest;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.List;
 
@@ -75,39 +77,60 @@ public class JavaFormsTest extends AbstractFormTest{
     }
 
     @Test
+    public void testClassOf() throws Exception {
+
+        final List<Object> eval = eval("(classOf \"hallo\")");
+        assertASTEquals("L[ class java.lang.String ]", eval);
+    }
+
+    @Test
+    public void testClass() throws Exception {
+
+        final List<Object> eval = eval("(class java.lang.String )");
+        assertASTEquals("L[ class java.lang.String ]", eval);
+    }
+
+    @Test
     public void testCallArgs() throws Exception {
 
-        final List<Object> eval = eval("(call concat \"hello \" (\"world\"))");
+        final List<Object> eval = eval("(call concat (\"world\") \"hello \")");
         assertASTEquals("L[ hello world ]", eval);
     }
 
     @Test
     public void testCall() throws Exception {
 
-        final List<Object> eval = eval("(call length [] \"just an overlong hello world thingy blblbl\")");
+        final List<Object> eval = eval("(call length \"just an overlong hello world thingy blblbl\")");
         assertASTEquals("L[ 42 ]", eval);
+    }
+
+    @Test
+    public void testCallStaticNoArgs() throws Exception {
+
+        final List<Object> eval = eval("(call-static java.nio.charset.Charset:defaultCharset)");
+        assertTrue(eval.get(0) instanceof Charset);
     }
 
     @Test
     public void testCallStatic() throws Exception {
 
-        final List<Object> eval = eval("(call-static java.lang.Integer:parseInt [] (\"42\"))");
+        final List<Object> eval = eval("(call-static java.lang.Integer:parseInt (\"42\"))");
         assertASTEquals("L[ 42 ]", eval);
     }
 
     @Test
     public void testCallPrimitiveTyp() throws Exception {
-        final List<Object> eval = eval("(call-static java.lang.Math:abs [int] (-42))");
+        final List<Object> eval = eval("(call-static java.lang.Math:abs (int) (-42))");
         assertASTEquals("L[ 42 ]", eval);
     }
 
-    @Ignore // TODO impl a way to call methods with varargs
     @Test
     public void testCallVarargs() throws Exception {
 
-        final List<Object> eval = eval("(call-static java.lang.String:format (\"%04d\" 42))");
+        // varargs is tricky!
+        final List<Object> eval = eval("(call-static java.lang.String:format ( string array ) (\"%04d\" (amake 42)))");
 
-        assertASTEquals("L[ 42 ]", eval);
+        assertASTEquals("L[ 0042 ]", eval);
     }
 
 

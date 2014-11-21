@@ -46,6 +46,18 @@ public class ListStructTest {
     }
 
     @Test
+    public void testCdr() throws Exception {
+        ListStruct listStruct = new ListStruct("1", "2", "3", "4");
+        LOGGER.debug("Testing '{}'", FormatHelper.formatAsSExpression(listStruct));
+
+
+        assertEquals("1", listStruct.car());
+        assertEquals("2", listStruct.cdar());
+        assertEquals("3", listStruct.cddar());
+        assertEquals("4", listStruct.cdddar());
+    }
+
+    @Test
     public void testLast() throws Exception {
         ListStruct listStruct = new ListStruct("1", "2", "3");
         LOGGER.debug("Testing '{}'", FormatHelper.formatAsSExpression(listStruct));

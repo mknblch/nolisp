@@ -1,22 +1,24 @@
 package de.mknblch.nolisp.core.minimal;
 
 import de.mknblch.nolisp.core.common.Expectations;
-import de.mknblch.nolisp.core.common.TypeHelper;
+import de.mknblch.nolisp.core.common.FormatHelper;
 import de.mknblch.nolisp.core.interpreter.Context;
 import de.mknblch.nolisp.core.interpreter.EvaluationException;
 import de.mknblch.nolisp.core.interpreter.Interpreter;
 import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
 import de.mknblch.nolisp.core.interpreter.structs.SymbolStruct;
+import de.mknblch.nolisp.core.scanner.Constant;
 import de.mknblch.nolisp.core.scanner.Define;
 import de.mknblch.nolisp.core.scanner.Special;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static de.mknblch.nolisp.core.common.TypeHelper.*;
 
 /**
  * @author mknblch
@@ -25,15 +27,46 @@ public class JavaForms {
 
     private static final Pattern CLASS_METHOD_PATTERN = Pattern.compile("(.+):(.+)");
 
+    @Constant({"BOOLEAN", "boolean"})
+    public static final Class<?> PRIMITIVE_BOOLEAN = Boolean.TYPE;
+
+    @Constant({"BYTE", "byte"})
+    public static final Class<?> PRIMITIVE_BYTE = Byte.TYPE;
+
+    @Constant({"SHORT", "short"})
+    public static final Class<?> PRIMITIVE_SHORT = Short.TYPE;
+
+    @Constant({"CHAR", "char"})
+    public static final Class<?> PRIMITIVE_CHAR = Character.TYPE;
+
+    @Constant({"INT", "int"})
+    public static final Class<?> PRIMITIVE_INT = Integer.TYPE;
+
+    @Constant({"LONG", "long"})
+    public static final Class<?> PRIMITIVE_LONG = Long.TYPE;
+
+    @Constant({"FLOAT", "float"})
+    public static final Class<?> PRIMITIVE_FLOAT = Float.TYPE;
+
+    @Constant({"DOUBLE", "double"})
+    public static final Class<?> PRIMITIVE_DOUBLE = Double.TYPE;
+
+    @Constant({"STRING", "string"})
+    public static final Class<?> PRIMITIVE_STRING = String.class;
+
+    @Constant({"ARRAY", "array"})
+    public static final Class<?> PRIMITIVE_ARRAY = Object[].class;
+
+
     @Special
     @Define("new") // (new java.lang.Integer [ ( args+ ) ] )
     public static Object newForm(Interpreter interpreter, Context context, ListStruct args) throws Exception {
-        final String fqn = TypeHelper.symbolLiteral(args.car());
+        final String fqn = symbolLiteral(args.car());
         final Class<?> clazz = Class.forName(fqn);
         final Object initArgs = args.cdar();
         if (null != initArgs) {
             // has arguments
-            return initializeNew(clazz, interpreter, context, TypeHelper.asList(initArgs));
+            return initializeNew(clazz, interpreter, context, asList(initArgs));
         }
         return clazz.newInstance();
     }
@@ -52,10 +85,10 @@ public class JavaForms {
 
     @Define("throw") // (throw <exception>)
     public static Object throwException(ListStruct args) throws Exception {
-        throw TypeHelper.asException(args.car());
+        throw asException(args.car());
     }
 
-    @Define("classof") // (throw <exception>)
+    @Define({"classof", "classOf"}) // (throw <exception>)
     public static Object typeOf(ListStruct args) throws Exception {
         final Object car = args.car();
         if (null == car) {
@@ -65,20 +98,27 @@ public class JavaForms {
     }
 
     @Special
+    @Define("class") // (throw <exception>)
+    public static Object classForm(Interpreter interpreter, Context context, ListStruct args) throws Exception {
+        final Object car = args.car();
+        return Class.forName(symbolLiteral(car));
+    }
+
+    @Special
     @Define("try") // (try <form> (catch <Exception> <SYM> <form>)+)
     public static Object tryForm(Interpreter interpreter, Context context, ListStruct args) throws Exception {
         final Object tryBlock = args.car();
-        final ListStruct catchBlocks = TypeHelper.asList(args.cdar());
+        final ListStruct catchBlocks = asList(args.cdar());
         try {
             return interpreter.eval(tryBlock, context);
         } catch (Exception e) {
             final Class<?> exClazz = e.getClass();
             for (Object element : catchBlocks) {
-                final ListStruct listStruct = TypeHelper.asList(element);
+                final ListStruct listStruct = asList(element);
                 Expectations.expectSymbolWithLiteral(listStruct.car(), "catch");
-                final SymbolStruct exClassSymbol = TypeHelper.asSymbol(listStruct.cdar());
+                final SymbolStruct exClassSymbol = asSymbol(listStruct.cdar());
                 if(Class.forName(exClassSymbol.literal).isAssignableFrom(exClazz)) {
-                    final String literal = TypeHelper.symbolLiteral(listStruct.cddar());
+                    final String literal = symbolLiteral(listStruct.cddar());
                     final Context derive = context.derive();
                     derive.bind(literal, e);
                     return interpreter.eval(listStruct.nth(3), derive);
@@ -88,87 +128,103 @@ public class JavaForms {
         }
     }
 
-
+    /*
+     * examples:
+     * (call length "bla")
+     * (call split (",") "bla,bla")
+     * (call match (String) (",") "bla,bla")
+     *             |p1      |p2   |p3
+     */
     @Special
-    @Define("call") // (call <obj> method { (types) (args) }? )
+    @Define("call")
     public static Object call(Interpreter interpreter, Context context, ListStruct args) throws Exception {
-        final Object obj = interpreter.eval(args.car(), context);
-        final String methodName = TypeHelper.symbolLiteral(args.cdar());
-        final Object methodArgsRaw = args.cddar();
-        if (null == methodArgsRaw) {
-            return obj.getClass().getDeclaredMethod(methodName).invoke(obj);
-        }
-        final ListStruct methodArgs = TypeHelper.asList(methodArgsRaw);
-        final ArrayList<Class> argTypes = new ArrayList<Class>();
-        final ArrayList<Object> argValues = new ArrayList<Object>();
-        for (Object arg : methodArgs) {
-            final Object evaluated = interpreter.eval(arg, context);
-            argTypes.add(evaluated.getClass());
-            argValues.add(evaluated);
-        }
-        final Method method = obj.getClass().getDeclaredMethod(methodName, argTypes.toArray(new Class<?>[]{}));
-        return method.invoke(obj, argValues.toArray());
+
+        final String methodName = symbolLiteral(args.car());
+
+        final Object param1 = args.cdar();
+        final Object param2 = args.cddar();
+        final Object param3 = args.cdddar();
+
+        final Object[] types = convertListToArray(interpreter.evalEach(asList(findTypes(param1, param2, param3)), context));
+        final Object[] params = convertListToArray(interpreter.evalEach(asList(findParams(param1, param2, param3)), context));
+
+        final Object object = interpreter.eval(findObject(param1, param2, param3), context);
+        final Class<?> clazz = object.getClass();
+
+        return findMethod(clazz, methodName, types, params).invoke(object, params);
     }
 
+    /*
+     * examples:
+     * (call-static Some:getSingleton)
+     * (call-static Math:abs (42))
+     * (call-static Math:abs (int) (42))
+     *                       |p1   |p2
+     *
+     */
     @Special
-    @Define({"call-static"}) // (call class.method (..)? (<arg>+)? )
+    @Define({"call-static"})
     public static Object callStatic(Interpreter interpreter, Context context, ListStruct args) throws Exception {
 
-        // split first arg into class and method anme
-        final String fqName = TypeHelper.symbolLiteral(args.car());
+        // split first arg into class and method name
+        final String fqName = symbolLiteral(args.car());
         final Matcher matcher = CLASS_METHOD_PATTERN.matcher(fqName);
-        if(!matcher.matches()) throw new EvaluationException("Invalid class name in static method call.");
-        final String fqClassName = matcher.group(1);
-        final String methodName = matcher.group(2);
-
-        // retrieve the class
-        final Class<?> clazz = Class.forName(fqClassName);
-
-        // retrieve method type definition
-        final Object methodTypesRaw = interpreter.eval(args.cdar(), context);
-        // retrieve the actual arguments
-        final Object methodArgsRaw = interpreter.eval(args.cddar(), context);
-
-
-
-
-        // no types & args given, invoke noArgs
-        if (null == methodTypesRaw && null == methodArgsRaw) {
-            return clazz.getMethod(methodName).invoke(null);
-        }
-        // save cast to raw object array
-        final Object[] methodTypes = TypeHelper.asArray(methodTypesRaw);
-        // save cast to list
-        final ListStruct methodArgsList = TypeHelper.asList(methodArgsRaw);
-
-        final Object[] argValues = new Object[methodTypes.length];
-
-        int i = 0;
-        for (Object arg : methodArgsList) {
-            final Object evaluated = interpreter.eval(arg, context);
-            argValues[i++] = evaluated;
+        if(!matcher.matches()) {
+            throw new EvaluationException(String.format("Invalid class name in static method call, given %s.", FormatHelper.formatPretty(args.car())));
         }
 
-        final Method method = clazz.getDeclaredMethod(methodName, Arrays.copyOf(methodTypes, methodTypes.length, Class[].class));
-        return method.invoke(null, argValues);
+        final Class<?> clazz = Class.forName(matcher.group(1));
+
+        final Object[] param1 = convertListToArray(interpreter.evalEach(asList(args.cdar()), context));
+        final Object[] param2 = convertListToArray(interpreter.evalEach(asList(args.cddar()), context));
+
+        final Method method = findMethod(
+                clazz,
+                matcher.group(2),
+                findStaticTypes(param1, param2),
+                findStaticParams(param1, param2));
+
+        return method.invoke(null, findStaticParams(param1, param2));
     }
 
-    private static Method findMethod(Class<?> clazz, String methodName, ListStruct param1, ListStruct param2)
-            throws EvaluationException, NoSuchMethodException {
+    private static Method findMethod(Class<?> clazz, String methodName, Object[] types, Object[] params) throws NoSuchMethodException {
 
-        // (call-static String:valueOf (42))
-        if (null == param1 && null == param2) {
-            return clazz.getMethod(methodName);
+        if (null != types) {
+            return clazz.getDeclaredMethod(methodName, Arrays.copyOf(types, types.length, Class[].class));
+        } else if (null != params) {
+            return clazz.getDeclaredMethod(methodName, determineObjectType(params));
         }
-        if (null != param1 && null == param2) {
-            // param1 given and param2 not.. p1 is value list, determine types by inspecting values
-            final Class<?>[] types = determineObjectType(TypeHelper.convertListToArray(param1));
-            return clazz.getMethod(methodName, types);
-        } else {
-            // param1 and param2 given, p1 is type list, p2 value list
-            final Object[] typeList = TypeHelper.convertListToArray(param1);
-            return clazz.getMethod(methodName, Arrays.copyOf(typeList, typeList.length, Class[].class));
-        }
+        return clazz.getDeclaredMethod(methodName);
+    }
+
+    private static Object findParams(Object param1, Object param2, Object param3) {
+
+        if (null != param1 && null != param2 && null != param3) return param2;
+        if (null != param1 && null != param2) return param1;
+        return null;
+    }
+
+    private static Object findTypes(Object param1, Object param2, Object param3) {
+
+        if(null != param1 && null != param2 && null != param3) return param1;
+        return null;
+    }
+
+    private static Object findObject(Object param1, Object param2, Object param3) {
+
+        if(null != param1 && null != param2 && null != param3) return param3;
+        if(null != param1 && null != param2) return param2;
+        return param1;
+    }
+
+    private static Object[] findStaticParams(Object[] param1, Object[] param2) throws EvaluationException {
+        if (null == param2) return param1;
+        else return param2;
+    }
+
+    private static Object[] findStaticTypes(Object[] param1, Object[] param2) throws EvaluationException {
+        if (null != param2) return param1;
+        return null;
     }
 
     private static Class<?>[] determineObjectType(Object[] objects) {
@@ -178,9 +234,5 @@ public class JavaForms {
             classes[i] = object == null ? null : object.getClass();
         }
         return classes;
-    }
-
-    private static Object invoke (Method method, Object obj, Class<?> argTypes, Object[] args)  {
-
     }
 }

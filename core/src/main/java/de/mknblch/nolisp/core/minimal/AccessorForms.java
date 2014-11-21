@@ -1,9 +1,12 @@
 package de.mknblch.nolisp.core.minimal;
 
 import de.mknblch.nolisp.core.common.Expectations;
+import de.mknblch.nolisp.core.common.FormatHelper;
 import de.mknblch.nolisp.core.common.TypeHelper;
 import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
 import de.mknblch.nolisp.core.scanner.Define;
+
+import java.util.ArrayList;
 
 import static de.mknblch.nolisp.core.common.TypeHelper.*;
 
@@ -51,9 +54,23 @@ public class AccessorForms {
         return objects;
     }
 
+    @Define({"ainit", "array-init"}) // (amake 3)
+    public static Object ainit(ListStruct args) throws Exception {
+        return new Object[asInt(args.car())];
+    }
+
     @Define({"amake", "array-make"}) // (amake 3)
     public static Object amake(ListStruct args) throws Exception {
-        return new Object[asInt(args.car())];
+        System.out.printf("args %s%n", FormatHelper.formatAtom(args));
+
+        if (null == args) {
+            return new Object[0];
+        }
+        final ArrayList<Object> objects = new ArrayList<>();
+        for (Object arg : args) {
+            objects.add(arg);
+        }
+        return objects.toArray();
     }
 
     @Define("car")

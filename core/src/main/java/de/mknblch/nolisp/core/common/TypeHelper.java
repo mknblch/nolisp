@@ -106,6 +106,7 @@ public class TypeHelper {
     }
 
     public static ListStruct asList(Object o) throws EvaluationException {
+        if (null == o) return null; // TODO review!
         Expectations.expectList(o);
         return (ListStruct) o;
     }

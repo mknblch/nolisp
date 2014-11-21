@@ -178,16 +178,29 @@ public class AccessorFormsTest extends AbstractFormTest {
     }
 
     @Test
-    public void testArrayMake() throws Exception {
+    public void testArrayMultiSet() throws Exception {
 
-        final List<Object> evaluated = eval("(amake 3) ");
+        final List<Object> evaluated = eval("(progn (setq a (array-init 2)) (aset a 0 42 1 42) )");
+        AbstractFormTest.assertASTEquals("L[ A[ 42 42 ] ]", evaluated);
+    }
+
+    @Test
+    public void testArrayInit() throws Exception {
+
+        final List<Object> evaluated = eval("(ainit 3) ");
         AbstractFormTest.assertASTEquals("L[ A[ nil nil nil ] ]", evaluated);
     }
 
     @Test
-    public void testArrayMultiSet() throws Exception {
+    public void testArrayMake() throws Exception {
 
-        final List<Object> evaluated = eval("(progn (setq a (array-make 2)) (aset a 0 42 1 42) )");
-        AbstractFormTest.assertASTEquals("L[ A[ 42 42 ] ]", evaluated);
+        final List<Object> evaluated = eval("(array-make 1 2 3 4 5 6) ");
+        AbstractFormTest.assertASTEquals("L[ A[ 1 2 3 4 5 6 ] ]", evaluated);
+    }
+    @Test
+    public void testArrayMakeEmpty() throws Exception {
+
+        final List<Object> evaluated = eval("(array-make) ");
+        AbstractFormTest.assertASTEquals("L[ A[  ] ]", evaluated);
     }
 }

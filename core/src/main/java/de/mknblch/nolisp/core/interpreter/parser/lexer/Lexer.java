@@ -15,11 +15,9 @@ public class Lexer extends StringCutter {
 
     // TODO refactor
     private final ArrayList<TokenDecisionRule> decisionRules = new ArrayList<TokenDecisionRule>() {{
-        add(new BooleanRule());
         add(new IntRule());
         add(new RealRule());
         add(new NullRule());
-        add(new JavaPrimitivesRule());
     }};
 
     public void setCode(String code) {

@@ -105,24 +105,12 @@ public class ListStruct implements Atom, Iterable {
     }
 
     /**
-     * get current list element.
-     */
-    public Object car() {
-        return car;
-    }
-
-
-    /**
      * get rest list.
      */
     public ListStruct cdr() {
         return cdr;
     }
 
-    public Object cdar() {
-        if (cdr != null) return cdr.car;
-        return null;
-    }
 
     public ListStruct cddr() {
         if (cdr != null) {
@@ -131,8 +119,34 @@ public class ListStruct implements Atom, Iterable {
         return null;
     }
 
+    private ListStruct cdddr() {
+        final ListStruct cddr = cddr();
+        if (cddr != null) {
+            return cddr.cdr;
+        }
+        return null;
+    }
+
+    /**
+     * get current list element.
+     */
+    public Object car() {
+        return car;
+    }
+
+    public Object cdar() {
+        if (cdr != null) return cdr.car;
+        return null;
+    }
+
     public Object cddar() {
         final ListStruct cddr = cddr();
+        if (cddr != null) return cddr.car();
+        return null;
+    }
+
+    public Object cdddar() {
+        final ListStruct cddr = cdddr();
         if (cddr != null) return cddr.car();
         return null;
     }
