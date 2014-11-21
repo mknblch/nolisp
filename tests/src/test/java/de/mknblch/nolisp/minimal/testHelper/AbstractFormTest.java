@@ -56,7 +56,7 @@ public abstract class AbstractFormTest {
             LOGGER.debug("result: {}", FormatHelper.formatPretty(eval));
             ret.add(eval);
         }
-        LOGGER.debug("Context: [ {} ]", FormatHelper.formatContext(context, false));
+//        LOGGER.debug("Context: [ {} ]", FormatHelper.formatContext(context, false));
         return ret;
     }
 
