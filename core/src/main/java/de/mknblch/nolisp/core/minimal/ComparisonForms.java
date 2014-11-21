@@ -15,6 +15,11 @@ public class ComparisonForms {
         return equal(args.car(), args.cdar());
     }
 
+    @Define("!=")
+    public static Object notEqual(ListStruct args) throws Exception {
+        return !equal(args.car(), args.cdar());
+    }
+
     @Define(">")
     public static Object greater(ListStruct args) throws Exception {
         Expectations.expectCdr(args);

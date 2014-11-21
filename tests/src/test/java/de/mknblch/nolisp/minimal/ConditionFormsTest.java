@@ -19,9 +19,16 @@ public class ConditionFormsTest extends AbstractFormTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(ConditionFormsTest.class);
 
     @Test
-    public void testIf() throws Exception {
+    public void testIfBool() throws Exception {
         final List<Object> result = eval("(if true 42 43)");
         assertEquals(42, result.get(0));
+    }
+
+
+    @Test
+    public void testIfEmptyList() throws Exception {
+        List<Object> result = eval("(if '() 1 0)");
+        assertASTEquals("L[ 0 ]", result);
     }
 
     @Test
@@ -61,7 +68,7 @@ public class ConditionFormsTest extends AbstractFormTest {
     @Test
     public void testForiTime() throws Exception {
 
-        callForI(10);
+        callForI(1000);
         callForI(10);
         callForI(100);
         callForI(1000);

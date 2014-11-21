@@ -41,6 +41,63 @@ public class AccessorFormsTest extends AbstractFormTest {
     }
 
     @Test
+    public void testConsEmptyList() throws Exception {
+
+        final String code = "(cons 1 '())";
+        final List<Object> evaluated = eval(code);
+        AbstractFormTest.assertASTEquals("L[ ( 1 ) ]", evaluated);
+    }
+
+    @Test
+    public void testConsEmptyLists() throws Exception {
+
+        final String code = "(cons '() '())";
+        final List<Object> evaluated = eval(code);
+        AbstractFormTest.assertASTEquals("L[ ( nil ) ]", evaluated);
+    }
+
+    @Test
+    public void testConsNilNil() throws Exception {
+
+        final String code = "(cons nil nil)";
+        final List<Object> evaluated = eval(code);
+        AbstractFormTest.assertASTEquals("L[ ( nil ) ]", evaluated);
+    }
+
+    @Test
+    public void testConsNilAtEnd() throws Exception {
+
+        final String code = "(cons 1 nil)";
+        final List<Object> evaluated = eval(code);
+        AbstractFormTest.assertASTEquals("L[ ( 1 ) ]", evaluated);
+    }
+
+
+    @Test
+    public void testConsNilAtStart() throws Exception {
+
+        final String code = "(cons nil 1)";
+        final List<Object> evaluated = eval(code);
+        AbstractFormTest.assertASTEquals("L[ ( nil 1 ) ]", evaluated);
+    }
+
+    @Test
+    public void testConsNilAtStartListAtEnd() throws Exception {
+
+        final String code = "(cons null '(1 2 3))";
+        final List<Object> evaluated = eval(code);
+        AbstractFormTest.assertASTEquals("L[ ( nil 1 2 3 ) ]", evaluated);
+    }
+
+    @Test
+    public void testConsEmptyListAtStartListAtEnd() throws Exception {
+
+        final String code = "(cons '() '(1 2 3))";
+        final List<Object> evaluated = eval(code);
+        AbstractFormTest.assertASTEquals("L[ ( nil 1 2 3 ) ]", evaluated);
+    }
+
+    @Test
     public void testCons2() throws Exception {
 
         final String code = "(cons 1 '(2 3))";

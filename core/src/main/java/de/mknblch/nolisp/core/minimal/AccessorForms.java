@@ -81,12 +81,26 @@ public class AccessorForms {
     @Define("cons")
     public static Object cons(ListStruct args) throws Exception {
         Expectations.expectCdr(args);
-        final Object car = args.car();
-        final Object cdar = args.cdar();
-        if (isList(cdar)) {
-            return new ListStruct(car).setCdr((ListStruct) cdar);
+        final Object a = args.car();
+        final Object b = args.cdar();
+        return cons(a, b);
+    }
+
+    // TODO refactor
+    private static Object cons (Object a, Object b) {
+        if (TypeHelper.isEmptyList(a) && TypeHelper.isEmptyList(b)) {
+            return new ListStruct();
         }
-        return new ListStruct(car, cdar);
+        if (TypeHelper.isEmptyList(b)) {
+            return new ListStruct(a);
+        }
+        if (isList(b)) {
+            if(TypeHelper.isEmptyList(a)) {
+                return new ListStruct(null).setCdr((ListStruct) b);
+            }
+            return new ListStruct(a).setCdr((ListStruct) b);
+        }
+        return new ListStruct(a, b);
     }
 
 }
