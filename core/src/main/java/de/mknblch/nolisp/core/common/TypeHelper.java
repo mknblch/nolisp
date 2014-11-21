@@ -31,7 +31,7 @@ public class TypeHelper {
         return ret;
     }
 
-    public static Integer asInt(Object o) throws EvaluationException {
+    public static int asInt(Object o) throws EvaluationException {
         if (isInt(o)) {
             return (Integer) o;
         }
@@ -69,7 +69,7 @@ public class TypeHelper {
         throw new EvaluationException("Illegal Exception cast.");
     }
 
-    public static Double asReal(Object o) throws EvaluationException {
+    public static double asReal(Object o) throws EvaluationException {
         if (isInt(o)) {
             return (double) (Integer) o;
         }
@@ -145,7 +145,19 @@ public class TypeHelper {
     }
 
     public static Boolean asBoolean(Object o) {
-        return null != o && !Boolean.FALSE.equals(o);
+        return null != o && !Boolean.FALSE.equals(o) && !isEmptyList(o);
+    }
+
+    public static boolean isEmptyList(Object o) {
+        if (null == o) {
+            return true;
+        }
+        if (!(o instanceof ListStruct)) {
+            return false;
+        } else {
+            final ListStruct listStruct = (ListStruct) o;
+            return listStruct.car() == null && !listStruct.hasSuccessor();
+        }
     }
 
     public static boolean isBoolean(Object o) {

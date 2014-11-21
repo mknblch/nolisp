@@ -3,6 +3,7 @@ package de.mknblch.nolisp.minimal;
 import de.mknblch.nolisp.core.interpreter.structs.forms.LambdaForm;
 import de.mknblch.nolisp.minimal.testHelper.AbstractFormTest;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
@@ -140,9 +141,21 @@ public class LambdaFormsTest extends AbstractFormTest {
 
     @Test
     public void testSetqLambda() throws Exception {
-        List<Object> result = eval("(setq c (lambda (a b) (+ a b))) (c 3 5)");
+        List<Object> result = eval("(setq c (lambda (a b) (+ a b))) (c 21 21)");
         dump(result);
-        Assert.assertEquals(8, result.get(1));
+        Assert.assertEquals(42, result.get(1));
     }
+
+    @Test
+    public void testLambda2() throws Exception {
+        List<Object> result = eval(
+                "(progn " +
+                        "(defun odd? (n) (!= 0 (% n 2)))" +
+                        "(defun foreach (f l) (if l (cons (f (car l)) (foreach f (cdr l))))) " +
+                        "(foreach odd? '(1 2 3 4 5 6 7)))");
+        assertASTEquals("L[ ( true false true false true false true ) ]", result);
+    }
+
+
 
 }
