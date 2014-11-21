@@ -1,5 +1,9 @@
 package de.mknblch.nolisp.core.interpreter.parser.lexer;
 
+import de.mknblch.nolisp.core.interpreter.parser.lexer.rules.*;
+
+import java.util.ArrayList;
+
 /**
  * basic lisp lexer.
  */
@@ -9,14 +13,14 @@ public class Lexer extends StringCutter {
     private static final char[] NEWLINE_CHARS = new char[]{'\n'};
     private static final char[] SPECIAL_TOKEN_CHARS = new char[]{'(', ')', '{', '}', '[', ']'};
 
-    private static final String INT_REGEX = "^\\-?[0-9]+$";
-    private static final String REAL_REGEX = "^\\-?[0-9]+\\.[0-9]+$";
-    private static final String NIL_REGEX = "^(nil)|(NIL)|(null)|(NULL)$";
-    private static final String TRUE_REGEX = "^(true)|(TRUE)$";
-    private static final String FALSE_REGEX = "^(false)|(FALSE)$";
-
-    public Lexer() {
-    }
+    // TODO refactor
+    private final ArrayList<TokenDecisionRule> decisionRules = new ArrayList<TokenDecisionRule>() {{
+        add(new BooleanRule());
+        add(new IntRule());
+        add(new RealRule());
+        add(new NullRule());
+        add(new JavaPrimitivesRule());
+    }};
 
     public void setCode(String code) {
         if (null == code) {
@@ -133,28 +137,11 @@ public class Lexer extends StringCutter {
     }
 
     private Token decideConstType(String literal) throws LexerException {
-
-        if (literal.matches(INT_REGEX)) {
-            try {
-                return new Token(Token.Type.CONST, literal, Integer.parseInt(literal));
-            } catch (Exception e) {
-                throw new LexerException(String.format("Parsing '%s' to INT failed", literal), e.getCause());
-            }
-        } else if (literal.matches(REAL_REGEX)) {
-            try {
-                return new Token(Token.Type.CONST, literal, Double.parseDouble(literal));
-            } catch (Exception e) {
-                throw new LexerException(String.format("Parsing '%s' to REAL failed", literal), e.getCause());
-            }
-        } else if (literal.matches(NIL_REGEX)) {
-            return new Token(Token.Type.CONST, "nil", null);
-        } else if (literal.matches(TRUE_REGEX)) {
-            return new Token(Token.Type.CONST, "true", Boolean.TRUE);
-        } else if (literal.matches(FALSE_REGEX)) {
-            return new Token(Token.Type.CONST, "false", Boolean.FALSE);
-        } else {
-            return new Token(Token.Type.SYMBOL, literal, literal);
+        for (TokenDecisionRule decisionRule : decisionRules) {
+            final Token token = decisionRule.token(literal);
+            if (null != token) return token;
         }
+        return new Token(Token.Type.SYMBOL, literal, literal);
     }
 
 }

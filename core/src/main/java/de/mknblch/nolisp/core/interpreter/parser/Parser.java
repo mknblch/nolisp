@@ -1,6 +1,5 @@
 package de.mknblch.nolisp.core.interpreter.parser;
 
-import de.mknblch.nolisp.core.common.TypeHelper;
 import de.mknblch.nolisp.core.inspection.Inspector;
 import de.mknblch.nolisp.core.interpreter.parser.lexer.Lexer;
 import de.mknblch.nolisp.core.interpreter.parser.lexer.LexerException;
@@ -10,7 +9,6 @@ import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
 import de.mknblch.nolisp.core.interpreter.structs.SymbolStruct;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 

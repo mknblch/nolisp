@@ -198,4 +198,13 @@ public class TypeHelper {
         return (Object[]) o;
     }
 
+    public static Object[] convertListToArray(Object o) throws EvaluationException {
+        if (null == o) return null;
+        final ArrayList<Object> objects = new ArrayList<>(); // TODO refactor?
+        final ListStruct listStruct = asList(o);
+        for (Object o1 : listStruct) {
+            objects.add(o1);
+        }
+        return objects.toArray();
+    }
 }

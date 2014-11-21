@@ -6,6 +6,7 @@ import de.mknblch.nolisp.core.interpreter.Context;
 import de.mknblch.nolisp.core.interpreter.Interpreter;
 import de.mknblch.nolisp.core.interpreter.parser.Parser;
 import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
+import de.mknblch.nolisp.core.interpreter.structs.SymbolStruct;
 import de.mknblch.nolisp.core.scanner.Define;
 import de.mknblch.nolisp.core.scanner.Special;
 
@@ -19,7 +20,7 @@ import java.io.InputStream;
  */
 public class BasicForms {
 
-    public static final Parser PARSER = new Parser();
+    private static final Parser PARSER = new Parser();
 
     @Special
     @Define("setq")

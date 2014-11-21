@@ -125,6 +125,14 @@ public class LexerTest {
     }
 
     @Test
+    public void testJavaType() throws Exception {
+        final String code = "int boolean";
+        final Lexer lexer = new Lexer();
+        lexer.setCode(code);
+        assertTokenEquals(new String[]{"INT", "BOOLEAN"}, lexer);
+    }
+
+    @Test
     public void testTrueFalse() throws Exception {
         final String code = "true TRUE false FALSE";
         final Lexer lexer = new Lexer();

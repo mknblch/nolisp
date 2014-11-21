@@ -32,7 +32,7 @@ public class PredicateForms {
         return null == args.car();
     }
 
-    @Special
+    @Special // TODO review!
     @Define("instanceof?") // (instanceof? java.lang.String "bla") => true
     public static Object isInstance(Interpreter interpreter, Context context, ListStruct args) throws Exception {
         final String className = TypeHelper.symbolLiteral(args.car());
