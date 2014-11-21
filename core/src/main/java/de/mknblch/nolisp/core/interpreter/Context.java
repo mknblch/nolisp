@@ -26,10 +26,6 @@ public class Context {
         implement(language);
     }
 
-    public void implement(Language language) {
-        bindAll(language.getContextMap());
-    }
-
     /**
      * used for derivation.
      */
@@ -37,6 +33,10 @@ public class Context {
         this.global = false;
         this.parent = parent;
         this.map = new HashMap<>();
+    }
+
+    public void implement(Language language) {
+        bindAll(language.getContextMap());
     }
 
     /**

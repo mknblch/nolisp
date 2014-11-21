@@ -1,5 +1,6 @@
 package de.mknblch.nolisp.core.interpreter.parser;
 
+import de.mknblch.nolisp.core.common.TypeHelper;
 import de.mknblch.nolisp.core.inspection.Inspector;
 import de.mknblch.nolisp.core.interpreter.parser.lexer.Lexer;
 import de.mknblch.nolisp.core.interpreter.parser.lexer.LexerException;
@@ -8,7 +9,10 @@ import de.mknblch.nolisp.core.interpreter.structs.Atom;
 import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
 import de.mknblch.nolisp.core.interpreter.structs.SymbolStruct;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * The parser transforms a token stream into an abstract syntax tree in form of ListStructs
@@ -49,6 +53,11 @@ public class Parser {
     private static final SymbolStruct AT_STRUCT = new SymbolStruct("splice");
 
     private final Lexer lexer = new Lexer();
+
+    public ListStruct parse(File file) throws Exception {
+        final String code = new Scanner(file).useDelimiter("\\A").next();
+        return parse(code);
+    }
 
     public ListStruct parse(String code) throws Exception {
         lexer.setCode(code);

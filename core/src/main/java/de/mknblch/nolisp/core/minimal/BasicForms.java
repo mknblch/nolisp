@@ -4,14 +4,22 @@ import de.mknblch.nolisp.core.common.Expectations;
 import de.mknblch.nolisp.core.common.TypeHelper;
 import de.mknblch.nolisp.core.interpreter.Context;
 import de.mknblch.nolisp.core.interpreter.Interpreter;
+import de.mknblch.nolisp.core.interpreter.parser.Parser;
 import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
 import de.mknblch.nolisp.core.scanner.Define;
 import de.mknblch.nolisp.core.scanner.Special;
+
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
 /**
  * @author mknblch
  */
 public class BasicForms {
+
+    public static final Parser PARSER = new Parser();
 
     @Special
     @Define("setq")
@@ -111,5 +119,12 @@ public class BasicForms {
             result = interpreter.eval(form, context);
         }
         return result;
+    }
+
+    @Special
+    @Define(value = "load") // (load "abc.nolisp" )
+    public static Object load(Interpreter interpreter, Context context, ListStruct args) throws Exception {
+        final File file = new File(TypeHelper.asString(interpreter.eval(args.car(), context)));
+        return interpreter.evalEach(PARSER.parse(file), context);
     }
 }

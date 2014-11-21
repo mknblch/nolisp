@@ -55,7 +55,7 @@ public class CoreInterpreter implements Interpreter {
         }
     }
 
-    private ListStruct evalEach(ListStruct list, Context context) throws Exception {
+    public ListStruct evalEach(ListStruct list, Context context) throws Exception {
         if (null == list) return null;
         final ListStruct ret = new ListStruct();
         for (Object l : list) {

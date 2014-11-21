@@ -1,5 +1,7 @@
 package de.mknblch.nolisp.core.interpreter;
 
+import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
+
 /**
  * @author mknblch
  */
@@ -16,5 +18,7 @@ public interface Interpreter {
      * </ul>
      */
     public Object eval(Object obj, Context context) throws Exception;
+
+    public ListStruct evalEach(ListStruct list, Context context) throws Exception;
 
 }
