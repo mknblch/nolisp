@@ -1,15 +1,14 @@
 package de.mknblch.nolisp.core.interpreter.parser.lexer.rules;
 
-import de.mknblch.nolisp.core.interpreter.parser.lexer.PatternDecisionRule;
+import de.mknblch.nolisp.core.interpreter.parser.lexer.ConstDecisionRuleAdapter;
 import de.mknblch.nolisp.core.interpreter.parser.lexer.Token;
 
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author mknblch
  */
-public class IntRule extends PatternDecisionRule {
+public class IntRule extends ConstDecisionRuleAdapter {
 
     public IntRule() {
         super("^\\-?[0-9]+$");

@@ -35,7 +35,7 @@ public class StringCutter {
         return offset < str.length();
     }
 
-    public String getToken() {
+    public String getLiteral() {
         return str.substring(prev, offset);
     }
 

@@ -1,6 +1,6 @@
 package de.mknblch.nolisp.core.interpreter.parser.lexer.rules;
 
-import de.mknblch.nolisp.core.interpreter.parser.lexer.PatternDecisionRule;
+import de.mknblch.nolisp.core.interpreter.parser.lexer.ConstDecisionRuleAdapter;
 import de.mknblch.nolisp.core.interpreter.parser.lexer.Token;
 
 import java.util.regex.Matcher;
@@ -8,7 +8,7 @@ import java.util.regex.Matcher;
 /**
  * @author mknblch
  */
-public class RealRule extends PatternDecisionRule {
+public class RealRule extends ConstDecisionRuleAdapter {
 
     public RealRule() {
         super("^\\-?[0-9]+\\.[0-9]+$");

@@ -14,12 +14,20 @@ public class Lexer extends StringCutter {
     private static final char[] SPECIAL_TOKEN_CHARS = new char[]{'(', ')', '{', '}', '[', ']'};
 
     // TODO refactor
-    private final ArrayList<TokenDecisionRule> decisionRules = new ArrayList<TokenDecisionRule>() {{
+    private final ArrayList<ConstDecisionRule> decisionRules = new ArrayList<ConstDecisionRule>() {{
         add(new NullRule());
         add(new IntRule());
         add(new RealRule());
         add(new BigIntegerRule());
         add(new BigDecimalRule());
+    }};
+
+    private final ArrayList<TokenDecisionRule> tokenDecisionRules = new ArrayList<TokenDecisionRule>() {{
+        add(new ArrayRule());
+        add(new CommentRule());
+        add(new ListRule());
+        add(new StringRule());
+        add(new SpecialTokenRule());
     }};
 
     public void setCode(String code) {
@@ -43,90 +51,18 @@ public class Lexer extends StringCutter {
     }
 
     private Token tokenize(char c) throws LexerException {
-        switch (c) {
-            case '[':
-                return new Token(Token.Type.ARRAY_BEGIN, "[", "[");
-            case ']':
-                return new Token(Token.Type.ARRAY_END, "]", "]");
-            case '(':
-                return new Token(Token.Type.LIST_BEGIN, "(", "(");
-            case ')':
-                return new Token(Token.Type.LIST_END, ")", ")");
-            case '{':
-                return new Token(Token.Type.LIST_BEGIN, "{", "{");
-            case '}':
-                return new Token(Token.Type.LIST_END, "}", "}");
-            case '\'':
-                return new Token(Token.Type.QUOTE, "'", "'");
-            case '#':
-                return new Token(Token.Type.SHARP, "#", "#");
-            case '`':
-                return new Token(Token.Type.BACKQUOTE, "`", "`");
-            case ',':
-                return new Token(Token.Type.COMMA, ",", ",");
-            case '.':
-                return new Token(Token.Type.SPLICE, ".", ".");
-            case '@':
-                return new Token(Token.Type.SPLICE, "@", "@");
-            case ';':
-                final String comment = tokenizeComment();
-                return new Token(Token.Type.LINE_COMMENT, comment, comment);
-            case '"':
-                final String str = tokenizeString();
-                return new Token(Token.Type.CONST, str, str);
-            default:
-                return decideConstType(tokenizeConst());
-        }
-    }
 
-    private String tokenizeComment() {
-        until(NEWLINE_CHARS);
-        return getToken();
-    }
-
-
-    private String tokenizeConst() {
-        until(IGNORE_CHARS, SPECIAL_TOKEN_CHARS, NEWLINE_CHARS);
-        return getToken();
-    }
-
-    private String tokenizeString() throws LexerException {
-        final StringBuilder buffer = new StringBuilder();
-        while (true) {
-            if (!hasNext()) {
-                throw new LexerException("Premature end of string.");
-            }
-            final char c = popChar();
-            if ('\\' == c) {
-                final char n = popChar();
-                switch (n) {
-                    case '"':
-                        buffer.append("\"");
-                        break;
-                    case 't':
-                        buffer.append("\t");
-                        break;
-                    case 'n':
-                        buffer.append("\n");
-                        break;
-                    case 'r':
-                        buffer.append("\r");
-                        break;
-                    case '\\':
-                        buffer.append("\\");
-                        break;
-                    default:
-                        throw new LexerException(String.format("Invalid escape sequence '\\%c'", n));
-                }
-            } else if ('"' == c) {
-                break;
-            } else {
-                buffer.append(c);
-            }
+        for (TokenDecisionRule tokenDecisionRule : tokenDecisionRules) {
+            final Token token = tokenDecisionRule.decide(c, this);
+            if (null != token) return token;
         }
 
-        sync();
-        return buffer.toString();
+        final String literal = tokenizeConst();
+        for (ConstDecisionRule decisionRule : decisionRules) {
+            final Token token = decisionRule.token(literal);
+            if (null != token) return token;
+        }
+        return new Token(Token.Type.SYMBOL, literal, literal);
     }
 
     /**
@@ -136,12 +72,9 @@ public class Lexer extends StringCutter {
         skip(IGNORE_CHARS, NEWLINE_CHARS);
     }
 
-    private Token decideConstType(String literal) throws LexerException {
-        for (TokenDecisionRule decisionRule : decisionRules) {
-            final Token token = decisionRule.token(literal);
-            if (null != token) return token;
-        }
-        return new Token(Token.Type.SYMBOL, literal, literal);
+    private String tokenizeConst() {
+        until(IGNORE_CHARS, SPECIAL_TOKEN_CHARS, NEWLINE_CHARS);
+        return getLiteral();
     }
 
 }

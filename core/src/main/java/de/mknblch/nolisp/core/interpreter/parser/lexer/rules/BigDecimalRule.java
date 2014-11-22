@@ -1,16 +1,15 @@
 package de.mknblch.nolisp.core.interpreter.parser.lexer.rules;
 
-import de.mknblch.nolisp.core.interpreter.parser.lexer.PatternDecisionRule;
+import de.mknblch.nolisp.core.interpreter.parser.lexer.ConstDecisionRuleAdapter;
 import de.mknblch.nolisp.core.interpreter.parser.lexer.Token;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.regex.Matcher;
 
 /**
  * @author mknblch
  */
-public class BigDecimalRule extends PatternDecisionRule {
+public class BigDecimalRule extends ConstDecisionRuleAdapter {
 
     public BigDecimalRule() {
         super("^(\\-?[0-9]+(\\.[0-9]+)?)[dD]?$");

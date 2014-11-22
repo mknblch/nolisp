@@ -39,8 +39,8 @@ public class StringCutterTest {
     }
 
     public void assertToken(StringCutter stringCutter, String expected) {
-        LOGGER.debug("'{}'", stringCutter.getToken());
-        Assert.assertEquals(expected, stringCutter.getToken());
+        LOGGER.debug("'{}'", stringCutter.getLiteral());
+        Assert.assertEquals(expected, stringCutter.getLiteral());
     }
 
 }

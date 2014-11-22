@@ -6,11 +6,11 @@ import java.util.regex.Pattern;
 /**
  * @author mknblch
  */
-public abstract class PatternDecisionRule implements TokenDecisionRule {
+public abstract class ConstDecisionRuleAdapter implements ConstDecisionRule {
 
     private final Pattern pattern;
 
-    public PatternDecisionRule(String regex) {
+    public ConstDecisionRuleAdapter(String regex) {
         this.pattern = Pattern.compile(regex);
     }
 
