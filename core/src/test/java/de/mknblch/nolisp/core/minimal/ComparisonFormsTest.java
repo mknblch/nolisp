@@ -1,9 +1,7 @@
-package de.mknblch.nolisp.minimal;
+package de.mknblch.nolisp.core.minimal;
 
-import de.mknblch.nolisp.minimal.testHelper.AbstractFormTest;
+import de.mknblch.nolisp.core.minimal.testHelper.AbstractFormTest;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class ComparisonFormsTest extends AbstractFormTest {
 

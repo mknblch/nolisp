@@ -1,4 +1,4 @@
-package de.mknblch.nolisp.minimal.testHelper;
+package de.mknblch.nolisp.core.minimal.testHelper;
 
 import de.mknblch.nolisp.core.scanner.FunctionDefinitionException;
 import de.mknblch.nolisp.core.interpreter.structs.ListStruct;

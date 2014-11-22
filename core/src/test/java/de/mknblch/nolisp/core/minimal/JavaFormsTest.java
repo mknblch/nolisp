@@ -1,13 +1,10 @@
-package de.mknblch.nolisp.minimal;
+package de.mknblch.nolisp.core.minimal;
 
 import de.mknblch.nolisp.core.interpreter.EvaluationException;
-import de.mknblch.nolisp.core.interpreter.Interpreter;
-import de.mknblch.nolisp.minimal.testHelper.AbstractFormTest;
-import org.junit.Ignore;
+import de.mknblch.nolisp.core.minimal.testHelper.AbstractFormTest;
 import org.junit.Test;
 
 import java.nio.charset.Charset;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;

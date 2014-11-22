@@ -1,15 +1,11 @@
-package de.mknblch.nolisp.minimal;
+package de.mknblch.nolisp.core.minimal;
 
 import de.mknblch.nolisp.core.interpreter.EvaluationException;
-import de.mknblch.nolisp.core.interpreter.Language;
-import de.mknblch.nolisp.core.minimal.Minimal;
-import de.mknblch.nolisp.minimal.testHelper.AbstractFormTest;
+import de.mknblch.nolisp.core.minimal.testHelper.AbstractFormTest;
 import de.mknblch.nolisp.core.interpreter.Context;
 import org.junit.Test;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

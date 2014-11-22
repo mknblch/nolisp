@@ -1,9 +1,8 @@
-package de.mknblch.nolisp.minimal;
+package de.mknblch.nolisp.core.minimal;
 
 import de.mknblch.nolisp.core.interpreter.structs.forms.LambdaForm;
-import de.mknblch.nolisp.minimal.testHelper.AbstractFormTest;
+import de.mknblch.nolisp.core.minimal.testHelper.AbstractFormTest;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;

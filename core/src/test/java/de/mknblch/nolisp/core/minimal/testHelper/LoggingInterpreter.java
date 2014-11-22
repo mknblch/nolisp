@@ -1,9 +1,8 @@
-package de.mknblch.nolisp.minimal.testHelper;
+package de.mknblch.nolisp.core.minimal.testHelper;
 
 import de.mknblch.nolisp.core.common.FormatHelper;
 import de.mknblch.nolisp.core.interpreter.CoreInterpreter;
 import de.mknblch.nolisp.core.interpreter.Context;
-import de.mknblch.nolisp.core.interpreter.Language;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
