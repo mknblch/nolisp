@@ -14,7 +14,7 @@ public class ListStruct implements Atom, Iterable {
     private ListStruct cdr = null;
 
     public ListStruct(Object car, Object... rest) {
-        isEmptyList = false;
+        isEmptyList = car == null && rest == null;
         this.car = car;
         for (int i = 0; i < rest.length; i++) {
             append(rest[i]);
@@ -55,7 +55,7 @@ public class ListStruct implements Atom, Iterable {
      * @param atom
      */
     private void append(Object atom) {
-
+        isEmptyList = false;
         if (cdr == null) cdr = new ListStruct(atom);
         else last().cdr = new ListStruct(atom);
     }
@@ -155,7 +155,7 @@ public class ListStruct implements Atom, Iterable {
      * return number of elements in the list
      */
     public int size() {
-        int i = 1;
+        int i = isEmptyList ? 0 : 1;
         for (ListStruct temp = this; null != temp.cdr; i++) {
             temp = temp.cdr;
         }

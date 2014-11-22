@@ -18,107 +18,113 @@ public class ParserTest {
     private static final Parser PARSER = new Parser();
 
     @Test
+    public void testEmptyList() throws Exception {
+        String code = "()";
+        assertASTEquals("( ( nil ) )", code);
+    }
+
+    @Test
     public void testSimpleConst() throws Exception {
         String code = "(x)";
-        evalAssertASTEquals("( ( x ) )", code);
+        assertASTEquals("( ( x ) )", code);
     }
 
     @Test
     public void testSimpleAST() throws Exception {
         String code = "(+ 1 2 3)(+ 1 2 3)";
-        evalAssertASTEquals("( ( + 1 2 3 ) ( + 1 2 3 ) )", code);
+        assertASTEquals("( ( + 1 2 3 ) ( + 1 2 3 ) )", code);
     }
 
     @Test
     public void testComment() throws Exception {
         String code = "(+ 1 2 3) ;(+ 1 2 3) \n\n\n(oO)";
-        evalAssertASTEquals("( ( + 1 2 3 ) ( oO ) )", code);
+        assertASTEquals("( ( + 1 2 3 ) ( oO ) )", code);
     }
 
     @Test
     public void testQuotedInt() throws Exception {
         String code = "'1 x";
-        evalAssertASTEquals("( ( quote 1 ) x )", code);
+        assertASTEquals("( ( quote 1 ) x )", code);
     }
 
 
     @Test
     public void testQuotedSymbol() throws Exception {
         String code = "'x x";
-        evalAssertASTEquals("( ( quote x ) x )", code);
+        assertASTEquals("( ( quote x ) x )", code);
     }
 
 
     @Test
     public void testQuotedReal() throws Exception {
         String code = "'3.1415 3";
-        evalAssertASTEquals("( ( quote 3.1415 ) 3 )", code);
+        assertASTEquals("( ( quote 3.1415 ) 3 )", code);
     }
 
     @Test
     public void testBackQuotedList() throws Exception {
         String code = "`(1 2 3) x";
-        evalAssertASTEquals("( ( backquote ( 1 2 3 ) ) x )", code);
+        assertASTEquals("( ( backquote ( 1 2 3 ) ) x )", code);
     }
 
     @Test(expected = EvaluationException.class)
     public void testSpliceError() throws Exception {
         String code = "(1 @(a @b) 3)";
-        evalAssertASTEquals("does not matter", code);
+        assertASTEquals("does not matter", code);
     }
 
     @Test
     public void testSplicedList() throws Exception {
         String code = "(1 @(a @(b)) 3)";
-        evalAssertASTEquals("( ( 1 a b 3 ) )", code);
+        assertASTEquals("( ( 1 a b 3 ) )", code);
     }
 
     @Test
     public void testBackQuotedSplicedList() throws Exception {
         String code = "`(1 @(a b) 3) x";
-        evalAssertASTEquals("( ( backquote ( 1 a b 3 ) ) x )", code);
+        assertASTEquals("( ( backquote ( 1 a b 3 ) ) x )", code);
     }
 
     @Test
     public void testBackQuotedCommaList() throws Exception {
         String code = "`(,1 2 3) x";
-        evalAssertASTEquals("( ( backquote ( ( comma 1 ) 2 3 ) ) x )", code);
+        assertASTEquals("( ( backquote ( ( comma 1 ) 2 3 ) ) x )", code);
     }
 
     @Test
     public void testBackQuotedSpliceList() throws Exception {
         String code = "`(,1 2 3) x";
-        evalAssertASTEquals("( ( backquote ( ( comma 1 ) 2 3 ) ) x )", code);
+        assertASTEquals("( ( backquote ( ( comma 1 ) 2 3 ) ) x )", code);
     }
 
     @Test
     public void testQuotedList() throws Exception {
         String code = "'(1 2 3) x";
-        evalAssertASTEquals("( ( quote ( 1 2 3 ) ) x )", code);
+        assertASTEquals("( ( quote ( 1 2 3 ) ) x )", code);
     }
 
     @Test
     public void testDoubleQuoted() throws Exception {
         String code = "''1 2 3";
-        evalAssertASTEquals("( ( quote ( quote 1 ) ) 2 3 )", code);
+        assertASTEquals("( ( quote ( quote 1 ) ) 2 3 )", code);
     }
 
     @Test
     public void testDoubleQuotedList() throws Exception {
         String code = "''(1 2 3)";
-        evalAssertASTEquals("( ( quote ( quote ( 1 2 3 ) ) ) )", code);
+        assertASTEquals("( ( quote ( quote ( 1 2 3 ) ) ) )", code);
     }
 
     @Test
     public void testQuotedTwoLists() throws Exception {
         String code = "'(1 2 3)'(1 2 3)x";
-        evalAssertASTEquals("( ( quote ( 1 2 3 ) ) ( quote ( 1 2 3 ) ) x )", code);
+        assertASTEquals("( ( quote ( 1 2 3 ) ) ( quote ( 1 2 3 ) ) x )", code);
     }
 
     @Test
     public void testNil() throws Exception {
         String code = "(nil)";
-        evalAssertASTEquals("( ( nil ) )", code);
+        assertASTEquals("( ( nil ) )", code);
     }
 
     @Test(expected = ParserException.class)
@@ -142,14 +148,14 @@ public class ParserTest {
     @Test
     public void testFunction() throws Exception {
         String code = "#'+";
-        evalAssertASTEquals("( ( function ( quote + ) ) )", code);
+        assertASTEquals("( ( function ( quote + ) ) )", code);
     }
 
     private ListStruct parse(String code) throws Exception {
         return PARSER.parse(code);
     }
 
-    private void evalAssertASTEquals(String expected, String code) throws Exception {
+    private void assertASTEquals(String expected, String code) throws Exception {
         LOGGER.debug("code : {}", code.replaceAll("[\r\n]", "\\\\n"));
         ListStruct parse = parse(code);
         String pretty = FormatHelper.formatPretty(parse);

@@ -18,6 +18,19 @@ public class BasicFormsTest extends AbstractFormTest {
     public static final Minimal MINIMAL = new Minimal();
 
     @Test
+    public void testListLength() throws Exception {
+        final List<Object> eval = eval("(llength '())");
+        assertASTEquals("L[ 0 ]", eval);
+    }
+
+    @Test
+    public void testEmptyList() throws Exception {
+        final List<Object> eval = eval("()");
+        assertASTEquals("L[ nil ]", eval);
+    }
+
+
+    @Test
     public void testPrint() throws Exception {
         final String code = "(print (+ 1 1(+ 2 3)))";
         eval(code);

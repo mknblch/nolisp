@@ -8,6 +8,8 @@ import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
 import de.mknblch.nolisp.core.scanner.Constant;
 import de.mknblch.nolisp.core.scanner.Define;
 
+import java.security.SecureRandom;
+
 /**
  * @author mknblch
  */
@@ -18,6 +20,8 @@ public class MathForms {
 
     @Constant("E")
     public static final double E = Math.E;
+
+    private static final SecureRandom SRANDOM = new SecureRandom();
 
     @Define({"+", "add", "sum"})
     public static Object plus(ListStruct args) throws Exception {
@@ -101,6 +105,12 @@ public class MathForms {
                     String.format("Expected NUMBER, NUMBER but was: %s, %s ", FormatHelper.formatAtom(a), FormatHelper.formatAtom(b)));
         }
         return (Integer) a % (Integer) b;
+    }
+
+    @Define({"rint", "random-int"})
+    public static Object rint(ListStruct args) throws Exception {
+        if (null == args) return Math.abs(SRANDOM.nextInt());
+        return Math.abs(SRANDOM.nextInt()) % TypeHelper.asInt(args.car());
     }
 
     private static Object plus(Object a, Object b) throws EvaluationException {

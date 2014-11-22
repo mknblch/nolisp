@@ -3,6 +3,7 @@ package de.mknblch.nolisp.core.minimal;
 import de.mknblch.nolisp.core.common.Expectations;
 import de.mknblch.nolisp.core.common.TypeHelper;
 import de.mknblch.nolisp.core.interpreter.Context;
+import de.mknblch.nolisp.core.interpreter.EvaluationException;
 import de.mknblch.nolisp.core.interpreter.Interpreter;
 import de.mknblch.nolisp.core.interpreter.parser.Parser;
 import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
@@ -57,6 +58,12 @@ public class BasicForms {
     @Define("quote")
     public static Object quote(Interpreter interpreter, Context context, ListStruct args) {
         return args.car();
+    }
+
+    @Define({"llength", "list-length"})
+    public static Object length(ListStruct args) throws EvaluationException {
+        if (null == args) return 0; // TODO review
+        return TypeHelper.asList(args.car()).size();
     }
 
     @Define("list")

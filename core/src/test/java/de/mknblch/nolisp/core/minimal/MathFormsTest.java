@@ -67,4 +67,9 @@ public class MathFormsTest extends AbstractFormTest {
         assertEquals(42d, (Double) result.get(0), 0.01);
     }
 
+    @Test
+    public void testRint() throws Exception {
+        final List<Object> eval = eval("(rint 3)(rint)(rint 3)");
+        dump(eval);
+    }
 }

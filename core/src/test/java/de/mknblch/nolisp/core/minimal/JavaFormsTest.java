@@ -123,10 +123,9 @@ public class JavaFormsTest extends AbstractFormTest{
 
     @Test
     public void testCallVarargs() throws Exception {
-
         // varargs is tricky!
         final List<Object> eval = eval("(call-static java.lang.String:format ( string array ) (\"%04d\" (amake 42)))");
-
         assertASTEquals("L[ 0042 ]", eval);
     }
+
 }

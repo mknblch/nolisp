@@ -36,6 +36,14 @@ public class ListStructTest {
     }
 
     @Test
+    public void testRestSize() throws Exception {
+
+        assertEquals(0, new ListStruct().size());
+        assertEquals(1, new ListStruct(1).size());
+        assertEquals(1, new ListStruct(1, 2).cdr().size());
+    }
+
+    @Test
     public void testEmptyCTorRestSize() throws Exception {
 
         final ListStruct listStruct = new ListStruct();

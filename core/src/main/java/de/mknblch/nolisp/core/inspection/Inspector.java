@@ -52,6 +52,7 @@ public class Inspector {
      */
     public static ListStruct cloneTree(ListStruct tree, ContainerCloneRule rule) throws Exception {
         final ListStruct clone = new ListStruct();
+        if (tree.isEmpty()) return clone;
         ListStruct temp = tree;
         while (temp != null) {
             final Object car = temp.car();
