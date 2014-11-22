@@ -19,6 +19,8 @@ import static org.junit.Assert.assertTrue;
  */
 public class BasicFormsTest extends AbstractFormTest {
 
+    public static final Minimal MINIMAL = new Minimal();
+
     @Test
     public void testPrint() throws Exception {
         final String code = "(print (+ 1 1(+ 2 3)))";
@@ -68,7 +70,7 @@ public class BasicFormsTest extends AbstractFormTest {
     @Test
     public void testEnvironment() throws Exception {
         final String code = "x";
-        final Context env = new Context(new Minimal());
+        final Context env = MINIMAL.makeContext();
         env.bind("x", 3);
         final List<Object> evaluated = eval(code, loggingInterpreter, env);
         dump(evaluated);

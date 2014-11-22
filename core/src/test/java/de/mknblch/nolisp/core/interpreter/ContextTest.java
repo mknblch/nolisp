@@ -15,18 +15,11 @@ import java.util.Set;
  */
 public class ContextTest {
 
-    private static final Language NULL_LANG = new Language() {
-        @Override
-        public Map<String, Object> getContextMap() {
-            return new HashMap<>();
-        }
-    };
-
     private static final Logger LOGGER = LoggerFactory.getLogger(ContextTest.class);
 
     public static Context makeEnv(String[] keys, Object[] values) throws FunctionDefinitionException {
         Assert.assertEquals("Erroneous test", keys.length, values.length);
-        final Context env = new Context(NULL_LANG);
+        final Context env = new Context();
         for (int i = 0; i < keys.length; i++) {
             env.bind(keys[i], values[i]);
         }

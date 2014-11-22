@@ -17,6 +17,7 @@ import static org.junit.Assert.assertEquals;
 public class ConditionFormsTest extends AbstractFormTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ConditionFormsTest.class);
+    public static final Minimal MINIMAL = new Minimal();
 
     @Test
     public void testIfBool() throws Exception {
@@ -84,7 +85,7 @@ public class ConditionFormsTest extends AbstractFormTest {
                         "(setq a (+ a 1)))";
 
         final long start = System.currentTimeMillis();
-        eval(code, AbstractFormTest.coreInterpreter, new Context(new Minimal()));
+        eval(code, AbstractFormTest.coreInterpreter, MINIMAL.makeContext());
         final long end = System.currentTimeMillis();
 
         LOGGER.info("Done {} iterations in {}ms", count, (end - start));

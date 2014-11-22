@@ -25,6 +25,7 @@ import static org.junit.Assert.assertEquals;
  */
 public abstract class AbstractFormTest {
 
+    public static final Minimal MINIMAL = new Minimal();
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractFormTest.class);
     private static final Parser PARSER = new Parser();
     protected static Interpreter loggingInterpreter;
@@ -43,7 +44,7 @@ public abstract class AbstractFormTest {
     }
 
     protected List<Object> eval(String code) throws Exception {
-        final Context context = new Context(new Minimal());
+        final Context context = MINIMAL.makeContext();
         return eval(code, loggingInterpreter, context);
     }
 

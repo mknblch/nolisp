@@ -1,5 +1,7 @@
 package de.mknblch.nolisp.core.interpreter;
 
+import de.mknblch.nolisp.core.scanner.FunctionDefinitionException;
+
 import java.util.Map;
 
 /**
@@ -7,6 +9,6 @@ import java.util.Map;
  */
 public interface Language {
 
-    public Map<String, Object> getContextMap();
+    public Context makeContext () throws Exception;
 
 }

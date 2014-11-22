@@ -19,11 +19,13 @@ public class Context {
     private final HashMap<String, Object> map;
     private final boolean global;
 
-    public Context(Language language) {
+    /**
+     * make empty context
+     */
+    public Context() {
         this.global = true;
         this.parent = null;
         this.map = new HashMap<>();
-        implement(language);
     }
 
     /**
@@ -33,10 +35,6 @@ public class Context {
         this.global = false;
         this.parent = parent;
         this.map = new HashMap<>();
-    }
-
-    public void implement(Language language) {
-        bindAll(language.getContextMap());
     }
 
     /**
