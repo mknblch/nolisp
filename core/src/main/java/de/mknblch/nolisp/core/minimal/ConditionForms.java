@@ -25,8 +25,8 @@ public class ConditionForms {
     @Define(value = "if") // (if condition yes no)
     public static Object ifForm(Interpreter interpreter, Context context, ListStruct args) throws Exception {
         final boolean condition = TypeHelper.asBoolean(interpreter.eval(args.car(), context));
-        final Object trueBranch = args.cdar();
-        final Object falseBranch = args.cddar();
+        final Object trueBranch = args.cadr();
+        final Object falseBranch = args.caddr();
         if (condition) return interpreter.eval(trueBranch, context);
         else return interpreter.eval(falseBranch, context);
     }
@@ -39,7 +39,7 @@ public class ConditionForms {
             final ListStruct pair = (ListStruct) arg;
             final Object condition = interpreter.eval(pair.car(), context);
             if (TypeHelper.asBoolean(condition)) {
-                return interpreter.eval(pair.cdar(), context);
+                return interpreter.eval(pair.cadr(), context);
             }
         }
         return null;

@@ -1,7 +1,6 @@
 package de.mknblch.nolisp.core.minimal;
 
 import de.mknblch.nolisp.core.common.Expectations;
-import de.mknblch.nolisp.core.common.FormatHelper;
 import de.mknblch.nolisp.core.common.TypeHelper;
 import de.mknblch.nolisp.core.inspection.Inspector;
 import de.mknblch.nolisp.core.inspection.ValueCloneRule;
@@ -23,7 +22,7 @@ public class MacroForms {
     public static Object defmacro(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
         Expectations.expectCdr(args);
         final Object symbol = args.car();
-        parentContext.bind(TypeHelper.symbolLiteral(symbol), new MacroForm(TypeHelper.symbolList(args.cdar()), args.cddr()));
+        parentContext.bind(TypeHelper.symbolLiteral(symbol), new MacroForm(TypeHelper.symbolList(args.cadr()), args.cddr()));
         return symbol;
     }
 
@@ -39,7 +38,7 @@ public class MacroForms {
             @Override
             public Object clone(Object element) throws Exception {
                 if (TypeHelper.isListWithSymbolHead(element, "comma")) {
-                    return interpreter.eval(((ListStruct) element).cdar(), context);
+                    return interpreter.eval(((ListStruct) element).cadr(), context);
                 }
                 return element;
             }

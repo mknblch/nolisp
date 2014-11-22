@@ -21,9 +21,6 @@ public class QuoteRule implements TokenRule {
             case ',':
                 cutter.inc();
                 return new Token(Token.Type.COMMA, ",", ",");
-            case '.':
-                cutter.inc();
-                return new Token(Token.Type.SPLICE, ".", ".");
 
             default: return null;
         }

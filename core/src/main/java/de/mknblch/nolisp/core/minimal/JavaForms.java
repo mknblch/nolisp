@@ -63,7 +63,7 @@ public class JavaForms {
     public static Object newForm(Interpreter interpreter, Context context, ListStruct args) throws Exception {
         final String fqn = symbolLiteral(args.car());
         final Class<?> clazz = Class.forName(fqn);
-        final Object initArgs = args.cdar();
+        final Object initArgs = args.cadr();
         if (null != initArgs) {
             // has arguments
             return initializeNew(clazz, interpreter, context, asList(initArgs));
@@ -108,7 +108,7 @@ public class JavaForms {
     @Define("try") // (try <form> (catch <Exception> <SYM> <form>)+)
     public static Object tryForm(Interpreter interpreter, Context context, ListStruct args) throws Exception {
         final Object tryBlock = args.car();
-        final ListStruct catchBlocks = asList(args.cdar());
+        final ListStruct catchBlocks = asList(args.cadr());
         try {
             return interpreter.eval(tryBlock, context);
         } catch (Exception e) {
@@ -116,9 +116,9 @@ public class JavaForms {
             for (Object element : catchBlocks) {
                 final ListStruct listStruct = asList(element);
                 Expectations.expectSymbolWithLiteral(listStruct.car(), "catch");
-                final SymbolStruct exClassSymbol = asSymbol(listStruct.cdar());
+                final SymbolStruct exClassSymbol = asSymbol(listStruct.cadr());
                 if(Class.forName(exClassSymbol.literal).isAssignableFrom(exClazz)) {
-                    final String literal = symbolLiteral(listStruct.cddar());
+                    final String literal = symbolLiteral(listStruct.caddr());
                     final Context derive = context.derive();
                     derive.bind(literal, e);
                     return interpreter.eval(listStruct.nth(3), derive);
@@ -141,9 +141,9 @@ public class JavaForms {
 
         final String methodName = symbolLiteral(args.car());
 
-        final Object param1 = args.cdar();
-        final Object param2 = args.cddar();
-        final Object param3 = args.cdddar();
+        final Object param1 = args.cadr();
+        final Object param2 = args.caddr();
+        final Object param3 = args.cadddr();
 
         final Object[] types = convertListToArray(interpreter.evalEach(asList(findTypes(param1, param2, param3)), context));
         final Object[] params = convertListToArray(interpreter.evalEach(asList(findParams(param1, param2, param3)), context));
@@ -175,8 +175,8 @@ public class JavaForms {
 
         final Class<?> clazz = Class.forName(matcher.group(1));
 
-        final Object[] param1 = convertListToArray(interpreter.evalEach(asList(args.cdar()), context));
-        final Object[] param2 = convertListToArray(interpreter.evalEach(asList(args.cddar()), context));
+        final Object[] param1 = convertListToArray(interpreter.evalEach(asList(args.cadr()), context));
+        final Object[] param2 = convertListToArray(interpreter.evalEach(asList(args.caddr()), context));
 
         final Method method = findMethod(
                 clazz,

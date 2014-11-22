@@ -19,7 +19,7 @@ public class PredicateForms {
 
     @Define({"eq?", "equal?"}) // (eq? 1 3)
     public static Object equal(ListStruct args) throws Exception {
-        return equal(args.car(), args.cdar());
+        return equal(args.car(), args.cadr());
     }
 
     private static Object equal(Object a, Object b) {
@@ -36,7 +36,7 @@ public class PredicateForms {
     @Define("instanceof?") // (instanceof? java.lang.String "bla") => true
     public static Object isInstance(Interpreter interpreter, Context context, ListStruct args) throws Exception {
         final String className = TypeHelper.symbolLiteral(args.car());
-        final Object cdar = args.cdar();
+        final Object cdar = args.cadr();
         Expectations.expectNotNull(cdar);
         final Object value = interpreter.eval(cdar, context);
         return className.equals(value.getClass().getName());

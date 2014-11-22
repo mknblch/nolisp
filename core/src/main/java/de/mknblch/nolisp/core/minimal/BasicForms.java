@@ -6,15 +6,10 @@ import de.mknblch.nolisp.core.interpreter.Context;
 import de.mknblch.nolisp.core.interpreter.Interpreter;
 import de.mknblch.nolisp.core.interpreter.parser.Parser;
 import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
-import de.mknblch.nolisp.core.interpreter.structs.SymbolStruct;
-import de.mknblch.nolisp.core.scanner.Constant;
 import de.mknblch.nolisp.core.scanner.Define;
 import de.mknblch.nolisp.core.scanner.Special;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 
 /**
  * @author mknblch
@@ -112,10 +107,10 @@ public class BasicForms {
     public static Object fori(Interpreter interpreter, Context context, ListStruct args) throws Exception {
         final ListStruct loopArgs = TypeHelper.asList(args.car());
         final int from = TypeHelper.asInt(interpreter.eval(loopArgs.car(), context)); // from
-        final int to = TypeHelper.asInt(interpreter.eval(loopArgs.cdar(), context)); // to
-        final Object stepRaw = interpreter.eval(loopArgs.cddar(), context); // step if not null
+        final int to = TypeHelper.asInt(interpreter.eval(loopArgs.cadr(), context)); // to
+        final Object stepRaw = interpreter.eval(loopArgs.caddr(), context); // step if not null
         final int step = TypeHelper.isInt(stepRaw) ? TypeHelper.asInt(stepRaw) : 1;
-        final Object form = args.cdar();
+        final Object form = args.cadr();
         Object result = null;
         for (int i = from; i < to; i += step) {
             result = interpreter.eval(form, context);

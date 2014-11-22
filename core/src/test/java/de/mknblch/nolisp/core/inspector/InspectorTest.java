@@ -139,7 +139,7 @@ public class InspectorTest {
 
                 System.out.printf("cloning: %s%n", FormatHelper.formatPretty(element));
                 if (TypeHelper.isList(element) && ((Integer) 0).equals(((ListStruct) element).car())) {
-                    return ((ListStruct) element).cdar();
+                    return ((ListStruct) element).cadr();
                 }
                 return element;
             }

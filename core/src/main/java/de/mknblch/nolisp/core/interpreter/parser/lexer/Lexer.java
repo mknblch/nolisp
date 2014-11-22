@@ -55,7 +55,7 @@ public class Lexer extends StringCutter {
         ignorableRule.token(this);
         // check if end reached
         if (!hasNext()) return null;
-        // no, sync!
+        // we still have tokens, sync!
         sync();
         // check if any tokenRule matches
         for (TokenRule tokenRule : tokenRules) {

@@ -16,7 +16,7 @@ public class SpliceRule implements ContainerCloneRule {
     public ListStruct cloneSublist(ListStruct container) throws Exception {
 
         if (TypeHelper.isSymbolWithLiteral(container.car(), "splice")) {
-            final ListStruct listStruct = TypeHelper.asList(container.cdar());
+            final ListStruct listStruct = TypeHelper.asList(container.cadr());
             final ListStruct clone = new ListStruct();
             for (Object o : listStruct) {
                 clone.add(o);

@@ -27,7 +27,7 @@ public class LogicForms {
 
     @Define("xor")
     public static Object xor(ListStruct args) {
-        return TypeHelper.asBoolean(args.car()) ^ TypeHelper.asBoolean(args.cdar());
+        return TypeHelper.asBoolean(args.car()) ^ TypeHelper.asBoolean(args.cadr());
     }
 
     @Define("not")

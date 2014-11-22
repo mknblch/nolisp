@@ -52,9 +52,9 @@ public class ListStructTest {
 
 
         assertEquals("1", listStruct.car());
-        assertEquals("2", listStruct.cdar());
-        assertEquals("3", listStruct.cddar());
-        assertEquals("4", listStruct.cdddar());
+        assertEquals("2", listStruct.cadr());
+        assertEquals("3", listStruct.caddr());
+        assertEquals("4", listStruct.cadddr());
     }
 
     @Test

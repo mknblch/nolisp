@@ -16,7 +16,7 @@ import java.util.Set;
 public class Context {
 
     private final Context parent;
-    private final HashMap<String, Object> map;
+    private final HashMap<String, Object> map = new HashMap<>();
     private final boolean global;
 
     /**
@@ -25,7 +25,6 @@ public class Context {
     public Context() {
         this.global = true;
         this.parent = null;
-        this.map = new HashMap<>();
     }
 
     /**
@@ -34,7 +33,6 @@ public class Context {
     private Context(Context parent) {
         this.global = false;
         this.parent = parent;
-        this.map = new HashMap<>();
     }
 
     /**
@@ -149,10 +147,10 @@ public class Context {
         return map.keySet();
     }
 
-    private static <U> Set<U> union(Set<U> a, Set<U> globalSet) {
-        final Set<U> union = new HashSet<>(a.size() + globalSet.size());
+    private static <U> Set<U> union(Set<U> a, Set<U> b) {
+        final Set<U> union = new HashSet<>(a.size() + b.size());
         union.addAll(a);
-        union.addAll(globalSet);
+        union.addAll(b);
         return union;
     }
 }

@@ -18,6 +18,9 @@ public class SyntacticSugarRule implements TokenRule {
             case '@':
                 cutter.inc();
                 return new Token(Token.Type.SPLICE, "@", "@");
+            case '.':
+                cutter.inc();
+                return new Token(Token.Type.SPLICE, ".", ".");
 
             default: return null;
         }

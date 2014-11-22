@@ -38,7 +38,7 @@ public class AccessorForms {
      */
     @Define({"aget", "array-get"})
     public static Object aget(ListStruct args) throws Exception {
-        return TypeHelper.asArray(args.car()) [ asInt(args.cdar()) ];
+        return TypeHelper.asArray(args.car()) [ asInt(args.cadr()) ];
     }
 
     @Define({"aset", "array-set"}) // (aset (amake 2) 0 "hallo" 1 "welt") => "hallo welt"
@@ -48,7 +48,7 @@ public class AccessorForms {
         while (null != temp) {
             final int index = asInt(temp.car());
             Expectations.expectCdr(temp);
-            objects[ index ] = temp.cdar();
+            objects[ index ] = temp.cadr();
             temp = temp.cddr();
         }
         return objects;
@@ -81,7 +81,7 @@ public class AccessorForms {
     @Define("nth")
     public static Object nth(ListStruct args) throws Exception {
 
-        return asList(args.cdar()).nth(asInt(args.car()));
+        return asList(args.cadr()).nth(asInt(args.car()));
     }
 
     @Define("cdr")
@@ -92,14 +92,14 @@ public class AccessorForms {
     @Define("nthcdr")
     public static Object nthcdr(ListStruct args) throws Exception {
 
-        return asList(args.cdar()).nthcdr(asInt(args.car()));
+        return asList(args.cadr()).nthcdr(asInt(args.car()));
     }
 
     @Define("cons")
     public static Object cons(ListStruct args) throws Exception {
         Expectations.expectCdr(args);
         final Object a = args.car();
-        final Object b = args.cdar();
+        final Object b = args.cadr();
         return cons(a, b);
     }
 

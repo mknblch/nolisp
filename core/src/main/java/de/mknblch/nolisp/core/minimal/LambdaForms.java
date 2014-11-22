@@ -19,7 +19,7 @@ public class LambdaForms {
     @Define("lambda") // ((lambda (a) (+ a 1)) 1) => 2
     public static Object lambda(Interpreter interpreter, Context context, ListStruct args) throws Exception {
         Expectations.expectCdr(args);
-        return new LambdaForm(interpreter, context, TypeHelper.asList(args.car()), args.cdar());
+        return new LambdaForm(interpreter, context, TypeHelper.asList(args.car()), args.cadr());
     }
 
     @Define("lbody") // (lbody (lambda (a) (+ a 1))) => (+ a 1)
@@ -37,7 +37,7 @@ public class LambdaForms {
     public static Object defun(Interpreter interpreter, Context context, ListStruct args) throws Exception {
         Expectations.expectCdr(args);
         final String functionName = TypeHelper.symbolLiteral(args.car());
-        final LambdaForm lambda = new LambdaForm(interpreter, context, TypeHelper.asList(args.cdar()), args.cddar());
+        final LambdaForm lambda = new LambdaForm(interpreter, context, TypeHelper.asList(args.cadr()), args.caddr());
         context.bindGlobal(functionName, lambda);
         return lambda;
     }
@@ -47,7 +47,7 @@ public class LambdaForms {
     public static Object function(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
         final Object car = args.car();
         Expectations.expectQuotedList(car);
-        return interpreter.eval(((ListStruct) car).cdar(), parentContext);
+        return interpreter.eval(((ListStruct) car).cadr(), parentContext);
     }
 
     @Special
@@ -55,7 +55,7 @@ public class LambdaForms {
     public static Object funcall(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
         final Object car = args.car();
         final Form form = TypeHelper.asForm(interpreter.eval(car, parentContext));
-        Object ret = interpreter.eval(args.cdar(), parentContext);
+        Object ret = interpreter.eval(args.cadr(), parentContext);
         ListStruct rest = args.cddr();
         for (Object o : rest) {
             ret = form.eval(new ListStruct(ret, interpreter.eval(o, parentContext)));

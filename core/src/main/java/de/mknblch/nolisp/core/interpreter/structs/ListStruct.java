@@ -134,18 +134,18 @@ public class ListStruct implements Atom, Iterable {
         return car;
     }
 
-    public Object cdar() {
+    public Object cadr() {
         if (cdr != null) return cdr.car;
         return null;
     }
 
-    public Object cddar() {
+    public Object caddr() {
         final ListStruct cddr = cddr();
         if (cddr != null) return cddr.car();
         return null;
     }
 
-    public Object cdddar() {
+    public Object cadddr() {
         final ListStruct cddr = cdddr();
         if (cddr != null) return cddr.car();
         return null;
