@@ -1,24 +1,16 @@
-***NOLISP ( not only lisp )***
+## Special Forms
 
-learning functional programming the hard way - by implementing an interpreter from scratch
+### Conditions
 
-**Special Forms**
++ cond
+<pre>(cond (E1 B1) (E2 B2)	... )</pre>
+iterates over arguments and treat each object as list `(E B)` if expression at `E` evaluates to true its body `B` is evaluated and the result returned. otherwise the next branch is taken. return null if no branch matches.
 
-Conditions:
++ if
+<pre>(if W T F)</pre>
+if W evaluates to true, `T` is evaluated and its result returned otherwise `F` is evaluated. `F` is optional. if `W` evaluates to false and no `F` branch is given, `null` is returned.
 
-	cond
-	; (cond (E1 B1) (E2 B2)	... )
-	; iterates over arguments and treat each object as list (E B)
-	; if expression at E evaluates to true its body B is evaluated and
-	; the result returned. otherwise the next branch is taken.
-	; return null if no branch matches
-
-	if
-	; (if W T F)
-	; if W evaluates to true, T is evaluated and its result returned otherwise F is evaluated.
-	; F is optional. if W evaluates to false and no F branch is given, null is returned.
-
-Basic:
+### Basic:
 
 	load
 	quote
@@ -28,11 +20,11 @@ Basic:
 	let
 	fori
 
-Predicate:
+### Predicate:
 
 	symbol?
 
-Lambda:
+### Lambda:
 
 	function
 	eval
@@ -40,14 +32,14 @@ Lambda:
 	defun
 	funcall
 
-Macro:
+### Macro:
 
 	comma
 	defmacro
 	splice
 	backquote
 
-Java:
+### Java:
 
 	new
 	class
@@ -56,21 +48,21 @@ Java:
 	call-static
 	instanceof?
 
-**Forms**
+## Forms
 
-Logic:
+### Logic:
 
 	and
 	or
 	xor
 	not
 
-Basic:
+### Basic:
 
 	list
 	progn
 
-Accessor:
+### Accessor:
 
 	append
 	cons
@@ -83,7 +75,7 @@ Accessor:
 	cdr
 	nthcdr
 
-Predicate:
+### Predicate:
 
 	list?
 	int?
@@ -95,7 +87,7 @@ Predicate:
 	macro?
 	atom?
 
-Math:
+### Math:
 
 	sin
 	cos
@@ -111,28 +103,46 @@ Math:
 	[/, div]
 	[%, mod]
 
-Lambda:
+### Lambda:
 
 	lbody
 	largs
 
-Console:
+### Console:
 
 	print
 	printf
 	pprint
 	sprint
 
-Java:
+### Java:
 
 	throw
 	[classof, classOf]
 
-Comparison: ; these forms are used to compare numbers
+### Comparison:
+these forms are used to compare numbers
 
-    >       Greater         ; (> 5 4) => true, (> 3 3) => false
-    >=      Greater Equal   ; (>= 5 4) => true, (>= 3 3) => true
-    ==      Equal           ; (== 3 3) => true, (== 3 3.1415) => false
-    !=      Not Equal       ; (!= 5 6) => true, (!= 3.14 3.14) => false
-    <       Lower           ; (< 5 4) => false, (< 4 5) => true
-    <=      Lower Equal     ; (<= 3 3) => true, (<= 4 3) => false
++ `>`
+
+	Greater
+
++ `>=`
+
+	Greater Equal
+
++ `==`
+
+	Equal
+
++ `!=`
+
+	Not Equal
+
++ `<`
+
+	Lower
+
++ `<=`
+
+	Lower Equal

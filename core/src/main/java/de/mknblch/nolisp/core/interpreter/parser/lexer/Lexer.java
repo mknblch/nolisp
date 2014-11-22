@@ -38,8 +38,6 @@ public class Lexer extends StringCutter {
         new SyntacticSugarRule(),
     };
 
-
-
     public void setCode(String code) {
         if (null == code) {
             throw new IllegalArgumentException("null not allowed");
@@ -54,14 +52,16 @@ public class Lexer extends StringCutter {
      * phase 1: uses a special rule to skip unwanted chars
      *  (e.g. whitespaces, newlines).<br/>
      *
-     * phase 2: checks if any token rule matches and return its token<br/>
+     * phase 2: checks if any token rule matches and return its token. these
+     *  rules must decide if they match by checking the current head of the
+     *  StringCutter. <br/>
      *
      * phase 3: is started when there are characters left but all
-     *  ignorable chars have been skipped and no token rule matches.
+     *  ignorable chars have been skipped and no tokenRule matches.
      *  it must be a const type. check if any constRule matches.<br/>
      *
-     * phase 4: uses the avoidanceRule which must clearly decide its type and return a<br/>
-     *  standard token.
+     * phase 4: use the avoidanceRule which must clearly decide its type and return a
+     *  standard token.<br/>
      */
     public Token next() throws LexerException {
         // skip all ignorable

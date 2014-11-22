@@ -10,7 +10,7 @@ import java.util.regex.Matcher;
 public class HexadecimalRule extends ConstRulePatternAdapter {
 
     public HexadecimalRule() {
-        super("^(0x)?([0-9a-fA-F]+)$");
+        super("^(0x)([0-9a-fA-F]+)$");
     }
 
     @Override
