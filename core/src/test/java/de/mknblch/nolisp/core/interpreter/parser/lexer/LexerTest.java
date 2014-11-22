@@ -6,7 +6,11 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author mknblch
@@ -41,7 +45,7 @@ public class LexerTest {
         final String code = "10000000000";
         final Lexer lexer = new Lexer();
         lexer.setCode(code);
-        assertTokenEquals(new String[]{"123"}, lexer);
+        lexer.next();
     }
 
     @Test
@@ -143,13 +147,39 @@ public class LexerTest {
         assertTokenEquals(new String[]{"(", "-", "-3.1415", "-1", ")"}, lexer);
     }
 
-
     @Test
     public void testLineComment() throws Exception {
         final String code = "abc ; hallo welt\n123";
         final Lexer lexer = new Lexer();
         lexer.setCode(code);
         assertTokenEquals(new String[]{"abc", "; hallo welt", "123"}, lexer);
+    }
+
+    @Test
+    public void testBigInteger() throws Exception {
+        final String code = "13333333333333333333333333333333333333333333337B";
+        final Lexer lexer = new Lexer();
+        lexer.setCode(code);
+        final Token next = lexer.next();
+        assertTrue(next.value instanceof BigInteger);
+    }
+
+    @Test
+    public void testBigDecimalFPPart() throws Exception {
+        final String code = "13.37d";
+        final Lexer lexer = new Lexer();
+        lexer.setCode(code);
+        final Token next = lexer.next();
+        assertTrue(next.value instanceof BigDecimal);
+    }
+
+    @Test
+    public void testBigDecimal() throws Exception {
+        final String code = "1337d";
+        final Lexer lexer = new Lexer();
+        lexer.setCode(code);
+        final Token next = lexer.next();
+        assertTrue(next.value instanceof BigDecimal);
     }
 
     @Test
@@ -170,7 +200,7 @@ public class LexerTest {
     private static void assertTokenEquals(String[] expected, Lexer lexer) throws LexerException {
         for (int i = 0; i < expected.length; i++) {
 
-            Assert.assertTrue("premature end at token " + i, lexer.hasNext());
+            assertTrue("premature end at token " + i, lexer.hasNext());
             final String literal = lexer.next().literal;
             LOGGER.debug("comparing expected '{}' with result '{}'", merge(expected), literal);
             assertEquals("token " + i + " did not match", expected[i], literal);
