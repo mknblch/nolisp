@@ -1,4 +1,4 @@
-package de.mknblch.nolisp.core.interpreter.parser.lexer.specialTokenRules;
+package de.mknblch.nolisp.core.interpreter.parser.lexer.tokenRules;
 
 import de.mknblch.nolisp.core.interpreter.parser.lexer.StringCutter;
 import de.mknblch.nolisp.core.interpreter.parser.lexer.Token;
@@ -21,6 +21,15 @@ public class SyntacticSugarRule implements TokenRule {
             case '.':
                 cutter.inc();
                 return new Token(Token.Type.SPLICE, ".", ".");
+            case '\'':
+                cutter.inc();
+                return new Token(Token.Type.QUOTE, "'", "'");
+            case '`':
+                cutter.inc();
+                return new Token(Token.Type.BACKQUOTE, "`", "`");
+            case ',':
+                cutter.inc();
+                return new Token(Token.Type.COMMA, ",", ",");
 
             default: return null;
         }

@@ -1,4 +1,4 @@
-package de.mknblch.nolisp.core.interpreter.parser.lexer.specialTokenRules;
+package de.mknblch.nolisp.core.interpreter.parser.lexer.tokenRules;
 
 import de.mknblch.nolisp.core.interpreter.parser.lexer.*;
 import de.mknblch.nolisp.core.interpreter.parser.lexer.TokenRule;

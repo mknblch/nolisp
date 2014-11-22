@@ -1,4 +1,4 @@
-package de.mknblch.nolisp.core.interpreter.parser.lexer.constRules;
+package de.mknblch.nolisp.core.interpreter.parser.lexer.specialRules;
 
 import de.mknblch.nolisp.core.interpreter.parser.lexer.ConstRule;
 import de.mknblch.nolisp.core.interpreter.parser.lexer.LexerException;

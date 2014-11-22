@@ -1,9 +1,9 @@
 package de.mknblch.nolisp.core.interpreter.parser.lexer;
 
 import de.mknblch.nolisp.core.interpreter.parser.lexer.constRules.*;
-import de.mknblch.nolisp.core.interpreter.parser.lexer.specialTokenRules.*;
-
-import java.util.ArrayList;
+import de.mknblch.nolisp.core.interpreter.parser.lexer.specialRules.AvoidanceRule;
+import de.mknblch.nolisp.core.interpreter.parser.lexer.specialRules.IgnoreRule;
+import de.mknblch.nolisp.core.interpreter.parser.lexer.tokenRules.*;
 
 /**
  * basic lisp lexer.
@@ -12,17 +12,18 @@ public class Lexer extends StringCutter {
 
 
     // TODO refactor
-    private final char[] tokenDelimiter = new char[]{
+    private final char[] delimiter = new char[]{
             '(', ')', '{', '}', '[', ']',
             ' ', '\t', '\r', '\n'
     };
 
-    private final TokenRule ignorableRule = new IgnorableRule();
-    private final AvoidanceRule avoidanceRule = new AvoidanceRule();
+    private final TokenRule ignoreRule = new IgnoreRule();
+    private final ConstRule avoidanceRule = new AvoidanceRule();
 
     private final ConstRule[] constRules = new ConstRule[] {
         new NullRule(),
         new IntRule(),
+        new LongRule(),
         new RealRule(),
         new BigIntegerRule(),
         new BigDecimalRule(),
@@ -34,8 +35,9 @@ public class Lexer extends StringCutter {
         new ListRule(),
         new StringRule(),
         new SyntacticSugarRule(),
-        new QuoteRule(),
     };
+
+
 
     public void setCode(String code) {
         if (null == code) {
@@ -46,18 +48,28 @@ public class Lexer extends StringCutter {
     }
 
     /**
-     * fetch next token and increment offset.
+     * fetch next token.
      *
-     * @return next token
+     * phase 1: uses a special rule to skip unwanted chars
+     *  (e.g. whitespaces, newlines).<br/>
+     *
+     * phase 2: checks if any token rule matches and return its token<br/>
+     *
+     * phase 3: is started when there are characters left but all
+     *  ignorable chars have been skipped and no token rule matches.
+     *  it must be a const type. check if any constRule matches.<br/>
+     *
+     * phase 4: uses the avoidanceRule which must clearly decide its type and return a<br/>
+     *  standard token.
      */
     public Token next() throws LexerException {
         // skip all ignorable
-        ignorableRule.token(this);
+        ignoreRule.token(this);
         // check if end reached
         if (!hasNext()) return null;
-        // we still have tokens, sync!
+        // we still have tokens and we must be at the start of something special, do sync
         sync();
-        // check if any tokenRule matches
+        // check if a tokenRule matches
         for (TokenRule tokenRule : tokenRules) {
             final Token token = tokenRule.token(this);
             if (null != token) return token;
@@ -74,7 +86,7 @@ public class Lexer extends StringCutter {
     }
 
     private String tokenizeConst() {
-        until(tokenDelimiter);
+        until(delimiter);
         return getLiteral();
     }
 

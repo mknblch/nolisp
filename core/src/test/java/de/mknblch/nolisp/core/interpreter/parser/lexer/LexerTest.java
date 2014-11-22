@@ -49,6 +49,16 @@ public class LexerTest {
     }
 
     @Test
+    public void testLong() throws Exception {
+        final String code = "10000000000L";
+        final Lexer lexer = new Lexer();
+        lexer.setCode(code);
+        final Token next = lexer.next();
+        System.out.println(next.value.getClass().getSimpleName());
+        assertTrue(next.value instanceof Long);
+    }
+
+    @Test
     public void testCodeWithTabs() throws Exception {
         final String code = " (sugar 1     (+      23 345) ) ";
         final Lexer lexer = new Lexer();
@@ -74,7 +84,7 @@ public class LexerTest {
 
     @Test
     public void testString() throws Exception {
-        final String code = "\"abc\"";
+        final String code = " \"abc\" ";
         final Lexer lexer = new Lexer();
         lexer.setCode(code);
         assertTokenEquals(new String[]{"abc"}, lexer);

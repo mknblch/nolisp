@@ -7,10 +7,11 @@ learning functional programming the hard way - by implementing an interpreter fr
 Conditions:
 
 	cond
-	; (cond ( (C1 B1) (C2 B2)	... ))
-	; treat first argument as list and iterates over it's sublists.
-	; if car() evaluates to true its body at cadr() is evaluated and
-	; the result returned. otherwise the next branch is taken
+	; (cond (E1 B1) (E2 B2)	... )
+	; iterates over arguments and treat each object as list (E B)
+	; if expression at E evaluates to true its body B is evaluated and
+	; the result returned. otherwise the next branch is taken.
+	; return null if no branch matches
 
 	if
 	; (if W T F)
