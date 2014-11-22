@@ -25,6 +25,7 @@ public class Lexer extends StringCutter {
         new IntRule(),
         new LongRule(),
         new RealRule(),
+        new HexadecimalRule(),
         new BigIntegerRule(),
         new BigDecimalRule(),
     };

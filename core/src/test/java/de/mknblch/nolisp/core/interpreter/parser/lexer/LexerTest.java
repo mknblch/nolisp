@@ -1,5 +1,6 @@
 package de.mknblch.nolisp.core.interpreter.parser.lexer;
 
+import de.mknblch.nolisp.core.interpreter.Interpreter;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -54,8 +55,16 @@ public class LexerTest {
         final Lexer lexer = new Lexer();
         lexer.setCode(code);
         final Token next = lexer.next();
-        System.out.println(next.value.getClass().getSimpleName());
         assertTrue(next.value instanceof Long);
+    }
+
+    @Test
+    public void testHexadecimal() throws Exception {
+        final String code = "0x2A";
+        final Lexer lexer = new Lexer();
+        lexer.setCode(code);
+        final Token next = lexer.next();
+        assertTrue(next.value == 42);
     }
 
     @Test
