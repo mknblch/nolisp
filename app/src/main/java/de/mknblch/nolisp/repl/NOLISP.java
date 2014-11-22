@@ -19,6 +19,7 @@ import java.io.Console;
 public class NOLISP {
 
 
+    public static final Minimal MINIMAL = new Minimal();
     private static Parser parser = new Parser();
 
     public static void main(String[] args) throws Exception {
@@ -31,8 +32,6 @@ public class NOLISP {
             System.out.println("Usage: java -jar [-e CODE | -l]");
             System.exit(1);
         }
-
-
     }
 
     private static void eval(String code) throws Exception {
@@ -42,8 +41,8 @@ public class NOLISP {
         System.out.printf(">%s%n", FormatHelper.formatPretty(interpreter.eval(prg, context)));
     }
 
-    private static Context makeContext() throws FunctionDefinitionException {
-        return new Context(new Minimal());
+    private static Context makeContext() throws Exception {
+        return MINIMAL.makeContext();
     }
 
     private static void repl() throws Exception {
