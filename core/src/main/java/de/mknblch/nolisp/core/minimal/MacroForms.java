@@ -22,7 +22,7 @@ public class MacroForms {
     public static Object defmacro(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
         Expectations.expectCdr(args);
         final Object symbol = args.car();
-        parentContext.bind(TypeHelper.symbolLiteral(symbol), new MacroForm(TypeHelper.symbolList(args.cadr()), args.cddr()));
+        parentContext.bind(TypeHelper.getSymbolLiteral(symbol), new MacroForm(TypeHelper.convertToSymbolList(args.cadr()), args.cddr()));
         return symbol;
     }
 

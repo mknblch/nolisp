@@ -8,37 +8,22 @@ import de.mknblch.nolisp.core.interpreter.structs.forms.LambdaForm;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @author mknblch
  */
 public class TypeHelper {
 
-    public static ListStruct javaListToListStruct (List<?> list) {
-        final ListStruct ret = new ListStruct();
-        for (Object object : list) {
-            ret.add(object);
-        }
-        return ret;
+    public static boolean isType(Object o, Class<?> type) {
+        return null != o && type.isAssignableFrom(o.getClass());
     }
 
-    public static ListStruct arrayToListStruct (Object[] objects) {
-        final ListStruct ret = new ListStruct();
-        for (Object object : objects) {
-            ret.add(object);
-        }
-        return ret;
+    public static boolean isBoolean(Object o) {
+        return Boolean.FALSE.equals(o) || Boolean.TRUE.equals(o);
     }
 
-    public static int asInt(Object o) throws EvaluationException {
-        if (isInt(o)) {
-            return (Integer) o;
-        }
-        if (isReal(o)) {
-            return ((Double) o).intValue();
-        }
-        throw new EvaluationException("Illegal INT cast.");
+    public static boolean isArray(Object o) {
+        return o instanceof Object[];
     }
 
     public static boolean isInt(Object o) {
@@ -48,7 +33,6 @@ public class TypeHelper {
     public static boolean isObjectType(Object o, String type) throws ClassNotFoundException {
 
         final Class<?> typeClass = Class.forName(type);
-
         return typeClass.isAssignableFrom(o.getClass());
     }
 
@@ -59,33 +43,8 @@ public class TypeHelper {
         return typeClass.isAssignableFrom(o.getClass());
     }
 
-    public static <T> T castToType (Object o, String type) throws ClassNotFoundException {
-        final Class<?> typeClass = Class.forName(type);
-        return (T) typeClass.cast(o);
-    }
-
-    public static Exception asException(Object o) throws ClassNotFoundException, EvaluationException {
-        if(isPrimitiveObjectType(o, "Exception")) return castToType(o, "java.lang.Exception");
-        throw new EvaluationException("Illegal Exception cast.");
-    }
-
-    public static double asReal(Object o) throws EvaluationException {
-        if (isInt(o)) {
-            return (double) (Integer) o;
-        }
-        if (isReal(o)) {
-            return ((Double) o);
-        }
-        throw new EvaluationException("Illegal REAL cast.");
-    }
-
     public static boolean isReal(Object o) {
         return o instanceof Double;
-    }
-
-    public static String asString(Object o) throws EvaluationException {
-        Expectations.expectString(o);
-        return (String) o;
     }
 
     public static boolean isString(Object o) {
@@ -96,19 +55,16 @@ public class TypeHelper {
         return o instanceof SymbolStruct;
     }
 
-    public static SymbolStruct asSymbol(Object o) throws EvaluationException {
-        if (!isSymbol(o)) throw new EvaluationException("Illegal Symbol cast.");
-        return (SymbolStruct) o;
+    public static boolean isLambda(Object o) {
+        return o instanceof LambdaForm;
+    }
+
+    public static boolean isForm(Object o) {
+        return o instanceof Form;
     }
 
     public static boolean isSymbolWithLiteral(Object o, String literal) {
         return isSymbol(o) && literal.equals(((SymbolStruct) o).literal);
-    }
-
-    public static ListStruct asList(Object o) throws EvaluationException {
-        if (null == o) return null; // TODO review!
-        Expectations.expectList(o);
-        return (ListStruct) o;
     }
 
     public static boolean isListWithSymbolHead(Object o, String symbolLiteral) {
@@ -117,36 +73,8 @@ public class TypeHelper {
         return isSymbol(head) && symbolLiteral.equals(((SymbolStruct) head).literal);
     }
 
-
     public static boolean isList(Object o) {
         return o instanceof ListStruct;
-    }
-
-    public static String symbolLiteral(Object o) throws EvaluationException {
-        Expectations.expectSymbol(o);
-        return ((SymbolStruct) o).literal;
-    }
-
-    public static LambdaForm asLambda(Object o) throws EvaluationException {
-        Expectations.expectLambda(o);
-        return ((LambdaForm) o);
-    }
-
-    public static boolean isLambda(Object o) {
-        return o instanceof LambdaForm;
-    }
-
-    public static Form asForm(Object o) throws EvaluationException {
-        Expectations.expectForm(o);
-        return ((Form) o);
-    }
-
-    public static boolean isForm(Object o) {
-        return o instanceof Form;
-    }
-
-    public static Boolean asBoolean(Object o) {
-        return null != o && !Boolean.FALSE.equals(o) && !isEmptyList(o);
     }
 
     public static boolean isEmptyList(Object o) {
@@ -161,43 +89,69 @@ public class TypeHelper {
         }
     }
 
-    public static boolean isBoolean(Object o) {
-        return Boolean.FALSE.equals(o) || Boolean.TRUE.equals(o);
+    //////////////////////////////////////////////////////////////////////////////////
+
+    public static Boolean asBoolean(Object o) {
+        return null != o && !Boolean.FALSE.equals(o) && !isEmptyList(o);
     }
-
-    public static List<String> symbolList(Object o) throws EvaluationException {
-        Expectations.expectList(o);
-        final ArrayList<String> flat = new ArrayList<String>();
-        final ListStruct listStruct = (ListStruct) o;
-        for (Object t : listStruct) {
-            if (null == t) {
-                continue;
-            }
-
-            flat.add(symbolLiteral(t));
-        }
-        return flat;
-    }
-
-    public static List<Object> asJavaList(ListStruct listStruct) {
-        final List<Object> flat = new ArrayList<Object>();
-        ListStruct temp = listStruct;
-        while (temp != null) {
-            flat.add(temp.car());
-            temp = temp.cdr();
-        }
-        return flat;
-    }
-
-    public static boolean isArray(Object o) {
-        return o instanceof Object[];
-    }
-
 
     public static Object[] asArray(Object o) throws EvaluationException {
         Expectations.expectArray(o);
         return (Object[]) o;
     }
+
+    public static int asInt(Object o) throws EvaluationException {
+        if (isInt(o)) {
+            return (Integer) o;
+        }
+        if (isReal(o)) {
+            return ((Double) o).intValue();
+        }
+        throw new EvaluationException("Illegal INT cast.");
+    }
+
+    public static double asReal(Object o) throws EvaluationException {
+        if (isInt(o)) {
+            return (double) (Integer) o;
+        }
+        if (isReal(o)) {
+            return ((Double) o);
+        }
+        throw new EvaluationException("Illegal REAL cast.");
+    }
+
+    public static SymbolStruct asSymbol(Object o) throws EvaluationException {
+        if (!isSymbol(o)) throw new EvaluationException("Illegal Symbol cast.");
+        return (SymbolStruct) o;
+    }
+
+    public static ListStruct asList(Object o) throws EvaluationException {
+        if (null == o) return null; // TODO review!
+        Expectations.expectList(o);
+        return (ListStruct) o;
+    }
+
+    public static Form asForm(Object o) throws EvaluationException {
+        Expectations.expectForm(o);
+        return ((Form) o);
+    }
+
+    public static Exception asException(Object o) throws ClassNotFoundException, EvaluationException {
+        if (isPrimitiveObjectType(o, "Exception")) return castToType(o, "java.lang.Exception");
+        throw new EvaluationException("Illegal Exception cast.");
+    }
+
+    public static String asString(Object o) throws EvaluationException {
+        Expectations.expectString(o);
+        return (String) o;
+    }
+
+    public static LambdaForm asLambda(Object o) throws EvaluationException {
+        Expectations.expectLambda(o);
+        return ((LambdaForm) o);
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////
 
     public static Object[] convertListToArray(Object o) throws EvaluationException {
         if (null == o) return null;
@@ -207,5 +161,49 @@ public class TypeHelper {
             objects.add(o1);
         }
         return objects.toArray();
+    }
+
+    public static List<String> convertToSymbolList(Object o) throws EvaluationException {
+        Expectations.expectList(o);
+        final ArrayList<String> flat = new ArrayList<String>();
+        final ListStruct listStruct = (ListStruct) o;
+        for (Object t : listStruct) {
+            if (null == t) {
+                continue;
+            }
+
+            flat.add(getSymbolLiteral(t));
+        }
+        return flat;
+    }
+
+    public static ListStruct convertToListStruct(List<?> list) {
+        final ListStruct ret = new ListStruct();
+        for (Object object : list) {
+            ret.add(object);
+        }
+        return ret;
+    }
+
+    public static ListStruct convertToListStruct(Object[] objects) {
+        final ListStruct ret = new ListStruct();
+        for (Object object : objects) {
+            ret.add(object);
+        }
+        return ret;
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////
+
+    public static String getSymbolLiteral(Object o) throws EvaluationException {
+        Expectations.expectSymbol(o);
+        return ((SymbolStruct) o).literal;
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////
+
+    public static <T> T castToType(Object o, String type) throws ClassNotFoundException {
+        final Class<?> typeClass = Class.forName(type);
+        return (T) typeClass.cast(o);
     }
 }

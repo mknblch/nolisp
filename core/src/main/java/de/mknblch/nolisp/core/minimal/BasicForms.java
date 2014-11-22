@@ -9,7 +9,10 @@ import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
 import de.mknblch.nolisp.core.scanner.Define;
 import de.mknblch.nolisp.core.scanner.Special;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.net.URL;
 
 /**
  * @author mknblch
@@ -25,7 +28,7 @@ public class BasicForms {
         Object value;
         do {
             Expectations.expectCdr(temp);
-            final String key = TypeHelper.symbolLiteral(temp.car());
+            final String key = TypeHelper.getSymbolLiteral(temp.car());
             value = interpreter.eval(temp.cdr().car(), context);
             context.bindGlobal(key, value);
             temp = temp.cdr().cdr();
@@ -40,7 +43,7 @@ public class BasicForms {
         ListStruct temp = args;
         Object value;
         do {
-            final String key = TypeHelper.symbolLiteral(temp.car());
+            final String key = TypeHelper.getSymbolLiteral(temp.car());
             Expectations.expectCdr(temp);
             value = interpreter.eval(temp.cdr().car(), context);
             context.bind(key, value);
@@ -71,7 +74,7 @@ public class BasicForms {
             final ListStruct pair = ((ListStruct) def);
             Expectations.expectCdr(pair);
             // bind to local and eval with local scope
-            localScope.bind(TypeHelper.symbolLiteral(pair.car()), interpreter.eval(pair.cdr().car(), localScope));
+            localScope.bind(TypeHelper.getSymbolLiteral(pair.car()), interpreter.eval(pair.cdr().car(), localScope));
         }
         // evaluate cdar with newly build variable scope
         return interpreter.eval(args.cdr().car(), localScope);
@@ -89,7 +92,7 @@ public class BasicForms {
             final ListStruct pair = ((ListStruct) def);
             Expectations.expectCdr(pair);
             // bind to local but eval args with parent scope
-            localScope.bind(TypeHelper.symbolLiteral(pair.car()), interpreter.eval(pair.cdr().car(), parentScope));
+            localScope.bind(TypeHelper.getSymbolLiteral(pair.car()), interpreter.eval(pair.cdr().car(), parentScope));
         }
         return interpreter.eval(args.cdr().car(), localScope);
     }
@@ -119,9 +122,16 @@ public class BasicForms {
     }
 
     @Special
-    @Define(value = "load") // (load "abc.nolisp" )
-    public static Object load(Interpreter interpreter, Context context, ListStruct args) throws Exception {
+    @Define({"load", "load-file"}) // (load "file://abc.nolisp" )
+    public static Object loadFile(Interpreter interpreter, Context context, ListStruct args) throws Exception {
         final File file = new File(TypeHelper.asString(interpreter.eval(args.car(), context)));
-        return interpreter.evalEach(PARSER.parse(file), context);
+        return interpreter.evalEach(PARSER.parse(new BufferedInputStream(new FileInputStream(file))), context);
+    }
+
+    @Special
+    @Define("load-url") // (load "classpath:de/mknblch/nolisp/resources/abc.nolisp" )
+    public static Object loadUrl(Interpreter interpreter, Context context, ListStruct args) throws Exception {
+        final URL url = new URL(TypeHelper.asString(interpreter.eval(args.car(), context)));
+        return interpreter.evalEach(PARSER.parse(new BufferedInputStream(url.openStream())), context);
     }
 }

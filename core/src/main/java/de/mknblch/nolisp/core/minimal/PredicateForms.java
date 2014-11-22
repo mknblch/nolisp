@@ -32,16 +32,6 @@ public class PredicateForms {
         return null == args.car();
     }
 
-    @Special // TODO review!
-    @Define("instanceof?") // (instanceof? java.lang.String "bla") => true
-    public static Object isInstance(Interpreter interpreter, Context context, ListStruct args) throws Exception {
-        final String className = TypeHelper.symbolLiteral(args.car());
-        final Object cdar = args.cadr();
-        Expectations.expectNotNull(cdar);
-        final Object value = interpreter.eval(cdar, context);
-        return className.equals(value.getClass().getName());
-    }
-
     @Define("int?")
     public static Object isInt(ListStruct args) {
         return args.car() instanceof Integer;

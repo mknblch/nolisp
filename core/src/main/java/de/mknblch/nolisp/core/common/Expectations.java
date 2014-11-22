@@ -9,6 +9,10 @@ import de.mknblch.nolisp.core.interpreter.structs.forms.SpecialForm;
 
 public class Expectations {
 
+    public static <T extends Class<?>> void expect(Object o, T clazz) {
+
+    }
+
     public static void expectList(Object o) throws EvaluationException {
         if (!(o instanceof ListStruct)) {
             throw new EvaluationException(

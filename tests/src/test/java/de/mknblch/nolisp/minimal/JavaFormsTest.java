@@ -132,7 +132,4 @@ public class JavaFormsTest extends AbstractFormTest{
 
         assertASTEquals("L[ 0042 ]", eval);
     }
-
-
-
 }

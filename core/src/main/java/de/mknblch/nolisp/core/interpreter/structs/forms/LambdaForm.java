@@ -62,7 +62,7 @@ public class LambdaForm implements Form {
                 throw new EvaluationException(String.format(
                         "procedure expects %d arguments, given: nil", symbols.size()));
             }
-            context.bind(TypeHelper.symbolLiteral(symbol), values.car());
+            context.bind(TypeHelper.getSymbolLiteral(symbol), values.car());
             values = values.cdr();
         }
     }

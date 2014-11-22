@@ -2,6 +2,7 @@ package de.mknblch.nolisp.core.minimal;
 
 import de.mknblch.nolisp.core.common.Expectations;
 import de.mknblch.nolisp.core.common.FormatHelper;
+import de.mknblch.nolisp.core.common.TypeHelper;
 import de.mknblch.nolisp.core.interpreter.Context;
 import de.mknblch.nolisp.core.interpreter.EvaluationException;
 import de.mknblch.nolisp.core.interpreter.Interpreter;
@@ -57,11 +58,13 @@ public class JavaForms {
     @Constant({"ARRAY", "array"})
     public static final Class<?> PRIMITIVE_ARRAY_TYPE = Object[].class;
 
+    @Constant({"cwd", "CWD"})
+    public static final String CWD = System.getProperty("user.dir");
 
-    @Special
+    @Special // TODO arg types
     @Define("new") // (new java.lang.Integer [ ( args+ ) ] )
     public static Object newForm(Interpreter interpreter, Context context, ListStruct args) throws Exception {
-        final String fqn = symbolLiteral(args.car());
+        final String fqn = getSymbolLiteral(args.car());
         final Class<?> clazz = Class.forName(fqn);
         final Object initArgs = args.cadr();
         if (null != initArgs) {
@@ -88,6 +91,11 @@ public class JavaForms {
         throw asException(args.car());
     }
 
+    @Define("utime")
+    public static Object utime(ListStruct args) throws Exception {
+        return System.currentTimeMillis();
+    }
+
     @Define({"classof", "classOf"}) // (throw <exception>)
     public static Object typeOf(ListStruct args) throws Exception {
         final Object car = args.car();
@@ -101,7 +109,7 @@ public class JavaForms {
     @Define("class") // (throw <exception>)
     public static Object classForm(Interpreter interpreter, Context context, ListStruct args) throws Exception {
         final Object car = args.car();
-        return Class.forName(symbolLiteral(car));
+        return Class.forName(getSymbolLiteral(car));
     }
 
     @Special
@@ -118,7 +126,7 @@ public class JavaForms {
                 Expectations.expectSymbolWithLiteral(listStruct.car(), "catch");
                 final SymbolStruct exClassSymbol = asSymbol(listStruct.cadr());
                 if(Class.forName(exClassSymbol.literal).isAssignableFrom(exClazz)) {
-                    final String literal = symbolLiteral(listStruct.caddr());
+                    final String literal = getSymbolLiteral(listStruct.caddr());
                     final Context derive = context.derive();
                     derive.bind(literal, e);
                     return interpreter.eval(listStruct.nth(3), derive);
@@ -126,6 +134,16 @@ public class JavaForms {
             }
             throw e;
         }
+    }
+
+    @Special // TODO review!
+    @Define("instanceof?") // (instanceof? java.lang.String "bla") => true
+    public static Object isInstance(Interpreter interpreter, Context context, ListStruct args) throws Exception {
+        final String className = TypeHelper.getSymbolLiteral(args.car());
+        final Object cdar = args.cadr();
+        Expectations.expectNotNull(cdar);
+        final Object value = interpreter.eval(cdar, context);
+        return className.equals(value.getClass().getName());
     }
 
     /*
@@ -139,7 +157,7 @@ public class JavaForms {
     @Define("call")
     public static Object call(Interpreter interpreter, Context context, ListStruct args) throws Exception {
 
-        final String methodName = symbolLiteral(args.car());
+        final String methodName = getSymbolLiteral(args.car());
 
         final Object param1 = args.cadr();
         final Object param2 = args.caddr();
@@ -167,7 +185,7 @@ public class JavaForms {
     public static Object callStatic(Interpreter interpreter, Context context, ListStruct args) throws Exception {
 
         // split first arg into class and method name
-        final String fqName = symbolLiteral(args.car());
+        final String fqName = getSymbolLiteral(args.car());
         final Matcher matcher = CLASS_METHOD_PATTERN.matcher(fqName);
         if(!matcher.matches()) {
             throw new EvaluationException(String.format("Invalid class name in static method call, given %s.", FormatHelper.formatPretty(args.car())));

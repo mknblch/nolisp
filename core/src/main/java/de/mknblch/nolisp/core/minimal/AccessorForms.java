@@ -15,23 +15,6 @@ import static de.mknblch.nolisp.core.common.TypeHelper.*;
  */
 public class AccessorForms {
 
-    @Define("append")
-    public static Object append(ListStruct args) {
-        final ListStruct ret = new ListStruct();
-        for (Object arg : args) {
-            if (null == arg) continue;
-            if(isList(arg)) {
-                final ListStruct listStruct = (ListStruct) arg;
-                for (Object iArg : listStruct) {
-                    ret.add(iArg);
-                }
-            } else {
-                ret.add(arg);
-            }
-        }
-        return ret;
-    }
-
     /**
      * retrieve nth element of an array
      * usage: (aget [42 21 7] 0) => 42
@@ -71,6 +54,23 @@ public class AccessorForms {
             objects.add(arg);
         }
         return objects.toArray();
+    }
+
+    @Define("append")
+    public static Object append(ListStruct args) {
+        final ListStruct ret = new ListStruct();
+        for (Object arg : args) {
+            if (null == arg) continue;
+            if(isList(arg)) {
+                final ListStruct listStruct = (ListStruct) arg;
+                for (Object iArg : listStruct) {
+                    ret.add(iArg);
+                }
+            } else {
+                ret.add(arg);
+            }
+        }
+        return ret;
     }
 
     @Define("car")

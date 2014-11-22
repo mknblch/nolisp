@@ -9,6 +9,7 @@ import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
 import de.mknblch.nolisp.core.interpreter.structs.SymbolStruct;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -52,8 +53,8 @@ public class Parser {
 
     private final Lexer lexer = new Lexer();
 
-    public ListStruct parse(File file) throws Exception {
-        final String code = new Scanner(file).useDelimiter("\\A").next();
+    public ListStruct parse(InputStream stream) throws Exception {
+        final String code = new Scanner(stream).useDelimiter("\\A").next();
         return parse(code);
     }
 

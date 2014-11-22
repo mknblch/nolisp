@@ -36,7 +36,7 @@ public class LambdaForms {
     @Define("defun") // (defun bla (a) (+ a 1) ) => form
     public static Object defun(Interpreter interpreter, Context context, ListStruct args) throws Exception {
         Expectations.expectCdr(args);
-        final String functionName = TypeHelper.symbolLiteral(args.car());
+        final String functionName = TypeHelper.getSymbolLiteral(args.car());
         final LambdaForm lambda = new LambdaForm(interpreter, context, TypeHelper.asList(args.cadr()), args.caddr());
         context.bindGlobal(functionName, lambda);
         return lambda;
