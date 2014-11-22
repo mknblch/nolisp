@@ -14,8 +14,8 @@ public class Token {
     public final Object value;
 
     public Token(Type type, String literal, Object value) {
-        this.value = value;
         this.type = type;
         this.literal = literal;
+        this.value = value;
     }
 }

@@ -1,6 +1,7 @@
 package de.mknblch.nolisp.core.interpreter.parser.lexer;
 
-import de.mknblch.nolisp.core.interpreter.parser.lexer.rules.*;
+import de.mknblch.nolisp.core.interpreter.parser.lexer.constRules.*;
+import de.mknblch.nolisp.core.interpreter.parser.lexer.specialTokenRules.*;
 
 import java.util.ArrayList;
 
@@ -9,26 +10,32 @@ import java.util.ArrayList;
  */
 public class Lexer extends StringCutter {
 
-    private static final char[] IGNORE_CHARS = new char[]{' ', '\t', '\r'};
-    private static final char[] NEWLINE_CHARS = new char[]{'\n'};
-    private static final char[] SPECIAL_TOKEN_CHARS = new char[]{'(', ')', '{', '}', '[', ']'};
 
     // TODO refactor
-    private final ArrayList<ConstDecisionRule> decisionRules = new ArrayList<ConstDecisionRule>() {{
-        add(new NullRule());
-        add(new IntRule());
-        add(new RealRule());
-        add(new BigIntegerRule());
-        add(new BigDecimalRule());
-    }};
+    private final char[] tokenDelimiter = new char[]{
+            '(', ')', '{', '}', '[', ']',
+            ' ', '\t', '\r', '\n'
+    };
 
-    private final ArrayList<TokenDecisionRule> tokenDecisionRules = new ArrayList<TokenDecisionRule>() {{
-        add(new ArrayRule());
-        add(new CommentRule());
-        add(new ListRule());
-        add(new StringRule());
-        add(new SpecialTokenRule());
-    }};
+    private final TokenRule ignorableRule = new IgnorableRule();
+    private final AvoidanceRule avoidanceRule = new AvoidanceRule();
+
+    private final ConstRule[] constRules = new ConstRule[] {
+        new NullRule(),
+        new IntRule(),
+        new RealRule(),
+        new BigIntegerRule(),
+        new BigDecimalRule(),
+    };
+
+    private final TokenRule[] tokenRules = new TokenRule[] {
+        new ArrayRule(),
+        new CommentRule(),
+        new ListRule(),
+        new StringRule(),
+        new SyntacticSugarRule(),
+        new QuoteRule(),
+    };
 
     public void setCode(String code) {
         if (null == code) {
@@ -44,36 +51,30 @@ public class Lexer extends StringCutter {
      * @return next token
      */
     public Token next() throws LexerException {
-        skipIgnorable();
+        // skip all ignorable
+        ignorableRule.token(this);
+        // check if end reached
         if (!hasNext()) return null;
+        // no, sync!
         sync();
-        return tokenize(popChar());
-    }
-
-    private Token tokenize(char c) throws LexerException {
-
-        for (TokenDecisionRule tokenDecisionRule : tokenDecisionRules) {
-            final Token token = tokenDecisionRule.decide(c, this);
+        // check if any tokenRule matches
+        for (TokenRule tokenRule : tokenRules) {
+            final Token token = tokenRule.token(this);
             if (null != token) return token;
         }
-
+        // no tokenRule applies, must be a const
         final String literal = tokenizeConst();
-        for (ConstDecisionRule decisionRule : decisionRules) {
-            final Token token = decisionRule.token(literal);
+        // check if any constRules matches
+        for (ConstRule constRule : constRules) {
+            final Token token = constRule.token(literal);
             if (null != token) return token;
         }
-        return new Token(Token.Type.SYMBOL, literal, literal);
-    }
-
-    /**
-     * skip ignorable chars. e.g. whitespaces and newline
-     */
-    private void skipIgnorable() {
-        skip(IGNORE_CHARS, NEWLINE_CHARS);
+        // no constRule matches, use avoidanceRule
+        return avoidanceRule.token(literal);
     }
 
     private String tokenizeConst() {
-        until(IGNORE_CHARS, SPECIAL_TOKEN_CHARS, NEWLINE_CHARS);
+        until(tokenDelimiter);
         return getLiteral();
     }
 

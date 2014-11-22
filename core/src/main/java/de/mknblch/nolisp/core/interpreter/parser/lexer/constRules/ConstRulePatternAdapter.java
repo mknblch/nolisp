@@ -1,4 +1,8 @@
-package de.mknblch.nolisp.core.interpreter.parser.lexer;
+package de.mknblch.nolisp.core.interpreter.parser.lexer.constRules;
+
+import de.mknblch.nolisp.core.interpreter.parser.lexer.ConstRule;
+import de.mknblch.nolisp.core.interpreter.parser.lexer.LexerException;
+import de.mknblch.nolisp.core.interpreter.parser.lexer.Token;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -6,11 +10,11 @@ import java.util.regex.Pattern;
 /**
  * @author mknblch
  */
-public abstract class ConstDecisionRuleAdapter implements ConstDecisionRule {
+public abstract class ConstRulePatternAdapter implements ConstRule {
 
     private final Pattern pattern;
 
-    public ConstDecisionRuleAdapter(String regex) {
+    public ConstRulePatternAdapter(String regex) {
         this.pattern = Pattern.compile(regex);
     }
 

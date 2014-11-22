@@ -1,29 +1,29 @@
-package de.mknblch.nolisp.core.interpreter.parser.lexer.rules;
+package de.mknblch.nolisp.core.interpreter.parser.lexer.specialTokenRules;
 
 import de.mknblch.nolisp.core.interpreter.parser.lexer.StringCutter;
 import de.mknblch.nolisp.core.interpreter.parser.lexer.Token;
-import de.mknblch.nolisp.core.interpreter.parser.lexer.TokenDecisionRule;
+import de.mknblch.nolisp.core.interpreter.parser.lexer.TokenRule;
 
 /**
  * @author mknblch
  */
-public class SpecialTokenRule implements TokenDecisionRule {
+public class QuoteRule implements TokenRule {
     @Override
-    public Token decide(char head, StringCutter cutter) {
+    public Token token(StringCutter cutter) {
 
-        switch (head) {
+        switch (cutter.charAtOffset()) {
             case '\'':
+                cutter.inc();
                 return new Token(Token.Type.QUOTE, "'", "'");
-            case '#':
-                return new Token(Token.Type.SHARP, "#", "#");
             case '`':
+                cutter.inc();
                 return new Token(Token.Type.BACKQUOTE, "`", "`");
             case ',':
+                cutter.inc();
                 return new Token(Token.Type.COMMA, ",", ",");
             case '.':
+                cutter.inc();
                 return new Token(Token.Type.SPLICE, ".", ".");
-            case '@':
-                return new Token(Token.Type.SPLICE, "@", "@");
 
             default: return null;
         }

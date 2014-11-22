@@ -1,18 +1,20 @@
-package de.mknblch.nolisp.core.interpreter.parser.lexer.rules;
+package de.mknblch.nolisp.core.interpreter.parser.lexer.specialTokenRules;
 
 import de.mknblch.nolisp.core.interpreter.parser.lexer.*;
+import de.mknblch.nolisp.core.interpreter.parser.lexer.TokenRule;
 
 /**
  * @author mknblch
  */
-public class StringRule implements TokenDecisionRule {
+public class StringRule implements TokenRule {
 
     private static final char[] NEWLINE_CHARS = new char[]{'\n'};
 
     @Override
-    public Token decide(char head, StringCutter cutter) throws LexerException {
+    public Token token(StringCutter cutter) throws LexerException {
 
-        if ('"' != head) return null;
+        if ('"' != cutter.charAtOffset()) return null;
+        cutter.inc();
         final String literal = tokenizeString(cutter);
         return new Token(Token.Type.CONST, literal, literal);
     }

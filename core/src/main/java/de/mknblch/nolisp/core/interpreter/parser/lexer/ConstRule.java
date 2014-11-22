@@ -1,12 +1,12 @@
 package de.mknblch.nolisp.core.interpreter.parser.lexer;
 
 /**
- * these rules parses the literal and returns its associated token
+ * these constRules parses the literal and returns its associated token
  * or null if rule did not match
  *
  * @author mknblch
  */
-public interface ConstDecisionRule {
+public interface ConstRule {
 
     /**
      * return token or null

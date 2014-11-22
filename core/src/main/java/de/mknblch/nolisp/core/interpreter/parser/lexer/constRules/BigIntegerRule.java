@@ -1,6 +1,5 @@
-package de.mknblch.nolisp.core.interpreter.parser.lexer.rules;
+package de.mknblch.nolisp.core.interpreter.parser.lexer.constRules;
 
-import de.mknblch.nolisp.core.interpreter.parser.lexer.ConstDecisionRuleAdapter;
 import de.mknblch.nolisp.core.interpreter.parser.lexer.Token;
 
 import java.math.BigInteger;
@@ -9,7 +8,7 @@ import java.util.regex.Matcher;
 /**
  * @author mknblch
  */
-public class BigIntegerRule extends ConstDecisionRuleAdapter {
+public class BigIntegerRule extends ConstRulePatternAdapter {
 
     public BigIntegerRule() {
         super("^(\\-?[0-9]+)[bB]$");

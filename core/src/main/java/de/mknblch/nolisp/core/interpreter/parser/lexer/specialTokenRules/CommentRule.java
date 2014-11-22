@@ -1,21 +1,22 @@
-package de.mknblch.nolisp.core.interpreter.parser.lexer.rules;
+package de.mknblch.nolisp.core.interpreter.parser.lexer.specialTokenRules;
 
 import de.mknblch.nolisp.core.interpreter.parser.lexer.StringCutter;
 import de.mknblch.nolisp.core.interpreter.parser.lexer.Token;
-import de.mknblch.nolisp.core.interpreter.parser.lexer.TokenDecisionRule;
+import de.mknblch.nolisp.core.interpreter.parser.lexer.TokenRule;
 
 /**
  * @author mknblch
  */
-public class CommentRule implements TokenDecisionRule {
+public class CommentRule implements TokenRule {
 
     private static final char[] NEWLINE_CHARS = new char[]{'\n'};
 
     @Override
-    public Token decide(char head, StringCutter cutter) {
+    public Token token(StringCutter cutter) {
 
-        if (';' != head) return null;
+        if (';' != cutter.charAtOffset()) return null;
 
+        cutter.inc();
         cutter.until(NEWLINE_CHARS);
         final String literal = cutter.getLiteral();
         return new Token(Token.Type.LINE_COMMENT, literal, literal);
