@@ -75,7 +75,7 @@ public class AccessorForms {
 
     @Define("car")
     public static Object car(ListStruct args) throws Exception {
-        return asList(args.car()).car();
+        return asList(args.car()).car(); // TODO review NPE
     }
 
     @Define("nth")

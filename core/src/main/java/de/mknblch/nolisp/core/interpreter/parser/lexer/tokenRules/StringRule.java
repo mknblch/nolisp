@@ -1,14 +1,11 @@
 package de.mknblch.nolisp.core.interpreter.parser.lexer.tokenRules;
 
 import de.mknblch.nolisp.core.interpreter.parser.lexer.*;
-import de.mknblch.nolisp.core.interpreter.parser.lexer.TokenRule;
 
 /**
  * @author mknblch
  */
 public class StringRule implements TokenRule {
-
-    private static final char[] NEWLINE_CHARS = new char[]{'\n'};
 
     @Override
     public Token token(StringCutter cutter) throws LexerException {

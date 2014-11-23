@@ -5,9 +5,6 @@ import de.mknblch.nolisp.core.interpreter.Language;
 import de.mknblch.nolisp.core.scanner.AnnotationScanner;
 import de.mknblch.nolisp.core.scanner.FunctionDefinitionException;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * @author mknblch
  */

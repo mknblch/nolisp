@@ -41,7 +41,7 @@ public class CoreInterpreter implements Interpreter {
     }
 
     private Object functionCall(ListStruct list, Context context) throws Exception {
-        if(TypeHelper.isEmptyList(list)) return null; // TODO review
+        if(TypeHelper.isEmptyList(list)) return null;
         // retrieve the function at list.car from context
         final Object func = eval(list.car(), context);
         if (null == func) {
