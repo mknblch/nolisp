@@ -26,15 +26,15 @@ Use `-l` to enter repl-mode.
 
 ## Language characteristics
 
-Basic Lisp syntax is supported including syntactic sugar like Quotes ( ' ), Backquotes ( \` ), Commas ( , ), SharpQuote ( #' ) and the splicing of static lists with at or dot syntax.
+Basic Lisp syntax is supported including syntactic sugar like quote ( ' ), backquote ( \` ), comma ( , ), sharp-quote ( #' ) and the splicing of lists at parse-time (with at or dot syntax). Some high-level functions are also included like lambda, defmacro
 
-NOLISP bind its functions and variables in the same context. This makes #' optional but does not allow to have variables and functions with identical symbol-name.
+NOLISP bind its functions and variables in the same context. This makes #' optional but permits variables and functions with identical symbol-name.
 
-## Current Flaws
+The Lexer can read basic types like list, array, integer (standard or hexadecimal notation), real and null as well as more complex types like escaped string, one line comment, long, BigInteger and BigDecimal.
 
-+ The interpreter easily reaches recursion limit when using recursive lambdas (even with tail-recursion) - maybe a stack or cactus-tree based approach could help.
-+ The implementation of builtin-functions is easy for the coder but not optimal for the interpreter which wraps a static function in an executable form using reflection - a Strategy-pattern may help.
-+ Dynamic list-splicing is not supported (e.g. `(setq a '(6 7)) (* @a)` wont work).
+Syntactic sugar (e.g. quote, backquote, ..) is processed in the Parser. Upon occurrence of a special token the Parser transforms these tokens into ListStructs containing a special symbol in their car-part and the following element in their cdr-part.
+
+Implementing new functionality is done by defining static functions with a @Define annotation. These are wrapped into Forms and bound to the Context. SpecialForms can be made by using an additional @Special annotation.
 
 ## Functionality
 
@@ -154,4 +154,10 @@ The current set of functions work more or less like Common Lisp - without guaran
 	>=
 	<
 	<=
+
+## Current Flaws
+
++ The interpreter easily reaches recursion limit when using recursive lambdas (even with tail-recursion) - maybe a stack based approach could help.
++ The implementation of builtin-functions is easy for the coder but not optimal for the interpreter which wraps a static function in an executable form using reflection - a Strategy-pattern may help.
++ Dynamic list-splicing is not supported (the expression `(setq a '(6 7)) (* @a)` wont work).
 
