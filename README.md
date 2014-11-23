@@ -34,7 +34,7 @@ The Lexer can read basic types like list, array, integer (standard or hexadecima
 
 Syntactic sugar (e.g. quote, backquote, ..) is processed in the Parser. Upon occurrence of a special token the Parser transforms these tokens into ListStructs containing a special symbol in their car-part and the following element in their cdr-part.
 
-Implementing new functionality is done by defining static functions with a \@Define annotation. These are wrapped into Forms and bound to the Context. SpecialForms can be made by using an additional \@Special annotation.
+Implementing new functionality is done by defining static functions with a `@Define` annotation. These are wrapped into Forms and bound to the Context. SpecialForms can be made by using an additional `@Special` annotation.
 
 ## Functionality
 
