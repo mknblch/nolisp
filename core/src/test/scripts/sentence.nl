@@ -5,16 +5,19 @@
 (defun Noun ()        (one-of '(man ball woman sheriff)))
 (defun Verb ()        (one-of '(hit took saw liked shot)))
 
+(defun one-of (set)
+  (list (random-elt set)))
+
 (defun random-elt (choices)
-  (nth (rint (llength choices))) choices)
+  (nth (rint (llength choices) ) choices))
 
 (defun Adj* ()
-  (if (= (random 2) 0)
+  (if (== (rint 2) 0)
       nil
       (append (Adj) (Adj*))))
 
 (defun PP* ()
-  (if (random-elt '(t nil))
+  (if (random-elt '(TRUE nil))
       (append (PP) (PP*))
       nil))
 
@@ -22,4 +25,7 @@
 (defun Adj () (one-of '(big little blue green adiabatic)))
 (defun Prep () (one-of '(to in by with on)))
 
-(print (sentence))
+; redefinition
+(defun noun-phrase () (append (Article) (Adj*) (Noun) (PP*)))
+
+(sentence) ; buggy ?

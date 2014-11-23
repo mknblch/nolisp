@@ -167,7 +167,7 @@ public class BasicFormsTest extends AbstractFormTest {
     @Test
     public void testLoad2() throws Exception {
 
-        final List<Object> result = eval("cwd (load \"./src/test/scripts/sentence.nl\") (sentence)");
+        final List<Object> result = eval("(load \"./src/test/scripts/sentence.nl\")");
         dump(result);
     }
 

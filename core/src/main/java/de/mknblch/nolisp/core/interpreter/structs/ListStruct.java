@@ -17,6 +17,8 @@ public class ListStruct implements Atom, Iterable {
         if (car == null && rest == null) {
             isEmptyList = true;
             return;
+        } else {
+            isEmptyList = false;
         }
         this.car = car;
         for (int i = 0; i < rest.length; i++) {
