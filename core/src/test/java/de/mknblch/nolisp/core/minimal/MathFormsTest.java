@@ -72,4 +72,9 @@ public class MathFormsTest extends AbstractFormTest {
         final List<Object> eval = eval("(rint 3)(rint)(rint 3)");
         dump(eval);
     }
+    @Test
+    public void testRint0() throws Exception {
+        final List<Object> eval = eval("(rint 0)");
+        assertASTEquals("L[ 0 ]", eval);
+    }
 }

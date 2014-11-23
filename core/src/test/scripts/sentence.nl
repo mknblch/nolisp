@@ -2,6 +2,6 @@
 (defun noun-phrase () (append (Article) (Noun)))
 (defun verb-phrase () (append (Verb) (noun-phrase)))
 (defun Article ()     (one-of '(the a)))
-(defun Noun ()        (one-of '(man ball woman table)))
-(defun Verb ()        (one-of '(hit took saw liked)))
-; (defun one-of (l)     (nth
+(defun Noun ()        (one-of '(man ball woman sheriff)))
+(defun Verb ()        (one-of '(hit took saw liked shot)))
+(defun one-of (l)     (nth (rint (llength l)) l))

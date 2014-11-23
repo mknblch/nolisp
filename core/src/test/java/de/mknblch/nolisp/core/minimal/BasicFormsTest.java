@@ -159,8 +159,16 @@ public class BasicFormsTest extends AbstractFormTest {
     @Test
     public void testLoad() throws Exception {
 
-        final List<Object> result = eval("(load \"./src/test/resources/test.nl\")");
+        final List<Object> result = eval("(load \"./src/test/scripts/1337.nl\")");
         assertASTEquals("L[ ( 1337 ) ]", result);
+    }
+
+
+    @Test
+    public void testLoad2() throws Exception {
+
+        final List<Object> result = eval("(progn (load \"./src/test/scripts/sentence.nl\") (sentence))");
+        dump(result);
     }
 
     @Test
