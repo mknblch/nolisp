@@ -28,7 +28,7 @@ public class Minimal implements Language {
     };
 
     @Override
-    public Context makeContext() throws Exception {
+    public Context makeContext() throws FunctionDefinitionException {
         final Context context = new Context();
         context.bindAll(AnnotationScanner.scanForConstants(clazzes));
         context.bindAll(AnnotationScanner.scanForFunctions(clazzes));
