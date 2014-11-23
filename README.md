@@ -26,7 +26,7 @@ Use `-l` to enter repl-mode.
 
 ## Language characteristics
 
-Basic Lisp syntax is supported including syntactic sugar like quote ( ' ), backquote ( \` ), comma ( , ), sharp-quote ( #' ) and the splicing of lists at parse-time (with at or dot syntax). Some high-level functions are also included like lambda, defmacro
+Basic Lisp syntax is supported including syntactic sugar like quote ( ' ), backquote ( \` ), comma ( , ), sharp-quote ( \#' ) and the splicing of lists at parse-time (with at or dot syntax).
 
 NOLISP bind its functions and variables in the same context. This makes #' optional but permits variables and functions with identical symbol-name.
 
