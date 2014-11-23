@@ -109,8 +109,10 @@ public class MathForms {
 
     @Define({"rint", "random-int"})
     public static Object rint(ListStruct args) throws Exception {
-        if (null == args) return Math.abs(SRANDOM.nextInt());
-        return Math.abs(SRANDOM.nextInt()) % TypeHelper.asInt(args.car());
+        final int arint = Math.abs(SRANDOM.nextInt());
+        if (null == args) return arint;
+        final int max = TypeHelper.asInt(args.car());
+        return max > 0 ? arint % max : 0;
     }
 
     private static Object plus(Object a, Object b) throws EvaluationException {

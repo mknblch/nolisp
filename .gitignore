@@ -1,6 +1,8 @@
 ﻿
 .idea
 
+documentation/
+
 target/
 
 **/*.iml
