@@ -3,6 +3,7 @@ package de.mknblch.nolisp.core.minimal;
 import de.mknblch.nolisp.core.interpreter.EvaluationException;
 import de.mknblch.nolisp.core.minimal.testHelper.AbstractFormTest;
 import de.mknblch.nolisp.core.interpreter.Context;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
@@ -163,11 +164,11 @@ public class BasicFormsTest extends AbstractFormTest {
         assertASTEquals("L[ ( 1337 ) ]", result);
     }
 
-
+    @Ignore
     @Test
     public void testLoad2() throws Exception {
 
-        final List<Object> result = eval("(load \"./src/test/scripts/sentence.nl\")");
+        final List<Object> result = eval("CWD (load \"./src/test/scripts/sentence.nl\")");
         dump(result);
     }
 
