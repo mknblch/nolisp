@@ -2,7 +2,7 @@
 
 Learning functional programming the hard way - by implementing an interpreter from scratch.
 
-This language is for fun and didactic purpose only and hardly usable in productive code. Everything is hardcoded without dependencies on 3rd-party libraries.
+This language is for fun and didactic purpose only and hardly usable in productive code.
 
 ## Usage
 
@@ -31,10 +31,6 @@ Basic Lisp syntax is supported including syntactic sugar like quote ( ' ), backq
 NOLISP bind its functions and variables in the same context. This makes #' optional but permits variables and functions with identical symbol-name.
 
 The Lexer can read basic types like list, array, integer (standard or hexadecimal notation), real and null as well as more complex types like escaped string, one line comment, long, BigInteger and BigDecimal.
-
-Syntactic sugar (e.g. quote, backquote, ..) is processed in the Parser. Upon occurrence of a special token the Parser transforms these tokens into ListStructs containing a special symbol in their car-part and the following element in their cdr-part.
-
-Implementing new functionality is done by defining static functions with a `@Define` annotation. These are wrapped into Forms and bound to the Context. SpecialForms can be made by using an additional `@Special` annotation.
 
 ## Functionality
 
