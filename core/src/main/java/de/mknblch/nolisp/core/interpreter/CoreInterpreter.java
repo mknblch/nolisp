@@ -36,6 +36,17 @@ public class CoreInterpreter implements Interpreter {
         }
     }
 
+    @Override
+    public ListStruct evalEach(ListStruct list, Context context) throws Exception {
+        if (null == list) return null;
+        final ListStruct ret = new ListStruct();
+        for (Object l : list) {
+            if (!(l instanceof Atom)) ret.add(l);
+            else ret.add(eval(l, context));
+        }
+        return ret;
+    }
+
     private Object retrieveFromContext(SymbolStruct atom, Context context) throws EvaluationException {
         return context.get(atom.literal);
     }
@@ -47,24 +58,14 @@ public class CoreInterpreter implements Interpreter {
         if (null == func) {
             throw new EvaluationException(String.format("Procedure application: expected procedure, given: nil"));
         } else if (func instanceof Form) {
-            // each argument of Forms must be evaluated before function call
+            // each argument is evaluated before function call
             return ((Form) func).eval(evalEach(list.cdr(), context));
         } else if (func instanceof SpecialForm) {
-            // specialForms get their arguments as unevaluated AST
+            // specialForms get the pure AST
             return ((SpecialForm) func).eval(this, context, list.cdr());
         } else {
             throw new EvaluationException(String.format("Procedure application: expected procedure, given: %s:%s", func, func.getClass().getName()));
         }
-    }
-
-    public ListStruct evalEach(ListStruct list, Context context) throws Exception {
-        if (null == list) return null;
-        final ListStruct ret = new ListStruct();
-        for (Object l : list) {
-            if (!(l instanceof Atom)) ret.add(l);
-            else ret.add(eval(l, context));
-        }
-        return ret;
     }
 
 }
