@@ -104,10 +104,18 @@ public class BackquoteTest extends AbstractFormTest {
     }
 
     @Test
-    public void testCommaSplice() throws Exception {
+    public void testCommaSpliceVars() throws Exception {
 
-        final String code = "(setq a 1) `(,.a b c)";
+        final String code = "(setq a '(1 2)) (setq b `(,.a 3)) `(,.b 4)";
         final List<Object> evaluated = eval(code);
-        AbstractFormTest.assertASTEquals("L[ 1 1 b c ]", evaluated);
+        AbstractFormTest.assertASTEquals("L[ ( 1 2 ) ( 1 2 3 ) ( 1 2 3 4 ) ]", evaluated);
+    }
+
+    @Test
+    public void testCommaSpliceList() throws Exception {
+
+        final String code = "`(,.'(1 2) 3)";
+        final List<Object> evaluated = eval(code);
+        AbstractFormTest.assertASTEquals("L[ ( 1 2 3 ) ]", evaluated);
     }
 }

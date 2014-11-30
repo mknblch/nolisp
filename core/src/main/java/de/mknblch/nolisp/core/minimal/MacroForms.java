@@ -2,6 +2,7 @@ package de.mknblch.nolisp.core.minimal;
 
 import de.mknblch.nolisp.core.common.Expectations;
 import de.mknblch.nolisp.core.common.TypeHelper;
+import de.mknblch.nolisp.core.inspection.ContainerCloneRule;
 import de.mknblch.nolisp.core.inspection.Inspector;
 import de.mknblch.nolisp.core.inspection.ValueCloneRule;
 import de.mknblch.nolisp.core.interpreter.Context;
@@ -44,7 +45,35 @@ public class MacroForms {
             }
         };
 
-        return Inspector.cloneTree(args, valueCloneRule).car();
+        ListStruct ret = Inspector.cloneTree(args, valueCloneRule);
+
+        final ContainerCloneRule splice = new ContainerCloneRule() {
+
+            @Override
+            public ListStruct cloneSublist(ListStruct container) throws Exception {
+
+                if (TypeHelper.isSymbolWithLiteral(container.car(), "comma-splice")) {
+                    final ListStruct listStruct = TypeHelper.asList(interpreter.eval(container.cadr(), context));
+                    final ListStruct clone = new ListStruct();
+                    //noinspection ConstantConditions
+                    for (Object o : listStruct) {
+                        clone.add(o);
+                    }
+                    return clone;
+                }
+
+                return new ListStruct(container);
+            }
+
+            @Override
+            public ListStruct cloneElement(Object element) throws Exception {
+                return new ListStruct(element);
+            }
+        };
+
+        ret = Inspector.cloneTree(ret, splice);
+
+        return ret.car();
     }
 
     @Special
