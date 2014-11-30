@@ -88,7 +88,7 @@ public class LexerTest {
         final String code = "'(+ a b)";
         final Lexer lexer = new Lexer();
         lexer.setCode(code);
-        assertTokenEquals(new String[]{"'", "(", "+", "a", "b", ")"}, lexer);
+        assertTokenEquals(new String[]{"quote", "(", "+", "a", "b", ")"}, lexer);
     }
 
     @Test
