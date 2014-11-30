@@ -21,8 +21,6 @@ import java.util.Scanner;
  */
 public class Parser {
 
-    private static final SpliceRule SPLICE_RULE = new SpliceRule();
-
     private static final Atom LIST_END_STRUCT = new Atom() {
         @Override
         public Type getType() {
@@ -44,11 +42,7 @@ public class Parser {
         }
     };
 
-    private static final SymbolStruct QUOTE_STRUCT = new SymbolStruct("quote");
-    private static final SymbolStruct FUNCTION_STRUCT = new SymbolStruct("function");
-    private static final SymbolStruct BACKQUOTE_STRUCT = new SymbolStruct("backquote");
-    private static final SymbolStruct COMMA_STRUCT = new SymbolStruct("comma");
-    private static final SymbolStruct AT_STRUCT = new SymbolStruct("splice");
+    private static final SpliceRule SPLICE_RULE = new SpliceRule();
 
     private final Lexer lexer = new Lexer();
 
@@ -94,18 +88,8 @@ public class Parser {
                 return COMMENT_STRUCT;
             case CONST:
                 return token.value;
-
-            // syntactic sugar
-            case BACKQUOTE:
-                return new ListStruct(BACKQUOTE_STRUCT, parseOne());
-            case SHARP:
-                return new ListStruct(FUNCTION_STRUCT, parseOne());
-            case QUOTE:
-                return new ListStruct(QUOTE_STRUCT, parseOne());
-            case COMMA:
-                return new ListStruct(COMMA_STRUCT, parseOne());
-            case SPLICE:
-                return new ListStruct(AT_STRUCT, parseOne());
+            case TRANSFORM:
+                return new ListStruct(new SymbolStruct(token.literal), parseOne());
 
             default:
                 throw new ParserException(String.format("Type '%s' Not yet implemented.", token.type.name()));

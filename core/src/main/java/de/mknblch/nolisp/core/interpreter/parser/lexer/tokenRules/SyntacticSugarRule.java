@@ -14,22 +14,22 @@ public class SyntacticSugarRule implements TokenRule {
         switch (cutter.charAtOffset()) {
             case '#':
                 cutter.inc();
-                return new Token(Token.Type.SHARP, "#", "#");
+                return new Token(Token.Type.TRANSFORM, "function", "#");
             case '@':
                 cutter.inc();
-                return new Token(Token.Type.SPLICE, "@", "@");
+                return new Token(Token.Type.TRANSFORM, "splice", "@");
             case '.':
                 cutter.inc();
-                return new Token(Token.Type.SPLICE, ".", ".");
+                return new Token(Token.Type.TRANSFORM, "splice", ".");
             case '\'':
                 cutter.inc();
-                return new Token(Token.Type.QUOTE, "'", "'");
+                return new Token(Token.Type.TRANSFORM, "quote", "'");
             case '`':
                 cutter.inc();
-                return new Token(Token.Type.BACKQUOTE, "`", "`");
+                return new Token(Token.Type.TRANSFORM, "backquote", "`");
             case ',':
                 cutter.inc();
-                return new Token(Token.Type.COMMA, ",", ",");
+                return new Token(Token.Type.TRANSFORM, "comma", ",");
 
             default: return null;
         }

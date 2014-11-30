@@ -58,9 +58,24 @@ public class StringCutter {
     public void inc() {
         offset++;
     }
+    public void inc(int i) {
+        offset += i;
+    }
 
     public char popChar() {
         return str.charAt(offset++);
+    }
+
+    /**
+     * returns true if the next chars are equal to the chars in la.
+     * @param la chars to match
+     * @return true if
+     */
+    public boolean lookAhead (char[] la) {
+        for (int i = 0; i < la.length; i++) {
+            if (la[i] != str.charAt(offset+i)) return false;
+        }
+        return true;
     }
 
     /**
