@@ -11,9 +11,9 @@ public class SyntacticSugarRule implements TokenRule {
     @Override
     public Token token(StringCutter cutter) {
 
-        if(cutter.lookAhead(new char[]{',', '.'})) {
+        if(cutter.lookAhead(new char[]{',', '.'}) || cutter.lookAhead(new char[]{',', '@'})) {
             cutter.inc(2);
-            return new Token(Token.Type.TRANSFORM, "comma-splice", ",");
+            return new Token(Token.Type.TRANSFORM, "comma-splice", ",@");
         }
 
         switch (cutter.charAtOffset()) {
