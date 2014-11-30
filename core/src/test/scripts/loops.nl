@@ -6,8 +6,3 @@
 (defun some (n) (print n))
 
 (loop 10 #'some)
-
-; TODO
-; (defmacro alambda (parms &body body)
-;    `(labels ((self ,parms ,@body))
-;       #'self))
