@@ -6,7 +6,7 @@ package de.mknblch.nolisp.core.interpreter.parser.lexer;
 public class Token {
 
     public enum Type {
-        SYMBOL, LIST_BEGIN, LIST_END, ARRAY_BEGIN, ARRAY_END, LINE_COMMENT, CONST, TRANSFORM //, QUOTE, SHARP, BACKQUOTE, SPLICE, COMMA
+        SYMBOL, LIST_BEGIN, LIST_END, ARRAY_BEGIN, ARRAY_END, LINE_COMMENT, CONST, TRANSFORM
     }
 
     public final Type type;

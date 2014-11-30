@@ -103,4 +103,11 @@ public class BackquoteTest extends AbstractFormTest {
         AbstractFormTest.assertASTEquals("L[ 42 ]", evaluated);
     }
 
+    @Test
+    public void testCommaSplice() throws Exception {
+
+        final String code = "(setq a 1) `(,.a b c)";
+        final List<Object> evaluated = eval(code);
+        AbstractFormTest.assertASTEquals("L[ 1 1 b c ]", evaluated);
+    }
 }
