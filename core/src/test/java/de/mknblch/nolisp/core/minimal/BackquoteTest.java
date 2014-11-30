@@ -112,9 +112,9 @@ public class BackquoteTest extends AbstractFormTest {
     }
 
     @Test
-    public void testCommaSpliceList() throws Exception {
+    public void testCommaNestedList() throws Exception {
 
-        final String code = "`(,.'(1 2) 3)";
+        final String code = "`(,.`(1 ,,'(+ 1 1)) 3)";
         final List<Object> evaluated = eval(code);
         AbstractFormTest.assertASTEquals("L[ ( 1 2 3 ) ]", evaluated);
     }
