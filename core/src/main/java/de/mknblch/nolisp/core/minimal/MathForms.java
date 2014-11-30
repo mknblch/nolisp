@@ -34,8 +34,11 @@ public class MathForms {
 
     @Define({"-", "sub"})
     public static Object minus(ListStruct args) throws Exception {
-        Expectations.expectCdr(args);
-        return minus(args.car(), args.cdr().car());
+        Object result = args.car();
+        for (Object arg : args.cdr()) {
+            result = minus(result, arg);
+        }
+        return result;
     }
 
     @Define({"*", "mul"})

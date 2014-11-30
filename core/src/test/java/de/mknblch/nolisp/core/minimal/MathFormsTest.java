@@ -21,8 +21,8 @@ public class MathFormsTest extends AbstractFormTest {
     @Test
     public void testMinus() throws Exception {
 
-        final List<Object> result = eval("(- -42 (- 42 126))");
-        assertEquals(42, result.get(0));
+        final List<Object> result = eval("(- 10 5 3 1)");
+        assertEquals(1, result.get(0));
     }
 
     @Test
