@@ -33,13 +33,6 @@ public class LambdaFormsTest extends AbstractFormTest {
     }
 
     @Test
-    public final void testRecursiveLambdaWithTHIS() throws Exception {
-        final List<Object> result = eval("((lambda (n) (if (eq? n 0) 1 (* n (this (- n 1))))) 5)");
-        dump(result);
-        Assert.assertEquals(120, result.get(0));
-    }
-
-    @Test
     public final void testEvalBQ() throws Exception {
         final List<Object> result = eval("(eval `(+ 22 20))");
         Assert.assertEquals(42, result.get(0));

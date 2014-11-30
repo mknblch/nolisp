@@ -1,6 +1,7 @@
 package de.mknblch.nolisp.core.minimal;
 
 import de.mknblch.nolisp.core.common.Expectations;
+import de.mknblch.nolisp.core.common.FormatHelper;
 import de.mknblch.nolisp.core.common.TypeHelper;
 import de.mknblch.nolisp.core.inspection.ContainerCloneRule;
 import de.mknblch.nolisp.core.inspection.Inspector;
@@ -35,19 +36,7 @@ public class MacroForms {
             return car;
         }
 
-        final ValueCloneRule valueCloneRule = new ValueCloneRule() {
-            @Override
-            public Object clone(Object element) throws Exception {
-                if (TypeHelper.isListWithSymbolHead(element, "comma")) {
-                    return interpreter.eval(((ListStruct) element).cadr(), context);
-                }
-                return element;
-            }
-        };
-
-        ListStruct ret = Inspector.cloneTree(args, valueCloneRule);
-
-        final ContainerCloneRule splice = new ContainerCloneRule() {
+        final ContainerCloneRule rule = new ContainerCloneRule() {
 
             @Override
             public ListStruct cloneSublist(ListStruct container) throws Exception {
@@ -62,6 +51,10 @@ public class MacroForms {
                     return clone;
                 }
 
+                else if (TypeHelper.isSymbolWithLiteral(container.car(), "comma")) {
+                    return new ListStruct(interpreter.eval(container.cadr(), context));
+                }
+
                 return new ListStruct(container);
             }
 
@@ -71,9 +64,7 @@ public class MacroForms {
             }
         };
 
-        ret = Inspector.cloneTree(ret, splice);
-
-        return ret.car();
+        return Inspector.cloneTree(args, rule).car();
     }
 
     @Special
@@ -86,5 +77,11 @@ public class MacroForms {
     @Define("splice")
     public static Object splice(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
         throw new EvaluationException("Dynamic splicing not supported.");
+    }
+
+    @Special
+    @Define("comma-splice")
+    public static Object commaSplice(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
+        throw new EvaluationException("Bad syntax. Comma-Splice not inside a backquote environment.");
     }
 }

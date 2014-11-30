@@ -28,7 +28,7 @@ public class LambdaForm implements Form {
         // derive local scope context
         final Context executionContext = context.derive();
         // bind this to context
-        executionContext.bind("this", this);
+//        executionContext.bind("this", this);
         // bind args to context
         bind(executionContext, symbols, args);
         // eval
