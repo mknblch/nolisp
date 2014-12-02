@@ -153,6 +153,7 @@ public class BasicFormsTest extends AbstractFormTest {
 
     }
 
+    @Ignore
     @Test
     public void testLoad() throws Exception {
 
@@ -160,6 +161,7 @@ public class BasicFormsTest extends AbstractFormTest {
         AbstractFormTest.assertASTEquals("L[ ( 1337 ) ]", result);
     }
 
+    @Ignore
     @Test
     public void testLoad2() throws Exception {
 
