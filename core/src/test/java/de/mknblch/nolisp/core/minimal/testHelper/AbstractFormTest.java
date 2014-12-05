@@ -1,13 +1,13 @@
 package de.mknblch.nolisp.core.minimal.testHelper;
 
 import de.mknblch.nolisp.core.scanner.FunctionDefinitionException;
-import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
+import de.mknblch.nolisp.core.datatypes.ListStruct;
 import de.mknblch.nolisp.core.interpreter.CoreInterpreter;
 import de.mknblch.nolisp.core.interpreter.Interpreter;
 import de.mknblch.nolisp.core.minimal.Minimal;
-import de.mknblch.nolisp.core.interpreter.parser.Parser;
-import de.mknblch.nolisp.core.interpreter.parser.ParserException;
-import de.mknblch.nolisp.core.interpreter.parser.lexer.LexerException;
+import de.mknblch.nolisp.core.parser.Parser;
+import de.mknblch.nolisp.core.parser.ParserException;
+import de.mknblch.nolisp.core.parser.lexer.LexerException;
 import de.mknblch.nolisp.core.common.FormatHelper;
 import de.mknblch.nolisp.core.interpreter.Context;
 import org.junit.Assert;

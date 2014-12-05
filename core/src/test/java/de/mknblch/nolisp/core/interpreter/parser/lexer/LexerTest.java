@@ -1,8 +1,9 @@
 package de.mknblch.nolisp.core.interpreter.parser.lexer;
 
-import de.mknblch.nolisp.core.interpreter.Interpreter;
+import de.mknblch.nolisp.core.parser.lexer.Lexer;
+import de.mknblch.nolisp.core.parser.lexer.LexerException;
+import de.mknblch.nolisp.core.parser.lexer.Token;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

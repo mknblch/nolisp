@@ -1,11 +1,11 @@
 package de.mknblch.nolisp.core.interpreter;
 
 import de.mknblch.nolisp.core.common.TypeHelper;
-import de.mknblch.nolisp.core.interpreter.structs.Atom;
-import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
-import de.mknblch.nolisp.core.interpreter.structs.SymbolStruct;
-import de.mknblch.nolisp.core.interpreter.structs.forms.Form;
-import de.mknblch.nolisp.core.interpreter.structs.forms.SpecialForm;
+import de.mknblch.nolisp.core.datatypes.Atom;
+import de.mknblch.nolisp.core.datatypes.ListStruct;
+import de.mknblch.nolisp.core.datatypes.SymbolStruct;
+import de.mknblch.nolisp.core.datatypes.forms.Form;
+import de.mknblch.nolisp.core.datatypes.forms.SpecialForm;
 
 /**
  * Interpreter

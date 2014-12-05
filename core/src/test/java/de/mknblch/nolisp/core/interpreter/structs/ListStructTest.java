@@ -1,6 +1,8 @@
 package de.mknblch.nolisp.core.interpreter.structs;
 
 import de.mknblch.nolisp.core.common.FormatHelper;
+import de.mknblch.nolisp.core.datatypes.Atom;
+import de.mknblch.nolisp.core.datatypes.ListStruct;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;

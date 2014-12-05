@@ -2,7 +2,9 @@ package de.mknblch.nolisp.core.interpreter.parser;
 
 import de.mknblch.nolisp.core.common.FormatHelper;
 import de.mknblch.nolisp.core.interpreter.EvaluationException;
-import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
+import de.mknblch.nolisp.core.parser.Parser;
+import de.mknblch.nolisp.core.parser.ParserException;
+import de.mknblch.nolisp.core.datatypes.ListStruct;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;

@@ -2,12 +2,12 @@ package de.mknblch.nolisp.core.common;
 
 import de.mknblch.nolisp.core.interpreter.Context;
 import de.mknblch.nolisp.core.interpreter.EvaluationException;
-import de.mknblch.nolisp.core.interpreter.structs.Atom;
-import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
-import de.mknblch.nolisp.core.interpreter.structs.SymbolStruct;
-import de.mknblch.nolisp.core.interpreter.structs.forms.LambdaForm;
-import de.mknblch.nolisp.core.interpreter.structs.forms.MacroForm;
-import de.mknblch.nolisp.core.scanner.BuiltIn;
+import de.mknblch.nolisp.core.datatypes.Atom;
+import de.mknblch.nolisp.core.datatypes.ListStruct;
+import de.mknblch.nolisp.core.datatypes.SymbolStruct;
+import de.mknblch.nolisp.core.datatypes.forms.LambdaForm;
+import de.mknblch.nolisp.core.datatypes.forms.MacroForm;
+import de.mknblch.nolisp.core.datatypes.forms.BuiltIn;
 
 import java.util.List;
 import java.util.Set;

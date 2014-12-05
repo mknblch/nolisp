@@ -2,7 +2,7 @@ package de.mknblch.nolisp.core.minimal;
 
 import de.mknblch.nolisp.core.common.Expectations;
 import de.mknblch.nolisp.core.interpreter.EvaluationException;
-import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
+import de.mknblch.nolisp.core.datatypes.ListStruct;
 import de.mknblch.nolisp.core.scanner.Define;
 
 /**

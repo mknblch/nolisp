@@ -1,5 +1,6 @@
 package de.mknblch.nolisp.core.interpreter.parser.lexer;
 
+import de.mknblch.nolisp.core.parser.lexer.StringCutter;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;

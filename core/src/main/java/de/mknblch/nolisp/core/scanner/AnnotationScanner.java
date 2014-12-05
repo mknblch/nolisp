@@ -1,10 +1,12 @@
 package de.mknblch.nolisp.core.scanner;
 
+import de.mknblch.nolisp.core.datatypes.forms.BuiltInForm;
+import de.mknblch.nolisp.core.datatypes.forms.BuiltInSpecialForm;
 import de.mknblch.nolisp.core.interpreter.Context;
 import de.mknblch.nolisp.core.interpreter.Interpreter;
-import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
-import de.mknblch.nolisp.core.interpreter.structs.forms.Form;
-import de.mknblch.nolisp.core.interpreter.structs.forms.SpecialForm;
+import de.mknblch.nolisp.core.datatypes.ListStruct;
+import de.mknblch.nolisp.core.datatypes.forms.Form;
+import de.mknblch.nolisp.core.datatypes.forms.SpecialForm;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -51,7 +53,7 @@ public class AnnotationScanner {
     }
 
     private static Form wrapNonSpecialForm(final Method method, final String symbol) {
-        return new FormAdapter() {
+        return new BuiltInForm() {
             @Override
             public Object eval(ListStruct args) throws Exception {
                 try {
@@ -68,7 +70,7 @@ public class AnnotationScanner {
     }
 
     private static SpecialForm wrapSpecialForm(final Method method, final String symbol) {
-        return new SpecialFormAdapter() {
+        return new BuiltInSpecialForm() {
             @Override
             public Object eval(Interpreter interpreter, Context context, ListStruct args) throws Exception {
                 try {

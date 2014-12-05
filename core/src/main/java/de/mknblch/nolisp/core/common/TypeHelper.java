@@ -1,10 +1,10 @@
 package de.mknblch.nolisp.core.common;
 
 import de.mknblch.nolisp.core.interpreter.EvaluationException;
-import de.mknblch.nolisp.core.interpreter.structs.ListStruct;
-import de.mknblch.nolisp.core.interpreter.structs.SymbolStruct;
-import de.mknblch.nolisp.core.interpreter.structs.forms.Form;
-import de.mknblch.nolisp.core.interpreter.structs.forms.LambdaForm;
+import de.mknblch.nolisp.core.datatypes.ListStruct;
+import de.mknblch.nolisp.core.datatypes.SymbolStruct;
+import de.mknblch.nolisp.core.datatypes.forms.Form;
+import de.mknblch.nolisp.core.datatypes.forms.LambdaForm;
 
 import java.util.ArrayList;
 import java.util.List;
