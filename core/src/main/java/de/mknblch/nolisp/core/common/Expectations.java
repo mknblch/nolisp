@@ -86,8 +86,7 @@ public class Expectations {
     }
 
     public static void expectListWithSymbol(Object o, String head) throws EvaluationException {
-        expectList(o);
-        expectSymbolWithLiteral(((ListStruct) o).car(), head); // TODO review
+        expectSymbolWithLiteral(TypeHelper.asList(o).car(), head);
     }
 
     public static void expectCdr(Object o) throws EvaluationException {

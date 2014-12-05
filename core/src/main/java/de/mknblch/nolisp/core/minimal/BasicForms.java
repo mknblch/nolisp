@@ -62,7 +62,7 @@ public class BasicForms {
 
     @Define({"llength", "list-length"})
     public static Object length(ListStruct args) throws EvaluationException {
-        if (null == args) return 0; // TODO review
+        if (null == args) return 0;
         return TypeHelper.asList(args.car()).size();
     }
 
@@ -75,10 +75,11 @@ public class BasicForms {
     @Define("let*") // (let* ((a 1) (b a)) b) => 1
     public static Object letAsterisk(Interpreter interpreter, Context parentScope, ListStruct args) throws Exception {
         final Context localScope = parentScope.derive();
-        // car must be list // TODO expectations
-        for (Object def : (ListStruct) args.car()) {
+        final ListStruct definitions = TypeHelper.asList(args.car());
+        for (Object def : definitions) {
             // each element must be a key-value pair (2 element list).
-            final ListStruct pair = ((ListStruct) def);
+            final ListStruct pair = TypeHelper.asList(def);
+            // lst must have a successor
             Expectations.expectCdr(pair);
             // bind to local and eval with local scope
             localScope.bind(TypeHelper.getSymbolLiteral(pair.car()), interpreter.eval(pair.cdr().car(), localScope));
@@ -92,11 +93,10 @@ public class BasicForms {
     public static Object let(Interpreter interpreter, Context parentScope, ListStruct args) throws Exception {
         final Context localScope = parentScope.derive();
         // car must be list
-        final ListStruct car = (ListStruct) args.car();
-        Expectations.expectList(car);
-        for (Object def : car) {
+        final ListStruct definitions = TypeHelper.asList(args.car());
+        for (Object def : definitions) {
             // each element must be a value-value pair.
-            final ListStruct pair = ((ListStruct) def);
+            final ListStruct pair = TypeHelper.asList(def);
             Expectations.expectCdr(pair);
             // bind to local but eval args with parent scope
             localScope.bind(TypeHelper.getSymbolLiteral(pair.car()), interpreter.eval(pair.cdr().car(), parentScope));

@@ -52,8 +52,6 @@ public class LambdaForm implements Form {
      * bind each argument to the symbol associated to its position
      */
     private static void bind(Context context, ListStruct symbols, ListStruct values) throws Exception {
-
-        // TODO review values = null
         for (Object symbol : symbols) {
             if (null == symbol) {
                 return;

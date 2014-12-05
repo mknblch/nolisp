@@ -91,7 +91,6 @@ public class LambdaFormsTest extends AbstractFormTest {
         AbstractFormTest.assertASTEquals("#<BUILTIN +>", result.get(0));
     }
 
-    // TODO review! maybe a dedicated function context is needed because +, ++ and +++ have special meaning in cl
     @Test
     public void testFunction() throws Exception {
         final List<Object> result = eval("+");
@@ -117,7 +116,7 @@ public class LambdaFormsTest extends AbstractFormTest {
         Assert.assertEquals(3, result.get(0));
     }
 
-    @Test // TODO possible bug in rest list isEmpty & size & iterator
+    @Test
     public void testEmptyLambda() throws Exception {
         List<Object> result = eval("( (lambda () 1) )");
         dump(result);

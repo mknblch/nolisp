@@ -12,14 +12,10 @@ public class StringCutter {
     public StringCutter() {
     }
 
-    public StringCutter(String str) {
+    public StringCutter setString(String str) {
         this.str = str;
         reset();
-    }
-
-    public void setString(String str) {
-        this.str = str;
-        reset();
+        return this;
     }
 
     public String getString() {
@@ -31,20 +27,19 @@ public class StringCutter {
         prev = 0;
     }
 
+    /**
+     * @return false if end reached (offset >= string length); true otherwise
+     */
     public boolean hasNext() {
         return offset < str.length();
     }
 
+    /**
+     * returns substring from previous hit point offset to current hit point offset
+     * @return
+     */
     public String getLiteral() {
         return str.substring(prev, offset);
-    }
-
-    public int getOffset() {
-        return offset;
-    }
-
-    public void setOffset(int offset) {
-        this.offset = offset;
     }
 
     public char charAtOffset() {
@@ -71,7 +66,8 @@ public class StringCutter {
      * @param la chars to match
      * @return true if
      */
-    public boolean lookAhead (char[] la) {
+    public boolean lookAheadEquals(char[] la) {
+        if(la.length + offset >= str.length()) return false;
         for (int i = 0; i < la.length; i++) {
             if (la[i] != str.charAt(offset+i)) return false;
         }

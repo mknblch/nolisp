@@ -24,7 +24,7 @@ public class AccessorForms {
         return TypeHelper.asArray(args.car()) [ asInt(args.cadr()) ];
     }
 
-    @Define({"aset", "array-set"}) // (aset (amake 2) 0 "hallo" 1 "welt") => "hallo welt"
+    @Define({"aset", "array-set"}) // (aset (ainit 2) 1 "welt" 0 "hallo") => "hallo welt"
     public static Object[] aset(ListStruct args) throws Exception {
         final Object[] objects = asArray(args.car());
         ListStruct temp = args.cdr();
@@ -37,15 +37,13 @@ public class AccessorForms {
         return objects;
     }
 
-    @Define({"ainit", "array-init"}) // (amake 3)
+    @Define({"ainit", "array-init"}) // (ainit 3) => [null, null, null]
     public static Object ainit(ListStruct args) throws Exception {
         return new Object[asInt(args.car())];
     }
 
-    @Define({"amake", "array-make"}) // (amake 3)
+    @Define({"amake", "array-make"}) // (amake 1 2 3) => [1, 2, 3]
     public static Object amake(ListStruct args) throws Exception {
-        System.out.printf("args %s%n", FormatHelper.formatAtom(args));
-
         if (null == args) {
             return new Object[0];
         }
@@ -75,12 +73,11 @@ public class AccessorForms {
 
     @Define("car")
     public static Object car(ListStruct args) throws Exception {
-        return asList(args.car()).car(); // TODO review NPE
+        return asList(args.car()).car();
     }
 
     @Define("nth")
     public static Object nth(ListStruct args) throws Exception {
-
         return asList(args.cadr()).nth(asInt(args.car()));
     }
 
@@ -103,7 +100,6 @@ public class AccessorForms {
         return cons(a, b);
     }
 
-    // TODO refactor
     private static Object cons (Object a, Object b) {
         if (TypeHelper.isEmptyList(a) && TypeHelper.isEmptyList(b)) {
             return new ListStruct();

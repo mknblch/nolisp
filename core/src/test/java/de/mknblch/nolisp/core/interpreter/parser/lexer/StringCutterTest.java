@@ -15,7 +15,7 @@ public class StringCutterTest {
 
     @Test
     public void testRunner() throws Exception {
-        final StringCutter stringCutter = new StringCutter("a ab 1 23");
+        final StringCutter stringCutter = new StringCutter().setString("a ab 1 23");
         stringCutter.until(SPACE);
         assertToken(stringCutter, "a");
         stringCutter.skip(SPACE);

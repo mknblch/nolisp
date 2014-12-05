@@ -126,7 +126,7 @@ public class TypeHelper {
     }
 
     public static ListStruct asList(Object o) throws EvaluationException {
-        if (null == o) return null; // TODO review!
+        if (null == o) return null;
         Expectations.expectList(o);
         return (ListStruct) o;
     }
@@ -155,12 +155,14 @@ public class TypeHelper {
 
     public static Object[] convertListToArray(Object o) throws EvaluationException {
         if (null == o) return null;
-        final ArrayList<Object> objects = new ArrayList<>(); // TODO refactor?
         final ListStruct listStruct = asList(o);
-        for (Object o1 : listStruct) {
-            objects.add(o1);
+        final int size = listStruct.size();
+        final Object[] objects = new Object[size];
+        int n = 0;
+        for (Object obj : listStruct) {
+            objects[n++] = obj;
         }
-        return objects.toArray();
+        return objects;
     }
 
     public static List<String> convertToSymbolList(Object o) throws EvaluationException {
