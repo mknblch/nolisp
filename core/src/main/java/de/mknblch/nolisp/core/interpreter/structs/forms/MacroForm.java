@@ -36,11 +36,7 @@ public class MacroForm implements SpecialForm {
 
     private ListStruct expand(Interpreter interpreter, Context context) throws Exception {
         // expand the macro to it's actual form
-        final ListStruct expanded = new ListStruct();
-        for (Object o : forms) {
-            expanded.add(interpreter.eval(o, context)); // TODO review: correct context?
-        }
-        return expanded;
+        return interpreter.evalEach(forms, context); // TODO review: correct context?
     }
 
     @Override
