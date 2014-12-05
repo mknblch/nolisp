@@ -1,6 +1,5 @@
 package de.mknblch.nolisp.core.parser.lexer.tokenRules;
 
-import de.mknblch.nolisp.core.interpreter.parser.lexer.*;
 import de.mknblch.nolisp.core.parser.lexer.LexerException;
 import de.mknblch.nolisp.core.parser.lexer.StringCutter;
 import de.mknblch.nolisp.core.parser.lexer.Token;
