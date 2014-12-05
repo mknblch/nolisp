@@ -1,13 +1,13 @@
 package de.mknblch.nolisp.repl;
 
-import de.mknblch.nolisp.core.datatypes.ListStruct;
-import de.mknblch.nolisp.core.interpreter.CoreInterpreter;
-import de.mknblch.nolisp.core.interpreter.Interpreter;
-import de.mknblch.nolisp.core.parser.Parser;
-import de.mknblch.nolisp.core.common.FormatHelper;
-import de.mknblch.nolisp.core.interpreter.Context;
-import de.mknblch.nolisp.core.datatypes.SymbolStruct;
-import de.mknblch.nolisp.core.minimal.Minimal;
+import de.mknblch.nolisp.datatypes.ListStruct;
+import de.mknblch.nolisp.interpreter.CoreInterpreter;
+import de.mknblch.nolisp.interpreter.Interpreter;
+import de.mknblch.nolisp.parser.Parser;
+import de.mknblch.nolisp.common.FormatHelper;
+import de.mknblch.nolisp.interpreter.Context;
+import de.mknblch.nolisp.datatypes.SymbolStruct;
+import de.mknblch.nolisp.minimal.Minimal;
 
 import java.io.Console;
 
