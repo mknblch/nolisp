@@ -2,7 +2,6 @@ package de.mknblch.nolisp.minimal;
 
 import de.mknblch.nolisp.common.Expectations;
 import de.mknblch.nolisp.common.FormatHelper;
-import de.mknblch.nolisp.common.TypeHelper;
 import de.mknblch.nolisp.interpreter.Context;
 import de.mknblch.nolisp.interpreter.EvaluationException;
 import de.mknblch.nolisp.interpreter.Interpreter;
@@ -61,23 +60,35 @@ public class JavaForms {
     @Constant({"cwd", "CWD"})
     public static final String CWD = System.getProperty("user.dir");
 
-    @Special // TODO arg types
+
+    /*
+     * (new java.lang.Exception) ; noargs ctor
+     * (new java.lang.Exception ("Test")) ; find type of args automatically
+     * (new java.lang.Exception (String) ("Test")) ; define argtypes and args
+     */
+    @Special
     @Define("new") // (new java.lang.Integer [ ( args+ ) ] )
     public static Object newForm(Interpreter interpreter, Context context, ListStruct args) throws Exception {
-        System.out.printf("ARGS %s%n", FormatHelper.formatAtom(args));
-
         final String fqn = getSymbolLiteral(args.car());
-        System.out.println(fqn);
         final Class<?> clazz = Class.forName(fqn);
-        final Object initArgs = args.cadr();
-        if (null != initArgs) {
-            // has arguments
-            return initializeNew(clazz, interpreter, context, asList(initArgs));
+        final Object param1 = args.cadr();
+        final Object param2 = args.caddr();
+        if(null == param1 && null == param2) {
+            // no args ctor
+            return clazz.newInstance();
+        } if (null == param2) {
+            // 1 arg ctor; auto mode
+            return makeInstanceFindTypes(clazz, interpreter, context, asList(param1));
+        } else {
+            // 2 arg ctor; p1 = types, p2 = args
+            final Object[] types = convertListToArray(interpreter.evalEach(asList(param1), context));
+            final Object[] evaluatedArgs = convertListToArray(interpreter.evalEach(asList(param2), context));
+            final Constructor<?> declaredConstructor = clazz.getDeclaredConstructor(Arrays.copyOf(types, types.length, Class[].class));
+            return declaredConstructor.newInstance(evaluatedArgs);
         }
-        return clazz.newInstance();
     }
 
-    private static Object initializeNew(Class<?> clazz, Interpreter interpreter, Context context, ListStruct args) throws Exception {
+    private static Object makeInstanceFindTypes(Class<?> clazz, Interpreter interpreter, Context context, ListStruct args) throws Exception {
         final ArrayList<Class> classes = new ArrayList<Class>();
         final ArrayList<Object> initArgs = new ArrayList<Object>();
         for (Object arg : args) {

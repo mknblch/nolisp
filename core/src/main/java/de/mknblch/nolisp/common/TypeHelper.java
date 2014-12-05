@@ -7,6 +7,7 @@ import de.mknblch.nolisp.datatypes.forms.Form;
 import de.mknblch.nolisp.datatypes.forms.LambdaForm;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**

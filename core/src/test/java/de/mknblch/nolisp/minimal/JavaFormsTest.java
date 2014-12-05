@@ -35,9 +35,23 @@ public class JavaFormsTest extends AbstractFormTest{
     }
 
     @Test
-    public void testNew() throws Exception {
-        assertASTEquals("L[ Test ]", eval("(new java.lang.String (\"Test\"))"));
+    public void testNewNoArgs() throws Exception {
+        assertASTEquals("L[ java.lang.Exception ]", eval("(new java.lang.Exception)"));
+    }
 
+    @Test
+    public void testNewAutoArgs() throws Exception {
+        assertASTEquals("L[ Test ]", eval("(new java.lang.String (\"Test\"))"));
+    }
+
+    @Test
+    public void testNewDefineArgs() throws Exception {
+        assertASTEquals("L[ Test ]", eval("(new java.lang.String (STRING) (\"Test\"))"));
+    }
+
+    @Test(expected = NoSuchMethodException.class)
+    public void testNewDefineArgsError() throws Exception {
+        assertASTEquals("L[ Test ]", eval("(new java.lang.String (INT) (\"Test\"))"));
     }
 
     @Test
