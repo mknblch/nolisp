@@ -176,4 +176,16 @@ public class BasicFormsTest extends AbstractFormTest {
         final List<Object> result = eval("cwd");
         dump(result);
     }
+
+    @Test
+    public void testFor() throws Exception {
+        final List<Object> result = eval("(for (x 0 10) ((print x)))");
+        assertASTEquals("L[ 9 ]", result);
+    }
+
+    @Test
+    public void testWhile() throws Exception {
+        final List<Object> result = eval("(setq n 0) (while (< n 10) ((setq n (+ n 1))))");
+        assertASTEquals("L[ 0 10 ]", result);
+    }
 }

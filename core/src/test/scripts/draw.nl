@@ -16,9 +16,6 @@
 (defun getHeight (image)
     (call getHeight image))
 
-(defun getLength (image)
-    (- (* (getWidth image) (getHeight image)) 1))
-
 (defun mapImage (image func)
     (progn
         (local width (getWidth image))
@@ -48,4 +45,11 @@
 (defun mod-grid (x y)
     (color (% (* x y) 255) (% (* x y) 255)(% (* x y) 255)))
 
-;  (exportImage (mapImage (makeImage 255 255) mod-grid) "img.png")
+(defun stripes (x y)
+    (color (% (+ x y) 255) (% (+ x y) 255) (% (+ x y) 255)))
+
+(defun min (a b)
+    (if (< a b) a b))
+
+
+;  (exportImage (mapImage (makeImage 255 255) mod-grid) "mod.png")

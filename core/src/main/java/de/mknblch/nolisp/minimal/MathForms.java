@@ -72,6 +72,11 @@ public class MathForms {
         return Math.log(TypeHelper.asReal(args.car()));
     }
 
+    @Define({"sqrt"})
+    public static Object sqrt(ListStruct args) throws Exception {
+        return Math.sqrt(TypeHelper.asReal(args.car()));
+    }
+
     @Define({"log10"})
     public static Object log10(ListStruct args) throws Exception {
         return Math.log10(TypeHelper.asReal(args.car()));
