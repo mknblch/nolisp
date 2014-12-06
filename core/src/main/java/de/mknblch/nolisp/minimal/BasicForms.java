@@ -23,7 +23,7 @@ public class BasicForms {
     private static final Parser PARSER = new Parser();
 
     @Special
-    @Define("setq")
+    @Define({"setq", "define"})
     public static Object setq(Interpreter interpreter, Context context, ListStruct args) throws Exception {
         ListStruct temp = args;
         Object value;
@@ -39,7 +39,7 @@ public class BasicForms {
     }
 
     @Special
-    @Define({"set", "define"})
+    @Define({"local"})
     public static Object define(Interpreter interpreter, Context context, ListStruct args) throws Exception {
         ListStruct temp = args;
         Object value;

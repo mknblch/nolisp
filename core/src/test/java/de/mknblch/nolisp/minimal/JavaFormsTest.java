@@ -4,6 +4,7 @@ import de.mknblch.nolisp.interpreter.EvaluationException;
 import de.mknblch.nolisp.testHelper.AbstractFormTest;
 import org.junit.Test;
 
+import java.awt.image.BufferedImage;
 import java.nio.charset.Charset;
 import java.util.List;
 
@@ -127,6 +128,13 @@ public class JavaFormsTest extends AbstractFormTest{
 
         final List<Object> eval = eval("(call-static java.lang.Integer:parseInt (\"42\"))");
         assertASTEquals("L[ 42 ]", eval);
+    }
+
+    @Test
+    public void testCallConstant() throws Exception {
+
+        final List<Object> eval = eval("(java-const java.awt.image.BufferedImage:TYPE_INT_ARGB)");
+        assertEquals(BufferedImage.TYPE_INT_ARGB, eval.get(0));
     }
 
     @Test

@@ -30,6 +30,38 @@ public class LogicFormsTest extends AbstractFormTest {
     }
 
     @Test
+    public void testIntOr() throws Exception {
+        assertASTEquals("L[ 6 ]", eval("(ior 4 2)"));
+
+    }
+
+    @Test
+    public void testIntAnd1Arg() throws Exception {
+        assertASTEquals("L[ 42 ]", eval("(iand 42)"));
+
+    }
+
+    @Test
+    public void testIntAndNArg() throws Exception {
+        assertASTEquals("L[ 42 ]", eval("(iand 0x0FFFFFFF 42 42 42)"));
+    }
+
+    @Test
+    public void testShiftLeft() throws Exception {
+        assertASTEquals("L[ 42 ]", eval("(ior (<< 1 5) (<< 1 3) (<< 1 1))"));
+    }
+
+    @Test
+    public void testShiftRight() throws Exception {
+        assertASTEquals("L[ 42 ]", eval("(>> 170 2)"));
+    }
+
+    @Test
+    public void testRollRight() throws Exception {
+        assertASTEquals("L[ 42 ]", eval("(>>> 42 32)"));
+    }
+
+    @Test
     public void testMultipleOr() throws Exception {
 
         assertASTEquals("L[ true ]", eval("(or false false false true)"));

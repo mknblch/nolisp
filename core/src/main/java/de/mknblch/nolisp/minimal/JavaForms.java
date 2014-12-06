@@ -2,6 +2,7 @@ package de.mknblch.nolisp.minimal;
 
 import de.mknblch.nolisp.common.Expectations;
 import de.mknblch.nolisp.common.FormatHelper;
+import de.mknblch.nolisp.common.TypeHelper;
 import de.mknblch.nolisp.interpreter.Context;
 import de.mknblch.nolisp.interpreter.EvaluationException;
 import de.mknblch.nolisp.interpreter.Interpreter;
@@ -11,7 +12,9 @@ import de.mknblch.nolisp.scanner.Constant;
 import de.mknblch.nolisp.scanner.Define;
 import de.mknblch.nolisp.scanner.Special;
 
+import java.io.InputStream;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -150,7 +153,7 @@ public class JavaForms {
         }
     }
 
-    @Special // TODO review!
+    @Special
     @Define("instanceof?") // (instanceof? java.lang.String "bla") => true
     public static Object isInstance(Interpreter interpreter, Context context, ListStruct args) throws Exception {
         final String className = getSymbolLiteral(args.car());
@@ -202,11 +205,9 @@ public class JavaForms {
         final String fqName = getSymbolLiteral(args.car());
         final Matcher matcher = CLASS_METHOD_PATTERN.matcher(fqName);
         if(!matcher.matches()) {
-            throw new EvaluationException(String.format("Invalid class name in static method call, given %s.", FormatHelper.formatPretty(args.car())));
+            throw new EvaluationException(String.format("Invalid literal in static method call, given %s.", FormatHelper.formatPretty(args.car())));
         }
-
         final Class<?> clazz = Class.forName(matcher.group(1));
-
         final Object[] param1 = convertListToArray(interpreter.evalEach(asList(args.cadr()), context));
         final Object[] param2 = convertListToArray(interpreter.evalEach(asList(args.caddr()), context));
 
@@ -217,6 +218,24 @@ public class JavaForms {
                 findStaticParams(param1, param2));
 
         return method.invoke(null, findStaticParams(param1, param2));
+    }
+
+    /*
+     * (java-const java.awt.image.BufferedImage:TYPE_INT_ARGB)
+     */
+    @Special
+    @Define({"jconst", "java-const"})
+    public static Object javaConst(Interpreter interpreter, Context context, ListStruct args) throws Exception {
+        System.out.printf("ARGS: %s%n", FormatHelper.formatAtom(args));
+
+        final String fqName = TypeHelper.getSymbolLiteral(args.car());
+        final Matcher matcher = CLASS_METHOD_PATTERN.matcher(fqName);
+        if(!matcher.matches()) {
+            throw new EvaluationException(String.format("Invalid literal in java constant retrieval, given %s.", FormatHelper.formatPretty(args.car())));
+        }
+        final Class<?> clazz = Class.forName(matcher.group(1));
+        final Field constField = clazz.getDeclaredField(matcher.group(2));
+        return constField.get(clazz);
     }
 
     private static Method findMethod(Class<?> clazz, String methodName, Object[] types, Object[] params) throws NoSuchMethodException {

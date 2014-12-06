@@ -60,7 +60,8 @@ public class NOLISP {
                     System.out.printf("%s%n", FormatHelper.formatPretty(obj));
                 }
             } catch (Exception e) {
-                System.err.printf("[%s] %s%n", e.getClass().getName(), e.getMessage());
+//                System.err.printf("[%s] %s%n", e.getClass().getName(), e.getMessage());
+                e.printStackTrace();
             }
         }
     }
