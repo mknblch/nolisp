@@ -28,7 +28,7 @@ public class MathFormsTest extends AbstractFormTest {
     @Test
     public void testMul() throws Exception {
 
-        final List<Object> result = eval("(* 2 (* 3 7))");
+        final List<Object> result = eval("(* 2 3 7)");
         assertEquals(42, result.get(0));
     }
 

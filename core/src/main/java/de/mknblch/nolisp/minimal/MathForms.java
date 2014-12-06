@@ -34,6 +34,7 @@ public class MathForms {
 
     @Define({"-", "sub"})
     public static Object minus(ListStruct args) throws Exception {
+        Expectations.expectCdr(args);
         Object result = args.car();
         for (Object arg : args.cdr()) {
             result = minus(result, arg);
@@ -41,16 +42,24 @@ public class MathForms {
         return result;
     }
 
-    @Define({"*", "mul"})
+    @Define({"*", "mul", "prod"})
     public static Object mul(ListStruct args) throws Exception {
         Expectations.expectCdr(args);
-        return mul(args.car(), args.cdr().car());
+        Object result = args.car();
+        for (Object arg : args.cdr()) {
+            result = mul(result, arg);
+        }
+        return result;
     }
 
     @Define({"/", "div"})
     public static Object div(ListStruct args) throws Exception {
         Expectations.expectCdr(args);
-        return div(args.car(), args.cdr().car());
+        Object result = args.car();
+        for (Object arg : args.cdr()) {
+            result = div(result, arg);
+        }
+        return result;
     }
 
     @Define({"%", "mod"})
@@ -105,6 +114,17 @@ public class MathForms {
     @Define({"tan"})
     public static Object tan(ListStruct args) throws Exception {
         return Math.tan(TypeHelper.asReal(args.car()));
+    }
+
+    @Define({"toint"})
+    public static Object toInt(ListStruct args) throws Exception {
+        return TypeHelper.asInt(args.car());
+    }
+
+
+    @Define({"toreal"})
+    public static Object toReal(ListStruct args) throws Exception {
+        return TypeHelper.asReal(args.car());
     }
 
     private static Object mod(Object a, Object b) throws EvaluationException {

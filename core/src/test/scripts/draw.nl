@@ -4,7 +4,7 @@
     (new java.awt.image.BufferedImage (int int int) (w h RGB)))
 
 (defun color (r g b)
-    (ior (<< 255 24) (<< r 16) (<< g 8) b))
+    (ior (<< 255 24) (<< (toint r) 16) (<< (toint g) 8) (toint b)))
 
 (defun setPixel (image x y color)
     (progn
@@ -20,11 +20,11 @@
     (progn
         (local width (getWidth image))
         (local height (getHeight image))
-        (local y 0)
-        (fori (0 (- height 1))
+        (local y 1)
+        (fori (1 (- height 1))
             (progn
-                (local x 0)
-                (fori (0 (- width 1))
+                (local x 1)
+                (fori (1 (- width 1))
                     (progn
                         (setPixel image x y (func x y))
                         (local x (+ x 1))))
