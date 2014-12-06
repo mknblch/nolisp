@@ -11,13 +11,15 @@ import de.mknblch.nolisp.scanner.FunctionDefinitionException;
 public class Minimal implements Language {
 
     private static final Class<?>[] clazzes = {
-            AccessorForms.class,
+            ArrayForms.class,
             BasicForms.class,
             ConditionForms.class,
+            ContextForms.class,
             ComparisonForms.class,
             ConsoleForms.class,
             JavaForms.class,
             LambdaForms.class,
+            ListForms.class,
             LogicForms.class,
             MacroForms.class,
             MathForms.class,

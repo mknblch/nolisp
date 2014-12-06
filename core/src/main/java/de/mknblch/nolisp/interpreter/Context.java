@@ -121,6 +121,20 @@ public class Context {
         }
     }
 
+
+    /**
+     * put value in the most significant env if any. put to local env otherwise.
+     */
+    public void bindToContainer(String key, Object value) throws EvaluationException {
+        if(map.containsKey(key)) {
+            map.put(key, value);
+        } else if(null == parent) {
+            throw new EvaluationException(String.format("Reference to undefined identifier: '%s'.", key));
+        } else {
+            parent.bindToContainer(key, value);
+        }
+    }
+
     /**
      * put all into local env.
      */

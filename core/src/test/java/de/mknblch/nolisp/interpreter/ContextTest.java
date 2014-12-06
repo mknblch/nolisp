@@ -9,6 +9,10 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.Set;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 /**
  * @author mknblch
  */
@@ -17,7 +21,7 @@ public class ContextTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(ContextTest.class);
 
     public static Context makeEnv(String[] keys, Object[] values) throws FunctionDefinitionException {
-        Assert.assertEquals("Erroneous test", keys.length, values.length);
+        assertEquals("Erroneous test", keys.length, values.length);
         final Context env = new Context();
         for (int i = 0; i < keys.length; i++) {
             env.bind(keys[i], values[i]);
@@ -44,10 +48,10 @@ public class ContextTest {
         dump(derived);
 
         Assert.assertNotNull(derived);
-        Assert.assertTrue(derived.containsKey("a"));
-        Assert.assertTrue(derived.containsKey("b"));
-        Assert.assertTrue(derived.containsKey("c"));
-        Assert.assertFalse(global.containsKey("c"));
+        assertTrue(derived.containsKey("a"));
+        assertTrue(derived.containsKey("b"));
+        assertTrue(derived.containsKey("c"));
+        assertFalse(global.containsKey("c"));
     }
 
     @Test
@@ -59,10 +63,10 @@ public class ContextTest {
         dump(derived);
 
         Assert.assertNotNull(derived);
-        Assert.assertTrue(derived.containsKey("a"));
-        Assert.assertTrue(derived.containsKey("b"));
-        Assert.assertTrue(derived.containsKey("c"));
-        Assert.assertTrue(global.containsKey("c"));
+        assertTrue(derived.containsKey("a"));
+        assertTrue(derived.containsKey("b"));
+        assertTrue(derived.containsKey("c"));
+        assertTrue(global.containsKey("c"));
     }
 
     @Test
@@ -73,9 +77,9 @@ public class ContextTest {
         derived.bind("c", 3);
         dump(derived);
 
-        Assert.assertEquals(2, global.size());
-        Assert.assertEquals(1, derived.size());
-        Assert.assertEquals(3, derived.sizeGlobal());
+        assertEquals(2, global.size());
+        assertEquals(1, derived.size());
+        assertEquals(3, derived.sizeGlobal());
     }
 
     @Test
@@ -85,8 +89,8 @@ public class ContextTest {
         Context derived = global.derive();
         dump(derived);
 
-        Assert.assertTrue(global.isEmpty());
-        Assert.assertTrue(derived.isEmpty());
+        assertTrue(global.isEmpty());
+        assertTrue(derived.isEmpty());
     }
 
     @Test
@@ -97,8 +101,8 @@ public class ContextTest {
         derived.bind("c", 3);
         dump(derived);
 
-        Assert.assertTrue(global.isEmpty());
-        Assert.assertFalse(derived.isEmpty());
+        assertTrue(global.isEmpty());
+        assertFalse(derived.isEmpty());
     }
 
     @Test
@@ -109,8 +113,8 @@ public class ContextTest {
         derived.bind("c", 3);
         dump(derived);
 
-        Assert.assertFalse(global.isEmpty());
-        Assert.assertFalse(derived.isEmpty());
+        assertFalse(global.isEmpty());
+        assertFalse(derived.isEmpty());
     }
 
     @Test
@@ -121,10 +125,10 @@ public class ContextTest {
         derived.bind("c", 3);
         dump(derived);
 
-        Assert.assertFalse(global.containsKey("c"));
-        Assert.assertTrue(derived.containsKey("c"));
-        Assert.assertTrue(derived.containsKey("a"));
-        Assert.assertTrue(derived.containsKey("b"));
+        assertFalse(global.containsKey("c"));
+        assertTrue(derived.containsKey("c"));
+        assertTrue(derived.containsKey("a"));
+        assertTrue(derived.containsKey("b"));
     }
 
     @Test
@@ -137,7 +141,7 @@ public class ContextTest {
 
         Assert.assertNotNull(global.get("a"));
         Assert.assertNotNull(global.get("b"));
-        Assert.assertFalse(global.containsKey("c"));
+        assertFalse(global.containsKey("c"));
 
         Assert.assertNotNull(derived.get("a"));
         Assert.assertNotNull(derived.get("b"));
@@ -155,7 +159,7 @@ public class ContextTest {
         derived.bind("c", 3);
         dump(derived);
 
-        Assert.assertFalse(global.containsKey("c"));
+        assertFalse(global.containsKey("c"));
         Assert.assertNotNull(derived.get("c"));
         Assert.assertNotNull(global.get("a"));
         Assert.assertNotNull(global.get("b"));
@@ -173,7 +177,7 @@ public class ContextTest {
         derived.unbind("a");
 
         dump(derived);
-        Assert.assertTrue(derived.isEmpty());
+        assertTrue(derived.isEmpty());
     }
 
     @Test
@@ -186,15 +190,15 @@ public class ContextTest {
         }};
 
         e1.bindAll(e2);
-        Assert.assertEquals(3, e1.sizeGlobal());
+        assertEquals(3, e1.sizeGlobal());
     }
 
     @Test
     public void testKeySetLocal() throws Exception {
         Context global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
         Set<String> keys = global.keySetLocal();
-        Assert.assertTrue(keys.contains("a"));
-        Assert.assertTrue(keys.contains("b"));
+        assertTrue(keys.contains("a"));
+        assertTrue(keys.contains("b"));
     }
 
     @Test
@@ -203,9 +207,18 @@ public class ContextTest {
         Context derive = global.derive();
         derive.bind("c", 3);
         Set<String> keys = derive.keySetGlobal();
-        Assert.assertTrue(keys.contains("a"));
-        Assert.assertTrue(keys.contains("b"));
-        Assert.assertTrue(keys.contains("c"));
+        assertTrue(keys.contains("a"));
+        assertTrue(keys.contains("b"));
+        assertTrue(keys.contains("c"));
+    }
+
+    @Test
+    public void testBindToContainer() throws Exception {
+        final Context global = makeEnv(new String[]{"a", "b"}, new Object[]{1, 2});
+        final Context local = global.derive();
+        local.bindToContainer("a", 2);
+        assertFalse(local.keySetLocal().contains("a"));
+        assertEquals(2, global.get("a"));
     }
 
     private Context derive(Context global) {

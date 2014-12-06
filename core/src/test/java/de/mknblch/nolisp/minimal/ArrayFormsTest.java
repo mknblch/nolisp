@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import java.util.List;
 
-public class AccessorFormsTest extends AbstractFormTest {
+public class ArrayFormsTest extends AbstractFormTest {
 
 
     @Test

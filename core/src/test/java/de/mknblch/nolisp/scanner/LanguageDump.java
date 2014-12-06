@@ -10,7 +10,7 @@ public class LanguageDump {
 
 
     private static final Class<?>[] clazzes = {
-            AccessorForms.class,
+            ArrayForms.class,
             BasicForms.class,
             ConditionForms.class,
             ComparisonForms.class,

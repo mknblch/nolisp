@@ -3,54 +3,36 @@ package de.mknblch.nolisp.minimal;
 import de.mknblch.nolisp.common.Expectations;
 import de.mknblch.nolisp.common.TypeHelper;
 import de.mknblch.nolisp.datatypes.ListStruct;
+import de.mknblch.nolisp.interpreter.Context;
+import de.mknblch.nolisp.interpreter.EvaluationException;
+import de.mknblch.nolisp.interpreter.Interpreter;
 import de.mknblch.nolisp.scanner.Define;
+import de.mknblch.nolisp.scanner.Special;
 
-import java.util.ArrayList;
-
-import static de.mknblch.nolisp.common.TypeHelper.*;
+import static de.mknblch.nolisp.common.TypeHelper.asInt;
+import static de.mknblch.nolisp.common.TypeHelper.asList;
+import static de.mknblch.nolisp.common.TypeHelper.isList;
 
 /**
  * @author mknblch
  */
-public class AccessorForms {
+public class ListForms {
 
-    /**
-     * retrieve nth element of an array
-     * usage: (aget [42 21 7] 0) => 42
-     */
-    @Define({"aget", "array-get"})
-    public static Object aget(ListStruct args) throws Exception {
-        return asArray(args.car()) [ asInt(args.cadr()) ];
+    @Special
+    @Define("quote")
+    public static Object quote(Interpreter interpreter, Context context, ListStruct args) {
+        return args.car();
     }
 
-    @Define({"aset", "array-set"}) // (aset (ainit 2) 1 "welt" 0 "hallo") => "hallo welt"
-    public static Object[] aset(ListStruct args) throws Exception {
-        final Object[] objects = asArray(args.car());
-        ListStruct temp = args.cdr();
-        while (null != temp) {
-            final int index = asInt(temp.car());
-            Expectations.expectCdr(temp);
-            objects[ index ] = temp.cadr();
-            temp = temp.cddr();
-        }
-        return objects;
+    @Define({"llength", "list-length"})
+    public static Object length(ListStruct args) throws EvaluationException {
+        if (null == args) return 0;
+        return asList(args.car()).size();
     }
 
-    @Define({"ainit", "array-init"}) // (ainit 3) => [null, null, null]
-    public static Object ainit(ListStruct args) throws Exception {
-        return new Object[asInt(args.car())];
-    }
-
-    @Define({"amake", "array-make"}) // (amake 1 2 3) => [1, 2, 3]
-    public static Object amake(ListStruct args) throws Exception {
-        if (null == args) {
-            return new Object[0];
-        }
-        final ArrayList<Object> objects = new ArrayList<>();
-        for (Object arg : args) {
-            objects.add(arg);
-        }
-        return objects.toArray();
+    @Define("list")
+    public static Object list(ListStruct args) {
+        return args;
     }
 
     @Define("append")
@@ -114,5 +96,4 @@ public class AccessorForms {
         }
         return new ListStruct(a, b);
     }
-
 }
