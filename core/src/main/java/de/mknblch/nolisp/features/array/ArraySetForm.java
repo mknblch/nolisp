@@ -10,7 +10,7 @@ import static de.mknblch.nolisp.common.TypeHelper.asInt;
 /**
  * @author mknblch
  */
-public class ArraySet extends BuiltInForm{
+public class ArraySetForm extends BuiltInForm{
     @Override
     public String[] getSymbols() {
         return new String[]{"array-set"};

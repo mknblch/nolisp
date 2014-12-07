@@ -1,6 +1,5 @@
-package de.mknblch.nolisp.features.comparision;
+package de.mknblch.nolisp.features.number;
 
-import de.mknblch.nolisp.common.Expectations;
 import de.mknblch.nolisp.datatypes.ListStruct;
 import de.mknblch.nolisp.datatypes.forms.BuiltInForm;
 import de.mknblch.nolisp.interpreter.EvaluationException;
@@ -8,34 +7,33 @@ import de.mknblch.nolisp.interpreter.EvaluationException;
 /**
  * @author mknblch
  */
-public class GreaterForm extends BuiltInForm {
+public class NumberEqualForm extends BuiltInForm {
 
     @Override
     public String[] getSymbols() {
-        return new String[]{">"};
+        return new String[]{"=="};
     }
 
     @Override
     public Object eval(ListStruct args) throws Exception {
-        Expectations.expectCdr(args);
-        return greater(args.car(), args.cadr());
+        return equal(args.car(), args.cadr());
     }
 
-    private static boolean greater(Object a, Object b) throws EvaluationException {
+    private static boolean equal(Object a, Object b) throws EvaluationException {
         if (a instanceof Double) {
             if (b instanceof Double) {
-                return (Double) a > (Double) b;
+                return ((Double) a).compareTo((Double) b) == 0;
             }
             if (b instanceof Integer) {
-                return (Double) a > (Integer) b;
+                return ((Double) a).compareTo(((Integer) b).doubleValue()) == 0;
             }
         }
         if (a instanceof Integer) {
             if (b instanceof Double) {
-                return (Integer) a > (Double) b;
+                return ((Double) b).compareTo(((Integer) a).doubleValue()) == 0;
             }
             if (b instanceof Integer) {
-                return (Integer) a > (Integer) b;
+                return ((Integer) a).compareTo((Integer) b) == 0;
             }
         }
         throw new EvaluationException("Invalid comparison arguments.");

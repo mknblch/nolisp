@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * @author mknblch
  */
-public class ArrayMake extends BuiltInForm{
+public class ArrayMakeForm extends BuiltInForm{
     @Override
     public String[] getSymbols() {
         return new String[]{"array-make"};

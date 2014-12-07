@@ -1,4 +1,4 @@
-package de.mknblch.nolisp.features.comparision;
+package de.mknblch.nolisp.features.number;
 
 import de.mknblch.nolisp.datatypes.ListStruct;
 import de.mknblch.nolisp.datatypes.forms.BuiltInForm;
@@ -7,16 +7,16 @@ import de.mknblch.nolisp.interpreter.EvaluationException;
 /**
  * @author mknblch
  */
-public class EqualForm extends BuiltInForm {
+public class NumberNotEqualForm extends BuiltInForm {
 
     @Override
     public String[] getSymbols() {
-        return new String[]{"=="};
+        return new String[]{"!="};
     }
 
     @Override
     public Object eval(ListStruct args) throws Exception {
-        return equal(args.car(), args.cadr());
+        return !equal(args.car(), args.cadr());
     }
 
     private static boolean equal(Object a, Object b) throws EvaluationException {

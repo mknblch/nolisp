@@ -9,7 +9,7 @@ import static de.mknblch.nolisp.common.TypeHelper.asInt;
 /**
  * @author mknblch
  */
-public class ArrayGet extends BuiltInForm{
+public class ArrayGetForm extends BuiltInForm{
     @Override
     public String[] getSymbols() {
         return new String[]{"array-get", "aget"};

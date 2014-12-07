@@ -1,21 +1,21 @@
-package de.mknblch.nolisp.features.array;
+package de.mknblch.nolisp.features.number;
 
+import de.mknblch.nolisp.common.TypeHelper;
 import de.mknblch.nolisp.datatypes.ListStruct;
 import de.mknblch.nolisp.datatypes.forms.BuiltInForm;
-
-import static de.mknblch.nolisp.common.TypeHelper.asInt;
 
 /**
  * @author mknblch
  */
-public class ArrayInit extends BuiltInForm{
+public class ToRealForm extends BuiltInForm {
+
     @Override
     public String[] getSymbols() {
-        return new String[]{"array-init", "ainit"};
+        return new String[]{"toreal"};
     }
 
     @Override
     public Object eval(ListStruct args) throws Exception {
-        return new Object[asInt(args.car())];
+        return TypeHelper.asReal(args.car());
     }
-}
+}    

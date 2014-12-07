@@ -1,4 +1,4 @@
-package de.mknblch.nolisp.features.macro;
+package de.mknblch.nolisp.features.list;
 
 import de.mknblch.nolisp.datatypes.ListStruct;
 import de.mknblch.nolisp.datatypes.forms.BuiltInSpecialForm;
@@ -9,15 +9,15 @@ import de.mknblch.nolisp.interpreter.Interpreter;
 /**
  * @author mknblch
  */
-public class CommaSpecialForm extends BuiltInSpecialForm {
+public class SpliceSpecialForm extends BuiltInSpecialForm {
 
     @Override
     public String[] getSymbols() {
-        return new String[]{"comma"};
+        return new String[]{"splice"};
     }
 
     @Override
     public Object eval(Interpreter interpreter, Context context, ListStruct args) throws Exception {
-        throw new EvaluationException("Bad syntax. Comma not inside a backquote environment.");
+        throw new EvaluationException("Dynamic splicing not supported.");
     }
 }
