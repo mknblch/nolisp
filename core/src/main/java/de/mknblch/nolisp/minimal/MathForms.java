@@ -127,20 +127,20 @@ public class MathForms {
         return TypeHelper.asReal(args.car());
     }
 
-    private static Object mod(Object a, Object b) throws EvaluationException {
-        if (!(a instanceof Integer) || !(b instanceof Integer)) {
-            throw new EvaluationException(
-                    String.format("Expected NUMBER, NUMBER but was: %s, %s ", FormatHelper.formatAtom(a), FormatHelper.formatAtom(b)));
-        }
-        return (Integer) a % (Integer) b;
-    }
-
     @Define({"rint", "random-int"})
     public static Object rint(ListStruct args) throws Exception {
         final int arint = Math.abs(SRANDOM.nextInt());
         if (null == args) return arint;
         final int max = TypeHelper.asInt(args.car());
         return max > 0 ? arint % max : 0;
+    }
+
+    private static Object mod(Object a, Object b) throws EvaluationException {
+        if (!(a instanceof Integer) || !(b instanceof Integer)) {
+            throw new EvaluationException(
+                    String.format("Expected NUMBER, NUMBER but was: %s, %s ", FormatHelper.formatAtom(a), FormatHelper.formatAtom(b)));
+        }
+        return (Integer) a % (Integer) b;
     }
 
     private static Object plus(Object a, Object b) throws EvaluationException {
@@ -185,27 +185,6 @@ public class MathForms {
                 String.format("Expected NUMBER, NUMBER but was: %s, %s ", FormatHelper.formatAtom(a), FormatHelper.formatAtom(b)));
     }
 
-    private static Object mul(Object a, Object b) throws EvaluationException {
-        if (a instanceof Double) {
-            if (b instanceof Double) {
-                return (Double) a * (Double) b;
-            }
-            if (b instanceof Integer) {
-                return (Double) a * (Integer) b;
-            }
-        }
-        if (a instanceof Integer) {
-            if (b instanceof Double) {
-                return (Integer) a * (Double) b;
-            }
-            if (b instanceof Integer) {
-                return (Integer) a * (Integer) b;
-            }
-        }
-        throw new EvaluationException(
-                String.format("Expected NUMBER, NUMBER but was: %s, %s ", FormatHelper.formatAtom(a), FormatHelper.formatAtom(b)));
-    }
-
     private static Object div(Object a, Object b) throws EvaluationException {
         if (a instanceof Double) {
             if (b instanceof Double) {
@@ -221,6 +200,27 @@ public class MathForms {
             }
             if (b instanceof Integer) {
                 return (Integer) a / (Integer) b;
+            }
+        }
+        throw new EvaluationException(
+                String.format("Expected NUMBER, NUMBER but was: %s, %s ", FormatHelper.formatAtom(a), FormatHelper.formatAtom(b)));
+    }
+
+    private static Object mul(Object a, Object b) throws EvaluationException {
+        if (a instanceof Double) {
+            if (b instanceof Double) {
+                return (Double) a * (Double) b;
+            }
+            if (b instanceof Integer) {
+                return (Double) a * (Integer) b;
+            }
+        }
+        if (a instanceof Integer) {
+            if (b instanceof Double) {
+                return (Integer) a * (Double) b;
+            }
+            if (b instanceof Integer) {
+                return (Integer) a * (Integer) b;
             }
         }
         throw new EvaluationException(

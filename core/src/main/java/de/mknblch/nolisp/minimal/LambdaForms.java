@@ -6,7 +6,7 @@ import de.mknblch.nolisp.interpreter.Context;
 import de.mknblch.nolisp.interpreter.Interpreter;
 import de.mknblch.nolisp.datatypes.ListStruct;
 import de.mknblch.nolisp.datatypes.forms.Form;
-import de.mknblch.nolisp.datatypes.forms.LambdaForm;
+import de.mknblch.nolisp.datatypes.forms.Lambda;
 import de.mknblch.nolisp.scanner.Define;
 import de.mknblch.nolisp.scanner.Special;
 
@@ -19,7 +19,7 @@ public class LambdaForms {
     @Define("lambda") // ((lambda (a) (+ a 1)) 1) => 2
     public static Object lambda(Interpreter interpreter, Context context, ListStruct args) throws Exception {
         Expectations.expectCdr(args);
-        return new LambdaForm(interpreter, context, TypeHelper.asList(args.car()), args.cadr());
+        return new Lambda(interpreter, context, TypeHelper.asList(args.car()), args.cadr());
     }
 
     @Define("lbody") // (lbody (lambda (a) (+ a 1))) => (+ a 1)
@@ -30,14 +30,14 @@ public class LambdaForms {
     @Define("largs") // (lbody (lambda (a) (+ a 1))) => (+ a 1)
     public static Object largs(ListStruct args) throws Exception {
         return TypeHelper.asLambda(args.car()).getArgumentSymbols();
-}
+    }
 
     @Special
     @Define("defun") // (defun bla (a) (+ a 1) ) => form
     public static Object defun(Interpreter interpreter, Context context, ListStruct args) throws Exception {
         Expectations.expectCdr(args);
         final String functionName = TypeHelper.getSymbolLiteral(args.car());
-        final LambdaForm lambda = new LambdaForm(interpreter, context, TypeHelper.asList(args.cadr()), args.caddr());
+        final Lambda lambda = new Lambda(interpreter, context, TypeHelper.asList(args.cadr()), args.caddr());
         context.bindGlobal(functionName, lambda);
         return lambda;
     }

@@ -63,7 +63,7 @@ public class AnnotationScanner {
                 }
             }
             @Override
-            public String getSymbol() {
+            public String[] getSymbols() {
                 return symbol;
             }
         };
@@ -80,7 +80,7 @@ public class AnnotationScanner {
                 }
             }
             @Override
-            public String getSymbol() {
+            public String[] getSymbols() {
                 return symbol;
             }
         };

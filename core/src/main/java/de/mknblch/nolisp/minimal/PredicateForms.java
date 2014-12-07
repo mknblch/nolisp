@@ -1,6 +1,5 @@
 package de.mknblch.nolisp.minimal;
 
-import de.mknblch.nolisp.common.Expectations;
 import de.mknblch.nolisp.common.TypeHelper;
 import de.mknblch.nolisp.interpreter.Context;
 import de.mknblch.nolisp.interpreter.EvaluationException;
@@ -8,8 +7,8 @@ import de.mknblch.nolisp.interpreter.Interpreter;
 import de.mknblch.nolisp.datatypes.Atom;
 import de.mknblch.nolisp.datatypes.ListStruct;
 import de.mknblch.nolisp.datatypes.SymbolStruct;
-import de.mknblch.nolisp.datatypes.forms.LambdaForm;
-import de.mknblch.nolisp.datatypes.forms.MacroForm;
+import de.mknblch.nolisp.datatypes.forms.Lambda;
+import de.mknblch.nolisp.datatypes.forms.Macro;
 import de.mknblch.nolisp.scanner.Define;
 import de.mknblch.nolisp.scanner.Special;
 
@@ -67,12 +66,12 @@ public class PredicateForms {
 
     @Define("lambda?")
     public static Object isLambda( ListStruct args) {
-        return args.car() instanceof LambdaForm;
+        return args.car() instanceof Lambda;
     }
 
     @Define("macro?")
     public static Object isMacro(ListStruct args) {
-        return args.car() instanceof MacroForm;
+        return args.car() instanceof Macro;
     }
 
     @Define("atom?")

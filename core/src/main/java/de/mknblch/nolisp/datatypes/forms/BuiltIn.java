@@ -5,5 +5,5 @@ package de.mknblch.nolisp.datatypes.forms;
  */
 public interface BuiltIn {
 
-    public String getSymbol();
+    public String[] getSymbols();
 }

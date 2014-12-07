@@ -4,7 +4,7 @@ import de.mknblch.nolisp.interpreter.EvaluationException;
 import de.mknblch.nolisp.datatypes.ListStruct;
 import de.mknblch.nolisp.datatypes.SymbolStruct;
 import de.mknblch.nolisp.datatypes.forms.Form;
-import de.mknblch.nolisp.datatypes.forms.LambdaForm;
+import de.mknblch.nolisp.datatypes.forms.Lambda;
 import de.mknblch.nolisp.datatypes.forms.SpecialForm;
 
 public class Expectations {
@@ -99,7 +99,7 @@ public class Expectations {
     }
 
     public static void expectLambda(Object o) throws EvaluationException {
-        if (!(o instanceof LambdaForm)) {
+        if (!(o instanceof Lambda)) {
             throw new EvaluationException(
                     String.format("Expected LAMBDA but was: %s", FormatHelper.formatAtom(o)));
         }

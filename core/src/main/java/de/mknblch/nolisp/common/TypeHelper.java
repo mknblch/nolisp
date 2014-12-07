@@ -4,10 +4,9 @@ import de.mknblch.nolisp.interpreter.EvaluationException;
 import de.mknblch.nolisp.datatypes.ListStruct;
 import de.mknblch.nolisp.datatypes.SymbolStruct;
 import de.mknblch.nolisp.datatypes.forms.Form;
-import de.mknblch.nolisp.datatypes.forms.LambdaForm;
+import de.mknblch.nolisp.datatypes.forms.Lambda;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -57,7 +56,7 @@ public class TypeHelper {
     }
 
     public static boolean isLambda(Object o) {
-        return o instanceof LambdaForm;
+        return o instanceof Lambda;
     }
 
     public static boolean isForm(Object o) {
@@ -145,9 +144,9 @@ public class TypeHelper {
         return (String) o;
     }
 
-    public static LambdaForm asLambda(Object o) throws EvaluationException {
+    public static Lambda asLambda(Object o) throws EvaluationException {
         Expectations.expectLambda(o);
-        return ((LambdaForm) o);
+        return ((Lambda) o);
     }
 
     //////////////////////////////////////////////////////////////////////////////////

@@ -12,8 +12,8 @@ import static de.mknblch.nolisp.common.TypeHelper.asInt;
  */
 public class ArraySet extends BuiltInForm{
     @Override
-    public String getSymbol() {
-        return "array-set";
+    public String[] getSymbols() {
+        return new String[]{"array-set"};
     }
 
     @Override

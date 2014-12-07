@@ -1,6 +1,6 @@
 package de.mknblch.nolisp.minimal;
 
-import de.mknblch.nolisp.datatypes.forms.LambdaForm;
+import de.mknblch.nolisp.datatypes.forms.Lambda;
 import de.mknblch.nolisp.testHelper.AbstractFormTest;
 import org.junit.Assert;
 import org.junit.Test;
@@ -127,7 +127,7 @@ public class LambdaFormsTest extends AbstractFormTest {
     public void testLambdaFunc() throws Exception {
         List<Object> result = eval("(lambda () 1)");
         dump(result);
-        assertTrue(result.get(0) instanceof LambdaForm);
+        assertTrue(result.get(0) instanceof Lambda);
     }
 
     @Test

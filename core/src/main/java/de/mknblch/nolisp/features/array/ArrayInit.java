@@ -1,10 +1,8 @@
 package de.mknblch.nolisp.features.array;
 
-import de.mknblch.nolisp.common.Expectations;
 import de.mknblch.nolisp.datatypes.ListStruct;
 import de.mknblch.nolisp.datatypes.forms.BuiltInForm;
 
-import static de.mknblch.nolisp.common.TypeHelper.asArray;
 import static de.mknblch.nolisp.common.TypeHelper.asInt;
 
 /**
@@ -12,8 +10,8 @@ import static de.mknblch.nolisp.common.TypeHelper.asInt;
  */
 public class ArrayInit extends BuiltInForm{
     @Override
-    public String getSymbol() {
-        return "array-init";
+    public String[] getSymbols() {
+        return new String[]{"array-init", "ainit"};
     }
 
     @Override

@@ -8,7 +8,7 @@ import de.mknblch.nolisp.interpreter.Context;
 import de.mknblch.nolisp.interpreter.EvaluationException;
 import de.mknblch.nolisp.interpreter.Interpreter;
 import de.mknblch.nolisp.datatypes.ListStruct;
-import de.mknblch.nolisp.datatypes.forms.MacroForm;
+import de.mknblch.nolisp.datatypes.forms.Macro;
 import de.mknblch.nolisp.scanner.Define;
 import de.mknblch.nolisp.scanner.Special;
 
@@ -22,7 +22,7 @@ public class MacroForms {
     public static Object defmacro(Interpreter interpreter, Context parentContext, ListStruct args) throws Exception {
         Expectations.expectCdr(args);
         final Object symbol = args.car();
-        parentContext.bind(TypeHelper.getSymbolLiteral(symbol), new MacroForm(TypeHelper.convertToSymbolList(args.cadr()), args.cddr()));
+        parentContext.bind(TypeHelper.getSymbolLiteral(symbol), new Macro(TypeHelper.convertToSymbolList(args.cadr()), args.cddr()));
         return symbol;
     }
 

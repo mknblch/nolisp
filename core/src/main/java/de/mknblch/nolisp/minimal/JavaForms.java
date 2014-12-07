@@ -226,8 +226,6 @@ public class JavaForms {
     @Special
     @Define({"jconst", "java-const"})
     public static Object javaConst(Interpreter interpreter, Context context, ListStruct args) throws Exception {
-        System.out.printf("ARGS: %s%n", FormatHelper.formatAtom(args));
-
         final String fqName = TypeHelper.getSymbolLiteral(args.car());
         final Matcher matcher = CLASS_METHOD_PATTERN.matcher(fqName);
         if(!matcher.matches()) {

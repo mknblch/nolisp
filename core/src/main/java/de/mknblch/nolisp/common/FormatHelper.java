@@ -5,8 +5,8 @@ import de.mknblch.nolisp.interpreter.EvaluationException;
 import de.mknblch.nolisp.datatypes.Atom;
 import de.mknblch.nolisp.datatypes.ListStruct;
 import de.mknblch.nolisp.datatypes.SymbolStruct;
-import de.mknblch.nolisp.datatypes.forms.LambdaForm;
-import de.mknblch.nolisp.datatypes.forms.MacroForm;
+import de.mknblch.nolisp.datatypes.forms.Lambda;
+import de.mknblch.nolisp.datatypes.forms.Macro;
 import de.mknblch.nolisp.datatypes.forms.BuiltIn;
 
 import java.util.List;
@@ -20,7 +20,7 @@ public class FormatHelper {
         for (String key : keys) {
             try {
                 final Object obj = context.get(key);
-                if (!addBuiltInForms && obj instanceof Atom && ((Atom) obj).getType() == Atom.Type.BUILTIN) continue;
+                if (!addBuiltInForms && obj instanceof BuiltIn) continue;
                 if (sb.length() > 0) sb.append(", ");
                 sb.append(key).append(" => ").append(formatPretty(obj));
             } catch (EvaluationException e) {
@@ -80,15 +80,15 @@ public class FormatHelper {
 
                 return String.format("( %s )", sb.toString());
             case LAMBDA:
-                final LambdaForm lambda = (LambdaForm) atom;
+                final Lambda lambda = (Lambda) atom;
                 return String.format("#<LAMBDA> %s %s", formatPretty(lambda.getArgumentSymbols()), formatPretty(lambda.getForm()));
             case MACRO:
-                final MacroForm macro = (MacroForm) atom;
+                final Macro macro = (Macro) atom;
                 return String.format("#<MACRO> (%s) %s", formatSymbols(macro.getArgumentSymbols()), formatPretty(macro.getForms()));
             case SYMBOL:
                 return String.format("%s", ((SymbolStruct) atom).literal);
             case BUILTIN:
-                return String.format("#<BUILTIN %s>", ((BuiltIn) atom).getSymbol());
+                return String.format("#<BUILTIN %s>", ((BuiltIn) atom).getSymbols());
         }
         throw new IllegalArgumentException(String.format("%s:UNKNOWN", atom));
     }
@@ -125,13 +125,13 @@ public class FormatHelper {
                 }
                 return String.format("( %s )", buffer.toString());
             case LAMBDA:
-                final LambdaForm lambda = (LambdaForm) atom;
+                final Lambda lambda = (Lambda) atom;
                 return String.format("#<LAMBDA> (%s) %s", lambda.getArgumentSymbols(), formatAtom(lambda.getForm()));
             case MACRO:
-                final MacroForm macro = (MacroForm) atom;
+                final Macro macro = (Macro) atom;
                 return String.format("#<MACRO> (%s) %s", formatSymbols(macro.getArgumentSymbols()), formatPretty(macro.getForms()));
             case BUILTIN:
-                return String.format("#<BUILTIN %s>", ((BuiltIn) atom).getSymbol());
+                return String.format("#<BUILTIN %s>", ((BuiltIn) atom).getSymbols());
         }
 
         throw new IllegalArgumentException(String.format("%s:UNKNOWN_ATOM", atom));

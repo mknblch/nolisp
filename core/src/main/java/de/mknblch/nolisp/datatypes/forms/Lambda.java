@@ -10,13 +10,13 @@ import de.mknblch.nolisp.datatypes.ListStruct;
 /**
  * @author mknblch
  */
-public class LambdaForm implements Form {
+public class Lambda implements Form {
     private final Interpreter interpreter;
     private final ListStruct symbols;
     private final Object form;
     private final Context context;
 
-    public LambdaForm(Interpreter interpreter, Context context, ListStruct symbols, Object form) {
+    public Lambda(Interpreter interpreter, Context context, ListStruct symbols, Object form) {
         this.interpreter = interpreter;
         this.context = context;
         this.symbols = symbols;

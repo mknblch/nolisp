@@ -1,0 +1,28 @@
+package de.mknblch.nolisp.features.macro;
+
+import de.mknblch.nolisp.common.Expectations;
+import de.mknblch.nolisp.common.TypeHelper;
+import de.mknblch.nolisp.datatypes.ListStruct;
+import de.mknblch.nolisp.datatypes.forms.BuiltInSpecialForm;
+import de.mknblch.nolisp.datatypes.forms.Macro;
+import de.mknblch.nolisp.interpreter.Context;
+import de.mknblch.nolisp.interpreter.Interpreter;
+
+/**
+ * @author mknblch
+ */
+public class DefMacroSpecialForm extends BuiltInSpecialForm {
+
+    @Override
+    public String[] getSymbols() {
+        return new String[]{"defmacro"};
+    }
+
+    @Override
+    public Object eval(Interpreter interpreter, Context context, ListStruct args) throws Exception {
+        Expectations.expectCdr(args);
+        final Object symbol = args.car();
+        context.bind(TypeHelper.getSymbolLiteral(symbol), new Macro(TypeHelper.convertToSymbolList(args.cadr()), args.cddr()));
+        return symbol;
+    }
+}

@@ -13,12 +13,12 @@ import java.util.List;
  *
  * @author mknblch
  */
-public class MacroForm implements SpecialForm {
+public class Macro implements SpecialForm {
 
     private final ListStruct forms;
     private final List<String> formSymbols;
 
-    public MacroForm(List<String> argumentSymbols, ListStruct forms) {
+    public Macro(List<String> argumentSymbols, ListStruct forms) {
         this.formSymbols = argumentSymbols;
         this.forms = forms;
     }

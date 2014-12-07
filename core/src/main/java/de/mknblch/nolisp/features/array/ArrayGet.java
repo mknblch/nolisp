@@ -2,7 +2,6 @@ package de.mknblch.nolisp.features.array;
 
 import de.mknblch.nolisp.datatypes.ListStruct;
 import de.mknblch.nolisp.datatypes.forms.BuiltInForm;
-import de.mknblch.nolisp.datatypes.forms.Form;
 
 import static de.mknblch.nolisp.common.TypeHelper.asArray;
 import static de.mknblch.nolisp.common.TypeHelper.asInt;
@@ -12,8 +11,8 @@ import static de.mknblch.nolisp.common.TypeHelper.asInt;
  */
 public class ArrayGet extends BuiltInForm{
     @Override
-    public String getSymbol() {
-        return "array-get";
+    public String[] getSymbols() {
+        return new String[]{"array-get", "aget"};
     }
 
     @Override
