@@ -1,14 +1,14 @@
 package de.mknblch.nolisp.minimal;
 
 import de.mknblch.nolisp.interpreter.Context;
-import de.mknblch.nolisp.interpreter.Language;
+import de.mknblch.nolisp.interpreter.ContextBuilder;
 import de.mknblch.nolisp.scanner.AnnotationScanner;
 import de.mknblch.nolisp.scanner.FunctionDefinitionException;
 
 /**
  * @author mknblch
  */
-public class Minimal implements Language {
+public class Minimal implements ContextBuilder {
 
     private static final Class<?>[] clazzes = {
             ArrayForms.class,

@@ -1,6 +1,9 @@
 package de.mknblch.nolisp.minimal;
 
+import de.mknblch.nolisp.common.Expectations;
+import de.mknblch.nolisp.common.TypeHelper;
 import de.mknblch.nolisp.interpreter.Context;
+import de.mknblch.nolisp.interpreter.EvaluationException;
 import de.mknblch.nolisp.interpreter.Interpreter;
 import de.mknblch.nolisp.datatypes.Atom;
 import de.mknblch.nolisp.datatypes.ListStruct;
@@ -49,6 +52,12 @@ public class PredicateForms {
     @Define("symbol?")
     public static Object isSymbol(Interpreter interpreter, Context context, ListStruct args) {
         return args.car() instanceof SymbolStruct;
+    }
+
+    @Special
+    @Define("isset?")
+    public static Object isSet(Interpreter interpreter, Context context, ListStruct args) throws EvaluationException {
+        return context.containsKey(TypeHelper.getSymbolLiteral(args.car()));
     }
 
     @Define("list?")
