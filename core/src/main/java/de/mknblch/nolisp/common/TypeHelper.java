@@ -1,5 +1,7 @@
 package de.mknblch.nolisp.common;
 
+import de.mknblch.nolisp.datatypes.Atom;
+import de.mknblch.nolisp.datatypes.forms.Macro;
 import de.mknblch.nolisp.interpreter.EvaluationException;
 import de.mknblch.nolisp.datatypes.ListStruct;
 import de.mknblch.nolisp.datatypes.SymbolStruct;
@@ -53,6 +55,10 @@ public class TypeHelper {
 
     public static boolean isSymbol(Object o) {
         return o instanceof SymbolStruct;
+    }
+
+    public static Object isMacro(Object o) {
+        return o instanceof Macro;
     }
 
     public static boolean isLambda(Object o) {
@@ -203,5 +209,9 @@ public class TypeHelper {
     public static <T> T castToType(Object o, String type) throws ClassNotFoundException {
         final Class<?> typeClass = Class.forName(type);
         return (T) typeClass.cast(o);
+    }
+
+    public static Object isAtom(Object o) {
+        return o instanceof Atom;
     }
 }
