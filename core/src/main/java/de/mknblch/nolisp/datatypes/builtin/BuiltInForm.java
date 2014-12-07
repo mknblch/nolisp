@@ -1,6 +1,7 @@
-package de.mknblch.nolisp.datatypes.forms;
+package de.mknblch.nolisp.datatypes.builtin;
 
 import de.mknblch.nolisp.datatypes.Atom;
+import de.mknblch.nolisp.datatypes.Form;
 
 /**
  * Adapter for built-in Form's.

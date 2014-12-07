@@ -1,7 +1,7 @@
 package de.mknblch.nolisp.features.predicate;
 
 import de.mknblch.nolisp.datatypes.ListStruct;
-import de.mknblch.nolisp.datatypes.forms.BuiltInForm;
+import de.mknblch.nolisp.datatypes.builtin.BuiltInForm;
 
 /**
  * @author mknblch

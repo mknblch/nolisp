@@ -5,9 +5,9 @@ import de.mknblch.nolisp.interpreter.EvaluationException;
 import de.mknblch.nolisp.datatypes.Atom;
 import de.mknblch.nolisp.datatypes.ListStruct;
 import de.mknblch.nolisp.datatypes.SymbolStruct;
-import de.mknblch.nolisp.datatypes.forms.Lambda;
-import de.mknblch.nolisp.datatypes.forms.Macro;
-import de.mknblch.nolisp.datatypes.forms.BuiltIn;
+import de.mknblch.nolisp.features.lambda.Lambda;
+import de.mknblch.nolisp.features.macro.Macro;
+import de.mknblch.nolisp.datatypes.builtin.BuiltIn;
 
 import java.util.List;
 import java.util.Set;
@@ -79,10 +79,10 @@ public class FormatHelper {
                 } while (temp != null);
 
                 return String.format("( %s )", sb.toString());
-            case LAMBDA:
+            case FORM:
                 final Lambda lambda = (Lambda) atom;
                 return String.format("#<LAMBDA> %s %s", formatPretty(lambda.getArgumentSymbols()), formatPretty(lambda.getForm()));
-            case MACRO:
+            case SPECIAL:
                 final Macro macro = (Macro) atom;
                 return String.format("#<MACRO> (%s) %s", formatSymbols(macro.getArgumentSymbols()), formatPretty(macro.getForms()));
             case SYMBOL:
@@ -124,10 +124,10 @@ public class FormatHelper {
                     buffer.append(formatAtom(element));
                 }
                 return String.format("( %s )", buffer.toString());
-            case LAMBDA:
+            case FORM:
                 final Lambda lambda = (Lambda) atom;
                 return String.format("#<LAMBDA> (%s) %s", lambda.getArgumentSymbols(), formatAtom(lambda.getForm()));
-            case MACRO:
+            case SPECIAL:
                 final Macro macro = (Macro) atom;
                 return String.format("#<MACRO> (%s) %s", formatSymbols(macro.getArgumentSymbols()), formatPretty(macro.getForms()));
             case BUILTIN:

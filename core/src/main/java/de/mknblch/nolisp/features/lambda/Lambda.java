@@ -1,6 +1,7 @@
-package de.mknblch.nolisp.datatypes.forms;
+package de.mknblch.nolisp.features.lambda;
 
 import de.mknblch.nolisp.common.TypeHelper;
+import de.mknblch.nolisp.datatypes.Form;
 import de.mknblch.nolisp.interpreter.Context;
 import de.mknblch.nolisp.interpreter.EvaluationException;
 import de.mknblch.nolisp.interpreter.Interpreter;
@@ -11,6 +12,7 @@ import de.mknblch.nolisp.datatypes.ListStruct;
  * @author mknblch
  */
 public class Lambda implements Form {
+
     private final Interpreter interpreter;
     private final ListStruct symbols;
     private final Object form;
@@ -27,8 +29,6 @@ public class Lambda implements Form {
     public Object eval(ListStruct args) throws Exception {
         // derive local scope context
         final Context executionContext = context.derive();
-        // bind this to context
-//        executionContext.bind("this", this);
         // bind args to context
         bind(executionContext, symbols, args);
         // eval
@@ -37,7 +37,7 @@ public class Lambda implements Form {
 
     @Override
     public Atom.Type getType() {
-        return Atom.Type.LAMBDA;
+        return Atom.Type.FORM;
     }
 
     public ListStruct getArgumentSymbols() {

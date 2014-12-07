@@ -1,6 +1,6 @@
 package de.mknblch.nolisp.minimal;
 
-import de.mknblch.nolisp.datatypes.forms.Lambda;
+import de.mknblch.nolisp.features.lambda.Lambda;
 import de.mknblch.nolisp.testHelper.AbstractFormTest;
 import org.junit.Assert;
 import org.junit.Test;
@@ -81,7 +81,7 @@ public class LambdaFormsTest extends AbstractFormTest {
     public void testEvalLambda() throws Exception {
         final String code = "(eval (lambda (x) (* 2 x)))";
         final List<Object> result = eval(code);
-        AbstractFormTest.assertASTEquals("#<LAMBDA> ( x ) ( * 2 x )", result.get(0));
+        AbstractFormTest.assertASTEquals("#<FORM> ( x ) ( * 2 x )", result.get(0));
     }
 
     @Test

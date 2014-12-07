@@ -2,7 +2,7 @@ package de.mknblch.nolisp.features.java;
 
 import de.mknblch.nolisp.common.FormatHelper;
 import de.mknblch.nolisp.datatypes.ListStruct;
-import de.mknblch.nolisp.datatypes.forms.BuiltInSpecialForm;
+import de.mknblch.nolisp.datatypes.builtin.BuiltInSpecialForm;
 import de.mknblch.nolisp.interpreter.Context;
 import de.mknblch.nolisp.interpreter.EvaluationException;
 import de.mknblch.nolisp.interpreter.Interpreter;

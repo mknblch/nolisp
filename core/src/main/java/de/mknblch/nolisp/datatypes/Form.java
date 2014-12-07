@@ -1,4 +1,4 @@
-package de.mknblch.nolisp.datatypes.forms;
+package de.mknblch.nolisp.datatypes;
 
 import de.mknblch.nolisp.datatypes.Atom;
 import de.mknblch.nolisp.datatypes.ListStruct;

@@ -1,4 +1,4 @@
-package de.mknblch.nolisp.datatypes.forms;
+package de.mknblch.nolisp.datatypes;
 
 import de.mknblch.nolisp.interpreter.Context;
 import de.mknblch.nolisp.interpreter.Interpreter;

@@ -1,9 +1,9 @@
-package de.mknblch.nolisp.features.condition;
+package de.mknblch.nolisp.features.basic;
 
 import de.mknblch.nolisp.common.Expectations;
 import de.mknblch.nolisp.common.TypeHelper;
 import de.mknblch.nolisp.datatypes.ListStruct;
-import de.mknblch.nolisp.datatypes.forms.BuiltInSpecialForm;
+import de.mknblch.nolisp.datatypes.builtin.BuiltInSpecialForm;
 import de.mknblch.nolisp.interpreter.Context;
 import de.mknblch.nolisp.interpreter.Interpreter;
 

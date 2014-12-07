@@ -1,5 +1,6 @@
-package de.mknblch.nolisp.datatypes.forms;
+package de.mknblch.nolisp.features.macro;
 
+import de.mknblch.nolisp.datatypes.SpecialForm;
 import de.mknblch.nolisp.interpreter.Context;
 import de.mknblch.nolisp.interpreter.EvaluationException;
 import de.mknblch.nolisp.interpreter.Interpreter;
@@ -41,7 +42,7 @@ public class Macro implements SpecialForm {
 
     @Override
     public Atom.Type getType() {
-        return Atom.Type.MACRO;
+        return Atom.Type.SPECIAL;
     }
 
     public List<String> getArgumentSymbols() {

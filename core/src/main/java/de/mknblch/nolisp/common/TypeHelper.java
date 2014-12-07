@@ -1,12 +1,12 @@
 package de.mknblch.nolisp.common;
 
 import de.mknblch.nolisp.datatypes.Atom;
-import de.mknblch.nolisp.datatypes.forms.Macro;
+import de.mknblch.nolisp.features.macro.Macro;
 import de.mknblch.nolisp.interpreter.EvaluationException;
 import de.mknblch.nolisp.datatypes.ListStruct;
 import de.mknblch.nolisp.datatypes.SymbolStruct;
-import de.mknblch.nolisp.datatypes.forms.Form;
-import de.mknblch.nolisp.datatypes.forms.Lambda;
+import de.mknblch.nolisp.datatypes.Form;
+import de.mknblch.nolisp.features.lambda.Lambda;
 
 import java.util.ArrayList;
 import java.util.List;

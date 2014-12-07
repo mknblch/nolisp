@@ -5,6 +5,7 @@ import java.util.Map;
 /**
  * @author mknblch
  */
-public interface Feature extends Map<String, Object>{
+public interface Dialect {
 
+    public Map<String, Object> features();
 }

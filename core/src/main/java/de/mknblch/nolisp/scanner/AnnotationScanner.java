@@ -1,12 +1,12 @@
 package de.mknblch.nolisp.scanner;
 
-import de.mknblch.nolisp.datatypes.forms.BuiltInForm;
-import de.mknblch.nolisp.datatypes.forms.BuiltInSpecialForm;
+import de.mknblch.nolisp.datatypes.builtin.BuiltInForm;
+import de.mknblch.nolisp.datatypes.builtin.BuiltInSpecialForm;
 import de.mknblch.nolisp.interpreter.Context;
 import de.mknblch.nolisp.interpreter.Interpreter;
 import de.mknblch.nolisp.datatypes.ListStruct;
-import de.mknblch.nolisp.datatypes.forms.Form;
-import de.mknblch.nolisp.datatypes.forms.SpecialForm;
+import de.mknblch.nolisp.datatypes.Form;
+import de.mknblch.nolisp.datatypes.SpecialForm;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;

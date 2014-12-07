@@ -6,7 +6,7 @@ package de.mknblch.nolisp.datatypes;
 public interface Atom {
 
     public enum Type {
-        SYMBOL, LIST, BUILTIN, LAMBDA, MACRO
+        SYMBOL, LIST, BUILTIN, FORM, SPECIAL
     }
 
     public Type getType();

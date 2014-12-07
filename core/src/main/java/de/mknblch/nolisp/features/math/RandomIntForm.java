@@ -2,7 +2,7 @@ package de.mknblch.nolisp.features.math;
 
 import de.mknblch.nolisp.common.TypeHelper;
 import de.mknblch.nolisp.datatypes.ListStruct;
-import de.mknblch.nolisp.datatypes.forms.BuiltInForm;
+import de.mknblch.nolisp.datatypes.builtin.BuiltInForm;
 
 import java.security.SecureRandom;
 

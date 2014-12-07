@@ -4,8 +4,8 @@ import de.mknblch.nolisp.common.TypeHelper;
 import de.mknblch.nolisp.datatypes.Atom;
 import de.mknblch.nolisp.datatypes.ListStruct;
 import de.mknblch.nolisp.datatypes.SymbolStruct;
-import de.mknblch.nolisp.datatypes.forms.Form;
-import de.mknblch.nolisp.datatypes.forms.SpecialForm;
+import de.mknblch.nolisp.datatypes.Form;
+import de.mknblch.nolisp.datatypes.SpecialForm;
 
 /**
  * Interpreter
@@ -27,8 +27,8 @@ public class CoreInterpreter implements Interpreter {
                 return functionCall((ListStruct) atom, context);
 
             case BUILTIN:
-            case MACRO:
-            case LAMBDA:
+            case SPECIAL:
+            case FORM:
                 return obj;
 
             default:

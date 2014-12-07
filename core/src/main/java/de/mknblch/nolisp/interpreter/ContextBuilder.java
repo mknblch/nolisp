@@ -5,10 +5,10 @@ package de.mknblch.nolisp.interpreter;
  */
 public class ContextBuilder {
 
-    public static Context build (Feature... features) {
+    public static Context build (Dialect... features) {
         final Context context = new Context();
-        for (Feature feature : features) {
-            context.bindAll(feature);
+        for (Dialect dialect : features) {
+            context.bindAll(dialect.features());
         }
         return context;
     }
