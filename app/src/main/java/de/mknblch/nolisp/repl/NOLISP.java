@@ -7,7 +7,7 @@ import de.mknblch.nolisp.parser.Parser;
 import de.mknblch.nolisp.common.FormatHelper;
 import de.mknblch.nolisp.interpreter.Context;
 import de.mknblch.nolisp.datatypes.SymbolStruct;
-import de.mknblch.nolisp.minimal.Minimal;
+import de.mknblch.nolisp.features.minimal.Minimal;
 
 import java.io.Console;
 

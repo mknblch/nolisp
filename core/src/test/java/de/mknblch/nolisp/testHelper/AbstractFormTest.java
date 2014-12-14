@@ -1,11 +1,10 @@
 package de.mknblch.nolisp.testHelper;
 
 import de.mknblch.nolisp.common.FormatHelper;
-import de.mknblch.nolisp.scanner.FunctionDefinitionException;
+import de.mknblch.nolisp.dialect.FunctionDefinitionException;
 import de.mknblch.nolisp.datatypes.ListStruct;
 import de.mknblch.nolisp.interpreter.CoreInterpreter;
 import de.mknblch.nolisp.interpreter.Interpreter;
-import de.mknblch.nolisp.minimal.Minimal;
 import de.mknblch.nolisp.parser.Parser;
 import de.mknblch.nolisp.parser.ParserException;
 import de.mknblch.nolisp.lexer.LexerException;
@@ -25,7 +24,6 @@ import static org.junit.Assert.assertEquals;
  */
 public abstract class AbstractFormTest {
 
-    public static final Minimal MINIMAL = new Minimal();
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractFormTest.class);
     private static final Parser PARSER = new Parser();
     protected static Interpreter loggingInterpreter;

@@ -215,4 +215,8 @@ public class TypeHelper {
         return o instanceof Atom;
     }
 
+    public static boolean isBuilIn(Object obj) {
+
+        return false;
+    }
 }

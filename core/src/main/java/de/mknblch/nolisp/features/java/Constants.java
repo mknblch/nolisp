@@ -1,6 +1,6 @@
 package de.mknblch.nolisp.features.java;
 
-import de.mknblch.nolisp.scanner.Constant;
+import de.mknblch.nolisp.dialect.Constant;
 
 /**
  * @author mknblch

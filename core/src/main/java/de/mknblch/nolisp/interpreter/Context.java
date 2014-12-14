@@ -164,12 +164,6 @@ public class Context {
         return map.keySet();
     }
 
-    public void implement (Dialect... features) {
-        for (Dialect dialect : features) {
-            bindAll(dialect.features());
-        }
-    }
-
     private static <U> Set<U> union(Set<U> a, Set<U> b) {
         final Set<U> union = new HashSet<>(a.size() + b.size());
         union.addAll(a);

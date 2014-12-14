@@ -20,7 +20,7 @@ public class FormatHelper {
         for (String key : keys) {
             try {
                 final Object obj = context.get(key);
-                if (!addBuiltInForms && obj instanceof BuiltIn) continue;
+                if (!addBuiltInForms && TypeHelper.isBuilIn(obj)) continue;
                 if (sb.length() > 0) sb.append(", ");
                 sb.append(key).append(" => ").append(formatPretty(obj));
             } catch (EvaluationException e) {
@@ -88,7 +88,7 @@ public class FormatHelper {
             case SYMBOL:
                 return String.format("%s", ((SymbolStruct) atom).literal);
             case BUILTIN:
-                return String.format("#<BUILTIN %s>", ((BuiltIn) atom).getSymbols());
+                return "#<BUILTIN>"; // String.format("#<BUILTIN %s>", ((BuiltIn) atom).getSymbols());
         }
         throw new IllegalArgumentException(String.format("%s:UNKNOWN", atom));
     }
@@ -131,7 +131,7 @@ public class FormatHelper {
                 final Macro macro = (Macro) atom;
                 return String.format("#<MACRO> (%s) %s", formatSymbols(macro.getArgumentSymbols()), formatPretty(macro.getForms()));
             case BUILTIN:
-                return String.format("#<BUILTIN %s>", ((BuiltIn) atom).getSymbols());
+                return "#<BUILTIN>"; //return String.format("#<BUILTIN %s>", ((BuiltIn) atom).getSymbols());
         }
 
         throw new IllegalArgumentException(String.format("%s:UNKNOWN_ATOM", atom));

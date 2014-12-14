@@ -1,6 +1,6 @@
 package de.mknblch.nolisp.interpreter;
 
-import de.mknblch.nolisp.scanner.FunctionDefinitionException;
+import de.mknblch.nolisp.dialect.FunctionDefinitionException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;

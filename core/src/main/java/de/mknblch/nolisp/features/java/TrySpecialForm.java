@@ -6,7 +6,7 @@ import de.mknblch.nolisp.datatypes.SymbolStruct;
 import de.mknblch.nolisp.datatypes.builtin.BuiltInSpecialForm;
 import de.mknblch.nolisp.interpreter.Context;
 import de.mknblch.nolisp.interpreter.Interpreter;
-import de.mknblch.nolisp.scanner.Define;
+import de.mknblch.nolisp.dialect.Define;
 
 import static de.mknblch.nolisp.common.TypeHelper.asList;
 import static de.mknblch.nolisp.common.TypeHelper.asSymbol;

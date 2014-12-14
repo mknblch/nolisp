@@ -5,7 +5,7 @@ import de.mknblch.nolisp.datatypes.builtin.BuiltInSpecialForm;
 import de.mknblch.nolisp.interpreter.Context;
 import de.mknblch.nolisp.interpreter.Interpreter;
 import de.mknblch.nolisp.parser.Parser;
-import de.mknblch.nolisp.scanner.Define;
+import de.mknblch.nolisp.dialect.Define;
 
 import java.io.BufferedInputStream;
 import java.net.URL;

@@ -7,5 +7,7 @@ import java.util.Map;
  */
 public interface Dialect {
 
+    public String getName();
+
     public Map<String, Object> features();
 }
