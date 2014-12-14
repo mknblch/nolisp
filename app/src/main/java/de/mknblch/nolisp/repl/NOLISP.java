@@ -3,7 +3,6 @@ package de.mknblch.nolisp.repl;
 import de.mknblch.nolisp.datatypes.ListStruct;
 import de.mknblch.nolisp.dialect.DialectBuilder;
 import de.mknblch.nolisp.dialect.FunctionDefinitionException;
-import de.mknblch.nolisp.interpreter.ContextBuilder;
 import de.mknblch.nolisp.interpreter.CoreInterpreter;
 import de.mknblch.nolisp.interpreter.Interpreter;
 import de.mknblch.nolisp.parser.Parser;
@@ -47,7 +46,7 @@ public class NOLISP {
     }
 
     private static Context makeContext() throws FunctionDefinitionException {
-        return ContextBuilder.buildContext(DialectBuilder.buildFromPackage("de.mknblch.nolisp.features"));
+        return new Context().addDialect(DialectBuilder.buildFromPackage("de.mknblch.nolisp.features"));
     }
 
     private static void repl() throws Exception {

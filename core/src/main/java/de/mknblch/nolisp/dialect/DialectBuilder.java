@@ -14,7 +14,7 @@ public class DialectBuilder {
     public static Dialect buildFromPackage(String packageName) throws FunctionDefinitionException {
 
         final Class<?>[] functions = ClassScanner.scanPackage(packageName, Define.class);
-        final Class<?>[] constants = ClassScanner.scanPackage(packageName, ContainsConstant.class);
+        final Class<?>[] constants = ClassScanner.scanPackage(packageName, ContainsConstants.class);
 
         final Dialect dialect = new EmptyDialect(packageName);
         final boolean constFound = addConstants(dialect, constants);

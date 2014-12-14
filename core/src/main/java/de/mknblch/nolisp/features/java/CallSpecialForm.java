@@ -17,6 +17,21 @@ import static de.mknblch.nolisp.common.TypeHelper.*;
 @Define({"call"})
 public class CallSpecialForm extends BuiltInSpecialForm {
 
+    @Override
+    public Object eval(Interpreter interpreter, Context context, ListStruct args) throws Exception {
+        final String methodName = getSymbolLiteral(args.car());
+        final Object param1 = args.cadr();
+        final Object param2 = args.caddr();
+        final Object param3 = args.cadddr();
+        final Object[] types = convertListToArray(interpreter.evalEach(asList(findTypes(param1, param2, param3)), context));
+        final Object[] params = convertListToArray(interpreter.evalEach(asList(findParams(param1, param2, param3)), context));
+
+        final Object object = interpreter.eval(findObject(param1, param2, param3), context);
+        final Class<?> clazz = object.getClass();
+
+        return findMethod(clazz, methodName, types, params).invoke(object, params);
+    }
+
     private static Method findMethod(Class<?> clazz, String methodName, Object[] types, Object[] params) throws NoSuchMethodException {
 
         if (null != types) {
@@ -54,20 +69,5 @@ public class CallSpecialForm extends BuiltInSpecialForm {
             classes[i] = object == null ? null : object.getClass();
         }
         return classes;
-    }
-
-    @Override
-    public Object eval(Interpreter interpreter, Context context, ListStruct args) throws Exception {
-        final String methodName = getSymbolLiteral(args.car());
-        final Object param1 = args.cadr();
-        final Object param2 = args.caddr();
-        final Object param3 = args.cadddr();
-        final Object[] types = convertListToArray(interpreter.evalEach(asList(findTypes(param1, param2, param3)), context));
-        final Object[] params = convertListToArray(interpreter.evalEach(asList(findParams(param1, param2, param3)), context));
-
-        final Object object = interpreter.eval(findObject(param1, param2, param3), context);
-        final Class<?> clazz = object.getClass();
-
-        return findMethod(clazz, methodName, types, params).invoke(object, params);
     }
 }

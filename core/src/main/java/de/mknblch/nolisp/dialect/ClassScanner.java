@@ -11,28 +11,13 @@ import java.util.ArrayList;
  */
 public class ClassScanner {
 
-    private static class PackageFilter implements ClassFilter.Predicate {
-
-        private String packageName;
-
-        public PackageFilter (String packageName) {
-            this.packageName = packageName;
-        }
-
-        @Override
-        public boolean matches(Class<?> aClass) {
-            return aClass.getName().startsWith(packageName);
-        }
-    }
-
     public static Class<?>[] scanPackage(String packageName, Class<? extends Annotation> annotation) {
 
-        final Iterable<Class<?>> classes = ClassFilter
-                .any(new PackageFilter(packageName))
-                .from(ClassIndex.getAnnotated(annotation));
+        final Iterable<Class<?>> classes = ClassIndex.getAnnotated(annotation);
 
         final ArrayList<Class<?>> list = new ArrayList<>();
         for (Class<?> clazz : classes) {
+            if(!clazz.getName().startsWith(packageName)) continue;
             list.add(clazz);
         }
         return list.toArray(new Class[list.size()]);

@@ -1,4 +1,4 @@
-package de.mknblch.nolisp.features.minimal;
+package de.mknblch.nolisp.features;
 
 import de.mknblch.nolisp.testHelper.AbstractFormTest;
 import org.junit.Test;

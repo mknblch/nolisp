@@ -1,6 +1,5 @@
-package de.mknblch.nolisp.features.minimal;
+package de.mknblch.nolisp.features;
 
-import de.mknblch.nolisp.interpreter.ContextBuilder;
 import de.mknblch.nolisp.interpreter.EvaluationException;
 import de.mknblch.nolisp.testHelper.AbstractFormTest;
 import de.mknblch.nolisp.interpreter.Context;
@@ -78,9 +77,9 @@ public class BasicFormsTest extends AbstractFormTest {
     @Test
     public void testEnvironment() throws Exception {
         final String code = "x";
-        final Context env = ContextBuilder.buildContext(TEST_LANG);
-        env.bind("x", 3);
-        final List<Object> evaluated = eval(code, loggingInterpreter, env);
+        final Context context = new Context().addDialect(TEST_LANG);
+        context.bind("x", 3);
+        final List<Object> evaluated = eval(code, loggingInterpreter, context);
         dump(evaluated);
         assertEquals(3, evaluated.get(0));
     }

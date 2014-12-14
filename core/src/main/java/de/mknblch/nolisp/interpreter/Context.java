@@ -147,6 +147,15 @@ public class Context {
         }
     }
 
+    public Context addDialect(Dialect... dialects) {
+        for (Dialect dialect : dialects) {
+            bindAll(dialect.features());
+            bind(dialect.getName(), true);
+        }
+        return this;
+    }
+
+
     /**
      * get local keySetLocal
      */

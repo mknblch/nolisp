@@ -1,7 +1,6 @@
-package de.mknblch.nolisp.features.minimal;
+package de.mknblch.nolisp.features;
 
 import de.mknblch.nolisp.interpreter.Context;
-import de.mknblch.nolisp.interpreter.ContextBuilder;
 import de.mknblch.nolisp.testHelper.AbstractFormTest;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -84,7 +83,7 @@ public class ConditionFormsTest extends AbstractFormTest {
                 "(fori (0 " + count + ") " +
                         "(setq a (+ a 1)))";
 
-        final Context context = ContextBuilder.buildContext(TEST_LANG);
+        final Context context = new Context().addDialect(TEST_LANG);
         final long start = System.currentTimeMillis();
         eval(code, coreInterpreter, context);
         final long end = System.currentTimeMillis();

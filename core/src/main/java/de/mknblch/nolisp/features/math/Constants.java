@@ -1,10 +1,12 @@
 package de.mknblch.nolisp.features.math;
 
 import de.mknblch.nolisp.dialect.Constant;
+import de.mknblch.nolisp.dialect.ContainsConstants;
 
 /**
  * @author mknblch
  */
+@ContainsConstants
 public class Constants {
 
     @Constant("PI")

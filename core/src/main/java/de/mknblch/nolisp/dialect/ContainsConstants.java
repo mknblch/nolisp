@@ -13,5 +13,5 @@ import java.lang.annotation.Target;
 @IndexAnnotated
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ContainsConstant { // TODO find better way
+public @interface ContainsConstants { // TODO find better way
 }

@@ -1,4 +1,4 @@
-package de.mknblch.nolisp.features.minimal;
+package de.mknblch.nolisp.features;
 
 import de.mknblch.nolisp.features.lambda.Lambda;
 import de.mknblch.nolisp.testHelper.AbstractFormTest;

@@ -1,12 +1,12 @@
 package de.mknblch.nolisp.features.minimal;
 
 import de.mknblch.nolisp.dialect.Constant;
-import de.mknblch.nolisp.dialect.ContainsConstant;
+import de.mknblch.nolisp.dialect.ContainsConstants;
 
 /**
  * @author mknblch
  */
-@ContainsConstant
+@ContainsConstants
 public class Constants {
 
     @Constant({"true", "TRUE"})

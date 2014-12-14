@@ -43,7 +43,7 @@ public abstract class AbstractFormTest {
     }
 
     protected List<Object> eval(String code) throws Exception {
-        final Context context = ContextBuilder.buildContext(TEST_LANG);
+        final Context context = new Context().addDialect(TEST_LANG);
         return eval(code, loggingInterpreter, context);
     }
 
