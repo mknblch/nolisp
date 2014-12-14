@@ -7,16 +7,13 @@ import de.mknblch.nolisp.inspection.ContainerCloneRule;
 import de.mknblch.nolisp.inspection.Inspector;
 import de.mknblch.nolisp.interpreter.Context;
 import de.mknblch.nolisp.interpreter.Interpreter;
+import de.mknblch.nolisp.scanner.Define;
 
 /**
  * @author mknblch
  */
-public class BackQuoteSpecialForm extends BuiltInSpecialForm {
-
-    @Override
-    public String[] getSymbols() {
-        return new String[]{"backquote"};
-    }
+@Define({"backquote"})
+public class BackQuoteSpecialForm extends BuiltInSpecialForm  {
 
     @Override
     public Object eval(final Interpreter interpreter, final Context context, ListStruct args) throws Exception {

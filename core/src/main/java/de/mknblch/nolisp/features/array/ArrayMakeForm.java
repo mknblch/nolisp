@@ -2,17 +2,15 @@ package de.mknblch.nolisp.features.array;
 
 import de.mknblch.nolisp.datatypes.ListStruct;
 import de.mknblch.nolisp.datatypes.builtin.BuiltInForm;
+import de.mknblch.nolisp.scanner.Define;
 
 import java.util.ArrayList;
 
 /**
  * @author mknblch
  */
-public class ArrayMakeForm extends BuiltInForm{
-    @Override
-    public String[] getSymbols() {
-        return new String[]{"array-make"};
-    }
+@Define({"array-make"})
+public class ArrayMakeForm extends BuiltInForm {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

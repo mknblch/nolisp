@@ -6,6 +6,7 @@ import de.mknblch.nolisp.datatypes.builtin.BuiltInSpecialForm;
 import de.mknblch.nolisp.interpreter.Context;
 import de.mknblch.nolisp.interpreter.EvaluationException;
 import de.mknblch.nolisp.interpreter.Interpreter;
+import de.mknblch.nolisp.scanner.Define;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -17,6 +18,7 @@ import static de.mknblch.nolisp.common.TypeHelper.*;
 /**
  * @author mknblch
  */
+@Define({"call-static"})
 public class CallStaticSpecialForm extends BuiltInSpecialForm {
 
     private static final Pattern CLASS_PATTERN = Pattern.compile("(.+):(.+)");
@@ -39,11 +41,6 @@ public class CallStaticSpecialForm extends BuiltInSpecialForm {
     private static Object[] findStaticTypes(Object[] param1, Object[] param2) throws EvaluationException {
         if (null != param2) return param1;
         return null;
-    }
-
-    @Override
-    public String[] getSymbols() {
-        return new String[]{"callstatic"};
     }
 
     @Override

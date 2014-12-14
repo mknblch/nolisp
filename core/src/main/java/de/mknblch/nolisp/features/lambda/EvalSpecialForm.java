@@ -4,16 +4,13 @@ import de.mknblch.nolisp.datatypes.ListStruct;
 import de.mknblch.nolisp.datatypes.builtin.BuiltInSpecialForm;
 import de.mknblch.nolisp.interpreter.Context;
 import de.mknblch.nolisp.interpreter.Interpreter;
+import de.mknblch.nolisp.scanner.Define;
 
 /**
  * @author mknblch
  */
-public class EvalSpecialForm extends BuiltInSpecialForm {
-
-    @Override
-    public String[] getSymbols() {
-        return new String[]{"eval"};
-    }
+@Define({"eval"})
+public class EvalSpecialForm extends BuiltInSpecialForm  {
 
     @Override
     public Object eval(Interpreter interpreter, Context context, ListStruct args) throws Exception {

@@ -53,7 +53,7 @@ public class CoreInterpreter implements Interpreter {
 
     private Object functionCall(ListStruct list, Context context) throws Exception {
         if(TypeHelper.isEmptyList(list)) return null;
-        // retrieve the function at list.car from context
+        // evaluate first argument
         final Object func = eval(list.car(), context);
         if (null == func) {
             throw new EvaluationException(String.format("Procedure application: expected procedure, given: nil"));

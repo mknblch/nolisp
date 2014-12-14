@@ -214,4 +214,5 @@ public class TypeHelper {
     public static Object isAtom(Object o) {
         return o instanceof Atom;
     }
+
 }

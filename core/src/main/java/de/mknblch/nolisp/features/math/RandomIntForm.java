@@ -3,20 +3,18 @@ package de.mknblch.nolisp.features.math;
 import de.mknblch.nolisp.common.TypeHelper;
 import de.mknblch.nolisp.datatypes.ListStruct;
 import de.mknblch.nolisp.datatypes.builtin.BuiltInForm;
+import de.mknblch.nolisp.scanner.Define;
 
 import java.security.SecureRandom;
+import java.util.Random;
 
 /**
  * @author mknblch
  */
-public class RandomIntForm extends BuiltInForm {
+@Define({"random-int", "rint"})
+public class RandomIntForm extends BuiltInForm  {
 
-    private static final SecureRandom SECURE_RANDOM = new SecureRandom();
-
-    @Override
-    public String[] getSymbols() {
-        return new String[]{"random-int", "rint"};
-    }
+    private static final Random SECURE_RANDOM = new SecureRandom();
 
     @Override
     public Object eval(ListStruct args) throws Exception {

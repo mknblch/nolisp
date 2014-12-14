@@ -4,18 +4,15 @@ import de.mknblch.nolisp.common.Expectations;
 import de.mknblch.nolisp.common.TypeHelper;
 import de.mknblch.nolisp.datatypes.ListStruct;
 import de.mknblch.nolisp.datatypes.builtin.BuiltInForm;
+import de.mknblch.nolisp.scanner.Define;
 
 import static de.mknblch.nolisp.common.TypeHelper.isList;
 
 /**
  * @author mknblch
  */
-public class ConsForm extends BuiltInForm {
-
-    @Override
-    public String[] getSymbols() {
-        return new String[]{"cons"};
-    }
+@Define({"cons"})
+public class ConsForm extends BuiltInForm  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

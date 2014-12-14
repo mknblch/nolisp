@@ -2,16 +2,13 @@ package de.mknblch.nolisp.features.list;
 
 import de.mknblch.nolisp.datatypes.ListStruct;
 import de.mknblch.nolisp.datatypes.builtin.BuiltInForm;
+import de.mknblch.nolisp.scanner.Define;
 
 /**
  * @author mknblch
  */
-public class ListForm extends BuiltInForm {
-
-    @Override
-    public String[] getSymbols() {
-        return new String[]{"list"};
-    }
+@Define({"list"})
+public class ListForm extends BuiltInForm  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

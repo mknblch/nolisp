@@ -1,23 +1,18 @@
-package de.mknblch.nolisp.features.basic;
+package de.mknblch.nolisp.features.loops;
 
 import de.mknblch.nolisp.datatypes.ListStruct;
 import de.mknblch.nolisp.datatypes.builtin.BuiltInSpecialForm;
 import de.mknblch.nolisp.interpreter.Context;
 import de.mknblch.nolisp.interpreter.Interpreter;
+import de.mknblch.nolisp.scanner.Define;
 
-import static de.mknblch.nolisp.common.TypeHelper.asInt;
-import static de.mknblch.nolisp.common.TypeHelper.asList;
-import static de.mknblch.nolisp.common.TypeHelper.isInt;
+import static de.mknblch.nolisp.common.TypeHelper.*;
 
 /**
  * @author mknblch
  */
+@Define({"fori"})
 public class ForISpecialForm extends BuiltInSpecialForm {
-
-    @Override
-    public String[] getSymbols() {
-        return new String[]{"fori"};
-    }
 
     @Override
     public Object eval(Interpreter interpreter, Context context, ListStruct args) throws Exception {

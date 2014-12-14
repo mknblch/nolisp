@@ -3,16 +3,13 @@ package de.mknblch.nolisp.features.math;
 import de.mknblch.nolisp.common.TypeHelper;
 import de.mknblch.nolisp.datatypes.ListStruct;
 import de.mknblch.nolisp.datatypes.builtin.BuiltInForm;
+import de.mknblch.nolisp.scanner.Define;
 
 /**
  * @author mknblch
  */
-public class Log10Form extends BuiltInForm {
-
-    @Override
-    public String[] getSymbols() {
-        return new String[]{"log10"};
-    }
+@Define({"log10"})
+public class Log10Form extends BuiltInForm  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

@@ -97,9 +97,12 @@ public class Context {
     }
 
     /**
-     * unbindLocal element from local env only.
+     * unbind element.
      */
     public Object unbind(Object key) {
+        if (null != parent) {
+            parent.unbind(key);
+        }
         return map.remove(key);
     }
 
@@ -123,7 +126,7 @@ public class Context {
 
 
     /**
-     * put value in the most significant env if any. put to local env otherwise.
+     * overwrite value in the context where it was defined. throws ex otherwise.
      */
     public void bindToContainer(String key, Object value) throws EvaluationException {
         if(map.containsKey(key)) {
@@ -159,6 +162,12 @@ public class Context {
             return union(keySetLocal(), parent.keySetGlobal());
         }
         return map.keySet();
+    }
+
+    public void implement (Dialect... features) {
+        for (Dialect dialect : features) {
+            bindAll(dialect.features());
+        }
     }
 
     private static <U> Set<U> union(Set<U> a, Set<U> b) {

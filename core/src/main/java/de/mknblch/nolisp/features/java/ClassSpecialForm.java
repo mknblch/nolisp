@@ -4,18 +4,15 @@ import de.mknblch.nolisp.datatypes.ListStruct;
 import de.mknblch.nolisp.datatypes.builtin.BuiltInSpecialForm;
 import de.mknblch.nolisp.interpreter.Context;
 import de.mknblch.nolisp.interpreter.Interpreter;
+import de.mknblch.nolisp.scanner.Define;
 
 import static de.mknblch.nolisp.common.TypeHelper.getSymbolLiteral;
 
 /**
  * @author mknblch
  */
-public class ClassSpecialForm extends BuiltInSpecialForm {
-
-    @Override
-    public String[] getSymbols() {
-        return new String[]{"class"};
-    }
+@Define({"class"})
+public class ClassSpecialForm extends BuiltInSpecialForm  {
 
     @Override
     public Object eval(Interpreter interpreter, Context context, ListStruct args) throws Exception {

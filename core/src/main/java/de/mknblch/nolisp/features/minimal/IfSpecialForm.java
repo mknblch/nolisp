@@ -1,20 +1,17 @@
-package de.mknblch.nolisp.features.basic;
+package de.mknblch.nolisp.features.minimal;
 
 import de.mknblch.nolisp.common.TypeHelper;
 import de.mknblch.nolisp.datatypes.ListStruct;
 import de.mknblch.nolisp.datatypes.builtin.BuiltInSpecialForm;
 import de.mknblch.nolisp.interpreter.Context;
 import de.mknblch.nolisp.interpreter.Interpreter;
+import de.mknblch.nolisp.scanner.Define;
 
 /**
  * @author mknblch
  */
+@Define({"if"})
 public class IfSpecialForm extends BuiltInSpecialForm {
-
-    @Override
-    public String[] getSymbols() {
-        return new String[]{"if"};
-    }
 
     @Override
     public Object eval(Interpreter interpreter, Context context, ListStruct args) throws Exception {

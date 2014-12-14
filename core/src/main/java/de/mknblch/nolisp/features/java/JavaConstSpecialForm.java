@@ -7,6 +7,7 @@ import de.mknblch.nolisp.datatypes.builtin.BuiltInSpecialForm;
 import de.mknblch.nolisp.interpreter.Context;
 import de.mknblch.nolisp.interpreter.EvaluationException;
 import de.mknblch.nolisp.interpreter.Interpreter;
+import de.mknblch.nolisp.scanner.Define;
 
 import java.lang.reflect.Field;
 import java.util.regex.Matcher;
@@ -15,14 +16,10 @@ import java.util.regex.Pattern;
 /**
  * @author mknblch
  */
-public class JavaConstSpecialForm extends BuiltInSpecialForm {
+@Define({"java-const", "jconst"})
+public class JavaConstSpecialForm extends BuiltInSpecialForm  {
 
     private static final Pattern CLASS_METHOD_PATTERN = Pattern.compile("(.+):(.+)");
-
-    @Override
-    public String[] getSymbols() {
-        return new String[]{"java-const", "jconst"};
-    }
 
     @Override
     public Object eval(Interpreter interpreter, Context context, ListStruct args) throws Exception {

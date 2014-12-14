@@ -4,6 +4,7 @@ import de.mknblch.nolisp.datatypes.ListStruct;
 import de.mknblch.nolisp.datatypes.builtin.BuiltInSpecialForm;
 import de.mknblch.nolisp.interpreter.Context;
 import de.mknblch.nolisp.interpreter.Interpreter;
+import de.mknblch.nolisp.scanner.Define;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -13,6 +14,7 @@ import static de.mknblch.nolisp.common.TypeHelper.*;
 /**
  * @author mknblch
  */
+@Define({"call"})
 public class CallSpecialForm extends BuiltInSpecialForm {
 
     private static Method findMethod(Class<?> clazz, String methodName, Object[] types, Object[] params) throws NoSuchMethodException {
@@ -52,11 +54,6 @@ public class CallSpecialForm extends BuiltInSpecialForm {
             classes[i] = object == null ? null : object.getClass();
         }
         return classes;
-    }
-
-    @Override
-    public String[] getSymbols() {
-        return new String[]{"call"};
     }
 
     @Override

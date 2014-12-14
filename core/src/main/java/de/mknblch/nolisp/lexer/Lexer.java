@@ -6,7 +6,7 @@ import de.mknblch.nolisp.lexer.constRules.*;
 import de.mknblch.nolisp.lexer.tokenRules.*;
 
 /**
- * basic lisp lexer.
+ * minimal lisp lexer.
  */
 public class Lexer extends StringCutter {
 

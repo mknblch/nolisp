@@ -3,16 +3,13 @@ package de.mknblch.nolisp.features.logic;
 import de.mknblch.nolisp.common.TypeHelper;
 import de.mknblch.nolisp.datatypes.ListStruct;
 import de.mknblch.nolisp.datatypes.builtin.BuiltInForm;
+import de.mknblch.nolisp.scanner.Define;
 
 /**
  * @author mknblch
  */
-public class NotForm extends BuiltInForm {
-
-    @Override
-    public String[] getSymbols() {
-        return new String[]{"not"};
-    }
+@Define({"not"})
+public class NotForm extends BuiltInForm  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

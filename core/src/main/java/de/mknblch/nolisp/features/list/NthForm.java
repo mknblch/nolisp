@@ -2,6 +2,7 @@ package de.mknblch.nolisp.features.list;
 
 import de.mknblch.nolisp.datatypes.ListStruct;
 import de.mknblch.nolisp.datatypes.builtin.BuiltInForm;
+import de.mknblch.nolisp.scanner.Define;
 
 import static de.mknblch.nolisp.common.TypeHelper.asInt;
 import static de.mknblch.nolisp.common.TypeHelper.asList;
@@ -9,12 +10,8 @@ import static de.mknblch.nolisp.common.TypeHelper.asList;
 /**
  * @author mknblch
  */
-public class NthForm extends BuiltInForm {
-
-    @Override
-    public String[] getSymbols() {
-        return new String[]{"nth"};
-    }
+@Define({"nth"})
+public class NthForm extends BuiltInForm  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

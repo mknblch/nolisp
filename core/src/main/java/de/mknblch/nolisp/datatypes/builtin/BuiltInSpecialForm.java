@@ -8,7 +8,7 @@ import de.mknblch.nolisp.datatypes.SpecialForm;
  *
  * @author mknblch
  */
-public abstract class BuiltInSpecialForm implements SpecialForm, BuiltIn {
+public abstract class BuiltInSpecialForm implements SpecialForm {
     @Override
     public Atom.Type getType() {
         return Atom.Type.BUILTIN;
