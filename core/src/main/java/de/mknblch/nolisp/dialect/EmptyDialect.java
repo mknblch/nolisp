@@ -10,7 +10,7 @@ import java.util.Map;
  */
 public class EmptyDialect implements Dialect {
 
-    private HashMap<String, Object> features = new HashMap<>();
+    protected HashMap<String, Object> features = new HashMap<>();
     private final String name;
 
     public EmptyDialect(String name) {

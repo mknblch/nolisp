@@ -1,14 +1,13 @@
 package de.mknblch.nolisp.testHelper;
 
 import de.mknblch.nolisp.common.FormatHelper;
+import de.mknblch.nolisp.dialect.DialectBuilder;
 import de.mknblch.nolisp.dialect.FunctionDefinitionException;
 import de.mknblch.nolisp.datatypes.ListStruct;
-import de.mknblch.nolisp.interpreter.CoreInterpreter;
-import de.mknblch.nolisp.interpreter.Interpreter;
+import de.mknblch.nolisp.interpreter.*;
 import de.mknblch.nolisp.parser.Parser;
 import de.mknblch.nolisp.parser.ParserException;
 import de.mknblch.nolisp.lexer.LexerException;
-import de.mknblch.nolisp.interpreter.Context;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.slf4j.Logger;
@@ -28,11 +27,13 @@ public abstract class AbstractFormTest {
     private static final Parser PARSER = new Parser();
     protected static Interpreter loggingInterpreter;
     protected static Interpreter coreInterpreter;
+    protected static Dialect TEST_LANG;
 
     @BeforeClass
     public static void setUp() throws FunctionDefinitionException {
         loggingInterpreter = new LoggingInterpreter();
         coreInterpreter = new CoreInterpreter();
+        TEST_LANG = DialectBuilder.buildFromPackage("de.mknblch.nolisp.features");
     }
 
     protected void dump(List<Object> evaluated) throws ParserException {
@@ -42,7 +43,7 @@ public abstract class AbstractFormTest {
     }
 
     protected List<Object> eval(String code) throws Exception {
-        final Context context = MINIMAL.makeContext();
+        final Context context = ContextBuilder.buildContext(TEST_LANG);
         return eval(code, loggingInterpreter, context);
     }
 

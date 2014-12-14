@@ -1,5 +1,6 @@
 package de.mknblch.nolisp.features.minimal;
 
+import de.mknblch.nolisp.interpreter.Context;
 import de.mknblch.nolisp.interpreter.ContextBuilder;
 import de.mknblch.nolisp.testHelper.AbstractFormTest;
 import org.junit.Test;
@@ -16,7 +17,6 @@ import static org.junit.Assert.assertEquals;
 public class ConditionFormsTest extends AbstractFormTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ConditionFormsTest.class);
-    public static final Minimal MINIMAL = new Minimal();
 
     @Test
     public void testIfBool() throws Exception {
@@ -65,6 +65,7 @@ public class ConditionFormsTest extends AbstractFormTest {
         final List<Object> result = eval("(setq a 1)(fori (0 12 2) (setq a (+ a a)))");
         AbstractFormTest.assertASTEquals("L[ 1 64 ]", result);
     }
+
     @Test
     public void testForiTime() throws Exception {
 
@@ -83,8 +84,9 @@ public class ConditionFormsTest extends AbstractFormTest {
                 "(fori (0 " + count + ") " +
                         "(setq a (+ a 1)))";
 
+        final Context context = ContextBuilder.buildContext(TEST_LANG);
         final long start = System.currentTimeMillis();
-        eval(code, AbstractFormTest.coreInterpreter, ContextBuilder.);
+        eval(code, coreInterpreter, context);
         final long end = System.currentTimeMillis();
 
         LOGGER.info("Done {} iterations in {}ms", count, (end - start));

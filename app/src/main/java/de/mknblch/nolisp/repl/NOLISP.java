@@ -1,13 +1,15 @@
 package de.mknblch.nolisp.repl;
 
 import de.mknblch.nolisp.datatypes.ListStruct;
+import de.mknblch.nolisp.dialect.DialectBuilder;
+import de.mknblch.nolisp.dialect.FunctionDefinitionException;
+import de.mknblch.nolisp.interpreter.ContextBuilder;
 import de.mknblch.nolisp.interpreter.CoreInterpreter;
 import de.mknblch.nolisp.interpreter.Interpreter;
 import de.mknblch.nolisp.parser.Parser;
 import de.mknblch.nolisp.common.FormatHelper;
 import de.mknblch.nolisp.interpreter.Context;
 import de.mknblch.nolisp.datatypes.SymbolStruct;
-import de.mknblch.nolisp.features.minimal.Minimal;
 
 import java.io.Console;
 
@@ -17,7 +19,6 @@ import java.io.Console;
 public class NOLISP {
 
 
-    private static final Minimal MINIMAL = new Minimal();
     private static Parser parser = new Parser();
     private  static final Interpreter INTERPRETER = new CoreInterpreter();
 
@@ -41,12 +42,16 @@ public class NOLISP {
     }
 
     private static void eval(ListStruct prg) throws Exception {
-        final Context context = MINIMAL.makeContext();
+        final Context context = makeContext();
         System.out.printf("%s", FormatHelper.formatPretty(INTERPRETER.evalEach(prg, context).last().car()));
     }
 
+    private static Context makeContext() throws FunctionDefinitionException {
+        return ContextBuilder.buildContext(DialectBuilder.buildFromPackage("de.mknblch.nolisp.features"));
+    }
+
     private static void repl() throws Exception {
-        final Context context = MINIMAL.makeContext();
+        final Context context = makeContext();
         final Console console = System.console();
 
         while (true) {

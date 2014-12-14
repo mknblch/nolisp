@@ -1,5 +1,6 @@
 package de.mknblch.nolisp.features.minimal;
 
+import de.mknblch.nolisp.interpreter.ContextBuilder;
 import de.mknblch.nolisp.interpreter.EvaluationException;
 import de.mknblch.nolisp.testHelper.AbstractFormTest;
 import de.mknblch.nolisp.interpreter.Context;
@@ -14,8 +15,6 @@ import static org.junit.Assert.assertTrue;
  * @author mknblch
  */
 public class BasicFormsTest extends AbstractFormTest {
-
-    public static final Minimal MINIMAL = new Minimal();
 
     @Test
     public void testListLength() throws Exception {
@@ -79,7 +78,7 @@ public class BasicFormsTest extends AbstractFormTest {
     @Test
     public void testEnvironment() throws Exception {
         final String code = "x";
-        final Context env = MINIMAL.makeContext();
+        final Context env = ContextBuilder.buildContext(TEST_LANG);
         env.bind("x", 3);
         final List<Object> evaluated = eval(code, loggingInterpreter, env);
         dump(evaluated);

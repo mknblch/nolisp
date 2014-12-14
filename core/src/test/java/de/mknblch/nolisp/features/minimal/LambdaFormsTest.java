@@ -81,20 +81,20 @@ public class LambdaFormsTest extends AbstractFormTest {
     public void testEvalLambda() throws Exception {
         final String code = "(eval (lambda (x) (* 2 x)))";
         final List<Object> result = eval(code);
-        AbstractFormTest.assertASTEquals("#<FORM> ( x ) ( * 2 x )", result.get(0));
+        AbstractFormTest.assertASTEquals("#<LAMBDA> ( x ) ( * 2 x )", result.get(0));
     }
 
     @Test
     public void testEvalBuiltin() throws Exception {
         final String code = "(eval +)";
         final List<Object> result = eval(code);
-        AbstractFormTest.assertASTEquals("#<BUILTIN +>", result.get(0));
+        AbstractFormTest.assertASTEquals("#<BUILTIN>", result.get(0));
     }
 
     @Test
     public void testFunction() throws Exception {
         final List<Object> result = eval("+");
-        AbstractFormTest.assertASTEquals("#<BUILTIN +>", result.get(0));
+        AbstractFormTest.assertASTEquals("#<BUILTIN>", result.get(0));
     }
 
     @Test

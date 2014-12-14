@@ -7,7 +7,7 @@ import de.mknblch.nolisp.dialect.Define;
 /**
  * @author mknblch
  */
-@Define({"classof"})
+@Define({"classof", "classOf"})
 public class ClassOfForm extends BuiltInForm  {
 
     @Override

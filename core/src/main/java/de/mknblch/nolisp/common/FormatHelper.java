@@ -7,7 +7,6 @@ import de.mknblch.nolisp.datatypes.ListStruct;
 import de.mknblch.nolisp.datatypes.SymbolStruct;
 import de.mknblch.nolisp.features.lambda.Lambda;
 import de.mknblch.nolisp.features.macro.Macro;
-import de.mknblch.nolisp.datatypes.builtin.BuiltIn;
 
 import java.util.List;
 import java.util.Set;
@@ -20,7 +19,7 @@ public class FormatHelper {
         for (String key : keys) {
             try {
                 final Object obj = context.get(key);
-                if (!addBuiltInForms && TypeHelper.isBuilIn(obj)) continue;
+                if (!addBuiltInForms && TypeHelper.isBuiltIn(obj)) continue;
                 if (sb.length() > 0) sb.append(", ");
                 sb.append(key).append(" => ").append(formatPretty(obj));
             } catch (EvaluationException e) {

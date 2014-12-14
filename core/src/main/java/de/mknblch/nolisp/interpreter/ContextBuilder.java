@@ -8,19 +8,8 @@ import de.mknblch.nolisp.dialect.FunctionDefinitionException;
  */
 public class ContextBuilder {
 
-    private static Dialect MINIMAL;
-
-    {
-        try {
-            MINIMAL = DialectBuilder.buildDialect("de.mknblch.nolisp.features.minimal");
-        } catch (FunctionDefinitionException e) {
-            e.printStackTrace();
-        }
-    }
-
     public static Context buildContext (Dialect... dialects) {
         final Context context = new Context();
-        addDialects(context, MINIMAL);
         addDialects(context, dialects);
         return context;
     }
