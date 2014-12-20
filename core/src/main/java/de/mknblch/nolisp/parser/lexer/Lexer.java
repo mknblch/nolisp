@@ -1,9 +1,8 @@
-package de.mknblch.nolisp.lexer;
+package de.mknblch.nolisp.parser.lexer;
 
-import de.mknblch.nolisp.lexer.specialRules.AvoidanceRule;
-import de.mknblch.nolisp.lexer.specialRules.IgnoreRule;
-import de.mknblch.nolisp.lexer.constRules.*;
-import de.mknblch.nolisp.lexer.tokenRules.*;
+import de.mknblch.nolisp.parser.lexer.rules.*;
+import de.mknblch.nolisp.parser.lexer.rules.AvoidanceRule;
+import de.mknblch.nolisp.parser.lexer.rules.IgnoreRule;
 
 /**
  * minimal lisp lexer.

@@ -1,7 +1,7 @@
 package de.mknblch.nolisp.common;
 
 import de.mknblch.nolisp.datatypes.Atom;
-import de.mknblch.nolisp.datatypes.builtin.BuiltIn;
+import de.mknblch.nolisp.dialect.builtin.BuiltIn;
 import de.mknblch.nolisp.features.macro.Macro;
 import de.mknblch.nolisp.interpreter.EvaluationException;
 import de.mknblch.nolisp.datatypes.ListStruct;

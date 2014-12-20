@@ -7,7 +7,7 @@ import de.mknblch.nolisp.datatypes.ListStruct;
 import de.mknblch.nolisp.interpreter.*;
 import de.mknblch.nolisp.parser.Parser;
 import de.mknblch.nolisp.parser.ParserException;
-import de.mknblch.nolisp.lexer.LexerException;
+import de.mknblch.nolisp.parser.lexer.LexerException;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.slf4j.Logger;

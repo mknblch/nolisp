@@ -1,4 +1,4 @@
-package de.mknblch.nolisp.lexer;
+package de.mknblch.nolisp.parser.lexer;
 
 import org.junit.Assert;
 import org.junit.Test;

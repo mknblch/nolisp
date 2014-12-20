@@ -1,4 +1,4 @@
-package de.mknblch.nolisp.datatypes.builtin;
+package de.mknblch.nolisp.dialect.builtin;
 
 /**
  * @author mknblch

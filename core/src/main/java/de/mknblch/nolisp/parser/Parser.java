@@ -1,9 +1,9 @@
 package de.mknblch.nolisp.parser;
 
 import de.mknblch.nolisp.inspection.Inspector;
-import de.mknblch.nolisp.lexer.Lexer;
-import de.mknblch.nolisp.lexer.LexerException;
-import de.mknblch.nolisp.lexer.Token;
+import de.mknblch.nolisp.parser.lexer.Lexer;
+import de.mknblch.nolisp.parser.lexer.LexerException;
+import de.mknblch.nolisp.parser.lexer.Token;
 import de.mknblch.nolisp.datatypes.Atom;
 import de.mknblch.nolisp.datatypes.ListStruct;
 import de.mknblch.nolisp.datatypes.SymbolStruct;

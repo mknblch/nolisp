@@ -1,4 +1,4 @@
-package de.mknblch.nolisp.lexer;
+package de.mknblch.nolisp.parser.lexer;
 
 /**
  * @author mknblch
@@ -53,6 +53,7 @@ public class StringCutter {
     public void inc() {
         offset++;
     }
+
     public void inc(int i) {
         offset += i;
     }

@@ -1,4 +1,4 @@
-package de.mknblch.nolisp.datatypes.builtin;
+package de.mknblch.nolisp.dialect.builtin;
 
 import de.mknblch.nolisp.datatypes.Atom;
 import de.mknblch.nolisp.datatypes.Form;

@@ -1,6 +1,7 @@
-package de.mknblch.nolisp.lexer.constRules;
+package de.mknblch.nolisp.parser.lexer.rules;
 
-import de.mknblch.nolisp.lexer.Token;
+import de.mknblch.nolisp.parser.lexer.ConstRulePatternAdapter;
+import de.mknblch.nolisp.parser.lexer.Token;
 
 import java.util.regex.Matcher;
 

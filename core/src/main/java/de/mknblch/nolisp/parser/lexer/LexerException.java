@@ -1,4 +1,4 @@
-package de.mknblch.nolisp.lexer;
+package de.mknblch.nolisp.parser.lexer;
 
 /**
  * @author mknblch

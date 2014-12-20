@@ -1,4 +1,4 @@
-package de.mknblch.nolisp.lexer;
+package de.mknblch.nolisp.parser.lexer;
 
 /**
  * @author mknblch
@@ -6,7 +6,14 @@ package de.mknblch.nolisp.lexer;
 public class Token {
 
     public enum Type {
-        SYMBOL, LIST_BEGIN, LIST_END, ARRAY_BEGIN, ARRAY_END, LINE_COMMENT, CONST, TRANSFORM
+        SYMBOL,
+        LIST_BEGIN,
+        LIST_END,
+        ARRAY_BEGIN,
+        ARRAY_END,
+        LINE_COMMENT,
+        CONST,
+        TRANSFORM
     }
 
     public final Type type;

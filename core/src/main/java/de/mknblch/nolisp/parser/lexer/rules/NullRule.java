@@ -1,8 +1,8 @@
-package de.mknblch.nolisp.lexer.constRules;
+package de.mknblch.nolisp.parser.lexer.rules;
 
-import de.mknblch.nolisp.lexer.LexerException;
-import de.mknblch.nolisp.lexer.Token;
-import de.mknblch.nolisp.lexer.ConstRule;
+import de.mknblch.nolisp.parser.lexer.LexerException;
+import de.mknblch.nolisp.parser.lexer.Token;
+import de.mknblch.nolisp.parser.lexer.ConstRule;
 
 /**
  * @author mknblch

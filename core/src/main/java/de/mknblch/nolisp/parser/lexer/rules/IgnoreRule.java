@@ -1,8 +1,8 @@
-package de.mknblch.nolisp.lexer.specialRules;
+package de.mknblch.nolisp.parser.lexer.rules;
 
-import de.mknblch.nolisp.lexer.StringCutter;
-import de.mknblch.nolisp.lexer.Token;
-import de.mknblch.nolisp.lexer.TokenRule;
+import de.mknblch.nolisp.parser.lexer.StringCutter;
+import de.mknblch.nolisp.parser.lexer.Token;
+import de.mknblch.nolisp.parser.lexer.TokenRule;
 
 /**
  * special rule used for skipping ignorable chars.
