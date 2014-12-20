@@ -6,14 +6,14 @@ package de.mknblch.nolisp.parser.lexer;
 public class Token {
 
     public enum Type {
-        SYMBOL,
-        LIST_BEGIN,
-        LIST_END,
-        ARRAY_BEGIN,
-        ARRAY_END,
-        LINE_COMMENT,
-        CONST,
-        TRANSFORM
+        SYMBOL,     // symbol-string
+        LIST_BEGIN, // list begin terminal
+        LIST_END,   // list end terminal
+        ARRAY_BEGIN,// array begin terminal
+        ARRAY_END,  // array end terminal
+        LINE_COMMENT, // comment starting with ; and ends with newline
+        CONST,      // constant like int or string
+        TRANSFORM   // transformation token to initiate a special parsing rule
     }
 
     public final Type type;
