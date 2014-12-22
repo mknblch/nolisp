@@ -14,6 +14,12 @@
     <!-- profiles -->
     <profiles>
         <profile>
+            <id>CODEGEN</id>
+            <modules>
+                <module>codegen</module>
+            </modules>
+        </profile>
+        <profile>
             <id>CORE</id>
             <modules>
                 <module>core</module>
