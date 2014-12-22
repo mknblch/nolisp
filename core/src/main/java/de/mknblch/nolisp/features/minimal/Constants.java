@@ -10,6 +10,7 @@ import de.mknblch.nolisp.dialect.ContainsConstants;
 public class Constants {
 
     @Constant({"true", "TRUE"})
+    @de.mknblch.nolisp.codegen.Constant("")
     public static final boolean CONSTANT_TRUE = true;
 
     @Constant({"false", "FALSE"})

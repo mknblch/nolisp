@@ -9,6 +9,7 @@ import static de.mknblch.nolisp.common.TypeHelper.asInt;
 /**
  * @author mknblch
  */
+@de.mknblch.nolisp.codegen.Define("ainit")
 @Define({"array-init", "ainit"})
 public class ArrayInitForm extends BuiltInForm{
 

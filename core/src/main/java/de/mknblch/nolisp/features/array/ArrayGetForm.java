@@ -10,6 +10,7 @@ import static de.mknblch.nolisp.common.TypeHelper.asInt;
 /**
  * @author mknblch
  */
+@de.mknblch.nolisp.codegen.Define("aget")
 @Define({"array-get", "aget"})
 public class ArrayGetForm extends BuiltInForm {
 

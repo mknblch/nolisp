@@ -1,0 +1,7 @@
+package ${packageName}
+
+#foreach($field in $importPackages)
+import ${field};
+#end
+
+public
