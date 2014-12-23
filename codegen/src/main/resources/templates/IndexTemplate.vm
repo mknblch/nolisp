@@ -1,0 +1,15 @@
+package ${package};
+
+import de.mknblch.nolisp.interpreter.Dialect;
+
+/**
+ * GENERATED
+*/
+public class Index {
+
+    public static final Dialect[] DIALECTS = new Dialect[] {
+#foreach($p in $packages)
+        new ${p}(),
+#end
+    };
+}

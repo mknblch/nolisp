@@ -1,6 +1,5 @@
 package de.mknblch.nolisp.interpreter;
 
-import de.mknblch.nolisp.dialect.FunctionDefinitionException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -20,7 +19,7 @@ public class ContextTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ContextTest.class);
 
-    public static Context makeEnv(String[] keys, Object[] values) throws FunctionDefinitionException {
+    public static Context makeEnv(String[] keys, Object[] values) {
         assertEquals("Erroneous test", keys.length, values.length);
         final Context env = new Context();
         for (int i = 0; i < keys.length; i++) {

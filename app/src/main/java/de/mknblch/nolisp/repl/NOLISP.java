@@ -1,8 +1,7 @@
 package de.mknblch.nolisp.repl;
 
 import de.mknblch.nolisp.datatypes.ListStruct;
-import de.mknblch.nolisp.dialect.DialectBuilder;
-import de.mknblch.nolisp.dialect.FunctionDefinitionException;
+import de.mknblch.nolisp.generated.Index;
 import de.mknblch.nolisp.interpreter.CoreInterpreter;
 import de.mknblch.nolisp.interpreter.Interpreter;
 import de.mknblch.nolisp.parser.Parser;
@@ -45,8 +44,8 @@ public class NOLISP {
         System.out.printf("%s", FormatHelper.formatPretty(INTERPRETER.evalEach(prg, context).last().car()));
     }
 
-    private static Context makeContext() throws FunctionDefinitionException {
-        return new Context().addDialect(DialectBuilder.buildFromPackage("de.mknblch.nolisp.features"));
+    private static Context makeContext() {
+        return new Context().addDialect(Index.DIALECTS);
     }
 
     private static void repl() throws Exception {

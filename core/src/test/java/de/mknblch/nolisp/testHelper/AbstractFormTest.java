@@ -1,9 +1,8 @@
 package de.mknblch.nolisp.testHelper;
 
 import de.mknblch.nolisp.common.FormatHelper;
-import de.mknblch.nolisp.dialect.DialectBuilder;
-import de.mknblch.nolisp.dialect.FunctionDefinitionException;
 import de.mknblch.nolisp.datatypes.ListStruct;
+import de.mknblch.nolisp.generated.Index;
 import de.mknblch.nolisp.interpreter.*;
 import de.mknblch.nolisp.parser.Parser;
 import de.mknblch.nolisp.parser.ParserException;
@@ -16,7 +15,6 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
 
 /**
  * @author mknblch
@@ -27,13 +25,11 @@ public abstract class AbstractFormTest {
     private static final Parser PARSER = new Parser();
     protected static Interpreter loggingInterpreter;
     protected static Interpreter coreInterpreter;
-    protected static Dialect TEST_LANG;
 
     @BeforeClass
-    public static void setUp() throws FunctionDefinitionException {
+    public static void setUp() {
         loggingInterpreter = new LoggingInterpreter();
         coreInterpreter = new CoreInterpreter();
-        TEST_LANG = DialectBuilder.buildFromPackage("de.mknblch.nolisp.features");
     }
 
     protected void dump(List<Object> evaluated) throws ParserException {
@@ -43,7 +39,7 @@ public abstract class AbstractFormTest {
     }
 
     protected List<Object> eval(String code) throws Exception {
-        final Context context = new Context().addDialect(TEST_LANG);
+        final Context context = new Context().addDialect(Index.DIALECTS);
         return eval(code, loggingInterpreter, context);
     }
 
@@ -56,7 +52,6 @@ public abstract class AbstractFormTest {
             LOGGER.debug("result: {}", FormatHelper.formatPretty(eval));
             ret.add(eval);
         }
-//        LOGGER.debug("Context: [ {} ]", FormatHelper.formatContext(context, false));
         return ret;
     }
 

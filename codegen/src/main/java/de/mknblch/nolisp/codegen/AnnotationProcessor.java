@@ -1,15 +1,9 @@
 package de.mknblch.nolisp.codegen;
 
-import org.apache.velocity.Template;
-import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.VelocityEngine;
-
 import javax.annotation.processing.*;
 import javax.lang.model.element.*;
-import javax.lang.model.util.ElementFilter;
 import javax.tools.*;
 import java.io.IOException;
-import java.io.Writer;
 import java.util.*;
 
 /**
@@ -19,12 +13,14 @@ import java.util.*;
 public class AnnotationProcessor extends AbstractProcessor {
 
 
-    private CodeGenerator generator;
+    private DialectGenerator dialectGenerator;
+    private IndexGenerator indexGenerator;
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
         super.init(processingEnv);
-        generator = new CodeGenerator();
+        dialectGenerator = new DialectGenerator();
+        indexGenerator = new IndexGenerator();
     }
 
 
@@ -43,7 +39,8 @@ public class AnnotationProcessor extends AbstractProcessor {
         final PackageDefinition map = AnnotationHelper.extract(functions, constants);
 
         try {
-            generator.write(map, processingEnv.getFiler());
+            dialectGenerator.write(map, processingEnv.getFiler());
+            indexGenerator.write(map, processingEnv.getFiler());
         } catch (IOException e) {
             e.printStackTrace();
         }

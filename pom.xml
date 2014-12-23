@@ -45,7 +45,7 @@
                                 <fileset>
                                     <directory>core/src/main/java/de/mknblch/nolisp/generated</directory>
                                     <includes>
-                                        <include>*Dialect.java</include>
+                                        <include>*.java</include>
                                     </includes>
                                     <followSymlinks>false</followSymlinks>
                                 </fileset>
