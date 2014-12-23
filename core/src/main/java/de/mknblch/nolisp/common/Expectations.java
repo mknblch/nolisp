@@ -4,7 +4,6 @@ import de.mknblch.nolisp.datatypes.Form;
 import de.mknblch.nolisp.datatypes.ListStruct;
 import de.mknblch.nolisp.datatypes.SpecialForm;
 import de.mknblch.nolisp.datatypes.SymbolStruct;
-import de.mknblch.nolisp.features.lambda.Lambda;
 import de.mknblch.nolisp.interpreter.EvaluationException;
 
 public class Expectations {
@@ -95,13 +94,6 @@ public class Expectations {
                 null == ((ListStruct) o).cdr()) {
             throw new EvaluationException(
                     String.format("Expected LIST with rest"));
-        }
-    }
-
-    public static void expectLambda(Object o) throws EvaluationException {
-        if (!(o instanceof Lambda)) {
-            throw new EvaluationException(
-                    String.format("Expected FORM but was: %s", FormatHelper.formatAtom(o)));
         }
     }
 

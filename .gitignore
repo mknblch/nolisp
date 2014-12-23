@@ -5,4 +5,4 @@ target/
 
 **/*.iml
 
-core/src/main/java/de/mknblch/nolisp/generated
+*/generated

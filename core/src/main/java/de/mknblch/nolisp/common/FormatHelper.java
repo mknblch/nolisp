@@ -5,8 +5,6 @@ import de.mknblch.nolisp.interpreter.EvaluationException;
 import de.mknblch.nolisp.datatypes.Atom;
 import de.mknblch.nolisp.datatypes.ListStruct;
 import de.mknblch.nolisp.datatypes.SymbolStruct;
-import de.mknblch.nolisp.features.lambda.Lambda;
-import de.mknblch.nolisp.features.macro.Macro;
 
 import java.util.List;
 import java.util.Set;
@@ -79,11 +77,9 @@ public class FormatHelper {
 
                 return String.format("( %s )", sb.toString());
             case FORM:
-                final Lambda lambda = (Lambda) atom;
-                return String.format("#<LAMBDA> %s %s", formatPretty(lambda.getArgumentSymbols()), formatPretty(lambda.getForm()));
+                return "#<FORM>"; //String.format(, formatPretty(lambda.getArgumentSymbols()), formatPretty(lambda.getForm()));
             case SPECIAL:
-                final Macro macro = (Macro) atom;
-                return String.format("#<MACRO> (%s) %s", formatSymbols(macro.getArgumentSymbols()), formatPretty(macro.getForms()));
+                return "#<MACRO>"; //String.format(" (%s) %s", formatSymbols(macro.getArgumentSymbols()), formatPretty(macro.getForms()));
             case SYMBOL:
                 return String.format("%s", ((SymbolStruct) atom).literal);
             case BUILTIN:
@@ -124,11 +120,9 @@ public class FormatHelper {
                 }
                 return String.format("( %s )", buffer.toString());
             case FORM:
-                final Lambda lambda = (Lambda) atom;
-                return String.format("#<LAMBDA> (%s) %s", lambda.getArgumentSymbols(), formatAtom(lambda.getForm()));
+                return "#<FORM>"; //String.format(, formatPretty(lambda.getArgumentSymbols()), formatPretty(lambda.getForm()));
             case SPECIAL:
-                final Macro macro = (Macro) atom;
-                return String.format("#<MACRO> (%s) %s", formatSymbols(macro.getArgumentSymbols()), formatPretty(macro.getForms()));
+                return "#<MACRO>"; //String.format(" (%s) %s", formatSymbols(macro.getArgumentSymbols()), formatPretty(macro.getForms()));
             case BUILTIN:
                 return "#<BUILTIN>"; //return String.format("#<BUILTIN %s>", ((BuiltIn) atom).getSymbols());
         }
