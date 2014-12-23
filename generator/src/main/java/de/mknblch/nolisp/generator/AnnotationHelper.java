@@ -1,4 +1,4 @@
-package de.mknblch.nolisp.codegen;
+package de.mknblch.nolisp.generator;
 
 import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.AnnotationValue;

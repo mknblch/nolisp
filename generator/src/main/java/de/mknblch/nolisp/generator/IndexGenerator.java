@@ -1,4 +1,4 @@
-package de.mknblch.nolisp.codegen;
+package de.mknblch.nolisp.generator;
 
 import org.apache.velocity.VelocityContext;
 
@@ -13,7 +13,7 @@ import java.util.Set;
  */
 public class IndexGenerator extends CodeGenerator {
 
-    public static final String TEMPLATE_PATH = "./codegen/src/main/resources/templates/IndexTemplate.vm";
+    public static final String TEMPLATE_PATH = "./generator/src/main/resources/templates/IndexTemplate.vm";
 
     public IndexGenerator() {
         super(TEMPLATE_PATH);

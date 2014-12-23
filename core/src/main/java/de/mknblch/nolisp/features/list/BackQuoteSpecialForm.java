@@ -7,7 +7,7 @@ import de.mknblch.nolisp.inspection.ContainerCloneRule;
 import de.mknblch.nolisp.inspection.Inspector;
 import de.mknblch.nolisp.interpreter.Context;
 import de.mknblch.nolisp.interpreter.Interpreter;
-import de.mknblch.nolisp.codegen.Define;
+import de.mknblch.nolisp.generator.Define;
 
 /**
  * @author mknblch

@@ -4,7 +4,7 @@ import de.mknblch.nolisp.common.FormatHelper;
 import de.mknblch.nolisp.datatypes.ListStruct;
 import de.mknblch.nolisp.datatypes.builtin.BuiltInForm;
 import de.mknblch.nolisp.interpreter.EvaluationException;
-import de.mknblch.nolisp.codegen.Define;
+import de.mknblch.nolisp.generator.Define;
 
 /**
  * @author mknblch

@@ -1,4 +1,4 @@
-package de.mknblch.nolisp.codegen;
+package de.mknblch.nolisp.generator;
 
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;

@@ -7,7 +7,7 @@ import de.mknblch.nolisp.datatypes.builtin.BuiltInSpecialForm;
 import de.mknblch.nolisp.interpreter.Context;
 import de.mknblch.nolisp.interpreter.EvaluationException;
 import de.mknblch.nolisp.interpreter.Interpreter;
-import de.mknblch.nolisp.codegen.Define;
+import de.mknblch.nolisp.generator.Define;
 
 import java.lang.reflect.Field;
 import java.util.regex.Matcher;

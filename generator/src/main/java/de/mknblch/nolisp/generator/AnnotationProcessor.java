@@ -1,4 +1,4 @@
-package de.mknblch.nolisp.codegen;
+package de.mknblch.nolisp.generator;
 
 import javax.annotation.processing.*;
 import javax.lang.model.element.*;
@@ -9,7 +9,7 @@ import java.util.*;
 /**
  * @author mknblch
  */
-@SupportedAnnotationTypes({"de.mknblch.nolisp.codegen.Constant","de.mknblch.nolisp.codegen.Define"})
+@SupportedAnnotationTypes({"de.mknblch.nolisp.generator.Constant","de.mknblch.nolisp.generator.Define"})
 public class AnnotationProcessor extends AbstractProcessor {
 
 

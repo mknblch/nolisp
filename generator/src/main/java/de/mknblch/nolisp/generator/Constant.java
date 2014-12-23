@@ -1,4 +1,4 @@
-package de.mknblch.nolisp.codegen;
+package de.mknblch.nolisp.generator;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

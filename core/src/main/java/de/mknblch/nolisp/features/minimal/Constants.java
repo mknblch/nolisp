@@ -1,6 +1,6 @@
 package de.mknblch.nolisp.features.minimal;
 
-import de.mknblch.nolisp.codegen.Constant;
+import de.mknblch.nolisp.generator.Constant;
 
 /**
  * @author mknblch

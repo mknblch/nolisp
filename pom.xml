@@ -14,9 +14,9 @@
     <!-- profiles -->
     <profiles>
         <profile>
-            <id>CODEGEN</id>
+            <id>GENERATOR</id>
             <modules>
-                <module>codegen</module>
+                <module>generator</module>
             </modules>
         </profile>
         <profile>
