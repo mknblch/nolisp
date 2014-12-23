@@ -1,4 +1,4 @@
-package de.mknblch.nolisp.dialect;
+package de.mknblch.nolisp.codegen;
 
 /**
  * @author mknblch

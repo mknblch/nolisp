@@ -2,7 +2,7 @@ package de.mknblch.nolisp.features.array;
 
 import de.mknblch.nolisp.datatypes.ListStruct;
 import de.mknblch.nolisp.dialect.builtin.BuiltInForm;
-import de.mknblch.nolisp.dialect.Define;
+import de.mknblch.nolisp.codegen.Define;
 
 import static de.mknblch.nolisp.common.TypeHelper.asArray;
 import static de.mknblch.nolisp.common.TypeHelper.asInt;
@@ -10,7 +10,6 @@ import static de.mknblch.nolisp.common.TypeHelper.asInt;
 /**
  * @author mknblch
  */
-@de.mknblch.nolisp.codegen.Define("aget")
 @Define({"array-get", "aget"})
 public class ArrayGetForm extends BuiltInForm {
 

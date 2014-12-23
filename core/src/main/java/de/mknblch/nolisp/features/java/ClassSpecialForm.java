@@ -4,7 +4,7 @@ import de.mknblch.nolisp.datatypes.ListStruct;
 import de.mknblch.nolisp.dialect.builtin.BuiltInSpecialForm;
 import de.mknblch.nolisp.interpreter.Context;
 import de.mknblch.nolisp.interpreter.Interpreter;
-import de.mknblch.nolisp.dialect.Define;
+import de.mknblch.nolisp.codegen.Define;
 
 import static de.mknblch.nolisp.common.TypeHelper.getSymbolLiteral;
 

@@ -1,7 +1,31 @@
-package ${packageName}
+package ${package};
 
-#foreach($field in $importPackages)
+import de.mknblch.nolisp.interpreter.Dialect;
+import java.util.Map;
+import java.util.HashMap;
+
+#foreach($field in $packages)
 import ${field};
 #end
 
-public
+/**
+ * GENERATED FROM $dialectName
+*/
+public class $className.substring(0,1).toUpperCase()$className.substring(1)Dialect implements Dialect {
+
+    private final static Map<String, Object> FEATURES = new HashMap<String, Object>() {{
+#foreach($key in $constants.keySet())
+        put("$key", $constants.get($key));
+#end
+#foreach($key in $functions.keySet())
+        put("$key", new $functions.get($key)());
+#end
+    }};
+
+    @Override
+    public String getName() { return "${dialectName}"; }
+
+    @Override
+    public Map<String, Object> features() { return FEATURES; }
+
+}

@@ -1,12 +1,10 @@
 package de.mknblch.nolisp.features.java;
 
-import de.mknblch.nolisp.dialect.Constant;
-import de.mknblch.nolisp.dialect.ContainsConstants;
+import de.mknblch.nolisp.codegen.Constant;
 
 /**
  * @author mknblch
  */
-@ContainsConstants
 public class Constants {
 
     @Constant({"BOOLEAN", "boolean"})

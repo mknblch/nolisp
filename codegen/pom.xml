@@ -18,7 +18,9 @@
             <artifactId>velocity</artifactId>
             <version>1.7</version>
         </dependency>
+
     </dependencies>
+
 
     <build>
         <plugins>
@@ -29,6 +31,8 @@
                     <compilerArgument>-proc:none</compilerArgument>
                 </configuration>
             </plugin>
+
+
         </plugins>
     </build>
 

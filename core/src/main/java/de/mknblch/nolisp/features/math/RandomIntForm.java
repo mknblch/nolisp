@@ -3,7 +3,7 @@ package de.mknblch.nolisp.features.math;
 import de.mknblch.nolisp.common.TypeHelper;
 import de.mknblch.nolisp.datatypes.ListStruct;
 import de.mknblch.nolisp.dialect.builtin.BuiltInForm;
-import de.mknblch.nolisp.dialect.Define;
+import de.mknblch.nolisp.codegen.Define;
 
 import java.security.SecureRandom;
 import java.util.Random;

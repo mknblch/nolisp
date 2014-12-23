@@ -1,11 +1,11 @@
 package de.mknblch.nolisp.common;
 
-import de.mknblch.nolisp.interpreter.EvaluationException;
-import de.mknblch.nolisp.datatypes.ListStruct;
-import de.mknblch.nolisp.datatypes.SymbolStruct;
 import de.mknblch.nolisp.datatypes.Form;
-import de.mknblch.nolisp.features.lambda.Lambda;
+import de.mknblch.nolisp.datatypes.ListStruct;
 import de.mknblch.nolisp.datatypes.SpecialForm;
+import de.mknblch.nolisp.datatypes.SymbolStruct;
+import de.mknblch.nolisp.features.lambda.Lambda;
+import de.mknblch.nolisp.interpreter.EvaluationException;
 
 public class Expectations {
 

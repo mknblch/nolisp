@@ -6,7 +6,7 @@ import de.mknblch.nolisp.dialect.builtin.BuiltInSpecialForm;
 import de.mknblch.nolisp.interpreter.Context;
 import de.mknblch.nolisp.interpreter.EvaluationException;
 import de.mknblch.nolisp.interpreter.Interpreter;
-import de.mknblch.nolisp.dialect.Define;
+import de.mknblch.nolisp.codegen.Define;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -45,7 +45,7 @@ public class CallStaticSpecialForm extends BuiltInSpecialForm {
 
     @Override
     public Object eval(Interpreter interpreter, Context context, ListStruct args) throws Exception {
-        // split first arg into class and method name
+        // split first arg into class and method packageName
         final String fqName = getSymbolLiteral(args.car());
         final Matcher matcher = CLASS_PATTERN.matcher(fqName);
         if (!matcher.matches()) {

@@ -35,22 +35,23 @@
         <profile>
             <id>generate</id>
 
-            <pluginRepositories>
-                <pluginRepository>
-                    <id>sonatype-repo</id>
-                    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-                    <releases>
-                        <enabled>false</enabled>
-                    </releases>
-                    <snapshots>
-                        <enabled>true</enabled>
-                    </snapshots>
-                </pluginRepository>
-
-            </pluginRepositories>
-
             <build>
                 <plugins>
+                    <plugin>
+                        <artifactId>maven-clean-plugin</artifactId>
+                        <version>2.6.1</version>
+                        <configuration>
+                            <filesets>
+                                <fileset>
+                                    <directory>core/src/main/java/de/mknblch/nolisp/generated</directory>
+                                    <includes>
+                                        <include>*Dialect.java</include>
+                                    </includes>
+                                    <followSymlinks>false</followSymlinks>
+                                </fileset>
+                            </filesets>
+                        </configuration>
+                    </plugin>
                     <plugin>
                         <groupId>org.bsc.maven</groupId>
                         <artifactId>maven-processor-plugin</artifactId>
@@ -60,10 +61,10 @@
                                 <goals>
                                     <goal>process</goal>
                                 </goals>
-                                <phase>generate-sources</phase>
+                                <phase>process-sources</phase>
                                 <configuration>
                                     <!-- source output directory -->
-                                    <outputDirectory>src/main/resources</outputDirectory>
+                                    <outputDirectory>src/main/java</outputDirectory>
                                 </configuration>
                             </execution>
                         </executions>
@@ -84,6 +85,7 @@
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>
+                    <compilerArgument>-proc:none</compilerArgument>
                 </configuration>
             </plugin>
         </plugins>
