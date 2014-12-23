@@ -18,7 +18,7 @@
             <groupId>de.mknblch.nolisp</groupId>
             <artifactId>codegen</artifactId>
             <version>0.1.0-SNAPSHOT</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>

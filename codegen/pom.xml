@@ -17,6 +17,7 @@
             <groupId>org.apache.velocity</groupId>
             <artifactId>velocity</artifactId>
             <version>1.7</version>
+            <scope>compile</scope>
         </dependency>
 
     </dependencies>
@@ -31,8 +32,6 @@
                     <compilerArgument>-proc:none</compilerArgument>
                 </configuration>
             </plugin>
-
-
         </plugins>
     </build>
 
