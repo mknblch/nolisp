@@ -10,7 +10,7 @@ import java.util.*;
  */
 public class AnnotationHelper {
 
-    public static PackageDefinition extract(Set<? extends Element> functions, Set<? extends Element> constants) {
+    public static PackageDefinition extractDefinition(Set<? extends Element> functions, Set<? extends Element> constants) {
 
         final PackageDefinition definition = new PackageDefinition();
 
@@ -20,7 +20,7 @@ public class AnnotationHelper {
         return definition;
     }
 
-    public static String[] getAnnotationElementAttributes(Element element) {
+    private static String[] getAnnotationElementAttributes(Element element) {
         for (AnnotationMirror mirror : element.getAnnotationMirrors()) {
             for (AnnotationValue annotationValue : mirror.getElementValues().values()) {
                 final List attributes = (List) annotationValue.getValue();
@@ -29,14 +29,14 @@ public class AnnotationHelper {
                 for (Object attribute : attributes) {
                     ret[n++] = attribute.toString();
                 }
-                return ret;
+                return ret; // TODO refactor 
             }
         }
         return new String[]{};
     }
 
 
-    public static void extractConstants(Set<? extends Element> elements, PackageDefinition definition) {
+    private static void extractConstants(Set<? extends Element> elements, PackageDefinition definition) {
         for (Element element : elements) {
             final String[] annotationElementAttributes = getAnnotationElementAttributes(element);
             final String packageName = packageOfConstantElement(element);
@@ -48,7 +48,7 @@ public class AnnotationHelper {
         }
     }
 
-    public static void extractFunctions(Set<? extends Element> elements, PackageDefinition definition) {
+    private static void extractFunctions(Set<? extends Element> elements, PackageDefinition definition) {
         for (Element element : elements) {
             final String[] annotationElementAttributes = getAnnotationElementAttributes(element);
             final String packageName = packageOfFunctionElement(element);

@@ -22,7 +22,7 @@
             <groupId>de.mknblch.nolisp</groupId>
             <artifactId>generator</artifactId>
             <version>0.1.0-SNAPSHOT</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -52,7 +52,7 @@
 
                 <executions>
                     <execution>
-                        <id>auto-clean</id>
+                        <id>clean</id>
                         <phase>clean</phase>
                         <goals>
                             <goal>clean</goal>
@@ -83,7 +83,7 @@
                         <goals>
                             <goal>process</goal>
                         </goals>
-                        <phase>process-sources</phase>
+                        <phase>generate-sources</phase>
                         <configuration>
                             <!-- source output directory -->
                             <outputDirectory>src/main/java</outputDirectory>

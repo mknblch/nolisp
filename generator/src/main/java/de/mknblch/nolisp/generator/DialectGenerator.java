@@ -20,7 +20,6 @@ public class DialectGenerator extends CodeGenerator {
     public void write(PackageDefinition packageDefinition, Filer filer) throws IOException {
 
         for (DialectDefinition dialectDefinition : packageDefinition.getDialectDefinitions()) {
-
             final VelocityContext context = createVelocityContext(dialectDefinition);
             write(context, makeFQClassName(dialectDefinition), filer);
         }

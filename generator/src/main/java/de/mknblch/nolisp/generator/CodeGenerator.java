@@ -30,6 +30,7 @@ public class CodeGenerator {
     }
 
     public void write(VelocityContext context, CharSequence fullQualifiedClassName, Filer filer) throws IOException {
+        System.out.printf("[PROCESSOR] Writing %s%n", fullQualifiedClassName);
         final JavaFileObject sourceFile = filer.createSourceFile(fullQualifiedClassName);
         final Writer writer = sourceFile.openWriter();
         template.merge(context, writer);

@@ -21,7 +21,7 @@ public class AnnotationProcessor extends AbstractProcessor {
     public synchronized void init(ProcessingEnvironment processingEnv) {
         super.init(processingEnv);
 
-        System.out.println("Processor started at " + System.getProperty("user.dir"));
+        System.out.println("[PROCESSOR] AnnotationProcessor started - user.dir=" + System.getProperty("user.dir"));
 
         dialectGenerator = new DialectGenerator();
         indexGenerator = new IndexGenerator();
@@ -40,7 +40,7 @@ public class AnnotationProcessor extends AbstractProcessor {
             return false;
         }
 
-        final PackageDefinition map = AnnotationHelper.extract(functions, constants);
+        final PackageDefinition map = AnnotationHelper.extractDefinition(functions, constants);
 
         try {
             dialectGenerator.write(map, processingEnv.getFiler());

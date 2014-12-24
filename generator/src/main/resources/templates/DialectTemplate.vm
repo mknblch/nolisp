@@ -13,14 +13,15 @@ import ${field};
 */
 public class $className.substring(0,1).toUpperCase()$className.substring(1)Dialect implements Dialect {
 
-    private final static Map<String, Object> FEATURES = new HashMap<String, Object>() {{
+    private final static Map<String, Object> FEATURES = new HashMap<String, Object>();
+    static {
 #foreach($key in $constants.keySet())
-        put("$key", $constants.get($key));
+        FEATURES.put("$key", $constants.get($key));
 #end
 #foreach($key in $functions.keySet())
-        put("$key", new $functions.get($key)());
+        FEATURES.put("$key", new $functions.get($key)());
 #end
-    }};
+    }
 
     @Override
     public String getName() { return "${dialectName}"; }
