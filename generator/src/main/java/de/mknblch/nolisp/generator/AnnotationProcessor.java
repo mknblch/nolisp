@@ -16,9 +16,13 @@ public class AnnotationProcessor extends AbstractProcessor {
     private DialectGenerator dialectGenerator;
     private IndexGenerator indexGenerator;
 
+
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
         super.init(processingEnv);
+
+        System.out.println("Processor started at " + System.getProperty("user.dir"));
+
         dialectGenerator = new DialectGenerator();
         indexGenerator = new IndexGenerator();
     }
@@ -48,7 +52,7 @@ public class AnnotationProcessor extends AbstractProcessor {
     }
 
     private void printNote(String msg) {
-        processingEnv.getMessager().printMessage(Diagnostic.Kind.NOTE, msg);
+        processingEnv.getMessager().printMessage(Diagnostic.Kind.WARNING, msg);
     }
 
 

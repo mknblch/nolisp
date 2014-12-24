@@ -13,7 +13,8 @@ import java.util.Set;
  */
 public class IndexGenerator extends CodeGenerator {
 
-    public static final String TEMPLATE_PATH = "./generator/src/main/resources/templates/IndexTemplate.vm";
+//    public static final String TEMPLATE_PATH = "./generator/src/main/resources/templates/IndexTemplate.vm";
+    public static final String TEMPLATE_PATH = "templates/IndexTemplate.vm";
 
     public IndexGenerator() {
         super(TEMPLATE_PATH);

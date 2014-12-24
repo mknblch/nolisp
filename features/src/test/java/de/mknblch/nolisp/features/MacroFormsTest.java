@@ -1,6 +1,7 @@
 package de.mknblch.nolisp.features;
 
 import de.mknblch.nolisp.testHelper.AbstractFormTest;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.List;

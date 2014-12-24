@@ -5,14 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>parent</artifactId>
-    <modules>
-        <module>features</module>
-    </modules>
     <groupId>de.mknblch.nolisp</groupId>
     <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
 
     <name>NOLISP :: AGGREGATOR</name>
-    <packaging>pom</packaging>
 
     <!-- profiles -->
     <profiles>
@@ -20,6 +17,12 @@
             <id>GENERATOR</id>
             <modules>
                 <module>generator</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>FEATURES</id>
+            <modules>
+                <module>features</module>
             </modules>
         </profile>
         <profile>
@@ -35,12 +38,6 @@
             </modules>
         </profile>
 
-        <profile>
-            <id>generate</id>
-
-
-        </profile>
-
     </profiles>
 
     <!-- build stuff -->
@@ -53,7 +50,7 @@
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>
-                    <compilerArgument>-proc:none</compilerArgument>
+                    <!--<compilerArgument>-proc:none</compilerArgument>-->
                 </configuration>
             </plugin>
         </plugins>

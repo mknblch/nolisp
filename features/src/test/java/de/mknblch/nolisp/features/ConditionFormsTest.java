@@ -3,6 +3,7 @@ package de.mknblch.nolisp.features;
 import de.mknblch.nolisp.generated.Index;
 import de.mknblch.nolisp.interpreter.Context;
 import de.mknblch.nolisp.testHelper.AbstractFormTest;
+import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

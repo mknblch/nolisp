@@ -4,6 +4,7 @@ import de.mknblch.nolisp.generated.Index;
 import de.mknblch.nolisp.interpreter.EvaluationException;
 import de.mknblch.nolisp.testHelper.AbstractFormTest;
 import de.mknblch.nolisp.interpreter.Context;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.List;

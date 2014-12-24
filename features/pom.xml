@@ -10,19 +10,19 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>features</artifactId>
-
+    <name>FEATURES</name>
 
     <dependencies>
         <dependency>
             <groupId>de.mknblch.nolisp</groupId>
-            <artifactId>generator</artifactId>
+            <artifactId>core</artifactId>
             <version>0.1.0-SNAPSHOT</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>de.mknblch.nolisp</groupId>
-            <artifactId>core</artifactId>
+            <artifactId>generator</artifactId>
             <version>0.1.0-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -49,10 +49,22 @@
             <plugin>
                 <artifactId>maven-clean-plugin</artifactId>
                 <version>2.6.1</version>
+
+                <executions>
+                    <execution>
+                        <id>auto-clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
                 <configuration>
                     <filesets>
                         <fileset>
-                            <directory>features/src/main/java/de/mknblch/nolisp/generated</directory>
+                            <!--<directory>features/src/main/java/de/mknblch/nolisp/generated</directory>-->
+                            <directory>src/main/java/de/mknblch/nolisp/generated</directory>
                             <includes>
                                 <include>*.java</include>
                             </includes>
@@ -64,6 +76,7 @@
             <plugin>
                 <groupId>org.bsc.maven</groupId>
                 <artifactId>maven-processor-plugin</artifactId>
+                <version>2.2.4</version>
                 <executions>
                     <execution>
                         <id>process</id>
@@ -77,6 +90,13 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <compilerArgument>-proc:none</compilerArgument>
+                </configuration>
             </plugin>
         </plugins>
     </build>
