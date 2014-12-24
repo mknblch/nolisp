@@ -8,7 +8,7 @@ import de.mknblch.nolisp.generator.Define;
  * @author mknblch
  */
 @Define({"classof", "classOf"})
-public class ClassOfForm extends BuiltInForm  {
+public class ClassOfForm implements Form  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

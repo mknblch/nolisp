@@ -11,7 +11,7 @@ import static de.mknblch.nolisp.common.TypeHelper.asInt;
  * @author mknblch
  */
 @Define({">>>"})
-public class RollRightForm extends BuiltInForm  {
+public class RollRightForm implements Form  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

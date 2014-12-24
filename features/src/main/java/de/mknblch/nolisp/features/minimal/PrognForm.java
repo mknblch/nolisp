@@ -8,7 +8,7 @@ import de.mknblch.nolisp.generator.Define;
  * @author mknblch
  */
 @Define({"progn"})
-public class PrognForm extends BuiltInForm  {
+public class PrognForm implements Form  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

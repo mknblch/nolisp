@@ -9,7 +9,7 @@ import de.mknblch.nolisp.generator.Define;
  * @author mknblch
  */
 @Define({"string?"})
-public class IsStringForm extends BuiltInForm  {
+public class IsStringForm implements Form  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

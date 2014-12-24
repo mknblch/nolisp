@@ -12,7 +12,7 @@ import de.mknblch.nolisp.datatypes.ListStruct;
  *
  * @author mknblch
  */
-public interface SpecialForm extends Atom {
+public interface SpecialForm { //extends Atom {
 
     public abstract Object eval(Interpreter interpreter, Context context, ListStruct args) throws Exception;
 }

@@ -9,7 +9,7 @@ import de.mknblch.nolisp.generator.Define;
  * @author mknblch
  */
 @Define({"toreal"})
-public class ToRealForm extends BuiltInForm  {
+public class ToRealForm implements Form  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

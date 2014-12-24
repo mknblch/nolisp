@@ -9,7 +9,7 @@ import de.mknblch.nolisp.generator.Define;
  * @author mknblch
  */
 @Define({"cos"})
-public class CosForm extends BuiltInForm  {
+public class CosForm implements Form  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

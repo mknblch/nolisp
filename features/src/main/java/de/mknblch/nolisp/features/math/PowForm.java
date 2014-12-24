@@ -10,7 +10,7 @@ import de.mknblch.nolisp.generator.Define;
  * @author mknblch
  */
 @Define({"**", "pow"})
-public class PowForm extends BuiltInForm  {
+public class PowForm implements Form  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

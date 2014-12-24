@@ -40,11 +40,6 @@ public class Macro implements SpecialForm {
         return interpreter.evalEach(forms, context); // TODO review: correct context?
     }
 
-    @Override
-    public Atom.Type getType() {
-        return Atom.Type.SPECIAL;
-    }
-
     public List<String> getArgumentSymbols() {
         return formSymbols;
     }

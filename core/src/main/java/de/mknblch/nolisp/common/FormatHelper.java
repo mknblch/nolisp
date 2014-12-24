@@ -1,10 +1,8 @@
 package de.mknblch.nolisp.common;
 
+import de.mknblch.nolisp.datatypes.*;
 import de.mknblch.nolisp.interpreter.Context;
 import de.mknblch.nolisp.interpreter.EvaluationException;
-import de.mknblch.nolisp.datatypes.Atom;
-import de.mknblch.nolisp.datatypes.ListStruct;
-import de.mknblch.nolisp.datatypes.SymbolStruct;
 
 import java.util.List;
 import java.util.Set;
@@ -39,7 +37,7 @@ public class FormatHelper {
         if (null == obj) {
             return "nil";
         }
-        //special case List<Object>
+        //special case List
         if (obj instanceof List) {
             final StringBuilder sb = new StringBuilder();
             final List list = (List) obj;
@@ -49,7 +47,7 @@ public class FormatHelper {
             }
             return String.format("L[ %s ]", sb.toString());
         }
-        //special case List<Object>
+        //special case Array
         if (obj instanceof Object[]) {
             final StringBuilder sb = new StringBuilder();
             final Object[] list = (Object[]) obj;
@@ -59,13 +57,22 @@ public class FormatHelper {
             }
             return String.format("A[ %s ]", sb.toString());
         }
+        if(obj instanceof Form) {
+            return "#<FORM>";
+        }
+        if(obj instanceof SpecialForm) {
+            return "#<SPECIAL>";
+        }
+
         // return Non-Atoms
         if (!(obj instanceof Atom)) {
             return String.valueOf(obj);
         }
-        final Atom atom = (Atom) obj;
 
+        final Atom atom = (Atom) obj;
         switch (atom.getType()) {
+            case SYMBOL:
+                return String.format("%s", ((SymbolStruct) atom).literal);
             case LIST:
                 final StringBuilder sb = new StringBuilder();
                 ListStruct temp = (ListStruct) obj;
@@ -76,14 +83,6 @@ public class FormatHelper {
                 } while (temp != null);
 
                 return String.format("( %s )", sb.toString());
-            case FORM:
-                return "#<FORM>"; //String.format(, formatPretty(lambda.getArgumentSymbols()), formatPretty(lambda.getForm()));
-            case SPECIAL:
-                return "#<MACRO>"; //String.format(" (%s) %s", formatSymbols(macro.getArgumentSymbols()), formatPretty(macro.getForms()));
-            case SYMBOL:
-                return String.format("%s", ((SymbolStruct) atom).literal);
-            case BUILTIN:
-                return "#<BUILTIN>"; // String.format("#<BUILTIN %s>", ((BuiltIn) atom).getSymbols());
         }
         throw new IllegalArgumentException(String.format("%s:UNKNOWN", atom));
     }
@@ -119,12 +118,6 @@ public class FormatHelper {
                     buffer.append(formatAtom(element));
                 }
                 return String.format("( %s )", buffer.toString());
-            case FORM:
-                return "#<FORM>"; //String.format(, formatPretty(lambda.getArgumentSymbols()), formatPretty(lambda.getForm()));
-            case SPECIAL:
-                return "#<MACRO>"; //String.format(" (%s) %s", formatSymbols(macro.getArgumentSymbols()), formatPretty(macro.getForms()));
-            case BUILTIN:
-                return "#<BUILTIN>"; //return String.format("#<BUILTIN %s>", ((BuiltIn) atom).getSymbols());
         }
 
         throw new IllegalArgumentException(String.format("%s:UNKNOWN_ATOM", atom));

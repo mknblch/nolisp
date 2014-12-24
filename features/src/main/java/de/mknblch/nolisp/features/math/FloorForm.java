@@ -9,7 +9,7 @@ import de.mknblch.nolisp.generator.Define;
  * @author mknblch
  */
 @Define({"floor"})
-public class FloorForm extends BuiltInForm  {
+public class FloorForm implements Form  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

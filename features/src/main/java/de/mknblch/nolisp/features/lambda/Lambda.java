@@ -36,11 +36,6 @@ public class Lambda implements Form {
         return interpreter.eval(form, executionContext);
     }
 
-    @Override
-    public Atom.Type getType() {
-        return Atom.Type.FORM;
-    }
-
     public ListStruct getArgumentSymbols() {
         return symbols;
     }

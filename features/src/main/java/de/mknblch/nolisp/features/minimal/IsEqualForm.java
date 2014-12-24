@@ -8,7 +8,7 @@ import de.mknblch.nolisp.generator.Define;
  * @author mknblch
  */
 @Define({"eq?", "equal?"})
-public class IsEqualForm extends BuiltInForm  {
+public class IsEqualForm implements Form  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

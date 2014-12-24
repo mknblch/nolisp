@@ -11,7 +11,7 @@ import de.mknblch.nolisp.generator.Define;
  * @author mknblch
  */
 @Define({"%", "modulo"})
-public class ModuloForm extends BuiltInForm  {
+public class ModuloForm implements Form  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

@@ -9,7 +9,7 @@ import de.mknblch.nolisp.generator.Define;
  * @author mknblch
  */
 @Define({"printf"})
-public class PrintFormatForm extends BuiltInForm  {
+public class PrintFormatForm implements Form  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

@@ -9,7 +9,7 @@ import de.mknblch.nolisp.generator.Define;
  * @author mknblch
  */
 @Define({"sqrt"})
-public class SqrtForm extends BuiltInForm  {
+public class SqrtForm implements Form  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

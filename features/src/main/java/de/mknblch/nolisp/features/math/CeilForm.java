@@ -9,7 +9,7 @@ import de.mknblch.nolisp.generator.Define;
  * @author mknblch
  */
 @Define({"ceil"})
-public class CeilForm extends BuiltInForm  {
+public class CeilForm implements Form  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

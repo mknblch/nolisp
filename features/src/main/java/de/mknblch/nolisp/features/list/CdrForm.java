@@ -11,7 +11,7 @@ import static de.mknblch.nolisp.common.TypeHelper.asList;
  * @author mknblch
  */
 @Define({"cdr"})
-public class CdrForm extends BuiltInForm  {
+public class CdrForm implements Form  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

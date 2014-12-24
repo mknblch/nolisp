@@ -13,7 +13,7 @@ import static de.mknblch.nolisp.common.TypeHelper.asInt;
  * @author mknblch
  */
 @Define({"array-set", "aset"})
-public class ArraySetForm extends BuiltInForm {
+public class ArraySetForm implements Form {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

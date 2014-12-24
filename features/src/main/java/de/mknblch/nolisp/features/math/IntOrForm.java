@@ -11,7 +11,7 @@ import static de.mknblch.nolisp.common.TypeHelper.asInt;
  * @author mknblch
  */
 @Define({"int-or", "ior"})
-public class IntOrForm extends BuiltInForm  {
+public class IntOrForm implements Form  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

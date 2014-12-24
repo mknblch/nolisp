@@ -9,7 +9,7 @@ import de.mknblch.nolisp.generator.Define;
  * @author mknblch
  */
 @Define({"xor"})
-public class XOrForm extends BuiltInForm  {
+public class XOrForm implements Form  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

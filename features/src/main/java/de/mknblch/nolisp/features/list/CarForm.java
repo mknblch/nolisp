@@ -11,7 +11,7 @@ import static de.mknblch.nolisp.common.TypeHelper.asList;
  * @author mknblch
  */
 @Define({"car"})
-public class CarForm extends BuiltInForm  {
+public class CarForm implements Form  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

@@ -11,7 +11,7 @@ import static de.mknblch.nolisp.common.TypeHelper.asException;
  * @author mknblch
  */
 @Define({"throw"})
-public class ThrowForm extends BuiltInForm  {
+public class ThrowForm implements Form  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

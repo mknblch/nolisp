@@ -9,7 +9,7 @@ import de.mknblch.nolisp.generator.Define;
  * @author mknblch
  */
 @Define({"largs"})
-public class LArgsForm extends BuiltInForm  {
+public class LArgsForm implements Form  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

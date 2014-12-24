@@ -8,7 +8,7 @@ import de.mknblch.nolisp.generator.Define;
  * @author mknblch
  */
 @Define({"null?"})
-public class IsNullForm extends BuiltInForm  {
+public class IsNullForm implements Form  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

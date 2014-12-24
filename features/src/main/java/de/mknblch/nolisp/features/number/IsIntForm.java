@@ -8,7 +8,7 @@ import de.mknblch.nolisp.generator.Define;
  * @author mknblch
  */
 @Define({"int?"})
-public class IsIntForm extends BuiltInForm  {
+public class IsIntForm implements Form  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

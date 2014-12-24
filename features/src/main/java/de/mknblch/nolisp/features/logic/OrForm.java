@@ -9,7 +9,7 @@ import de.mknblch.nolisp.generator.Define;
  * @author mknblch
  */
 @Define({"or"})
-public class OrForm extends BuiltInForm  {
+public class OrForm implements Form  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

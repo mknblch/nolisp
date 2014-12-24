@@ -11,7 +11,7 @@ import static de.mknblch.nolisp.common.TypeHelper.asList;
  * @author mknblch
  */
 @Define({"list-length", "llength"})
-public class ListLengthForm extends BuiltInForm  {
+public class ListLengthForm implements Form  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

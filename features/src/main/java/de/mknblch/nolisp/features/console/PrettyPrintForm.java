@@ -9,7 +9,7 @@ import de.mknblch.nolisp.generator.Define;
  * @author mknblch
  */
 @Define({"pprint"})
-public class PrettyPrintForm extends BuiltInForm  {
+public class PrettyPrintForm implements Form  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

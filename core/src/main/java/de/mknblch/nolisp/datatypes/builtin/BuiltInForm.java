@@ -9,8 +9,8 @@ import de.mknblch.nolisp.datatypes.Form;
  * @author mknblch
  */
 public abstract class BuiltInForm implements Form, BuiltIn {
-    @Override
-    public Atom.Type getType() {
-        return Atom.Type.BUILTIN;
-    }
+//    @Override
+//    public Atom.Type getType() {
+//        return Atom.Type.BUILTIN;
+//    }
 }

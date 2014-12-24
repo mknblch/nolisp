@@ -9,7 +9,7 @@ import de.mknblch.nolisp.generator.Define;
  * @author mknblch
  */
 @Define({"tan"})
-public class TanForm extends BuiltInForm  {
+public class TanForm implements Form  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

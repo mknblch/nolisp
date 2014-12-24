@@ -9,7 +9,7 @@ import de.mknblch.nolisp.generator.Define;
  * @author mknblch
  */
 @Define({"sin"})
-public class SinForm extends BuiltInForm  {
+public class SinForm implements Form  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

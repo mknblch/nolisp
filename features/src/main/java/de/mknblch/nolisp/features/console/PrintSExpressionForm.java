@@ -9,7 +9,7 @@ import de.mknblch.nolisp.generator.Define;
  * @author mknblch
  */
 @Define({"sprint"})
-public class PrintSExpressionForm extends BuiltInForm  {
+public class PrintSExpressionForm implements Form  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

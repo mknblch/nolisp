@@ -10,7 +10,7 @@ import de.mknblch.nolisp.generator.Define;
  * @author mknblch
  */
 @Define({">="})
-public class NumberGreaterEqualForm extends BuiltInForm  {
+public class NumberGreaterEqualForm implements Form  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

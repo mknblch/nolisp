@@ -10,7 +10,7 @@ import de.mknblch.nolisp.generator.Define;
  * @author mknblch
  */
 @Define({"+", "add", "sum"})
-public class AddForm extends BuiltInForm  {
+public class AddForm implements Form  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

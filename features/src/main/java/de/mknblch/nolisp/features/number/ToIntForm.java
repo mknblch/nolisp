@@ -9,7 +9,7 @@ import de.mknblch.nolisp.generator.Define;
  * @author mknblch
  */
 @Define({"toint"})
-public class ToIntForm extends BuiltInForm  {
+public class ToIntForm implements Form  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

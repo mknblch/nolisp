@@ -11,7 +11,7 @@ import static de.mknblch.nolisp.common.TypeHelper.asInt;
  * @author mknblch
  */
 @Define({">>"})
-public class ShiftRightForm extends BuiltInForm  {
+public class ShiftRightForm implements Form  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

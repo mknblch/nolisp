@@ -11,7 +11,7 @@ import static de.mknblch.nolisp.common.TypeHelper.isList;
  * @author mknblch
  */
 @Define({"append"})
-public class AppendForm extends BuiltInForm  {
+public class AppendForm implements Form  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

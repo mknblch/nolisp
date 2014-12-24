@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * @author mknblch
  */
 @Define({"array-make", "amake"})
-public class ArrayMakeForm extends BuiltInForm {
+public class ArrayMakeForm implements Form {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

@@ -9,7 +9,7 @@ import de.mknblch.nolisp.generator.Define;
  * @author mknblch
  */
 @Define({"lambda?"})
-public class IsLambdaForm extends BuiltInForm  {
+public class IsLambdaForm implements Form  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

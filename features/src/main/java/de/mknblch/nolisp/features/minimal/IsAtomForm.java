@@ -9,7 +9,7 @@ import de.mknblch.nolisp.generator.Define;
  * @author mknblch
  */
 @Define({"atom?"})
-public class IsAtomForm extends BuiltInForm  {
+public class IsAtomForm implements Form  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

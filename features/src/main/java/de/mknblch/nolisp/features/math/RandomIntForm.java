@@ -12,7 +12,7 @@ import java.util.Random;
  * @author mknblch
  */
 @Define({"random-int", "rint"})
-public class RandomIntForm extends BuiltInForm  {
+public class RandomIntForm implements Form  {
 
     private static final Random SECURE_RANDOM = new SecureRandom();
 

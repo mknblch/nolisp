@@ -12,7 +12,7 @@ import static de.mknblch.nolisp.common.TypeHelper.isList;
  * @author mknblch
  */
 @Define({"cons"})
-public class ConsForm extends BuiltInForm  {
+public class ConsForm implements Form  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

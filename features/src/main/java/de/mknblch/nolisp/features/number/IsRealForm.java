@@ -9,7 +9,7 @@ import de.mknblch.nolisp.generator.Define;
  * @author mknblch
  */
 @Define({"real?"})
-public class IsRealForm extends BuiltInForm  {
+public class IsRealForm implements Form  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

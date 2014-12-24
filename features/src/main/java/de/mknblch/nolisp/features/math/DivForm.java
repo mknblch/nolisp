@@ -11,7 +11,7 @@ import de.mknblch.nolisp.generator.Define;
  * @author mknblch
  */
 @Define({"/", "div"})
-public class DivForm extends BuiltInForm  {
+public class DivForm implements Form  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

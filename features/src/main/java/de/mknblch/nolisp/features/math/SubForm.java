@@ -11,7 +11,7 @@ import de.mknblch.nolisp.generator.Define;
  * @author mknblch
  */
 @Define({"-", "sub"})
-public class SubForm extends BuiltInForm  {
+public class SubForm implements Form  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

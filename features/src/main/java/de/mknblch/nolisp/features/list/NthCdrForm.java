@@ -12,7 +12,7 @@ import static de.mknblch.nolisp.common.TypeHelper.asList;
  * @author mknblch
  */
 @Define({"nthcdr"})
-public class NthCdrForm extends BuiltInForm  {
+public class NthCdrForm implements Form  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

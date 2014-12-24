@@ -11,7 +11,7 @@ import static de.mknblch.nolisp.common.TypeHelper.asInt;
  * @author mknblch
  */
 @Define({"int-and", "iand"})
-public class IntAndForm extends BuiltInForm  {
+public class IntAndForm implements Form  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

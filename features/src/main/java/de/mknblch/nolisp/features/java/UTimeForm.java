@@ -8,7 +8,7 @@ import de.mknblch.nolisp.generator.Define;
  * @author mknblch
  */
 @Define({"utime"})
-public class UTimeForm extends BuiltInForm  {
+public class UTimeForm implements Form  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

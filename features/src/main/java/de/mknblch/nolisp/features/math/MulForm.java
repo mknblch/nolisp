@@ -11,7 +11,7 @@ import de.mknblch.nolisp.generator.Define;
  * @author mknblch
  */
 @Define({"*", "mul"})
-public class MulForm extends BuiltInForm  {
+public class MulForm implements Form  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

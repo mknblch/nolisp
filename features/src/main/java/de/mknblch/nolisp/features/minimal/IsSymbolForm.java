@@ -9,7 +9,7 @@ import de.mknblch.nolisp.generator.Define;
  * @author mknblch
  */
 @Define({"symbol?"})
-public class IsSymbolForm extends BuiltInForm  {
+public class IsSymbolForm implements Form  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {

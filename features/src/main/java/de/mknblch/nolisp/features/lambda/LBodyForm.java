@@ -9,7 +9,7 @@ import de.mknblch.nolisp.generator.Define;
  * @author mknblch
  */
 @Define({"lbody"})
-public class LBodyForm extends BuiltInForm  {
+public class LBodyForm implements Form  {
 
     @Override
     public Object eval(ListStruct args) throws Exception {
