@@ -12,20 +12,18 @@ import java.util.*;
 @SupportedAnnotationTypes({"*"})
 public class AnnotationProcessor extends AbstractProcessor {
 
-
     private static final String DEFAULT_PACKAGE = "nolisp";
 
     private DialectGenerator dialectGenerator;
     private IndexGenerator indexGenerator;
     private AnnotationHelper.Filter filter;
 
-
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
         super.init(processingEnv);
-        System.out.println("[PROCESSOR] AnnotationProcessor started - user.dir=" + System.getProperty("user.dir"));
+        printNote("AnnotationProcessor started - user.dir=" + System.getProperty("user.dir"));
         final Map<String, String> options = processingEnv.getOptions();
-        System.out.println("[PROCESSOR] Options:" + options);
+        printNote("Options:" + options);
         buildGenerators(options);
         buildPackageFilter(options);
     }

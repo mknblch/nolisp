@@ -2,13 +2,11 @@ package de.mknblch.nolisp.inspector;
 
 import de.mknblch.nolisp.common.FormatHelper;
 import de.mknblch.nolisp.common.TypeHelper;
+import de.mknblch.nolisp.datatypes.ListStruct;
 import de.mknblch.nolisp.inspection.InspectionRule;
-import de.mknblch.nolisp.inspection.InspectionRuleAdapter;
 import de.mknblch.nolisp.inspection.Inspector;
-import de.mknblch.nolisp.inspection.ValueCloneRule;
 import de.mknblch.nolisp.interpreter.EvaluationException;
 import de.mknblch.nolisp.parser.Parser;
-import de.mknblch.nolisp.datatypes.ListStruct;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -125,30 +123,6 @@ public class InspectorTest {
         LOGGER.debug("{}", FormatHelper.formatPretty(program));
 
         assertASTEquals("( 0 ( 1 ( 2 ( 3 ( 4 ( 5 ) ) ) ) ) 0 ( 1 ( 2 ( 3 ) ) ) )", program);
-    }
-
-    @Test
-    public void testCloneTree() throws Exception {
-
-        final ListStruct program = PARSER.parse("( 1 2 (0 3 ) 4 ( (0 (1 (0 5)) ) 6 ) 7 )");
-
-        final ValueCloneRule valueCloneRule = new ValueCloneRule() {
-
-            @Override
-            public Object clone(Object element) throws Exception {
-
-                System.out.printf("cloning: %s%n", FormatHelper.formatPretty(element));
-                if (TypeHelper.isList(element) && ((Integer) 0).equals(((ListStruct) element).car())) {
-                    return ((ListStruct) element).cadr();
-                }
-                return element;
-            }
-        };
-
-        final ListStruct ret = Inspector.cloneTree(program, valueCloneRule);
-
-        assertASTEquals("( ( 1 2 3 4 ( ( 1 5 ) 6 ) 7 ) )", ret);
-
     }
 
     public void assertASTEquals(String expected, ListStruct parse) {

@@ -5,7 +5,7 @@ import de.mknblch.nolisp.datatypes.ListStruct;
 /**
  * @author mknblch
  */
-public interface ContainerCloneRule {
+public interface CloneRule {
 
     public ListStruct cloneSublist(ListStruct container) throws Exception;
 

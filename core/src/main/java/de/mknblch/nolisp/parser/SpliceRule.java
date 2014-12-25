@@ -1,7 +1,7 @@
 package de.mknblch.nolisp.parser;
 
 import de.mknblch.nolisp.common.TypeHelper;
-import de.mknblch.nolisp.inspection.ContainerCloneRule;
+import de.mknblch.nolisp.inspection.CloneRule;
 import de.mknblch.nolisp.datatypes.ListStruct;
 
 /**
@@ -10,7 +10,7 @@ import de.mknblch.nolisp.datatypes.ListStruct;
  *
  * @author mknblch
  */
-public class SpliceRule implements ContainerCloneRule {
+public class SpliceRule implements CloneRule {
 
     @Override
     public ListStruct cloneSublist(ListStruct container) throws Exception {

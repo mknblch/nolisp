@@ -20,29 +20,6 @@ public class Inspector {
     }
 
     /**
-     * clone the tree based on it's elements
-     *
-     * @param tree
-     * @param rule
-     * @return
-     * @throws Exception
-     */
-    public static ListStruct cloneTree(ListStruct tree, ValueCloneRule rule) throws Exception {
-        final ListStruct clone = new ListStruct();
-        ListStruct temp = tree;
-        while (temp != null) {
-            final Object car = temp.car();
-            if (TypeHelper.isList(car)) {
-                clone.add(rule.clone(cloneTree((ListStruct) car, rule)));
-            } else {
-                clone.add(rule.clone(temp.car()));
-            }
-            temp = temp.cdr();
-        }
-        return clone;
-    }
-
-    /**
      * clone the tree based on the listStruct container and it's value
      *
      * @param tree
@@ -50,7 +27,7 @@ public class Inspector {
      * @return
      * @throws Exception
      */
-    public static ListStruct cloneTree(ListStruct tree, ContainerCloneRule rule) throws Exception {
+    public static ListStruct cloneTree(ListStruct tree, CloneRule rule) throws Exception {
         final ListStruct clone = new ListStruct();
         if (tree.isEmpty()) return clone;
         ListStruct temp = tree;

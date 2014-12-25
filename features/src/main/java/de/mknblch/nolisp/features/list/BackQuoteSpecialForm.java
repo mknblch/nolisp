@@ -4,7 +4,7 @@ import de.mknblch.nolisp.common.TypeHelper;
 import de.mknblch.nolisp.datatypes.ListStruct;
 import de.mknblch.nolisp.datatypes.SpecialForm;
 import de.mknblch.nolisp.generator.Define;
-import de.mknblch.nolisp.inspection.ContainerCloneRule;
+import de.mknblch.nolisp.inspection.CloneRule;
 import de.mknblch.nolisp.inspection.Inspector;
 import de.mknblch.nolisp.interpreter.Context;
 import de.mknblch.nolisp.interpreter.Interpreter;
@@ -22,7 +22,7 @@ public class BackQuoteSpecialForm implements SpecialForm {
             return car;
         }
 
-        final ContainerCloneRule rule = new ContainerCloneRule() {
+        final CloneRule rule = new CloneRule() {
 
             @Override
             public ListStruct cloneSublist(ListStruct container) throws Exception {

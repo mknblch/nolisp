@@ -1,6 +1,7 @@
-package de.mknblch.nolisp.inspection;
+package de.mknblch.nolisp.inspector;
 
 import de.mknblch.nolisp.datatypes.ListStruct;
+import de.mknblch.nolisp.inspection.InspectionRule;
 
 /**
  * @author mknblch
