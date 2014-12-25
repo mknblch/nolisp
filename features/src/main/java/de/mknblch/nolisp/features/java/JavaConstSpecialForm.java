@@ -3,11 +3,11 @@ package de.mknblch.nolisp.features.java;
 import de.mknblch.nolisp.common.FormatHelper;
 import de.mknblch.nolisp.common.TypeHelper;
 import de.mknblch.nolisp.datatypes.ListStruct;
-import de.mknblch.nolisp.datatypes.builtin.BuiltInSpecialForm;
+import de.mknblch.nolisp.datatypes.SpecialForm;
+import de.mknblch.nolisp.generator.Define;
 import de.mknblch.nolisp.interpreter.Context;
 import de.mknblch.nolisp.interpreter.EvaluationException;
 import de.mknblch.nolisp.interpreter.Interpreter;
-import de.mknblch.nolisp.generator.Define;
 
 import java.lang.reflect.Field;
 import java.util.regex.Matcher;
@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
  * @author mknblch
  */
 @Define({"java-const", "jconst"})
-public class JavaConstSpecialForm extends BuiltInSpecialForm  {
+public class JavaConstSpecialForm implements SpecialForm {
 
     private static final Pattern CLASS_METHOD_PATTERN = Pattern.compile("(.+):(.+)");
 

@@ -10,12 +10,16 @@ import java.util.*;
  */
 public class AnnotationHelper {
 
-    public static PackageDefinition extractDefinition(Set<? extends Element> functions, Set<? extends Element> constants) {
+    public interface Filter {
+        public boolean accept (String className);
+    }
+
+    public static PackageDefinition extractDefinition(Set<? extends Element> functions, Set<? extends Element> constants, Filter filter) {
 
         final PackageDefinition definition = new PackageDefinition();
 
-        extractFunctions(functions, definition);
-        extractConstants(constants, definition);
+        extractFunctions(functions, definition, filter);
+        extractConstants(constants, definition, filter);
 
         return definition;
     }
@@ -36,11 +40,12 @@ public class AnnotationHelper {
     }
 
 
-    private static void extractConstants(Set<? extends Element> elements, PackageDefinition definition) {
+    private static void extractConstants(Set<? extends Element> elements, PackageDefinition definition, Filter filter) {
         for (Element element : elements) {
+            final String fullName = fullNameOfConstantElement(element);
+            if(null != filter && !filter.accept(fullName)) continue;
             final String[] annotationElementAttributes = getAnnotationElementAttributes(element);
             final String packageName = packageOfConstantElement(element);
-            final String fullName = fullNameOfConstantElement(element);
             final DialectDefinition pack = definition.getOrCreate(packageName);
             for (String attribute : annotationElementAttributes) {
                 pack.addConstant(attribute.substring(1, attribute.length() - 1), fullName);
@@ -48,11 +53,12 @@ public class AnnotationHelper {
         }
     }
 
-    private static void extractFunctions(Set<? extends Element> elements, PackageDefinition definition) {
+    private static void extractFunctions(Set<? extends Element> elements, PackageDefinition definition, Filter filter) {
         for (Element element : elements) {
+            final String fullName = fullNameOfFunctionElement(element);
+            if(null != filter && !filter.accept(fullName)) continue;
             final String[] annotationElementAttributes = getAnnotationElementAttributes(element);
             final String packageName = packageOfFunctionElement(element);
-            final String fullName = fullNameOfFunctionElement(element);
             final DialectDefinition pack = definition.getOrCreate(packageName);
             for (String attribute : annotationElementAttributes) {
                 pack.addFunction(attribute.substring(1, attribute.length()-1), fullName);

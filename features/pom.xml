@@ -12,6 +12,11 @@
     <artifactId>features</artifactId>
     <name>FEATURES</name>
 
+    <properties>
+        <outputPackage>de.mknblch.nolisp.generated</outputPackage>
+        <cleanPath>src/main/java/de/mknblch/nolisp/generated</cleanPath>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>de.mknblch.nolisp</groupId>
@@ -44,6 +49,7 @@
         </dependency>
     </dependencies>
 
+
     <build>
         <plugins>
             <plugin>
@@ -63,8 +69,7 @@
                 <configuration>
                     <filesets>
                         <fileset>
-                            <!--<directory>features/src/main/java/de/mknblch/nolisp/generated</directory>-->
-                            <directory>src/main/java/de/mknblch/nolisp/generated</directory>
+                            <directory>${cleanPath}</directory>
                             <includes>
                                 <include>*.java</include>
                             </includes>
@@ -87,6 +92,7 @@
                         <configuration>
                             <!-- source output directory -->
                             <outputDirectory>src/main/java</outputDirectory>
+                            <compilerArguments>-AoutputPackage=${outputPackage} -ApackageFilter=de.mknblch.nolisp.features</compilerArguments>
                         </configuration>
                     </execution>
                 </executions>

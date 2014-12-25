@@ -2,24 +2,20 @@ package de.mknblch.nolisp.features.java;
 
 import de.mknblch.nolisp.common.TypeHelper;
 import de.mknblch.nolisp.datatypes.ListStruct;
-import de.mknblch.nolisp.datatypes.builtin.BuiltInSpecialForm;
+import de.mknblch.nolisp.datatypes.SpecialForm;
+import de.mknblch.nolisp.generator.Define;
 import de.mknblch.nolisp.interpreter.Context;
 import de.mknblch.nolisp.interpreter.Interpreter;
-import de.mknblch.nolisp.generator.Define;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static de.mknblch.nolisp.common.TypeHelper.asList;
-import static de.mknblch.nolisp.common.TypeHelper.convertListToArray;
-import static de.mknblch.nolisp.common.TypeHelper.getSymbolLiteral;
-
 /**
  * @author mknblch
  */
 @Define({"new"})
-public class NewSpecialForm extends BuiltInSpecialForm  {
+public class NewSpecialForm implements SpecialForm {
 
     @Override
     public Object eval(Interpreter interpreter, Context context, ListStruct args) throws Exception {

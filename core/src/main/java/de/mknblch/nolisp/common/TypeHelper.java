@@ -1,7 +1,6 @@
 package de.mknblch.nolisp.common;
 
 import de.mknblch.nolisp.datatypes.Atom;
-import de.mknblch.nolisp.datatypes.builtin.BuiltIn;
 import de.mknblch.nolisp.interpreter.EvaluationException;
 import de.mknblch.nolisp.datatypes.ListStruct;
 import de.mknblch.nolisp.datatypes.SymbolStruct;
@@ -201,7 +200,4 @@ public class TypeHelper {
         return o instanceof Atom;
     }
 
-    public static boolean isBuiltIn(Object o) {
-        return o instanceof BuiltIn;
-    }
 }

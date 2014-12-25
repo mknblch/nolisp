@@ -19,6 +19,4 @@ public class LoggingInterpreter extends CoreInterpreter {
         LOGGER.trace("{} => {}", FormatHelper.formatPretty(obj), FormatHelper.formatPretty(evaluated));
         return evaluated;
     }
-
-
 }

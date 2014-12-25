@@ -10,11 +10,10 @@ import java.io.IOException;
  */
 public class DialectGenerator extends CodeGenerator {
 
-//    public static final String TEMPLATE_PATH = "./generator/src/main/resources/templates/DialectTemplate.vm";
     public static final String TEMPLATE_PATH = "templates/DialectTemplate.vm";
 
-    public DialectGenerator() {
-        super(TEMPLATE_PATH);
+    public DialectGenerator(String outPackageName) {
+        super(TEMPLATE_PATH, outPackageName);
     }
 
     public void write(PackageDefinition packageDefinition, Filer filer) throws IOException {

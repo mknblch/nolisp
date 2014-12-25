@@ -2,11 +2,9 @@ package de.mknblch.nolisp.features.list;
 
 import de.mknblch.nolisp.common.Expectations;
 import de.mknblch.nolisp.common.TypeHelper;
+import de.mknblch.nolisp.datatypes.Form;
 import de.mknblch.nolisp.datatypes.ListStruct;
-import de.mknblch.nolisp.datatypes.builtin.BuiltInForm;
 import de.mknblch.nolisp.generator.Define;
-
-import static de.mknblch.nolisp.common.TypeHelper.isList;
 
 /**
  * @author mknblch

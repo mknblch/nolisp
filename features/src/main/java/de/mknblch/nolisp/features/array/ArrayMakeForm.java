@@ -1,7 +1,7 @@
 package de.mknblch.nolisp.features.array;
 
+import de.mknblch.nolisp.datatypes.Form;
 import de.mknblch.nolisp.datatypes.ListStruct;
-import de.mknblch.nolisp.datatypes.builtin.BuiltInForm;
 import de.mknblch.nolisp.generator.Define;
 
 import java.util.ArrayList;

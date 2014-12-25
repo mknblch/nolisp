@@ -1,29 +1,10 @@
 package de.mknblch.nolisp.common;
 
 import de.mknblch.nolisp.datatypes.*;
-import de.mknblch.nolisp.interpreter.Context;
-import de.mknblch.nolisp.interpreter.EvaluationException;
 
 import java.util.List;
-import java.util.Set;
 
 public class FormatHelper {
-
-    public static String formatContext(Context context, boolean addBuiltInForms) {
-        final Set<String> keys = context.keySetGlobal();
-        final StringBuilder sb = new StringBuilder();
-        for (String key : keys) {
-            try {
-                final Object obj = context.get(key);
-                if (!addBuiltInForms && TypeHelper.isBuiltIn(obj)) continue;
-                if (sb.length() > 0) sb.append(", ");
-                sb.append(key).append(" => ").append(formatPretty(obj));
-            } catch (EvaluationException e) {
-                e.printStackTrace();
-            }
-        }
-        return sb.toString();
-    }
 
     public static String formatAsSExpression(ListStruct listStruct) {
         return String.format("(%s %s)",

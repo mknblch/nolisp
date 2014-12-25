@@ -3,11 +3,10 @@ package de.mknblch.nolisp.features.lambda;
 import de.mknblch.nolisp.common.FormatHelper;
 import de.mknblch.nolisp.common.TypeHelper;
 import de.mknblch.nolisp.datatypes.Form;
+import de.mknblch.nolisp.datatypes.ListStruct;
 import de.mknblch.nolisp.interpreter.Context;
 import de.mknblch.nolisp.interpreter.EvaluationException;
 import de.mknblch.nolisp.interpreter.Interpreter;
-import de.mknblch.nolisp.datatypes.Atom;
-import de.mknblch.nolisp.datatypes.ListStruct;
 
 /**
  * @author mknblch

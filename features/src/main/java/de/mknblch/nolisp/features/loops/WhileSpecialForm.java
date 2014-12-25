@@ -2,19 +2,16 @@ package de.mknblch.nolisp.features.loops;
 
 import de.mknblch.nolisp.common.TypeHelper;
 import de.mknblch.nolisp.datatypes.ListStruct;
-import de.mknblch.nolisp.datatypes.builtin.BuiltInSpecialForm;
+import de.mknblch.nolisp.datatypes.SpecialForm;
+import de.mknblch.nolisp.generator.Define;
 import de.mknblch.nolisp.interpreter.Context;
 import de.mknblch.nolisp.interpreter.Interpreter;
-import de.mknblch.nolisp.generator.Define;
-
-import static de.mknblch.nolisp.common.TypeHelper.asBoolean;
-import static de.mknblch.nolisp.common.TypeHelper.asList;
 
 /**
  * @author mknblch
  */
 @Define({"while"})
-public class WhileSpecialForm extends BuiltInSpecialForm  {
+public class WhileSpecialForm implements SpecialForm {
 
     @Override
     public Object eval(Interpreter interpreter, Context context, ListStruct args) throws Exception {

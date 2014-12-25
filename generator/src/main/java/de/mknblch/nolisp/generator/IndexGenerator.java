@@ -13,20 +13,19 @@ import java.util.Set;
  */
 public class IndexGenerator extends CodeGenerator {
 
-//    public static final String TEMPLATE_PATH = "./generator/src/main/resources/templates/IndexTemplate.vm";
     public static final String TEMPLATE_PATH = "templates/IndexTemplate.vm";
 
-    public IndexGenerator() {
-        super(TEMPLATE_PATH);
+    public IndexGenerator(String outPackageName) {
+        super(TEMPLATE_PATH, outPackageName);
     }
 
     public void write(PackageDefinition packageDefinition, Filer filer) throws IOException {
 
         final VelocityContext context = new VelocityContext();
-        context.put("package", "de.mknblch.nolisp.generated");
+        context.put("package", outPackageName);
         final Collection<String> packages = makeDialectNames(packageDefinition);
         context.put("packages", packages);
-        write(context, "de.mknblch.nolisp.generated.Index", filer);
+        write(context, String.format("%s.Index", outPackageName), filer);
     }
 
     private Collection<String> makeDialectNames(PackageDefinition packages) {

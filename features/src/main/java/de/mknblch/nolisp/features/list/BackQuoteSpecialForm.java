@@ -2,18 +2,18 @@ package de.mknblch.nolisp.features.list;
 
 import de.mknblch.nolisp.common.TypeHelper;
 import de.mknblch.nolisp.datatypes.ListStruct;
-import de.mknblch.nolisp.datatypes.builtin.BuiltInSpecialForm;
+import de.mknblch.nolisp.datatypes.SpecialForm;
+import de.mknblch.nolisp.generator.Define;
 import de.mknblch.nolisp.inspection.ContainerCloneRule;
 import de.mknblch.nolisp.inspection.Inspector;
 import de.mknblch.nolisp.interpreter.Context;
 import de.mknblch.nolisp.interpreter.Interpreter;
-import de.mknblch.nolisp.generator.Define;
 
 /**
  * @author mknblch
  */
 @Define({"backquote"})
-public class BackQuoteSpecialForm extends BuiltInSpecialForm  {
+public class BackQuoteSpecialForm implements SpecialForm {
 
     @Override
     public Object eval(final Interpreter interpreter, final Context context, ListStruct args) throws Exception {

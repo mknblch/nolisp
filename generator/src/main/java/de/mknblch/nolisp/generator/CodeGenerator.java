@@ -2,13 +2,11 @@ package de.mknblch.nolisp.generator;
 
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.Velocity;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 
 import javax.annotation.processing.Filer;
-import javax.tools.JavaFileObject;
 import java.io.IOException;
 import java.io.Writer;
 
@@ -19,8 +17,10 @@ public class CodeGenerator {
 
     private final VelocityEngine velocityEngine;
     private final Template template;
+    protected final String outPackageName;
 
-    public CodeGenerator(String templatePath) {
+    public CodeGenerator(String templatePath, String outPackageName) {
+        this.outPackageName = outPackageName;
         velocityEngine = new VelocityEngine();
         velocityEngine.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
         velocityEngine.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
@@ -31,8 +31,7 @@ public class CodeGenerator {
 
     public void write(VelocityContext context, CharSequence fullQualifiedClassName, Filer filer) throws IOException {
         System.out.printf("[PROCESSOR] Writing %s%n", fullQualifiedClassName);
-        final JavaFileObject sourceFile = filer.createSourceFile(fullQualifiedClassName);
-        final Writer writer = sourceFile.openWriter();
+        final Writer writer = filer.createSourceFile(fullQualifiedClassName).openWriter();
         template.merge(context, writer);
         writer.close();
     }
