@@ -1,16 +1,13 @@
 package de.mknblch.nolisp.features;
 
-import de.mknblch.nolisp.generated.Index;
+import de.mknblch.nolisp.interpreter.Context;
 import de.mknblch.nolisp.interpreter.EvaluationException;
 import de.mknblch.nolisp.testHelper.AbstractFormTest;
-import de.mknblch.nolisp.interpreter.Context;
+import nolisp.Index;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
  * @author mknblch

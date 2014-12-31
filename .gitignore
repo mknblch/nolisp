@@ -5,4 +5,4 @@ target/
 
 **/*.iml
 
-**/generated
+features/src/main/java/nolisp

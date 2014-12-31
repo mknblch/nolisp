@@ -13,8 +13,6 @@
     <name>FEATURES</name>
 
     <properties>
-        <outputPackage>de.mknblch.nolisp.generated</outputPackage>
-        <cleanPath>src/main/java/de/mknblch/nolisp/generated</cleanPath>
     </properties>
 
     <dependencies>
@@ -52,6 +50,7 @@
 
     <build>
         <plugins>
+            <!--delete all generated files during clean phase-->
             <plugin>
                 <artifactId>maven-clean-plugin</artifactId>
                 <version>2.6.1</version>
@@ -65,11 +64,10 @@
                         </goals>
                     </execution>
                 </executions>
-
                 <configuration>
                     <filesets>
                         <fileset>
-                            <directory>${cleanPath}</directory>
+                            <directory>src/main/java/nolisp</directory>
                             <includes>
                                 <include>*.java</include>
                             </includes>
@@ -78,6 +76,7 @@
                     </filesets>
                 </configuration>
             </plugin>
+            <!--generate Dialects from definitions-->
             <plugin>
                 <groupId>org.bsc.maven</groupId>
                 <artifactId>maven-processor-plugin</artifactId>
@@ -92,11 +91,12 @@
                         <configuration>
                             <!-- source output directory -->
                             <outputDirectory>src/main/java</outputDirectory>
-                            <compilerArguments>-AoutputPackage=${outputPackage} -ApackageFilter=de.mknblch.nolisp.features</compilerArguments>
+                            <compilerArguments>-AoutputPackage=nolisp -ApackageFilter=de.mknblch.nolisp.features</compilerArguments>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
+            <!--do nothing while compiling yourself-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

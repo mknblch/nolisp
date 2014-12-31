@@ -2,11 +2,13 @@ package de.mknblch.nolisp.testHelper;
 
 import de.mknblch.nolisp.common.FormatHelper;
 import de.mknblch.nolisp.datatypes.ListStruct;
-import de.mknblch.nolisp.generated.Index;
-import de.mknblch.nolisp.interpreter.*;
+import de.mknblch.nolisp.interpreter.Context;
+import de.mknblch.nolisp.interpreter.CoreInterpreter;
+import de.mknblch.nolisp.interpreter.Interpreter;
 import de.mknblch.nolisp.parser.Parser;
 import de.mknblch.nolisp.parser.ParserException;
 import de.mknblch.nolisp.parser.lexer.LexerException;
+import nolisp.Index;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.slf4j.Logger;

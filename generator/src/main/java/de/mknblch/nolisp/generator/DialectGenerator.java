@@ -25,13 +25,13 @@ public class DialectGenerator extends CodeGenerator {
     }
 
     private String makeFQClassName(DialectDefinition dialectDefinition) {
-        return String.format("de.mknblch.nolisp.generated.%sDialect", dialectDefinition.getClassName());
+        return String.format("%s.%sDialect", outPackageName, dialectDefinition.getClassName());
     }
 
     private VelocityContext createVelocityContext(DialectDefinition dialectDefinition) {
         final VelocityContext context = new VelocityContext();
 
-        context.put("package", "de.mknblch.nolisp.generated");
+        context.put("package", "nolisp");
         context.put("packages", dialectDefinition.getPackages());
         context.put("dialectName", dialectDefinition.getPackageName());
         context.put("className", dialectDefinition.getClassName());
