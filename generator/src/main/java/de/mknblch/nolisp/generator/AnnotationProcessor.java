@@ -1,5 +1,8 @@
 package de.mknblch.nolisp.generator;
 
+import de.mknblch.nolisp.generator.annotations.Constant;
+import de.mknblch.nolisp.generator.annotations.Define;
+
 import javax.annotation.processing.*;
 import javax.lang.model.element.*;
 import javax.tools.*;

@@ -1,5 +1,7 @@
 package de.mknblch.nolisp.interpreter;
 
+import de.mknblch.nolisp.datatypes.ListStruct;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -15,6 +17,7 @@ import java.util.Set;
  */
 public class Context {
 
+    public static final String PACKAGES_KEY = "packages";
     private final Context parent;
     private final HashMap<String, Object> map = new HashMap<>();
     private final boolean global;
@@ -148,10 +151,14 @@ public class Context {
     }
 
     public Context addDialect(Dialect... dialects) {
+        final ListStruct packages = new ListStruct();
         for (Dialect dialect : dialects) {
             bindAll(dialect.features());
-            bind(dialect.getName(), true);
+            final String name = dialect.getName();
+            bind(name, true);
+            packages.add(name);
         }
+        bind(PACKAGES_KEY, packages);
         return this;
     }
 

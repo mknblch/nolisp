@@ -1,6 +1,6 @@
 package de.mknblch.nolisp.features.java;
 
-import de.mknblch.nolisp.generator.Constant;
+import de.mknblch.nolisp.generator.annotations.Constant;
 
 /**
  * @author mknblch

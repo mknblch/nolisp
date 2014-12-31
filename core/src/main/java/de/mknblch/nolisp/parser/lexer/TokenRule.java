@@ -10,5 +10,6 @@ package de.mknblch.nolisp.parser.lexer;
  */
 public interface TokenRule {
 
+
     public Token token(StringCutter cutter) throws LexerException;
 }

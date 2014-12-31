@@ -3,7 +3,7 @@ package de.mknblch.nolisp.features.java;
 import de.mknblch.nolisp.common.TypeHelper;
 import de.mknblch.nolisp.datatypes.Form;
 import de.mknblch.nolisp.datatypes.ListStruct;
-import de.mknblch.nolisp.generator.Define;
+import de.mknblch.nolisp.generator.annotations.Define;
 
 /**
  * @author mknblch

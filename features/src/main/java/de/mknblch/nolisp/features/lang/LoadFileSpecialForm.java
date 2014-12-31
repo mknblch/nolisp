@@ -3,7 +3,7 @@ package de.mknblch.nolisp.features.lang;
 import de.mknblch.nolisp.common.TypeHelper;
 import de.mknblch.nolisp.datatypes.ListStruct;
 import de.mknblch.nolisp.datatypes.SpecialForm;
-import de.mknblch.nolisp.generator.Define;
+import de.mknblch.nolisp.generator.annotations.Define;
 import de.mknblch.nolisp.interpreter.Context;
 import de.mknblch.nolisp.interpreter.Interpreter;
 import de.mknblch.nolisp.parser.Parser;
